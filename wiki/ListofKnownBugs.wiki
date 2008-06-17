@@ -1,0 +1,13 @@
+#summary The current list of all know bugs in this project.
+
+= Introduction =
+
+This list can be edited by all project members, and should contain all known bugs.
+
+
+= Details =
+
+Major Bugs:
+  * Admit Defeat Bug   (<font color="red">FIXED</font>)
+  * Ban Bug
+  * Xael / Luci Ammo bug
