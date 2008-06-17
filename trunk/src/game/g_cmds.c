@@ -1757,6 +1757,7 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
   int   clientNum = -1;
   char  name[ MAX_NETNAME ];
   char nullstring[] = "";
+  pClass_t  oldClass = ent->client->ps.stats[ STAT_PCLASS ];
 	
   char *arg2plus;
   char *arg3plus;
@@ -1973,6 +1974,13 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
   }
   else if( !Q_stricmp( arg1, "admitdefeat" ) )
   {
+	if(ent->client->ps.stats[ STAT_HEALTH ] <= 0 ||
+          ent->client->sess.sessionTeam == TEAM_SPECTATOR)
+	{
+	trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: You must be alive to call an admit defeat vote.\n\"" );
+      return;
+	}
     Com_sprintf( level.teamVoteString[ cs_offset ],
       sizeof( level.teamVoteString[ cs_offset ] ), "admitdefeat %i", team );
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
