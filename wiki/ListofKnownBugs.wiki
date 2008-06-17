@@ -8,6 +8,6 @@ This list can be edited by all project members, and should contain all known bug
 = Details =
 
 Major Bugs:
-  * Admit Defeat Bug   (<font color="red">FIXED</font>)
+  * ~~strike~~Admit Defeat Bug~~strike~~
   * Ban Bug
   * Xael / Luci Ammo bug
