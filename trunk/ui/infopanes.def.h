@@ -303,6 +303,13 @@
   text "to remote locations, so that bases may be built far from the reactor.\n\n"
 }
 
+{
+  name forcefieldbuild
+  text "Force Field"
+  text "A Power shield built to repel Tyrants"
+  text "and Tyrant acid blobs, as well as blocking the way."
+}
+
 //alien structures
 
 {
