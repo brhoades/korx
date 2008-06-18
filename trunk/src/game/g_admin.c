@@ -1877,7 +1877,7 @@ static qboolean admin_create_ban( gentity_t *ent,
     Q_strncpyz( b->banner, ent->client->pers.netname, sizeof( b->banner ) );
   else
     Q_strncpyz( b->banner, "console", sizeof( b->banner ) );
-  if( !seconds )
+  if( seconds < 1 || !seconds )
     b->expires = 0;
   else
     b->expires = t + seconds;
