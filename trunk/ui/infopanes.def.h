@@ -53,7 +53,7 @@
   text "Construction kit\n\n"
   text "Used for building all basic structures. This includes "
   text "spawns, power and basic defense.\n"
-  text "It can be used to heal aliens/humans too.\n\n"
+  text "It can be used to heal humans too.\n\n"
   text "Credits: Free"
 }
 
@@ -62,7 +62,7 @@
   text "Advanced Construction kit\n\n"
   text "Used for building/repairing advanced structures. This includes "
   text "combat computers and advanced defense.\n"
-  text "It can be used to heal aliens/humans too.\n\n"
+  text "It can be used to heal humans too.\n\n"
   text "Credits: Free"
 }
 
