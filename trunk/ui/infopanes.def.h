@@ -459,7 +459,7 @@
   name level3upgclass
   text "Advanced Dragoon\n\n"
   text "In addition to the basic Dragoon abilities, the Dragoon Upgrade has "
-  text "an area effect electric shock attack.\n\n"
+  text "the ability to spit barbs as a ranged attack.\n\n"
   EVOS( LEVEL3_UPG_COST )
 }
 
