@@ -382,12 +382,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_RELOAD                2000
 #define RIFLE_PRICE                 0
 #define RIFLE_SPREAD                200
-#define RIFLE_DMG                   HDM(5)
+#define RIFLE_DMG                   HDM(6)
 
 #define PAINSAW_PRICE               100
 #define PAINSAW_REPEAT              75
 #define PAINSAW_K_SCALE             1.0f
-#define PAINSAW_DAMAGE              HDM(15)
+#define PAINSAW_DAMAGE              HDM(20)
 #define PAINSAW_RANGE               40.0f
 
 #define GRENADE_PRICE               200
@@ -407,7 +407,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_SPREAD              900
 #define SHOTGUN_DMG                 HDM(7)
 
-#define SHOTGUN_NADE_REPEAT         1000
+#define SHOTGUN_NADE_REPEAT         2000
 #define SHOTGUN_NADE_DAMAGE         HDM(40)
 #define SHOTGUN_NADE_RANGE          100.0f
 #define SHOTGUN_NADE_SPEED          800.0f
@@ -418,7 +418,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_REPEAT               200
 #define LASGUN_K_SCALE              1.0f
 #define LASGUN_RELOAD               2000
-#define LASGUN_DAMAGE               HDM(9)
+#define LASGUN_DAMAGE               HDM(10)
 
 #define MDRIVER_PRICE               350
 #define MDRIVER_CLIPSIZE            5
@@ -482,8 +482,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_K_SCALE             1.0f
 #define XAEL_CHARGEREPEAT        1000
 #define XAEL_RELOAD              2000
-#define XAEL_DAMAGE              HDM(330)
-#define XAEL_RADIUS              175
+#define XAEL_DAMAGE              HDM(300)
+#define XAEL_RADIUS              160
 #define XAEL_SECONDARY_DAMAGE    HDM(15)
 #define XAEL_SECONDARY_RADIUS    50
 #define XAEL_SPEED               350
@@ -514,7 +514,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MEDKIT_PRICE                0
 
 #define REGEN_PRICE                 150
-#define REGEN_HEALTH_RATE           2
+#define REGEN_HEALTH_RATE           3
 #define REGEN_STAMINA_RATE          25
 
 #define BATTPACK_PRICE              100
@@ -524,7 +524,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AMMOPACK_MODIFIER           1.4f //modifier for extra ammo storage available
 
 #define SURGE_PRICE                 200
-#define SURGE_DMG_MOD               1.1f
+#define SURGE_DMG_MOD               1.3f
 #define SURGE_TIME_MOD              0.8f
 
 #define CLOAK_PRICE                 300
@@ -677,7 +677,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define HUMAN_MAXED                 900   //a human with a strong selection of weapons/upgrades
 #define HUMAN_MAX_CREDITS           2000
-#define ALIEN_MAX_KILLS             9
+#define ALIEN_MAX_KILLS             12
 #define ALIEN_MAX_SINGLE_KILLS      3
 
 #define FREEKILL_PERIOD             120000 //msec
