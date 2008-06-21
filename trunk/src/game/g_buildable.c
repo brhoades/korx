@@ -1069,7 +1069,8 @@ void AAcidTube_Think( gentity_t *self )
       if( !G_Visible( self, enemy ) )
         continue;
 
-      if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+      if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
+	  !enemy->client->pers.paused )
       {
         self->timestamp = level.time;
         self->think = AAcidTube_Damage;
@@ -1140,7 +1141,8 @@ void AHive_Think( gentity_t *self )
       if( !G_Visible( self, enemy ) )
         continue;
 
-      if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+      if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
+	  !enemy->client->pers.paused )
       {
         self->active = qtrue;
         self->target_ent = enemy;
@@ -1548,6 +1550,8 @@ qboolean ATrapper_CheckTarget( gentity_t *self, gentity_t *target, int range )
     return qfalse;
   if( target->client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ) // locked?
     return qfalse;
+  if( target->client->pers.paused)  //Is the target paused?
+    return qfalse;
 
   VectorSubtract( target->r.currentOrigin, self->r.currentOrigin, distance );
   if( VectorLength( distance ) > range ) // is the target within range?
@@ -1729,7 +1733,7 @@ void HReactor_Think( gentity_t *self )
     {
       enemy = &g_entities[ entityList[ i ] ];
 
-      if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+      if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS && !enemy->client->pers.paused )
       {
         self->timestamp = level.time;
         G_SelectiveRadiusDamage( self->s.pos.trBase, self, REACTOR_ATTACK_DAMAGE,
@@ -2078,6 +2082,9 @@ qboolean HMGTurret_CheckTarget( gentity_t *self, gentity_t *target, qboolean ign
   if( Distance( self->s.origin, target->s.pos.trBase ) > MGTURRET_RANGE )
     return qfalse;
 
+  if( target->client->pers.paused)
+    return qfalse;
+
   //some turret has already selected this target
   if( self->dcced && target->targeted && target->targeted->powered && !ignorePainted )
     return qfalse;
@@ -2267,7 +2274,7 @@ void HTeslaGen_Think( gentity_t *self )
 
       if( enemy->client && enemy->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
           enemy->health > 0 &&
-          Distance( enemy->s.pos.trBase, self->s.pos.trBase ) <= TESLAGEN_RANGE )
+          Distance( enemy->s.pos.trBase, self->s.pos.trBase ) <= TESLAGEN_RANGE && !enemy->client->pers.paused )
       {
         VectorSubtract( enemy->s.pos.trBase, self->s.pos.trBase, dir );
         VectorNormalize( dir );
