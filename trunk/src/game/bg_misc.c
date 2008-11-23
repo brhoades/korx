@@ -2048,7 +2048,7 @@ classAttributes_t bg_classList[ ] =
     LEVEL4_UPG_HEALTH,                              //int     health;
     0.0f,                                           //float   fallDamage;
     LEVEL4_UPG_REGEN,                               //int     regenRate;
-    SCA_NOWEAPONDRIFT|SCA_TAKESFALLDAMAGE|
+    SCA_NOWEAPONDRIFT|
       SCA_FOVWARPS|SCA_ALIENSENSE,                  //int     abilities;
     WP_ALEVEL4_UPG,                                 //weapon_t  startWeapon
     0.0f,                                           //float   buildDist;
