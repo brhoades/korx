@@ -2301,7 +2301,10 @@ void CheckVote( void )
   if( !level.voteTime )
     return;
 
-  voteYesPercent = (int)(100* (level.voteYes)/(level.voteYes + level.voteNo));
+	if( level.voteYes == 0 && level.voteNo == 0 )
+		voteYesPercent = 0;
+	else
+  	voteYesPercent = (int)(100* (level.voteYes)/(level.voteYes + level.voteNo));
   if( level.time - level.voteTime >= VOTE_TIME || ( level.voteYes + level.voteNo == level.numConnectedClients ) )
   {
     if( voteYesPercent> votePercentToPass || level.voteNo == 0 )
