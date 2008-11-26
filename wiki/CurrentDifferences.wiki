@@ -1,5 +1,6 @@
 *Differences between Tremx-KoR*
 ==Commands==
+[http://i299.photobucket.com/albums/mm308/Aaron5367-trem/feature-1.jpg]
 New Vote Messages and functionality.
   *No longer automatically vote yes.
   *Vote results are displayed at the end of the vote.
