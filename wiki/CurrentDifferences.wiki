@@ -1,0 +1,9 @@
+*Differences between Tremx-KoR*
+==Commands==
+New Vote Messages and functionality.
+  *No longer automatically vote yes.
+  *Vote results are displayed at the end of the vote.
+Name Exploits patched from MGDev
+
+==Gameplay==
+Adv. Rants no longer take falling damage
