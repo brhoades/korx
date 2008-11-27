@@ -1008,18 +1008,17 @@ Think function for Alien Barricade
 void ABarricade_Think( gentity_t *self )
 {
 
+  G_CreepSlow( self );
+  self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
   self->powered = G_IsOvermindBuilt( );
 
-  //if there is no creep nearby, die
+  //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 50, 0, MOD_SUICIDE );
     return;
   }
 
-  G_CreepSlow( self );
-
-  self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
 }
 
 
@@ -1083,14 +1082,16 @@ void AAcidTube_Think( gentity_t *self )
   gentity_t *enemy;
 
   self->powered = G_IsOvermindBuilt( );
+  G_CreepSlow( self );
+  self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
 
   VectorAdd( self->s.origin, range, maxs );
   VectorSubtract( self->s.origin, range, mins );
 
-  //if there is no creep nearby, die
+  //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 5, 0, MOD_SUICIDE );
     return;
   }
 
@@ -1119,9 +1120,6 @@ void AAcidTube_Think( gentity_t *self )
     }
   }
 
-  G_CreepSlow( self );
-
-  self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
 }
 
 
@@ -1155,10 +1153,10 @@ void AHive_Think( gentity_t *self )
   VectorAdd( self->s.origin, range, maxs );
   VectorSubtract( self->s.origin, range, mins );
 
-  //if there is no creep nearby, die
+  //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 10, 0, MOD_SUICIDE );
     return;
   }
 
@@ -1356,19 +1354,18 @@ Think for alien hovel
 ================
 */
 void AHovel_Think( gentity_t *self )
-{
+{  
+  self->nextthink = level.time + 200;
   self->powered = G_IsOvermindBuilt( );
   if( self->spawned )
   {
+    G_CreepSlow( self );
     if( self->active )
       G_SetIdleBuildableAnim( self, BANIM_IDLE2 );
     else
       G_SetIdleBuildableAnim( self, BANIM_IDLE1 );
   }
 
-  G_CreepSlow( self );
-
-  self->nextthink = level.time + 200;
 }
 
 /*
@@ -1665,10 +1662,10 @@ void ATrapper_Think( gentity_t *self )
 
   self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
 
-  //if there is no creep nearby,  die
+  //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 1, 0, MOD_SUICIDE );
     return;
   }
 
