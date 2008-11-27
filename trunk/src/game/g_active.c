@@ -620,10 +620,11 @@ void ClientTimerActions( gentity_t *ent, int msec )
     if( client->ps.weapon == WP_ALEVEL1_UPG )
     {
       client->ps.eFlags &= ~EF_MOVER_STOP;
-      if( aForward <= 5 && aRight <= 5 && aUp <= 5 &&!( ucmd->buttons & BUTTON_ATTACK ) && (level.overmindPresent))
+      if( aForward <= 5 && aRight <= 5 && aUp <= 5 && !( ucmd->buttons & BUTTON_ATTACK ) && (level.overmindPresent) )
         client->ps.eFlags |= EF_MOVER_STOP;
-      
       else if(client->ps.stats[ STAT_STATE ] & SS_BOOSTED)
+        client->ps.eFlags |= EF_MOVER_STOP;
+      else if( !(level.overmindPresent) && ( (level.time/1000) % (int)(( random() + 1) * 5) != 0) )  //Make the lisk flash 'randomly'
         client->ps.eFlags |= EF_MOVER_STOP;
     }
 
