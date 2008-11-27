@@ -1,5 +1,5 @@
 *Differences between Tremx-KoR*
-==Commands==
+=Commands=
 [http://i299.photobucket.com/albums/mm308/Aaron5367-trem/feature-1.jpg]
 
 New Vote Messages and functionality.
@@ -7,5 +7,13 @@ New Vote Messages and functionality.
   * Vote results are displayed at the end of the vote.
 Name Exploits patched from MGDev
 
-==Gameplay==
-Adv. Rants no longer take falling damage
+=Gameplay=
+Adv. Rants no longer take falling damage.
+Dretches can attack forcefields.
+Alien buildings take damage (after ~30 seconds they explode) without a creep.
+Adv. Basilisks now randomly flash without a Overmind.
+Basilisks can now hold onto jettards (with the jetpack on), and kill them without having the jettard fall down.
+
+=Misc=
+Booster no longer boosts while dead
+Friendly building fire now has DESTROYED in red.
