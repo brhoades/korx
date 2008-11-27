@@ -1015,7 +1015,7 @@ void ABarricade_Think( gentity_t *self )
   //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 50, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 10, 0, MOD_SUICIDE );
     return;
   }
 
@@ -1156,7 +1156,7 @@ void AHive_Think( gentity_t *self )
   //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 5, 0, MOD_SUICIDE );
     return;
   }
 
@@ -1364,6 +1364,12 @@ void AHovel_Think( gentity_t *self )
       G_SetIdleBuildableAnim( self, BANIM_IDLE2 );
     else
       G_SetIdleBuildableAnim( self, BANIM_IDLE1 );
+  }
+  //if there is no creep nearby, take damage
+  if( !G_FindCreep( self ) )
+  {
+    G_Damage( self, NULL, NULL, NULL, NULL, 5, 0, MOD_SUICIDE );
+    return;
   }
 
 }
