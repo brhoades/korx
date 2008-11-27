@@ -982,7 +982,8 @@ qboolean CheckVenomAttack( gentity_t *ent )
   if( traceEnt->s.eType == ET_BUILDABLE )
   {
     if( traceEnt->s.modelindex != BA_H_MGTURRET &&
-        traceEnt->s.modelindex != BA_H_TESLAGEN )
+        traceEnt->s.modelindex != BA_H_TESLAGEN  && 
+        traceEnt->s.modelindex != BA_H_FORCEFIELD )
       return qfalse;
 
     //hackery
