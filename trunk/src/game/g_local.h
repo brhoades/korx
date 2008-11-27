@@ -359,6 +359,7 @@ typedef struct
   qboolean            muted;
   qboolean            denyBuild;
   qboolean            paused;
+  qboolean            jgrab;
   int                 adminLevel;
   qboolean            specd;
   qboolean            saved;

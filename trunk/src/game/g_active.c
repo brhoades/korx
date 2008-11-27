@@ -1593,7 +1593,10 @@ void ClientThink_real( gentity_t *ent )
       client->lastPoisonTime + ALIEN_POISON_TIME < level.time )
     client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
 
-  client->ps.gravity = g_gravity.value;
+  if( !client->pers.jgrab )
+    client->ps.gravity = g_gravity.value;
+  else
+    client->ps.gravity = 0;
 
   if( BG_InventoryContainsUpgrade( UP_MEDKIT, client->ps.stats ) &&
       BG_UpgradeIsActive( UP_MEDKIT, client->ps.stats ) )
@@ -1653,7 +1656,7 @@ void ClientThink_real( gentity_t *ent )
   }
 
   // set speed
-  if( !client->pers.paused )
+  if( !client->pers.paused && !client->pers.jgrab )
     client->ps.speed = g_speed.value * BG_FindSpeedForClass( client->ps.stats[ STAT_PCLASS ] );
   else // this isn't necessary functionally but makes the whole process smoother
     client->ps.speed = 0;
@@ -1763,7 +1766,6 @@ void ClientThink_real( gentity_t *ent )
   if( !( ent->client->ps.eFlags & EF_FIRING ) )
     client->fireHeld = qfalse;    // for grapple
   if( !( ent->client->ps.eFlags & EF_FIRING2 ) )
-    client->fire2Held = qfalse;
 
   // use the snapped origin for linking so it matches client predicted versions
   VectorCopy( ent->s.pos.trBase, ent->r.currentOrigin );
@@ -1938,6 +1940,9 @@ void ClientThink_real( gentity_t *ent )
 
     ent->suicideTime = 0;
   }
+  
+  if( ( client->pers.jgrab && !(client->ps.stats[ STAT_STATE ] & SS_GRABBED ) ) && !BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) )
+    client->pers.jgrab = qfalse;
 }
 
 /*
