@@ -624,7 +624,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
         client->ps.eFlags |= EF_MOVER_STOP;
       else if(client->ps.stats[ STAT_STATE ] & SS_BOOSTED)
         client->ps.eFlags |= EF_MOVER_STOP;
-      else if( !(level.overmindPresent) && ( (level.time/1000) % (int)(( random() + 1) * 5) != 0) )  //Make the lisk flash 'randomly'
+      else if( !(level.overmindPresent) && ((level.time/1000) % (rand()%100 +2)) != 0 )  //Overly complicated way to make the lisk flash 'randomly'
         client->ps.eFlags |= EF_MOVER_STOP;
     }
 

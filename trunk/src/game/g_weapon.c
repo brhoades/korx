@@ -1146,7 +1146,7 @@ void CheckGrabAttack( gentity_t *ent )
 
       //event for client side grab effect
       G_AddPredictableEvent( ent, EV_LEV1_GRAB, 0 );
-      if(BG_UpgradeIsActive( UP_JETPACK, traceEnt->client->ps.stats)
+      if(BG_UpgradeIsActive( UP_JETPACK, traceEnt->client->ps.stats))
         traceEnt->client->pers.jgrab = qtrue;
     }
 
