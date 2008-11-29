@@ -24,3 +24,4 @@ Placing builders can no longer be shoved.<br />
 Booster no longer boosts while dead.<br />
 Friendly building fire now has DESTROYED in red.<br />
 If there is not a regular vote, players can now use F1/F2 to vote on teamvotes.
+Bug fixed where aliens heal dead structures (then they explode).
