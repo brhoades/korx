@@ -3564,8 +3564,8 @@ qboolean G_admin_adjustban( gentity_t *ent, int skiparg )
   {
     Q_strncpyz( g_admin_bans[ bnum - 1 ]->reason, arg,
       sizeof( g_admin_bans[ bnum - 1 ]->reason ) );
-    AP( va( "print \"^3!adjustban: ^7ban #%d reason changed to %s\n\"", bnum,
-            arg ) );
+    AP( va( "print \"^3!adjustban: ^7ban #%d reason changed to %s by %s\n\"", bnum,
+            arg, ( ent ) ? ent->client->pers.netname : "console" ) );
   }
   else // time
   {
@@ -3587,8 +3587,8 @@ qboolean G_admin_adjustban( gentity_t *ent, int skiparg )
     g_admin_bans[ bnum - 1 ]->expires = expires;
     G_admin_duration( expires - ( expires - length ), duration, sizeof( duration ) );
 
-    AP( va( "print \"^3!adjustban: ^7ban #%d length adjusted to %s\n\"", bnum,
-            duration ) );
+    AP( va( "print \"^3!adjustban: ^7ban #%d length adjusted to %s by %s\n\"", bnum,
+            duration, ( ent ) ? ent->client->pers.netname : "console" ) );
   }
 
   if( !g_admin.string[ 0 ] )
