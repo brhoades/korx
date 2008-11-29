@@ -19,5 +19,5 @@ Adv. Basilisks now randomly flash without a Overmind.<br />
 Basilisks can now hold onto jettards (with the jetpack on), and kill them without having the jettard fall down.<br />
 
 ===Misc===
-Booster no longer boosts while dead
+Booster no longer boosts while dead.<br />
 Friendly building fire now has DESTROYED in red.
