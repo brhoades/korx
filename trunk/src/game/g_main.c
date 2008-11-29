@@ -51,6 +51,7 @@ vmCvar_t  g_extremeSuddenDeathTime;
 vmCvar_t  g_extremeSuddenDeathVote;
 vmCvar_t  g_extremeSuddenDeath;
 vmCvar_t  g_scrimMode;
+vmCvar_t  g_nextmap;
 
 vmCvar_t  g_capturelimit;
 vmCvar_t  g_friendlyFire;
@@ -211,6 +212,7 @@ static cvarTable_t   gameCvarTable[ ] =
 	{ &g_smartesd, "g_smartesd", "0", 0, 0, qfalse },
   { &g_extremeSuddenDeath, "g_extremeSuddenDeath", "0", 0, 0, qfalse },
   { &g_scrimMode, "g_scrimMode", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+  { &g_nextmap, "g_nextmap", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
   { &g_synchronousClients, "g_synchronousClients", "0", CVAR_SYSTEMINFO, 0, qfalse  },
 
@@ -1855,13 +1857,17 @@ void ExitLevel( void )
       G_Free( mark );
     }
   }
-  if (!g_scrimMode.integer)
+  if ( !g_scrimMode.integer )
   {
-		if( G_MapRotationActive( ) )
+		if( g_nextmap.string != "0" )
+    {
+      trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextmap.string ) );
+    }
+		else if( G_MapRotationActive( ) )
 		{
 			G_AdvanceMapRotation( );
 		}
-		else
+    else
 		{
 			trap_SendConsoleCommand( EXEC_APPEND, "map_restart\n" );
 		}

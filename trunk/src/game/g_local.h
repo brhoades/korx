@@ -1198,6 +1198,7 @@ extern  vmCvar_t  g_suddenDeathTime;
 extern  vmCvar_t  g_suddenDeath;
 extern  vmCvar_t  g_suddenDeathMode;
 extern  vmCvar_t  g_extremeSuddenDeathTime;
+extern  vmCvar_t  g_nextmap;
 extern  vmCvar_t  g_extremeSuddenDeathVote;
 extern  vmCvar_t  g_extremeSuddenDeath;
 extern  vmCvar_t  g_smartesd;

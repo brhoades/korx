@@ -1799,11 +1799,23 @@ void Cmd_CallVote_f( gentity_t *ent )
 		}
 	
   }
+	else if( !Q_stricmp( arg1, "nextmap" ) )
+	{	
+    	if( !trap_FS_FOpenFile( va( "maps/%s.bsp", arg2 ), NULL, FS_READ ) )
+		{
+			trap_SendServerCommand( ent - g_entities, va( "print \"callvote: "
+				"'maps/%s.bsp' could not be found on the server\n\"", arg2 ) );
+			return;
+		}
+		Com_sprintf( level.voteString, sizeof( level.voteString ), "set g_nextmap \"%s\"", arg2 ); 
+		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Make the next map '%s'", arg2);
+		level.votePercentToPass = g_mapVotesPercent.integer;
+  }
   else
   {
     trap_SendServerCommand( ent-g_entities, "print \"Invalid vote string\n\"" );
     trap_SendServerCommand( ent-g_entities, "print \"Valid vote commands are: "
-      "map, map_restart, denybuild, allowbuild, draw, kick, mute, unmute, poll, custom, sudden_death, and extreme_sudden_death\n" );
+      "map, map_restart, denybuild, allowbuild, draw, kick, mute, unmute, poll, custom, sudden_death, extreme_sudden_death, and nextmap\n" );
     return;
   }
   
