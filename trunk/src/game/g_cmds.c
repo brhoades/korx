@@ -2090,7 +2090,24 @@ void Cmd_Vote_f( gentity_t *ent )
   char msg[ 64 ];
 
   if( !level.voteTime )
-  {
+  { 
+    if( ent->client->pers.teamSelection != PTE_NONE )
+    {
+      // If there is a teamvote going on but no global vote, forward this vote on as a teamvote
+      // (ugly hack for 1.1 cgames + noobs who can't figure out how to use any command that isn't bound by default)
+      int     cs_offset = 0;
+      if( ent->client->pers.teamSelection == PTE_ALIENS )
+        cs_offset = 1;
+    
+      if( level.teamVoteTime[ cs_offset ] )
+      {
+         if( !(ent->client->ps.eFlags & EF_TEAMVOTED ) )
+         {
+           Cmd_TeamVote_f(ent); 
+	         return;
+         }
+       }
+     }
     trap_SendServerCommand( ent-g_entities, "print \"No vote in progress\n\"" );
     return;
   }
