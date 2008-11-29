@@ -1015,7 +1015,8 @@ void ABarricade_Think( gentity_t *self )
   //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 10, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 25, 0, MOD_SUICIDE );
+    self->nextthink = self->nextthink + 1000;
     return;
   }
 
@@ -1091,7 +1092,8 @@ void AAcidTube_Think( gentity_t *self )
   //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 5, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 7, 0, MOD_SUICIDE );
+    self->nextthink = self->nextthink + 1000;
     return;
   }
 
@@ -1157,6 +1159,7 @@ void AHive_Think( gentity_t *self )
   if( !G_FindCreep( self ) )
   {
     G_Damage( self, NULL, NULL, NULL, NULL, 5, 0, MOD_SUICIDE );
+    self->nextthink = self->nextthink + 1000;
     return;
   }
 
@@ -1368,7 +1371,8 @@ void AHovel_Think( gentity_t *self )
   //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 5, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 20, 0, MOD_SUICIDE );
+    self->nextthink = self->nextthink + 1000;
     return;
   }
 
@@ -1671,7 +1675,8 @@ void ATrapper_Think( gentity_t *self )
   //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
   {
-    G_Damage( self, NULL, NULL, NULL, NULL, 1, 0, MOD_SUICIDE );
+    G_Damage( self, NULL, NULL, NULL, NULL, 2, 0, MOD_SUICIDE );
+    self->nextthink = self->nextthink + 1000;
     return;
   }
 
