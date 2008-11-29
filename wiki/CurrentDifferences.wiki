@@ -5,7 +5,11 @@
 New Vote Messages and functionality.
   * No longer automatically vote yes.
   * Vote results are displayed at the end of the vote.
-Name Exploits patched from MGDev
+  * No one can vote, causing a vote to fail
+Name Exploits patched from MGDev<br />
+New Votes
+  * forcespec and unforcespec, causing people to be put (and stuck) to the spectator's team.
+  * nextmap, loads when the current map finishes
 
 ===Gameplay===
 Adv. Rants no longer take falling damage.<br />
