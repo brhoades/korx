@@ -7,6 +7,7 @@ New Vote Messages and functionality.
   * Vote results are displayed at the end of the vote.
   * No one can vote, causing a vote to fail
 Name Exploits patched from MGDev<br />
+Adjustban now tells who did it<br />
 New Votes
   * forcespec and unforcespec, causing people to be put (and stuck) to the spectator's team.
   * nextmap, loads when the current map finishes
@@ -17,7 +18,9 @@ Dretches can attack forcefields.<br />
 Alien buildings take damage (after ~30 seconds they explode) without a creep.<br />
 Adv. Basilisks now randomly flash without a Overmind.<br />
 Basilisks can now hold onto jettards (with the jetpack on), and kill them without having the jettard fall down.<br />
+Placing builders can no longer be shoved.<br />
 
 ===Misc===
 Booster no longer boosts while dead.<br />
-Friendly building fire now has DESTROYED in red.
+Friendly building fire now has DESTROYED in red.<br />
+If there is not a regular vote, players can now use F1/F2 to vote on teamvotes.
