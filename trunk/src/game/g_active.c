@@ -200,6 +200,12 @@ static void G_ClientShove( gentity_t *ent, gentity_t *victim )
   if( !OnSameTeam( ent, victim ) )
     return;
 
+   //If a builder is placing a building, don't shove.
+   if ( ( victim->client->ps.weapon >= WP_ABUILD ) &&
+        ( victim->client->ps.weapon <= WP_HBUILD ) &&
+        ( victim->client->ps.stats[ STAT_BUILDABLE ] != BA_NONE ) )
+     return;
+
   // alien mass is directly related to their health points
   // human mass is 200, double for bsuit  
   if( ent->client->pers.teamSelection == PTE_ALIENS )
