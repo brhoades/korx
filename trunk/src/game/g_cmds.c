@@ -1516,7 +1516,9 @@ void Cmd_CallVote_f( gentity_t *ent )
     !Q_stricmp( arg1, "denybuild" ) ||
     !Q_stricmp( arg1, "allowbuild" ) ||
     !Q_stricmp( arg1, "mute" ) ||
-    !Q_stricmp( arg1, "unmute" ) )
+    !Q_stricmp( arg1, "unmute" ) || 
+    !Q_stricmp( arg1, "forcespec" ) ||
+    !Q_stricmp( arg1, "unforcespec" ) )
   {
     int clientNums[ MAX_CLIENTS ] = { -1 };
     int numMatches=0;
@@ -1614,7 +1616,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 		else
     Com_sprintf( level.voteDisplayString,
         sizeof( level.voteDisplayString ),
-        "Take away building rights from '%s' because '%s'", name, arg3plus);
+        "Take away building rights from '%s' for '%s'", name, arg3plus);
 		
   }
   else if( !Q_stricmp( arg1, "allowbuild" ) )
@@ -1635,7 +1637,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 		else
       Com_sprintf( level.voteDisplayString,
           sizeof( level.voteDisplayString ),
-          "Allow '%s' to build because '%s'", name, arg3plus );
+          "Allow '%s' to build for '%s'", name, arg3plus );
   }
   else if( !Q_stricmp( arg1, "mute" ) )
   {
@@ -1811,15 +1813,48 @@ void Cmd_CallVote_f( gentity_t *ent )
 		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Make the next map '%s'", arg2);
 		level.votePercentToPass = g_mapVotesPercent.integer;
   }
+  else if( !Q_stricmp( arg1, "forcespec" ) )
+  {
+    if( level.clients[ clientNum ].pers.specd )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: player is already forced to the spectator team\n\"" );
+      return;
+    }
+    if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: admin is immune from forcespec\n\"" );
+      return;
+    }
+    Com_sprintf( level.voteString, sizeof( level.voteString ),
+      "!forcespec %i", clientNum );
+   	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
+      "Forcespec player \'%s\' for \'%s\'", name, arg3plus );
+  }
+  else if( !Q_stricmp( arg1, "unforcespec" ) )
+  {
+    if( !level.clients[ clientNum ].pers.specd )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: player is not currently forced to be on the spectator team\n\"" );
+      return;
+    }
+    Com_sprintf( level.voteString, sizeof( level.voteString ),
+      "!unforcespec %i", clientNum );
+   	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
+      "Un-Forcespec player \'%s\' for \'%s\'", name, arg3plus );
+  }
+
   else
   {
     trap_SendServerCommand( ent-g_entities, "print \"Invalid vote string\n\"" );
     trap_SendServerCommand( ent-g_entities, "print \"Valid vote commands are: "
-      "map, map_restart, denybuild, allowbuild, draw, kick, mute, unmute, poll, custom, sudden_death, extreme_sudden_death, and nextmap\n" );
+      "map, map_restart, denybuild, allowbuild, draw, kick, mute, unmute, poll, custom, sudden_death, extreme_sudden_death, nextmap, forcespec, and unforcespec\n" );
     return;
   }
   
-  if( level.votePercentToPass!=50 )
+  if( level.votePercentToPass != 50 )
   {
     Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " (Needs %d percent)", level.votePercentToPass ) );
   }
@@ -1845,8 +1880,8 @@ void Cmd_CallVote_f( gentity_t *ent )
 
   trap_SetConfigstring( CS_VOTE_TIME, va( "%i", level.voteTime ) );
   trap_SetConfigstring( CS_VOTE_STRING, level.voteDisplayString );
-  trap_SetConfigstring( CS_VOTE_YES, va( "%i", level.voteYes ) );
-  trap_SetConfigstring( CS_VOTE_NO, va( "%i", level.voteNo ) );
+  trap_SetConfigstring( CS_VOTE_YES, "0" );      //Should the default votes change, make sure these two lines are changed back from "0" to level.voteyes/no
+  trap_SetConfigstring( CS_VOTE_NO, "0" );
 }
 
 /* OLD VOTE FUNCTION
@@ -2274,7 +2309,7 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
       sizeof( level.teamVoteString[ cs_offset ] ), "!allowbuild %i", clientNum );
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
         sizeof( level.teamVoteDisplayString[ cs_offset ] ),
-        "Allow '%s' to build because '%s'", name, arg3plus );
+        "Allow '%s' to build for '%s'", name, arg3plus );
   }
   else if( !Q_stricmp( arg1, "designate" ) )
   {
@@ -2296,7 +2331,7 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
 		if( g_extravotereasons.value )
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
         sizeof( level.teamVoteDisplayString[ cs_offset ] ),
-        "Make '%s' a designated builder because '%s'", name, arg3plus );
+        "Make '%s' a designated builder for '%s'", name, arg3plus );
 		else
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
         sizeof( level.teamVoteDisplayString[ cs_offset ] ),
@@ -2324,7 +2359,7 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
 		if( g_extravotereasons.value )
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
         sizeof( level.teamVoteDisplayString[ cs_offset ] ),
-        "Remove designated builder status from '%s' because '%s'", name, arg3plus );
+        "Remove designated builder status from '%s' for '%s'", name, arg3plus );
 		else
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
         sizeof( level.teamVoteDisplayString[ cs_offset ] ),

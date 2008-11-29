@@ -693,7 +693,7 @@ void ASpawn_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     else
     {
       G_TeamCommand( PTE_ALIENS,
-        va( "print \"%s ^3DESTRYOED^7 by ^1TEAMMATE^7 %s^7\n\"",
+        va( "print \"%s ^3DESTROYED^7 by ^1TEAMMATE^7 %s^7\n\"",
           BG_FindHumanNameForBuildable( self->s.modelindex ), 
           attacker->client->pers.netname ) );
     }
@@ -986,7 +986,7 @@ void ABarricade_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker,
     if( attacker->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
     {
       G_TeamCommand( PTE_ALIENS,
-        va( "print \"%s ^3DESTRYOED^7 by ^1TEAMMATE^7 %s^7\n\"",
+        va( "print \"%s ^3DESTROYED^7 by ^1TEAMMATE^7 %s^7\n\"",
           BG_FindHumanNameForBuildable( self->s.modelindex ), 
           attacker->client->pers.netname ) );
     }
@@ -1450,7 +1450,7 @@ void AHovel_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     if( attacker->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
     {
       G_TeamCommand( PTE_ALIENS,
-        va( "print \"%s ^3DESTRYOED^7 by ^1TEAMMATE^7 %s^7\n\"",
+        va( "print \"%s ^3DESTROYED^7 by ^1TEAMMATE^7 %s^7\n\"",
           BG_FindHumanNameForBuildable( self->s.modelindex ), 
           attacker->client->pers.netname ) );
     }
@@ -2505,7 +2505,7 @@ void HSpawn_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     else
     {
       G_TeamCommand( PTE_HUMANS,
-        va( "print \"%s ^3DESTRYOED^7 by ^1TEAMMATE^7 %s^7\n\"",
+        va( "print \"%s ^3DESTROYED^7 by ^1TEAMMATE^7 %s^7\n\"",
           BG_FindHumanNameForBuildable( self->s.modelindex ), 
           attacker->client->pers.netname ) );
     }
