@@ -826,8 +826,8 @@ static void ClientCleanName( const char *in, char *out, int outSize )
       break;
 
 		// don't allow nonprinting characters or (dead) console keys
-    if( *in < ' ' || *in > '}' || *in == '`' )
-      continue;
+ //   if( *in < ' ' || *in > '}' || *in == '`' )
+ //     continue;
 
     // don't allow leading spaces
     if( !*p && ch == ' ' )
