@@ -732,6 +732,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   trap_Cvar_Set( "g_suddenDeath", 0 );
   trap_Cvar_Set( "g_extremeSuddenDeath", 0 );
   trap_Cvar_Set( "g_extremeSuddenDeathVote", 0 );
+  trap_Cvar_Set( "g_nextmap", 0 );
 
   G_Printf( "-----------------------------------\n" );
 
