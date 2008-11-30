@@ -183,6 +183,7 @@ vmCvar_t  g_designateVotes;
 vmCvar_t  g_dretchPunt;
 vmCvar_t  g_extravotereasons;
 vmCvar_t  g_mapvotepart;
+vmCvar_t  g_forcevotereason;
 
 static cvarTable_t   gameCvarTable[ ] =
 {
@@ -342,9 +343,10 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_slapKnockback, "g_slapKnockback", "200", CVAR_ARCHIVE, 0, qfalse},
   { &g_slapDamage, "g_slapDamage", "5", CVAR_ARCHIVE, 0, qfalse},
   { &g_allowActions, "g_allowActions", "1", CVAR_ARCHIVE, 0, qfalse },
-  { &g_rankings, "g_rankings", "0", 0, 0, qfalse},
-  { &g_extravotereasons, "g_extravotereasons", "1", 0, 0, qfalse},
-  { &g_mapvotepart, "g_mapvotepart", "50", 0, 0, qfalse},
+  { &g_rankings, "g_rankings", "0", 0, 0, qfalse },
+  { &g_extravotereasons, "g_extravotereasons", "1", 0, 0, qfalse },
+  { &g_mapvotepart, "g_mapvotepart", "50", 0, 0, qfalse },
+  { &g_forcevotereason, "g_forcevotereason", "1", 0, 0, qfalse },
 
 
 };

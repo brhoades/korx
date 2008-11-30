@@ -1320,6 +1320,7 @@ extern  vmCvar_t  g_buildLogMaxLength;
 extern  vmCvar_t  g_dretchPunt;
 extern  vmCvar_t  g_extravotereasons;
 extern  vmCvar_t  g_mapvotepart;
+extern  vmCvar_t  g_forcevotereason;
 
 void      trap_Printf( const char *fmt );
 void      trap_Error( const char *fmt );

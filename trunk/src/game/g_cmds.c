@@ -1531,6 +1531,13 @@ void Cmd_CallVote_f( gentity_t *ent )
       return;
     }
 
+    if( !arg3plus[ 0 ] && g_forcevotereason.integer )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: please specify a reason\n\"" );
+      return;
+    }
+
     numMatches = G_ClientNumbersFromString( arg2, clientNums );
     if( numMatches == 1 )
     {
