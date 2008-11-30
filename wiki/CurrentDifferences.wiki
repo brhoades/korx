@@ -7,6 +7,7 @@ New Vote Messages and functionality.
   * Vote results are displayed at the end of the vote.
   * No one can vote, causing a vote to fail
   * Map votes can now require a certain percent of participation to pass, defaults to 50%.
+  * Vote reasons can be forced with g_forcevotereason (enabled by default)
 Name Exploits patched from MGDev<br />
 Adjustban now tells who did it<br />
 New Votes
