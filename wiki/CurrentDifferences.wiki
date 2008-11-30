@@ -12,6 +12,8 @@ Adjustban now tells who did it<br />
 New Votes
   * forcespec and unforcespec, causing people to be put (and stuck) to the spectator's team.
   * nextmap, loads when the current map finishes
+New Commands
+  * listmaps, bound to !register and !help flag
 
 ===Gameplay===
 Adv. Rants no longer take falling damage.<br />
@@ -20,9 +22,11 @@ Alien buildings take damage (after ~30 seconds they explode) without a creep.<br
 Adv. Basilisks now randomly flash without a Overmind.<br />
 Basilisks can now hold onto jettards (with the jetpack on), and kill them without having the jettard fall down.<br />
 Placing builders can no longer be shoved.<br />
+Medistation now stacks healing rate with medkit
 
 ===Misc===
 Booster no longer boosts while dead.<br />
 Friendly building fire now has DESTROYED in red.<br />
 If there is not a regular vote, players can now use F1/F2 to vote on teamvotes.<br />
 Bug fixed where aliens heal dead structures (then they explode).<br />
+Cell outline cheat is now disabled upon activation, instead of moaning about it. <br />
