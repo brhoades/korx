@@ -1596,7 +1596,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 				g_adminTempBan.integer + 1, ( *arg3plus ) ? arg3plus : "no reason" );
     }
                 Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-                                "Kick player \'%s\' for \'%s'\'", name , arg3plus);
+                                "Kick player \'%s^7\' for \'%s^7\'", name , arg3plus);
   }
         else if( !Q_stricmp( arg1, "denybuild" ) )
   {
@@ -1619,11 +1619,11 @@ void Cmd_CallVote_f( gentity_t *ent )
 		if( !g_extravotereasons.value )
     Com_sprintf( level.voteDisplayString,
         sizeof( level.voteDisplayString ),
-        "Take away building rights from '%s'", name);
+        "Take away building rights from '%s^7'", name);
 		else
     Com_sprintf( level.voteDisplayString,
         sizeof( level.voteDisplayString ),
-        "Take away building rights from '%s' for '%s'", name, arg3plus);
+        "Take away building rights from '%s^7' for '%s^7'", name, arg3plus);
 		
   }
   else if( !Q_stricmp( arg1, "allowbuild" ) )
@@ -1644,7 +1644,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 		else
       Com_sprintf( level.voteDisplayString,
           sizeof( level.voteDisplayString ),
-          "Allow '%s' to build for '%s'", name, arg3plus );
+          "Allow '%s^7' to build for '%s^7'", name, arg3plus );
   }
   else if( !Q_stricmp( arg1, "mute" ) )
   {
@@ -1664,7 +1664,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     Com_sprintf( level.voteString, sizeof( level.voteString ),
       "!mute %i", clientNum );
    	 Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-    	  "Mute player \'%s\' for \'%s\'", name, arg3plus );
+    	  "Mute player \'%s^7\' for \'%s^7\'", name, arg3plus );
   }
   else if( !Q_stricmp( arg1, "unmute" ) )
   {
@@ -1677,7 +1677,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     Com_sprintf( level.voteString, sizeof( level.voteString ),
       "!unmute %i", clientNum );
    	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-      "Un-Mute player \'%s\' for \'%s\'", name, arg3plus );
+      "Un-Mute player \'%s^7\' for \'%s^7\'", name, arg3plus );
   }
   else if( !Q_stricmp( arg1, "map_restart" ) )
   {
@@ -1720,7 +1720,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 		}
 	
 		Com_sprintf( level.voteString, sizeof( level.voteString ), "%s %s", arg1, arg2 ); 
-		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Change to map '%s'", arg2);
+		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Change to map '%s^7'", arg2);
 		level.votePercentToPass = g_mapVotesPercent.integer;
   }
   else if( !Q_stricmp( arg1, "draw" ) )
@@ -1734,7 +1734,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     {
     Com_sprintf( level.voteString, sizeof( level.voteString ), nullstring);
     Com_sprintf( level.voteDisplayString,
-        sizeof( level.voteDisplayString ), "[Poll] \'%s\'", arg2plus );
+        sizeof( level.voteDisplayString ), "[Poll] \'%s^7\'", arg2plus );
    }
   else if( !Q_stricmp( arg1, "sudden_death" ) )
   {
@@ -1817,7 +1817,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 			return;
 		}
 		Com_sprintf( level.voteString, sizeof( level.voteString ), "set g_nextmap \"%s\"", arg2 ); 
-		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Make the next map '%s'", arg2);
+		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Make the next map '%s^7'", arg2);
 		level.votePercentToPass = g_mapVotesPercent.integer;
   }
   else if( !Q_stricmp( arg1, "forcespec" ) )
@@ -1837,7 +1837,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     Com_sprintf( level.voteString, sizeof( level.voteString ),
       "!forcespec %i", clientNum );
    	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-      "Forcespec player \'%s\' for \'%s\'", name, arg3plus );
+      "Forcespec player \'%s^7\' for \'%s^7\'", name, arg3plus );
   }
   else if( !Q_stricmp( arg1, "unforcespec" ) )
   {
@@ -1850,7 +1850,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     Com_sprintf( level.voteString, sizeof( level.voteString ),
       "!unforcespec %i", clientNum );
    	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-      "Un-Forcespec player \'%s\' for \'%s\'", name, arg3plus );
+      "Un-Forcespec player \'%s^7\' for \'%s^7\'", name, arg3plus );
   }
 
   else
