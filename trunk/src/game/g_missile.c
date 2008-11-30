@@ -173,7 +173,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       }
     }
     else if( other->s.eType == ET_BUILDABLE && other->spawned && 
-      ( other->biteam == PTE_ALIENS ) && other->health > 0 && !g_friendlyBuildableFire )
+      ( other->biteam == PTE_ALIENS ) && other->health > 0 && !g_friendlyBuildableFire.integer )
     {
       int bHealth = BG_FindHealthForBuildable( other->s.modelindex );
       other->health += 4+1.2f*BG_FindRegenRateForBuildable( other->s.modelindex );
