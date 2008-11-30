@@ -66,6 +66,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
       ""
     },
 
+    {"listmaps", G_admin_listmaps, "a",
+	  "Display a list of all maps on the server available for map votes.",
+	  ""
+  	},
+
     {"listadmins", G_admin_listadmins, "A",
       "display a list of all server admins and their levels",
       "(^5name|start admin#^7) (^5minimum level to display^7)"
@@ -4919,4 +4924,22 @@ qboolean G_admin_print2(gentity_t *ent, int skiparg )
   return qtrue;
 }
 
+qboolean G_admin_listmaps(gentity_t *ent, int skiparg) 
+{
+  char fileList[ ( MAX_CVAR_VALUE_STRING / 2 ) * 5 ] = {""};
+  int numFiles, i, fileLen = 0;
+  char *filePtr;
+
+  ADMP("^3!listmaps:^7 server has maps:\n");
+  numFiles = trap_FS_GetFileList( "maps", ".bsp",
+    fileList, sizeof( fileList ) );
+  filePtr = fileList;
+  for( i = 0; i < numFiles; i++, filePtr += fileLen + 1 )
+  {
+    fileLen = strlen( filePtr );
+	ADMP(va("%s, ", filePtr));
+  }
+  ADMP("\n^3!listmaps:^7 for votes, do \\callvote map <mapname> in console\n");
+  return qtrue;
+}
 
