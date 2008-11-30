@@ -2009,8 +2009,8 @@ void HMedistat_Think( gentity_t *self )
       if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_POISONED )
         self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
 
-      if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE )
-        self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
+//      if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE )
+//        self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
 
       self->enemy->health+=1+G_CountDCC();
 
@@ -2019,11 +2019,13 @@ void HMedistat_Think( gentity_t *self )
           !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
         BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
 
-      //if completely healed, cancel retribution
+      //if completely healed, cancel retribution, deactivate medkit, if active
       if( self->enemy->health >= self->enemy->client->ps.stats[ STAT_MAX_HEALTH ] )
       {
         for( i = 0; i < MAX_CLIENTS; i++ )
           self->enemy->client->tkcredits[ i ] = 0;
+        if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE )
+          self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
       }
     }
   }
