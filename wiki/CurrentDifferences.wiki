@@ -6,6 +6,7 @@ New Vote Messages and functionality.
   * No longer automatically vote yes.
   * Vote results are displayed at the end of the vote.
   * No one can vote, causing a vote to fail
+  * Map votes can now require a certain percent of participation to pass, defaults to 50%.
 Name Exploits patched from MGDev<br />
 Adjustban now tells who did it<br />
 New Votes
