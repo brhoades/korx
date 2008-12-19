@@ -508,6 +508,10 @@ void flamerFire( gentity_t *ent )
 {
   gentity_t *m;
 
+  //Flamer doesn't work underwater...
+  if( ent->waterlevel == 3 )
+    return;
+
   m = fire_flamer( ent, muzzle, forward );
 }
 
@@ -1206,6 +1210,10 @@ void poisonCloud( gentity_t *ent )
 
       //can't see target from here
       if( tr.entityNum == ENTITYNUM_WORLD )
+        continue;
+
+      //can't get gassed if we are underwater
+      if( humanPlayer->waterlevel == 3 )
         continue;
 
       if( !( humanPlayer->client->ps.stats[ STAT_STATE ] & SS_POISONCLOUDED ) )

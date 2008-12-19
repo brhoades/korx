@@ -1680,8 +1680,8 @@ void ClientThink_real( gentity_t *ent )
         client->ps.pm_type = PM_NORMAL;
     }
 
-    //switch jetpack off if no reactor
-    if( !level.reactorPresent )
+    //switch jetpack off if no reactor or underwater
+    if( !level.reactorPresent || ent->waterlevel == 3 )
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
   }
 
