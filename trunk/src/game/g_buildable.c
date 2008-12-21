@@ -1301,6 +1301,10 @@ Called when an alien uses a hovel
 void AHovel_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
 {
   vec3_t  hovelOrigin, hovelAngles, inverseNormal;
+ 
+  if( ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_BUILDER0 ) ||
+  ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_BUILDER0_UPG ) )
+    return;
 
   if( self->spawned && G_FindOvermind( self ) && !activator->client->pers.paused )
   {
