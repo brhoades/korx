@@ -1323,12 +1323,12 @@ static void Cmd_Say_f( gentity_t *ent )
    if( mode == SAY_ADMINS)  
    if(!G_admin_permission( ent, ADMF_ADMINCHAT ) )
    {
-     if( !g_publicSayadmins.integer )
+     if( !g_publicSayadmins.integer && !G_Flood_Limited( ent ) )
      {
       ADMP( "Sorry, but public use of say_admins has been disabled.\n" );
       return;
      }
-     else
+     else if( !G_Flood_Limited( ent ) )
      {
        ADMP( "Your message has been sent to any available admins and to the server logs.\n" );
      }
@@ -1337,12 +1337,12 @@ static void Cmd_Say_f( gentity_t *ent )
   if( mode == SAY_CLAN)  
   	if(!G_admin_permission( ent, ADMF_CLANCHAT ) )
  	 {
-  	  if( !g_publicSayclan.integer )
+  	  if( !g_publicSayclan.integer && !G_Flood_Limited( ent ) )
   	  {
   	   ADMP( "Sorry, but you don't have permission to use say_clan.\n" );
   	   return;
   	  }
- 	    else
+ 	    else if( !G_Flood_Limited( ent ) )
   	  {
   	    ADMP( "Your message has been sent to any available clan members and to the server logs.\n" );
   	  }
