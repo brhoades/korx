@@ -1304,6 +1304,8 @@ extern  vmCvar_t  g_publicSayadmins;
 extern  vmCvar_t  g_antiSpawnBlock;
 extern  vmCvar_t  g_devmapKillerHP;
 extern  vmCvar_t  g_KillerHP;
+extern  vmCvar_t  g_privateMessages;
+extern  vmCvar_t  g_publicSayclan;
 
 extern  vmCvar_t  g_slapKnockback;
 extern  vmCvar_t  g_slapDamage;

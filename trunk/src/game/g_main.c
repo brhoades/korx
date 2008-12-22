@@ -165,6 +165,7 @@ vmCvar_t  g_privateMessages;
 vmCvar_t  g_minLevelToSpecMM1;
 vmCvar_t  g_publicSayadmins;
 vmCvar_t  g_antiSpawnBlock;
+vmCvar_t  g_publicSayclan;
 
 vmCvar_t  g_devmapKillerHP;
 vmCvar_t  g_KillerHP;
@@ -336,6 +337,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_tag, "g_tag", "main", CVAR_INIT, 0, qfalse },
   { &g_dretchPunt, "g_dretchPunt", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_killDamage, "g_killDamage", "1000", CVAR_ARCHIVE, 0, qfalse},
+  { &g_publicSayclan, "g_publicSayclan", "1", CVAR_ARCHIVE, 0, qfalse  },
 
   { &g_allowShare, "g_allowShare", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},
   { &g_creditOverflow, "g_creditOverflow", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},

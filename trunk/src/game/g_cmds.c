@@ -1163,19 +1163,28 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
 			}
 			else
 			{
-				G_LogPrintf( "say_admins: [PLAYER]%s: %s\n", ent->client->pers.netname, chatText );
-				Com_sprintf( name, sizeof( name ), "%s[PLAYER]%s%c%c"EC": ", prefix,
+				G_LogPrintf( "say_admins: A[PLAYER]%s: %s\n", ent->client->pers.netname, chatText );
+				Com_sprintf( name, sizeof( name ), "%sA[PLAYER]%s%c%c"EC": ", prefix,
 					ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE );
 				color = COLOR_MAGENTA;
 				break;
 			}
+      break;
 			
 		case SAY_CLAN:
 			if( G_admin_permission( ent, ADMF_CLANCHAT ) ) //Differentiate between inter-admin chatter and user-admin alerts
 			{
-				G_LogPrintf( "say_admins: [CLAN]%s: %s\n", ( ent ) ? ent->client->pers.netname : "console", chatText );
+				G_LogPrintf( "say_clan: [CLAN]%s: %s\n", ( ent ) ? ent->client->pers.netname : "console", chatText );
 				Com_sprintf( name, sizeof( name ), "%s[CLAN]%s%c%c"EC": ", prefix,
 										( ent ) ? ent->client->pers.netname : "console", Q_COLOR_ESCAPE, COLOR_WHITE );
+				color = COLOR_WHITE;
+				break;
+			}
+			else
+			{
+				G_LogPrintf( "say_clan: C[PLAYER]%s: %s\n", ent->client->pers.netname, chatText );
+				Com_sprintf( name, sizeof( name ), "%sC[PLAYER]%s%c%c"EC": ", prefix,
+					ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE );
 				color = COLOR_WHITE;
 				break;
 			}
@@ -1328,15 +1337,15 @@ static void Cmd_Say_f( gentity_t *ent )
   if( mode == SAY_CLAN)  
   	if(!G_admin_permission( ent, ADMF_CLANCHAT ) )
  	 {
-  	//  if( !g_publicSayadmins.integer )
-  	//  {
+  	  if( !g_publicSayclan.integer )
+  	  {
   	   ADMP( "Sorry, but you don't have permission to use say_clan.\n" );
-  	//   return;
-  	//  }
- 	  // else
-  	//  {
-  	//    ADMP( "Your message has been sent to any available admins and to the server logs.\n" );
-  	//  }
+  	   return;
+  	  }
+ 	    else
+  	  {
+  	    ADMP( "Your message has been sent to any available clan members and to the server logs.\n" );
+  	  }
   	}
 
   if(!Q_stricmpn( args, "say /me ", 8 ) )
