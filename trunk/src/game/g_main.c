@@ -1367,9 +1367,6 @@ void G_CalculateBuildPoints( void )
 			if( g_humanStage.integer < 2 )
 					trap_SendConsoleCommand( EXEC_NOW, "g_humanStage 2\n" ); // set humans to stage 3
 			
-			trap_SendConsoleCommand( EXEC_NOW, "!lock a\n" ); // lock alien team
-			trap_SendConsoleCommand( EXEC_NOW, "!lock h\n" ); // lock human team
-			
 			for( i = 0; i < MAX_CLIENTS; i++ )
 					level.clients[i].ps.persistant[PERS_CREDIT] = 2000; // give everyone max credits, aliens get a few extra
 			
@@ -1410,6 +1407,8 @@ void G_CalculateBuildPoints( void )
 				g_extremeSuddenDeathTime.integer = (int)( ( (level.time - level.startTime + 120000)/60000));
 				AP( va( "print \"^7Extreme Sudden Death will now start at %d\n\"", g_extremeSuddenDeathTime.integer));
 				AP( va( "print \"^7Time Limit is now at %d\n\"", g_timelimit.integer));
+		  	trap_SendConsoleCommand( EXEC_NOW, "!lock a\n" ); // lock alien team
+			  trap_SendConsoleCommand( EXEC_NOW, "!lock h\n" ); // lock human team
 			}
 			else
 			{
