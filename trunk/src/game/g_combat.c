@@ -197,6 +197,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   //TA: close any menus the client has open
   G_CloseMenus( self->client->ps.clientNum );
 
+  //FIXME: Disable the cloak at death, a temporary fix until I know why it isn't disabled by the below
+  if( BG_InventoryContainsUpgrade( UP_CLOAK, self->client->ps.stats ) )
+    BG_DeactivateUpgrade( UP_CLOAK, self->client->ps.stats );
+
   //TA: deactivate all upgrades
   for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
     BG_DeactivateUpgrade( i, self->client->ps.stats );
@@ -221,7 +225,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     goto finish_dying;
   }
   
-	if( !tk )
+	if( !tk || meansOfDeath == MOD_TELEFRAG )
 	{
   // broadcast the death event to everyone
   ent = G_TempEntity( self->r.currentOrigin, EV_OBITUARY );
