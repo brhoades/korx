@@ -23,8 +23,12 @@ Alien buildings take damage (after ~30 seconds they explode) without a creep.<br
 Adv. Basilisks now randomly flash without a Overmind.<br />
 Basilisks can now hold onto jettards (with the jetpack on), and kill them without having the jettard fall down.<br />
 Placing builders can no longer be shoved.<br />
-Medistation now stacks healing rate with medkit<br />
-Flamer, Jetpack, and Gas no longer work underwater.
+Medistation now stacks healing rate with medkit.<br />
+Flamer, Jetpack, and Gas no longer work underwater.<br />
+<a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep has been added, creep by Garoth of MG.</a> <br />
+cl_jetpackmute disables the jetpack roar with any value that isn't 0. <br />
+
+
 
 ===Misc===
 Booster no longer boosts while dead.<br />
