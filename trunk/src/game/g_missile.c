@@ -653,7 +653,7 @@ gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->methodOfDeath = MOD_GRENADE;
   bolt->splashMethodOfDeath = MOD_GRENADE;
   bolt->clipmask = MASK_SHOT;
-  bolt->health = 5;
+  bolt->health = 100;
   bolt->takedamage = qtrue;
   bolt->die = G_MissileDie;
   bolt->r.contents = CONTENTS_BODY;
