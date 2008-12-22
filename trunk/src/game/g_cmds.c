@@ -4607,18 +4607,22 @@ static void Cmd_Ignore_f( gentity_t *ent )
      max = ALIEN_MAX_KILLS, *amounts;
    qboolean donated = qtrue;
  
-   if( !ent->client ) return;
+   if( !ent->client ) 
+    return;
  	  
    if( !g_allowShare.integer )
    {
- 	  
     trap_SendServerCommand( ent-g_entities,
     "print \"Donate has been disabled.\n\"" );
- 
      return;
    }
- 
- 
+   if( g_extremesuddendeath.integer ) 
+    {
+    trap_SendServerCommand( ent-g_entities,
+    "print \"Donate is disabled during ESD.\n\"" );
+     return;
+    }
+
    if( ent->client->pers.teamSelection == PTE_ALIENS )
      divisor = level.numAlienClients-1;
    else if( ent->client->pers.teamSelection == PTE_HUMANS ) {
