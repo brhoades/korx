@@ -413,7 +413,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_NADE_DAMAGE         HDM(40)
 #define SHOTGUN_NADE_RANGE          100.0f
 #define SHOTGUN_NADE_SPEED          800.0f
-#define SHOTGUN_NADE_TAKE           4
+#define SHOTGUN_NADE_TAKE           2
 
 #define LASGUN_PRICE                250
 #define LASGUN_AMMO                 200
