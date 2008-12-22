@@ -4152,10 +4152,10 @@ void G_CommitRevertedBuildable( gentity_t *ent )
          ent->think = ASpawn_Think;
          break;
       case BA_A_BARRICADE: 
-      case BA_A_BOOSTER:
         ent->think = ABarricade_Think;
         break;
       case BA_A_ACIDTUBE:
+      case BA_A_BOOSTER:
         ent->think = AAcidTube_Think;
         break;
       case BA_A_HIVE:
