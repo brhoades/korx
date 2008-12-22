@@ -982,6 +982,12 @@ qboolean CheckVenomAttack( gentity_t *ent )
   if( !traceEnt->client && !traceEnt->s.eType == ET_BUILDABLE )
     return qfalse;
 
+  if( traceEnt->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+      return qfalse;
+
+  if( traceEnt->client->ps.stats[ STAT_HEALTH ] <= 0 )
+      return qfalse;
+
   //allow bites to work against defensive buildables only
   if( traceEnt->s.eType == ET_BUILDABLE )
   {
@@ -992,14 +998,6 @@ qboolean CheckVenomAttack( gentity_t *ent )
 
     //hackery
     damage *= 0.5f;
-  }
-
-  if( traceEnt->client )
-  {
-    if( traceEnt->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
-      return qfalse;
-    if( traceEnt->client->ps.stats[ STAT_HEALTH ] <= 0 )
-      return qfalse;
   }
 
   // send blood impact
