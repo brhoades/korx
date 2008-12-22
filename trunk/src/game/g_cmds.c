@@ -849,6 +849,8 @@ void Cmd_Team_f( gentity_t *ent )
     trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " joined the aliens\n\"", ent->client->pers.netname ) );
   else if( team == PTE_HUMANS )
     trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " joined the humans\n\"", ent->client->pers.netname ) );
+  else if( team == PTE_NONE )
+    trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " joined the spectators\n\"", ent->client->pers.netname ) );
 }
 
 
