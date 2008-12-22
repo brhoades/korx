@@ -243,7 +243,7 @@ vmCvar_t  cg_projectileNudge;
 
 vmCvar_t  cg_drawBuildableStatus;
 vmCvar_t  cg_drawTeamStatus;
-vmCvar_t  cg_jetpackmute;
+vmCvar_t  cl_jetpackmute;
 
 typedef struct
 {
@@ -364,7 +364,7 @@ static cvarTable_t cvarTable[ ] =
 
   { &cg_drawBuildableStatus, "cg_drawBuildableStatus", "1", CVAR_ARCHIVE },
   { &cg_drawTeamStatus, "cg_drawTeamStatus", "1", CVAR_ARCHIVE },
-  { &cg_jetpackmute, "cg_drawTeamStatus", "0", CVAR_ARCHIVE },
+  { &cl_jetpackmute, "cg_drawTeamStatus", "0", CVAR_ARCHIVE },
 
   // the following variables are created in other parts of the system,
   // but we also reference them here
