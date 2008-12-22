@@ -2325,13 +2325,13 @@ void CheckVote( void )
   	voteYesPercent = (int)(100* (level.voteYes)/(level.voteYes + level.voteNo));
   if( level.time - level.voteTime >= VOTE_TIME || ( level.voteYes + level.voteNo == level.numConnectedClients ) )
   {
-    if( voteYesPercent > votePercentToPass && ( level.voteNo == 0 && level.voteYes != 0 ) )
+    if( voteYesPercent > votePercentToPass || ( level.voteNo == 0 && level.voteYes != 0 ) )
     {   
       // execute the command, then remove the vote
       trap_SendServerCommand( -1, va("print \"^2Vote Passed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
       level.voteExecuteTime = level.time + 3000;
     }
-    else if( level.voteYes == 0 && level.voteNo != 0 )
+    else if( ( level.voteYes == 0 && level.voteNo != 0 ) || voteYesPercent <= votePercentToPass )
     {
       // same behavior as a timeout
       trap_SendServerCommand( -1, va("print \"^1Vote Failed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
@@ -2345,7 +2345,7 @@ void CheckVote( void )
   }
   else if( level.time - level.voteTime >= VOTE_TIME && mapvote )
   {
-    if( participantpercent >= g_mapvotepart.integer && voteYesPercent > votePercentToPass && mapvote && level.voteYes > (int)((double)level.numConnectedClients * ((double)votePercentToPass/100.0)) && !mapvote )
+    if( participantpercent >= g_mapvotepart.integer && voteYesPercent > votePercentToPass && mapvote && level.voteYes > (int)((double)level.numConnectedClients * ((double)votePercentToPass/100.0)) )
     {
       // execute the command, then remove the vote
       trap_SendServerCommand( -1, va("print \"^2Vote Passed ^7(^2Y:^7%i ^1N:^7%i, %i percent, %i percent participation of %i percent required)\n\"", level.voteYes, level.voteNo, voteYesPercent, participantpercent, g_mapvotepart.integer));
