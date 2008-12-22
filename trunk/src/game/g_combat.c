@@ -1570,11 +1570,10 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
     if( !ent->takedamage )
       continue;
 		
-		// spread from adv rant acid bomb doesn't hurt buildables
+		// spread from adv rant acid bomb doesn't hurt buildables as badly as humans
 		if( ent->s.eType == ET_BUILDABLE && mod == MOD_LEVEL4_EBLOB)
-		{
-			continue;
-		}
+      damage = damage*.25;
+//  	continue;
     // find the distance from the edge of the bounding box
     for( i = 0; i < 3; i++ )
     {
