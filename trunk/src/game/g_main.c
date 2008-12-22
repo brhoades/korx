@@ -1376,6 +1376,11 @@ void G_CalculateBuildPoints( void )
 			level.extremeSuddenDeathWarning = TW_PASSED;
 			level.extremeSuddenDeath = qtrue;
 			g_extremeSuddenDeath.integer = 1;
+      if( g_smartesd.value )
+      {
+		  	level.alienTeamLocked = qtrue; // lock alien team
+			  level.humanTeamLocked = qtrue; // lock human team
+      }
 			
 			level.suddenDeath = qtrue; //we are going to say that sudden death is on too for speed reasons
 		}
@@ -1407,8 +1412,6 @@ void G_CalculateBuildPoints( void )
 				g_extremeSuddenDeathTime.integer = (int)( ( (level.time - level.startTime + 120000)/60000));
 				AP( va( "print \"^7Extreme Sudden Death will now start at %d\n\"", g_extremeSuddenDeathTime.integer));
 				AP( va( "print \"^7Time Limit is now at %d\n\"", g_timelimit.integer));
-		  	trap_SendConsoleCommand( EXEC_NOW, "!lock a\n" ); // lock alien team
-			  trap_SendConsoleCommand( EXEC_NOW, "!lock h\n" ); // lock human team
 			}
 			else
 			{

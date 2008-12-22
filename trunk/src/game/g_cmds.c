@@ -4981,12 +4981,18 @@ void G_PrivateMessage( gentity_t *ent )
   qboolean teamonly = qfalse;
   gentity_t *tmpent;
 
-  if( !g_privateMessages.integer && ent )
+ if( g_smartesd.integer && g_extremeSuddenDeath.integer )
+  {
+    ADMP( "Sorry, but private messages are not allowed in Extreme Sudden Death\n" );
+    return;
+  }
+  else if( !g_privateMessages.integer )
   {
     ADMP( "Sorry, but private messages have been disabled\n" );
     return;
   }
-  
+
+
   if( g_floodMinTime.integer )
    if ( G_Flood_Limited( ent ) )
    {
