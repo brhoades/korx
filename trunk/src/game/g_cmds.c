@@ -4558,9 +4558,9 @@ static void Cmd_Ignore_f( gentity_t *ent )
    }
  
    // transfer only credits the player really has
-   if( creds > ent->client->ps.persistant[ PERS_CREDIT ] )
+   if( creds > ent->client->pers.credit )
    {
-     creds = ent->client->ps.persistant[ PERS_CREDIT ];
+     creds = ent->client->pers.credit;
    }
  
    // player has no credits
@@ -4573,14 +4573,14 @@ static void Cmd_Ignore_f( gentity_t *ent )
  
    // allow transfers only up to the credit/evo limit
    if( ( team == PTE_HUMANS ) && 
-       ( creds > HUMAN_MAX_CREDITS - level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ] ) )
+       ( creds > HUMAN_MAX_CREDITS - level.clients[ clientNum ].pers.credit ) )
    {
-     creds = HUMAN_MAX_CREDITS - level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ];
+     creds = HUMAN_MAX_CREDITS - level.clients[ clientNum ].pers.credit;
    }
    else if( ( team == PTE_ALIENS ) && 
-       ( creds > ALIEN_MAX_KILLS - level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ] ) )
+       ( creds > ALIEN_MAX_KILLS - level.clients[ clientNum ].pers.credit ) )
    {
-     creds = ALIEN_MAX_KILLS - level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ];
+     creds = ALIEN_MAX_KILLS - level.clients[ clientNum ].pers.credit;
    }
  
    // target cannot take any more credits
@@ -4593,13 +4593,13 @@ static void Cmd_Ignore_f( gentity_t *ent )
    }
  
    // transfer credits
-   ent->client->ps.persistant[ PERS_CREDIT ] -= creds;
+   ent->client->pers.credit -= creds;
    trap_SendServerCommand( ent-g_entities,
      va( "print \"share: transferred %d %s to %s^7.\n\"", creds,
        ( team == PTE_HUMANS ) ? "credits" : "evolvepoints",
        level.clients[ clientNum ].pers.netname ) );
 // 	  G_AddCreditToClient( level.clients[ clientNum ], creds, qtrue );
-   level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ] += creds;
+   level.clients[ clientNum ].pers.credit += creds;
    trap_SendServerCommand( clientNum,
      va( "print \"You have received %d %s from %s^7.\n\"", creds,
        ( team == PTE_HUMANS ) ? "credits" : "evolvepoints",
