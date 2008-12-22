@@ -828,11 +828,11 @@ void cancelBuildFire( gentity_t *ent )
       if(traceEnt->s.eType == ET_BUILDABLE && traceEnt->spawned && 
         ( traceEnt->biteam == ent->client->ps.stats[ STAT_PTEAM ] ))
       {
-        if( ent->client->ps.stats[ STAT_MISC ] > 0 )
+        /*if( ent->client->ps.stats[ STAT_MISC ] > 0 ) //Humans can repair with build timers, like grangers
         {
           G_AddEvent( ent, EV_BUILD_DELAY, ent->client->ps.clientNum );
           return;
-        }
+        }*/
 
         bHealth = BG_FindHealthForBuildable( traceEnt->s.modelindex );
 
@@ -849,11 +849,11 @@ void cancelBuildFire( gentity_t *ent )
       //heal ANY player
       else if( traceEnt->client && traceEnt->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
       {
-        if( ent->client->ps.stats[ STAT_MISC ] > 0 )
+        /*if( ent->client->ps.stats[ STAT_MISC ] > 0 ) //Humans can repair with build timers, like grangers
         {
           G_AddEvent( ent, EV_BUILD_DELAY, ent->client->ps.clientNum );
           return;
-        }
+        }*/
 
         hHealth = traceEnt->client->ps.stats[ STAT_MAX_HEALTH ];
 

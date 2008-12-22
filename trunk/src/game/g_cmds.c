@@ -4616,7 +4616,7 @@ static void Cmd_Ignore_f( gentity_t *ent )
     "print \"Donate has been disabled.\n\"" );
      return;
    }
-   if( g_extremesuddendeath.integer ) 
+   if( level.extremeSuddenDeath ) 
     {
     trap_SendServerCommand( ent-g_entities,
     "print \"Donate is disabled during ESD.\n\"" );
