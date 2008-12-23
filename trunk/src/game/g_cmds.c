@@ -1474,7 +1474,7 @@ Cmd_CallVote_f
 */
 void Cmd_CallVote_f( gentity_t *ent )
 {
-  int   i;
+  int   i, arg2s;
   char  arg1[ MAX_STRING_TOKENS ];
   char  arg2[ MAX_STRING_TOKENS ];
   int   clientNum = -1;
@@ -1752,12 +1752,28 @@ void Cmd_CallVote_f( gentity_t *ent )
         "End match in a draw" );
     level.votePercentToPass = g_mapVotesPercent.integer;
   }
-   else if( !Q_stricmp( arg1, "poll" ) || !Q_stricmp( arg1, "custom" ))
-    {
+  else if( !Q_stricmp( arg1, "poll" ) )
+  {
     Com_sprintf( level.voteString, sizeof( level.voteString ), nullstring);
     Com_sprintf( level.voteDisplayString,
         sizeof( level.voteDisplayString ), "[Poll] \'%s^7\'", arg2plus );
-   }
+  }
+  else if( !Q_stricmp( arg1, "custom" ) )
+  {
+    arg2s = atoi(arg2);
+    if( arg2s <= 100 && arg2s > 0 )
+      level.votePercentToPass = arg2s;
+    else
+    {
+			trap_SendServerCommand( ent - g_entities,
+				"print \"Your syntax for a custom vote was invalid. Use the following:\n\"" );
+			trap_SendServerCommand( ent - g_entities,
+				"print \"/callvote custom percent polltext\n\"" );
+      return;
+    }
+    Com_sprintf( level.voteDisplayString,
+    sizeof( level.voteDisplayString ), "[Custom] \'%s^7\'", arg3plus);
+  }
   else if( !Q_stricmp( arg1, "sudden_death" ) )
   {
     if( level.extremeSuddenDeath )
