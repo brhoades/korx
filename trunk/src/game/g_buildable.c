@@ -2695,8 +2695,12 @@ void G_BuildableThink( gentity_t *ent, int msec )
   }
 
   // pack health and power
-  ent->s.generic1 = (int)( ( ent->health + bHealth / B_HEALTH_MASK - 1 ) *
-                           B_HEALTH_MASK / bHealth );
+  if( ent->health <= 0 )
+    ent->s.generic1 = 0;
+  else
+    ent->s.generic1 = (unsigned char)
+                      ( ( B_HEALTH_MASK * ent->health + bHealth - 1 ) / 
+                        bHealth );
 
 
   if( ent->s.generic1 < 0 )
