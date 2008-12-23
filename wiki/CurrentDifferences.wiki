@@ -13,6 +13,7 @@ Adjustban now tells who did it<br />
 New Votes
   * forcespec and unforcespec, causing people to be put (and stuck) to the spectator's team.
   * nextmap, loads when the current map finishes
+  * Custom, allows you to set a defined percent to pass for a poll
 New Commands
   * listmaps, bound to !register and !help flag
 
@@ -25,10 +26,18 @@ Basilisks can now hold onto jettards (with the jetpack on), and kill them withou
 Placing builders can no longer be shoved.<br />
 Medistation now stacks healing rate with medkit.<br />
 Flamer, Jetpack, and Gas no longer work underwater.<br />
-<a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep has been added, creep by Garoth of MG.</a> <br />
 cl_jetpackmute disables the jetpack roar with any value that isn't 0. <br />
+Dretches can no longer bite dead alien buildings. <br />
+Adv Rant's acid is weaker, but now does small splash damage to surronding structures.<br />
+Adv Rant's acid now has a different death message. <br />
+The Nade trick will no longer work with a shotgun. <br />
+Ckits can now heal with a build timer. <br />
+Players can now ready up at the end of a game. <br />
+Donations are disabled in ESD. <br />
 
-
+===Graphics===
+<a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep</a> has been added, creep by Garoth of MG. This also affects rant acid and granger spit.<br />
+A special no Overmind icon was added instead of a lightening bolt.<br />
 
 ===Misc===
 Booster no longer boosts while dead.<br />
@@ -36,3 +45,12 @@ Friendly building fire now has DESTROYED in red.<br />
 If there is not a regular vote, players can now use F1/F2 to vote on teamvotes.<br />
 Bug fixed where aliens heal dead structures (then they explode).<br />
 Cell outline cheat is now disabled upon activation, instead of moaning about it. <br />
+New support for TJW download redirection. <br />
+Cloak is now deactivated upon death. <br />
+You can now tell if the game is in ESD by trying to join a team.<br />
+Removed lock messages during ESD.<br />
+PM's are now disabled in ESD. <br />
+Telefrags now give their original death message. <br />
+A message is now given when someone goes from humans/aliens to the spectators using menus.<br />
+
+Clan chat can now be used by regular players. They have a c in front of PLAYER, while adminchat has a a in front.<br />
