@@ -1665,7 +1665,7 @@ void ClientThink_real( gentity_t *ent )
   // set speed
   if( !client->pers.paused && !client->pers.jgrab )
     client->ps.speed = g_speed.value * BG_FindSpeedForClass( client->ps.stats[ STAT_PCLASS ] );
-  else // this isn't necessary functionally but makes the whole process smoother
+  else if( client->pers.paused || client->pers.jgrab )// this isn't necessary functionally but makes the whole process smoother
     client->ps.speed = 0;
 
   if( client->lastCreepSlowTime + CREEP_TIMEOUT < level.time )
@@ -1948,7 +1948,7 @@ void ClientThink_real( gentity_t *ent )
     ent->suicideTime = 0;
   }
   
-  if( ( client->pers.jgrab && !(client->ps.stats[ STAT_STATE ] & SS_GRABBED ) ) && !BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) )
+  if( ( client->pers.jgrab && !(client->ps.stats[ STAT_STATE ] & SS_GRABBED ) ) )
     client->pers.jgrab = qfalse;
 }
 
