@@ -336,7 +336,7 @@ static void CG_Obituary( entityState_t *ent )
         message = "got burnt to a crisp in";
         Com_sprintf( className, 64, "'s %s's",
             BG_FindHumanNameForClassNum( PCL_ALIEN_LEVEL4 ) );
-        message2 = "acid";
+        message2 = " acid";
         break;
 
       case MOD_POISON:
