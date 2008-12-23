@@ -1573,11 +1573,11 @@ classAttributes_t bg_classList[ ] =
     1.0f,                                           //float   shadowScale;
     "",                                             //char    *hudname;
     ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ),            //int  stages
-    { -12, -12, -12 },                              //vec3_t  mins;
-    { 12, 12, 12 },                                 //vec3_t  maxs;
-    { 12, 12, 12 },                                 //vec3_t  crouchmaxs;
-    { -12, -12, -12 },                              //vec3_t  deadmins;
-    { 12, 12, 12 },                                 //vec3_t  deadmaxs;
+    { -15, -15, -15 },                              //vec3_t  mins;
+    { 15, 15, 15 },                                 //vec3_t  maxs;
+    { 15, 15, 15 },                                 //vec3_t  crouchmaxs;
+    { -15, -15, -15 },                              //vec3_t  deadmins;
+    { 15, 15, 15 },                                 //vec3_t  deadmaxs;
     0.0f,                                           //float   zOffset
     0, 0,                                           //int     viewheight, crouchviewheight;
     0,                                              //int     health;
