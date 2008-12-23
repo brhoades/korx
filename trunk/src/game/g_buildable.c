@@ -2685,9 +2685,7 @@ void G_BuildableThink( gentity_t *ent, int msec )
 
   //We don't think when we're paused
   if( gamepaused )
-  return;
-
-  //pack health, power and dcc
+    return;
 
   //toggle spawned flag for buildables
   if( !ent->spawned && ent->health > 0 )
@@ -2696,7 +2694,10 @@ void G_BuildableThink( gentity_t *ent, int msec )
       ent->spawned = qtrue;
   }
 
-  ent->s.generic1 = (int)( ( (float)ent->health / (float)bHealth ) * B_HEALTH_MASK );
+  // pack health and power
+  ent->s.generic1 = (int)( ( ent->health + bHealth / B_HEALTH_MASK - 1 ) *
+                           B_HEALTH_MASK / bHealth );
+
 
   if( ent->s.generic1 < 0 )
     ent->s.generic1 = 0;
@@ -2724,8 +2725,7 @@ void G_BuildableThink( gentity_t *ent, int msec )
     else if( ent->biteam == BIT_ALIENS && ent->health > 0 && ent->health < bHealth &&
         bRegen && ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
       ent->health += bRegen;
-    else if( ent->biteam == BIT_HUMANS && ent->health > 0 && ent->health < bHealth &&
-        bRegen && G_IsDCCBuilt() && ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time )
+    else if( ent->biteam == BIT_HUMANS && ent->health > 0 && ent->health < bHealth && bRegen && G_IsDCCBuilt() && ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time )
       ent->health += bRegen * G_CountDCC();
 
     if( ent->health > bHealth )
@@ -3363,7 +3363,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   else
   {
     // in-game building by a player
-
+    built->health = 1;
     if( builder->client->ps.stats[ STAT_STATE ] & SS_WALLCLIMBING )
     {
       if( builder->client->ps.stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
@@ -3379,8 +3379,6 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   // target surface so that it can be "dropped" onto it 
   if( !builder->client )
     VectorMA( origin, 1.0f, normal, origin );
-
-  built->health = 1;
 
   built->splashDamage = BG_FindSplashDamageForBuildable( buildable );
   built->splashRadius = BG_FindSplashRadiusForBuildable( buildable );
