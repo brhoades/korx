@@ -1414,9 +1414,11 @@ static void Cmd_Say_f( gentity_t *ent )
   if( trap_Argc( ) < 2 )
     return;
 
-  p = G_SayConcatArgs( 1 + skipargs );
+//  p = G_SayConcatArgs( 1 + skipargs );
 
-  p += offset;
+//  p += offset;
+
+  p = ConcatArgs( 1 );
   
   G_Say( ent, NULL, mode, p );
 }
