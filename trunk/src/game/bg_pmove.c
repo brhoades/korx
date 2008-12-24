@@ -3489,6 +3489,7 @@ void PmoveSingle( pmove_t *pmove )
 
   if( pm->ps->pm_type >= PM_DEAD )
   {
+    PM_UpdateViewAngles( pm->ps, &pm->cmd );
     pm->cmd.forwardmove = 0;
     pm->cmd.rightmove = 0;
     pm->cmd.upmove = 0;
