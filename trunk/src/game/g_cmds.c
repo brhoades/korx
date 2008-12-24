@@ -3231,7 +3231,12 @@ void Cmd_Destroy_f( gentity_t *ent )
 				new->marked = NULL;
 				G_LogBuild( new );
 
-				G_TeamCommand( ent->client->pers.teamSelection,
+				G_TeamCommand( ent->client->ps.stats[ STAT_PTEAM ],
+					va( "print \"%s ^3DECONSTRUCTED^7 by %s^7\n\"",
+						BG_FindHumanNameForBuildable( traceEnt->s.modelindex ), 
+						ent->client->pers.netname ) );
+
+				G_TeamCommand( PTE_NONE,
 					va( "print \"%s ^3DECONSTRUCTED^7 by %s^7\n\"",
 						BG_FindHumanNameForBuildable( traceEnt->s.modelindex ), 
 						ent->client->pers.netname ) );
