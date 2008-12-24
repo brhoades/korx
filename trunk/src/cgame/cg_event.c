@@ -360,6 +360,7 @@ static void CG_Obituary( entityState_t *ent )
         message = "tried to invade";
         message2 = "'s personal space";
         break;
+
       default:
         message = "was killed by";
         break;
@@ -367,6 +368,11 @@ static void CG_Obituary( entityState_t *ent )
 
     if( message )
     {
+      if( attackerName == NULL && mod == MOD_INFECTION )
+      {
+        message = "was infected by an unknown alien";
+        message2 = "";
+      }
       CG_Printf( "%s %s %s%s%s\n",
         targetName, message,
         ( teamKill ) ? S_COLOR_RED "TEAMMATE " S_COLOR_WHITE : "",
@@ -380,7 +386,13 @@ static void CG_Obituary( entityState_t *ent )
       return;
     }
   }
-
+    
+  if( mod == MOD_POISON )    
+  {
+    //If we still don't know what it is, but it's mod_poison, it was the booster.
+    CG_Printf( "%s shouldn't have touched the booster\n", targetName );
+    return;
+  }
   // we don't know what it was
   CG_Printf( "%s died.\n", targetName );
 }
