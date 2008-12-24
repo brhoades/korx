@@ -227,7 +227,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_friendlyFireMovementAttacks, "g_friendlyFireMovementAttacks", "1", CVAR_ARCHIVE, 0, qtrue  },
 
   { &g_teamAutoJoin, "g_teamAutoJoin", "0", CVAR_ARCHIVE  },
-  { &g_teamForceBalance, "g_teamForceBalance", "0", CVAR_ARCHIVE  },
+  { &g_teamForceBalance, "g_teamForceBalance", "1", CVAR_ARCHIVE  },
 
   { &g_warmup, "g_warmup", "20", CVAR_ARCHIVE, 0, qtrue  },
   { &g_doWarmup, "g_doWarmup", "0", 0, 0, qtrue  },
@@ -249,7 +249,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_dedicated, "dedicated", "0", 0, 0, qfalse  },
 
   { &g_speed, "g_speed", "320", 0, 0, qtrue  },
-  { &g_gravity, "g_gravity", "800", 0, 0, qtrue  },
+  { &g_gravity, "g_gravity", "667", 0, 0, qtrue  },
   { &g_knockback, "g_knockback", "1000", CVAR_SERVERINFO, 0, qtrue  },
   { &g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue  },
   { &g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue  },
@@ -271,7 +271,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_extremesuddenDeathVotePercent, "g_extremesuddenDeathVotePercent", "75", CVAR_ARCHIVE, 0, qfalse },
   { &g_extremesuddenDeathVoteMinTime, "g_extremesuddenDeathVoteMinTime", "10", CVAR_ARCHIVE, 0, qfalse },
   { &g_mapVotesPercent, "g_mapVotesPercent", "50", CVAR_ARCHIVE, 0, qfalse },
-  { &g_designateVotes, "g_designateVotes", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_designateVotes, "g_designateVotes", "1", CVAR_ARCHIVE, 0, qfalse },
 
   { &g_listEntity, "g_listEntity", "0", 0, 0, qfalse },
   { &g_minCommandPeriod, "g_minCommandPeriod", "500", 0, 0, qfalse},
