@@ -5019,14 +5019,10 @@ void G_PrivateMessage( gentity_t *ent )
   int i;
   int skipargs = 0;
   qboolean teamonly = qfalse;
+  qboolean nteammater = qfalse;
   gentity_t *tmpent;
 
- if( g_smartesd.integer && g_extremeSuddenDeath.integer )
-  {
-    ADMP( "Sorry, but private messages are not allowed in Extreme Sudden Death\n" );
-    return;
-  }
-  else if( !g_privateMessages.integer )
+  if( !g_privateMessages.integer )
   {
     ADMP( "Sorry, but private messages have been disabled\n" );
     return;
@@ -5070,6 +5066,9 @@ void G_PrivateMessage( gentity_t *ent )
       if( teamonly && !OnSameTeam( ent, tmpent ) )
         continue;
 
+      if( !OnSameTeam( ent, tmpent ) )
+        nteammater = qtrue;
+
       if( BG_ClientListTest( &tmpent->client->sess.ignoreList,
         ent-g_entities ) )
       {
@@ -5088,6 +5087,12 @@ void G_PrivateMessage( gentity_t *ent )
   }
 
   color = teamonly ? COLOR_CYAN : COLOR_YELLOW;
+
+ if( g_smartesd.integer && g_extremeSuddenDeath.integer && nteammater == qtrue )
+ {
+   ADMP( "Sorry, but you cannot pm anyone who isn't a teammate during ESD.\n" );
+   return;
+ }
 
   Q_strncpyz( str,
     va( "^%csent to %i player%s: ^7", color, matches,
