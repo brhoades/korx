@@ -34,6 +34,14 @@ The Nade trick will no longer work with a shotgun. <br />
 Ckits can now heal with a build timer. <br />
 Players can now ready up at the end of a game. <br />
 Donations are disabled in ESD. <br />
+Buildables can no longer have 0 HP without being dead. <br />
+Buildables are now built with > 0 HP. <br />
+Grangers in hovels can now rotate the camera freely. <br />
+Grangers can growl in hovels. <br />
+If you attempt to get into a occupied hovel, it tells who is in it.<br />
+The build timer now passes with the blaster out. <br />
+You can now heal structures/players with a build timer, as a human.<br />
+
 
 ===Graphics===
 <a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep</a> has been added, creep by Garoth of MG. This also affects rant acid and granger spit.<br />
@@ -52,5 +60,5 @@ Removed lock messages during ESD.<br />
 PM's are now disabled in ESD. <br />
 Telefrags now give their original death message. <br />
 A message is now given when someone goes from humans/aliens to the spectators using menus.<br />
-
 Clan chat can now be used by regular players. They have a c in front of PLAYER, while adminchat has a a in front.<br />
+*Space bug has been fixed.*
