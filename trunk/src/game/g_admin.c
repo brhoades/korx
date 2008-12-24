@@ -238,6 +238,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
       ""
     },
 
+    {"switch", G_admin_switch, "m",
+      "switch places with someone",
+      "[^3name|slot#^7]"
+    },
+
     {"speed", G_admin_speed, "n",
       "change the speed level",
       "[^3#^7]"
@@ -4943,3 +4948,62 @@ qboolean G_admin_listmaps(gentity_t *ent, int skiparg)
   return qtrue;
 }
 
+qboolean G_admin_switch( gentity_t *ent, int skiparg )
+{
+  int pids[ MAX_CLIENTS ];
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  int minargc;
+  gentity_t *vic;
+
+
+    minargc = 2 + skiparg;
+
+  if( G_SayArgc() < minargc )
+  {
+    ADMP( "^3!switch: ^7usage: !switch [name|slot#]\n" );
+    return qfalse;
+  }
+  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+
+  if( G_ClientNumbersFromString( name, pids ) != 1 )
+  {
+    G_MatchOnePlayer( pids, err, sizeof( err ) );
+    ADMP( va( "^3!switch: ^7%s\n", err ) );
+    return qfalse;
+  }
+
+  vic = &g_entities[ pids[ 0 ] ];
+
+
+//put them on noclip
+vic->client->noclip = qtrue;
+ent->client->noclip = qtrue;
+
+//switch places
+  trap_UnlinkEntity( ent );
+  VectorCopy( vic->s.origin, ent->client->ps.origin );
+
+//switch places
+  trap_UnlinkEntity( vic );
+  VectorCopy( ent->s.origin, vic->client->ps.origin );
+
+//spectator fix
+  if( ent->client->sess.sessionTeam != TEAM_SPECTATOR )
+    trap_LinkEntity (ent);
+
+  if( vic->client->sess.sessionTeam != TEAM_SPECTATOR )
+    trap_LinkEntity (vic);
+
+
+//take them off noclip
+vic->client->noclip = qfalse;
+ent->client->noclip = qfalse;
+
+     trap_SendServerCommand( vic-g_entities, va( "print \"^7%s^7 switched with you\n\"", ent->client->pers.netname ) );
+     trap_SendServerCommand( ent-g_entities, va( "print \"^7You switched with ^7%s^7\n\"", vic->client->pers.netname ) );
+
+
+
+  return qtrue;
+
+}
