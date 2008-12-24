@@ -1,4 +1,5 @@
 *Differences between Tremx-KoR*
+Major Changes are in *BOLD*
 ===Commands===
 [http://i299.photobucket.com/albums/mm308/Aaron5367-trem/feature-1.jpg]
 
@@ -16,23 +17,24 @@ New Votes
   * Custom, allows you to set a defined percent to pass for a poll
 New Commands
   * listmaps, bound to !register and !help flag
+  * switch, bound to m, a new flag
 
 ===Gameplay===
-Adv. Rants no longer take falling damage.<br />
+*Adv. Rants no longer take falling damage.<br />
 Dretches can attack forcefields.<br />
 Alien buildings take damage (after ~30 seconds they explode) without a creep.<br />
 Adv. Basilisks now randomly flash without a Overmind.<br />
-Basilisks can now hold onto jettards (with the jetpack on), and kill them without having the jettard fall down.<br />
+Basilisks can now hold onto jettards (with the jetpack on), and kill them without having the jettard fall down.*<br />
 Placing builders can no longer be shoved.<br />
-Medistation now stacks healing rate with medkit.<br />
-Flamer, Jetpack, and Gas no longer work underwater.<br />
+*Medistation now stacks healing rate with medkit.<br />
+Flamer, Jetpack, and Gas no longer work underwater.*<br />
 cl_jetpackmute disables the jetpack roar with any value that isn't 0. <br />
 Dretches can no longer bite dead alien buildings. <br />
-Adv Rant's acid is weaker, but now does small splash damage to surronding structures.<br />
-Adv Rant's acid now has a different death message. <br />
-The Nade trick will no longer work with a shotgun. <br />
-Ckits can now heal with a build timer. <br />
-Players can now ready up at the end of a game. <br />
+*Adv Rant's acid is weaker, but now does small splash damage to surrounding structures.*<br />
+*Adv Rant's acid now has a different death message.* <br />
+*The Nade trick will no longer work with a shotgun.* <br />
+*Ckits can now heal with a build timer.* <br />
+*Players can now ready up at the end of a game.* <br />
 Donations are disabled in ESD. <br />
 Buildables can no longer have 0 HP without being dead. <br />
 Buildables are now built with > 0 HP. <br />
@@ -41,6 +43,7 @@ Grangers can growl in hovels. <br />
 If you attempt to get into a occupied hovel, it tells who is in it.<br />
 The build timer now passes with the blaster out. <br />
 You can now heal structures/players with a build timer, as a human.<br />
+Spectators on a team can now rotate the camera freely. <br />
 
 
 ===Graphics===
@@ -50,14 +53,14 @@ A special no Overmind icon was added instead of a lightening bolt.<br />
 ===Misc===
 Booster no longer boosts while dead.<br />
 Friendly building fire now has DESTROYED in red.<br />
-If there is not a regular vote, players can now use F1/F2 to vote on teamvotes.<br />
+*If there is not a regular vote, players can now use F1/F2 to vote on teamvotes.*<br />
 Bug fixed where aliens heal dead structures (then they explode).<br />
 Cell outline cheat is now disabled upon activation, instead of moaning about it. <br />
 New support for TJW download redirection. <br />
 Cloak is now deactivated upon death. <br />
 You can now tell if the game is in ESD by trying to join a team.<br />
 Removed lock messages during ESD.<br />
-PM's are now disabled in ESD. <br />
+*PM's are now only allowed between teammates in ESD.* <br />
 Telefrags now give their original death message. <br />
 A message is now given when someone goes from humans/aliens to the spectators using menus.<br />
 Clan chat can now be used by regular players. They have a c in front of PLAYER, while adminchat has a a in front.<br />
