@@ -1552,6 +1552,7 @@ extern  vmCvar_t    cg_projectileNudge;
 extern  vmCvar_t    cg_drawBuildableStatus;
 extern  vmCvar_t    cg_drawTeamStatus;
 extern  vmCvar_t    cl_jetpackmute;
+extern  vmCvar_t    cl_gender;
 
 //
 // cg_main.c
