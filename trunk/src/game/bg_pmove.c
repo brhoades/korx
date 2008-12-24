@@ -3512,6 +3512,15 @@ void PmoveSingle( pmove_t *pmove )
     return;
   }
 
+  if( pm->ps->pm_type == PM_HOVELING )
+  {
+    PM_UpdateViewAngles( pm->ps, &pm->cmd );
+    pm->cmd.forwardmove = 0;
+    pm->cmd.rightmove = 0;
+    pm->cmd.upmove = 0;
+    return;
+  }
+
   if( pm->ps->pm_type == PM_FREEZE)
     return;   // no movement at all
 

@@ -1563,14 +1563,15 @@ void ClientThink_real( gentity_t *ent )
     client->ps.pm_type = PM_NOCLIP;
   else if( client->ps.stats[ STAT_HEALTH ] <= 0 )
     client->ps.pm_type = PM_DEAD;
-  else if( client->ps.stats[ STAT_STATE ] & SS_INFESTING ||
-           client->ps.stats[ STAT_STATE ] & SS_HOVELING )
+  else if( client->ps.stats[ STAT_STATE ] & SS_INFESTING )
     client->ps.pm_type = PM_FREEZE;
   else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ||
            client->ps.stats[ STAT_STATE ] & SS_GRABBED )
     client->ps.pm_type = PM_GRABBED;
   else if( BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_JETPACK, client->ps.stats ) )
     client->ps.pm_type = PM_JETPACK;
+  else if( client->ps.stats[ STAT_STATE ] & SS_HOVELING )
+    client->ps.pm_type = PM_HOVELING; 
   else
     client->ps.pm_type = PM_NORMAL;
 

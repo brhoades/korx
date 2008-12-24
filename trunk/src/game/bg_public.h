@@ -116,7 +116,8 @@ typedef enum
   PM_DEAD,          // no acceleration or turning, but free falling
   PM_FREEZE,        // stuck in place with no control
   PM_INTERMISSION,  // no movement or status bar
-  PM_SPINTERMISSION // no movement or status bar
+  PM_SPINTERMISSION,// no movement or status bar
+  PM_HOVELING       // stuck in place with rotational camera control
 } pmtype_t;
 
 typedef enum
