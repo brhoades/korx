@@ -976,6 +976,37 @@ static void ClientCleanNameAdmin( const char *in, char *out, int outSize )
 
 
 /*
+===================
+G_NextNewbieName
+
+Generate a unique, known-good name for an UnnamedPlayer
+===================
+*/
+char *G_NextNewbieName( gentity_t *ent )
+{
+  char newname[ MAX_NAME_LENGTH ];
+  char namePrefix[ MAX_NAME_LENGTH - 4 ];
+  char err[ MAX_STRING_CHARS ];
+
+  if( g_newbieNamePrefix.string[ 0 ] )
+    Q_strncpyz( namePrefix, g_newbieNamePrefix.string , sizeof( namePrefix ) );
+  else
+    strcpy( namePrefix, "Newbie#" );
+
+  while( level.numNewbies < 10000 )
+  {
+    strcpy( newname, va( "%s%i", namePrefix, level.numNewbies ) );
+    if ( G_admin_name_check( ent, newname, err, sizeof( err ) ) )
+    {
+      return va( "%s", newname );
+    }
+    level.numNewbies++; // Only increments if the last requested name was used.
+  }
+  return "UnnamedPlayer";
+}
+
+
+/*
 ======================
 G_NonSegModel
 
@@ -1053,6 +1084,7 @@ void ClientUserinfoChanged( int clientNum )
   char      newname[ MAX_NAME_LENGTH ];
   char      err[ MAX_STRING_CHARS ];
   qboolean  revertName = qfalse;
+  qboolean  showRenameMsg = qtrue;
   gclient_t *client;
   char      c1[ MAX_INFO_STRING ];
   char      c2[ MAX_INFO_STRING ];
@@ -1096,9 +1128,19 @@ void ClientUserinfoChanged( int clientNum )
 
   if( strcmp( oldname, newname ) )
   {
+    if( !strlen( oldname ) && client->pers.connected != CON_CONNECTED )
+      showRenameMsg = qfalse;
+
     // in case we need to revert and there's no oldname
-    if( client->pers.connected != CON_CONNECTED )
-        Q_strncpyz( oldname, "UnnamedPlayer", sizeof( oldname ) );
+    ClientCleanName( va( "%s", client->pers.netname ), oldname, sizeof( oldname ) );
+ 
+    if( g_newbieNumbering.integer )
+    {
+      if( !strcmp( newname, "UnnamedPlayer" ) )
+	Q_strncpyz( newname, G_NextNewbieName( ent ), sizeof( newname ) );
+      if( !strcmp( oldname, "UnnamedPlayer" ) )
+	Q_strncpyz( oldname, G_NextNewbieName( ent ), sizeof( oldname ) );
+    }
 
     if( client->pers.muted )
     {
@@ -1140,6 +1182,8 @@ void ClientUserinfoChanged( int clientNum )
     {
       Q_strncpyz( client->pers.netname, newname,
         sizeof( client->pers.netname ) );
+      Info_SetValueForKey( userinfo, "name", newname );
+      trap_SetUserinfo( clientNum, userinfo );
       if( client->pers.connected == CON_CONNECTED )
       {
         client->pers.nameChangeTime = level.time;
@@ -1154,7 +1198,7 @@ void ClientUserinfoChanged( int clientNum )
       Q_strncpyz( client->pers.netname, "scoreboard", sizeof( client->pers.netname ) );
   }
 
-  if( client->pers.connected == CON_CONNECTED )
+  if( client->pers.connected >= CON_CONNECTING && showRenameMsg )
   {
     if( strcmp( oldname, client->pers.netname ) )
     {

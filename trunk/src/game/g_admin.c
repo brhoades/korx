@@ -3237,10 +3237,11 @@ qboolean G_admin_rename( gentity_t *ent, int skiparg )
   Info_SetValueForKey( userinfo, "name", newname );
   trap_SetUserinfo( pids[ 0 ], userinfo );
   ClientUserinfoChanged( pids[ 0 ] );
-  AP( va( "print \"^3!rename: ^7%s^7 has been renamed to %s^7 by %s\n\"",
-          oldname,
-          newname,
-          ( ent ) ? ent->client->pers.netname : "console" ) );
+  if( strcmp( oldname, level.clients[ pids[ 0 ] ].pers.netname ) )
+    AP( va( "print \"^3!rename: ^7%s^7 has been renamed to %s^7 by %s\n\"",
+	    oldname,
+	    level.clients[ pids[ 0 ] ].pers.netname,
+	    ( ent ) ? ent->client->pers.netname : "console" ) );
   return qtrue;
 }
 

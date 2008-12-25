@@ -606,6 +606,7 @@ typedef struct
   int               numNonSpectatorClients;       // includes connecting clients
   int               numPlayingClients;            // connected, non-spectators
   int               sortedClients[MAX_CLIENTS];   // sorted by score
+  int               numNewbies;                   // number of UnnamedPlayers who have been renamed this round.
 
   int               snd_fry;                      // sound index for standing in lava
 
@@ -1002,6 +1003,7 @@ void      BeginIntermission( void );
 void      ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles );
 void      player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod );
 qboolean  SpotWouldTelefrag( gentity_t *spot );
+char     *G_NextNewbieName( gentity_t *ent );
 
 //
 // g_svcmds.c
@@ -1195,6 +1197,8 @@ extern  vmCvar_t  g_lockTeamsAtStart;
 extern  vmCvar_t  g_minCommandPeriod;
 extern  vmCvar_t  g_minNameChangePeriod;
 extern  vmCvar_t  g_maxNameChanges;
+extern  vmCvar_t  g_newbieNumbering;
+extern  vmCvar_t  g_newbieNamePrefix;
 
 extern  vmCvar_t  g_timelimit;
 extern  vmCvar_t  g_suddenDeathTime;
