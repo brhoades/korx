@@ -465,6 +465,8 @@ struct gclient_s
 
   qboolean            charging;
 
+  int               lastspecmeTime;
+
   vec3_t              hovelOrigin;          // player origin before entering hovel
 
   int                 lastFlameBall;        // s.number of the last flame ball fired
@@ -1323,6 +1325,7 @@ extern  vmCvar_t  g_dretchPunt;
 extern  vmCvar_t  g_extravotereasons;
 extern  vmCvar_t  g_mapvotepart;
 extern  vmCvar_t  g_forcevotereason;
+extern  vmCvar_t  g_specmetimeout;
 
 void      trap_Printf( const char *fmt );
 void      trap_Error( const char *fmt );

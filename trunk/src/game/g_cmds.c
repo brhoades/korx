@@ -745,7 +745,7 @@ void Cmd_Team_f( gentity_t *ent )
       return; 
     }
     else if( level.alienTeamLocked && g_extremeSuddenDeath.value )
-    {
+    {   
       trap_SendServerCommand( ent-g_entities,
         va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
     }
@@ -761,6 +761,14 @@ void Cmd_Team_f( gentity_t *ent )
       G_TriggerMenu( ent - g_entities, MN_A_TEAMFULL );
       return;
     }
+
+    if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+      return;
+    } 
 
     team = PTE_ALIENS;
   }
@@ -796,6 +804,14 @@ void Cmd_Team_f( gentity_t *ent )
       return;
     }
 
+    if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+      return;
+    } 
+
     team = PTE_HUMANS;
   }
   else if( !Q_stricmp( s, "auto" ) )
@@ -805,6 +821,15 @@ void Cmd_Team_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
       return; 
     }
+
+    if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+      return;
+    } 
+
     if( level.humanTeamLocked && level.alienTeamLocked )
       team = PTE_NONE;
     else if( humans > aliens )

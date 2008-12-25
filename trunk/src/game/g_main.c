@@ -185,6 +185,7 @@ vmCvar_t  g_dretchPunt;
 vmCvar_t  g_extravotereasons;
 vmCvar_t  g_mapvotepart;
 vmCvar_t  g_forcevotereason;
+vmCvar_t  g_specmetimeout;
 
 static cvarTable_t   gameCvarTable[ ] =
 {
@@ -349,6 +350,8 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_extravotereasons, "g_extravotereasons", "1", 0, 0, qfalse },
   { &g_mapvotepart, "g_mapvotepart", "50", 0, 0, qfalse },
   { &g_forcevotereason, "g_forcevotereason", "1", 0, 0, qfalse },
+  { &g_specmetimeout, "g_specmetimeout", "1", 0, 0, qfalse },
+
 
 
 };
