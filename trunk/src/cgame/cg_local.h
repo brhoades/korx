@@ -84,7 +84,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DEFAULT_TEAM_HEAD   "sarge"
 
 
-#define   CELL_OUTLINE_CHECK_FREQ 30000
+#define   CELL_OUTLINE_CHECK_FREQ 7500
 
 typedef enum
 {
