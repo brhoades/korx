@@ -2960,23 +2960,34 @@ static void PM_Weapon( void )
   }
 
    //A modified copy off of Latiku's QVM.
-   if ( pm->ps->weapon == WP_LUCIFER_CANNON && pm->ps->stats[ STAT_MISC ] > 0 && ( attack3 || attack2 ) )
+   if ( pm->ps->weapon == WP_LUCIFER_CANNON && pm->ps->stats[ STAT_MISC ] < LCANNON_MIN_CHARGE && ( attack3 || attack2 ) )
    {
      attack1 = qfalse;
      attack2 = qtrue;			//So we can't run around holding these buttons and firing full charges.
      attack3 = qfalse;
 		 pm->ps->stats[ STAT_MISC ] = 0;
    }
+   else
+   {
+     attack1 = qtrue;
+     attack2 = qfalse;
+     attack3 = qfalse;
+   }
 
   //Slightly edited for the Xael
-   if ( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] > 0 && ( attack3 || attack1 ) )
+   if ( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] < XAEL_MIN_CHARGE && attack3 )
    {
      attack1 = qtrue;			//So we can't run around holding these buttons and firing full charges.
      attack2 = qfalse;
      attack3 = qfalse;
 	 	 pm->ps->stats[ STAT_MISC ] = 0;
    }
-
+   else
+   {
+     attack1 = qfalse;
+     attack2 = qtrue;
+     attack3 = qfalse;
+   }
   //TA: fire events for non auto weapons
   if( attack3 )
   {
