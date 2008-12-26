@@ -943,11 +943,15 @@ void ClientTimerActions( gentity_t *ent, int msec )
           client->tkcredits[ i ] = 0;
       }
      
-    //if we have a biokit, clear the infection
-    if(BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ))
-    {
-        client->infected = qfalse;
-    }
+    //calculate resistance to infection ('aids')
+    client->pers.aidresistance = 0;
+    if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
+      client->pers.aidresistance += .75;
+    if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, ent->client->ps.stats ) )
+      client->pers.aidresistance += .2;
+    if( BG_InventoryContainsUpgrade( UP_HELMET, ent->client->ps.stats ) )
+      client->pers.aidresistance += .13;
+
     //infection - stay away from teh infected ones!!! :)
     if( client->infected && !OnSameTeam( client->infector , ent ) )
     {
@@ -955,7 +959,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if( client->infectionTime + 20000 > level.time )
       {
         int i, num, entityList[ MAX_GENTITIES ];
-        vec3_t range = { 150, 150, 150 }, mins, maxs;
+        vec3_t range = { 50, 50, 50 }, mins, maxs;
         gentity_t *target;
 
         VectorAdd( ent->s.origin, range, maxs );
@@ -970,9 +974,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
               target->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
               G_Visible( ent, target ) && ent != target && target->health > 0 )
           {
-            target->client->infected = qtrue;
-            target->client->infectionTime = level.time;
-            target->client->infector = client->infector;
+            if( rand( ) % 1 > client->pers.aidresistance )
+            {
+              target->client->infected = qtrue;
+              target->client->infectionTime = level.time;
+              target->client->infector = client->infector;
+            }
           }
         }
         G_Damage( ent, client->infector, client->infector, NULL, NULL, 1,

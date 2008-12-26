@@ -1066,7 +1066,7 @@ qboolean CheckVenomAttack2( gentity_t *ent )
     if( BG_FindTeamForBuildable( traceEnt->s.modelindex ) != BIT_HUMANS )
       return qfalse;
     //hackery
-    damage *= 0.3f;
+    damage *= 0.4f;
   }
 
   if( traceEnt->client )
@@ -1075,7 +1075,7 @@ qboolean CheckVenomAttack2( gentity_t *ent )
       return qfalse;
     if( traceEnt->client->ps.stats[ STAT_HEALTH ] <= 0 )
       return qfalse;
-    if( !(traceEnt->client->infected) )
+    if( !traceEnt->client->infected && ( rand( ) % 1 > traceEnt->client->pers.aidresistance ) )
     {
       traceEnt->client->infected = qtrue;
       traceEnt->client->infectionTime = level.time;

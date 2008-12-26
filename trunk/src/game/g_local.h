@@ -364,6 +364,7 @@ typedef struct
   qboolean            specd;
   qboolean            saved;
   qboolean            designatedBuilder;
+  double              aidresistance;
 } clientPersistant_t;
 
 #define MAX_UNLAGGED_MARKERS 10
