@@ -1363,6 +1363,7 @@ Think for alien hovel
 */
 void AHovel_Think( gentity_t *self )
 {  
+  gentity_t *builder = self->builder;
   self->nextthink = level.time + 200;
   self->powered = G_IsOvermindBuilt( );
   if( self->spawned )
@@ -1372,6 +1373,12 @@ void AHovel_Think( gentity_t *self )
       G_SetIdleBuildableAnim( self, BANIM_IDLE2 );
     else
       G_SetIdleBuildableAnim( self, BANIM_IDLE1 );
+
+    if( self->active && builder->client->ps.stats[ STAT_STATE ] == SS_HOVELING && builder->health <= 0 )
+    {
+       builder->client->ps.stats[ STAT_STATE ] &= ~SS_HOVELING;
+       self->active = qfalse;
+    }
   }
   //if there is no creep nearby, take damage
   if( !G_FindCreep( self ) )
