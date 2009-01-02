@@ -1573,14 +1573,14 @@ static void PM_CrashLand( void )
   {
     pm->ps->stats[ STAT_FALLDIST ] = delta;
 
-    if( delta > AVG_FALL_DISTANCE )
+   if( delta > AVG_FALL_DISTANCE )
+   {
+      if( PM_Live( pm->ps->pm_type ) )
+        PM_AddEvent( EV_FALL_FAR );
+   }
+   else if( delta > MIN_FALL_DISTANCE )
     {
-      PM_AddEvent( EV_FALL_FAR );
-    }
-    else if( delta > MIN_FALL_DISTANCE )
-    {
-      // this is a pain grunt, so don't play it if dead
-      if( pm->ps->stats[STAT_HEALTH] > 0 )
+      if( PM_Live( pm->ps->pm_type ) )
         PM_AddEvent( EV_FALL_MEDIUM );
     }
     else
@@ -1589,6 +1589,7 @@ static void PM_CrashLand( void )
         PM_AddEvent( EV_FALL_SHORT );
       else
         PM_AddEvent( PM_FootstepForSurface( ) );
+
     }
   }
 

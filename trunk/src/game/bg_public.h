@@ -120,6 +120,12 @@ typedef enum
   PM_HOVELING       // stuck in place with rotational camera control
 } pmtype_t;
 
+// pmtype_t categories
+#define PM_Paralyzed( x ) ( (x) == PM_DEAD || (x) == PM_FREEZE ||\
+                            (x) == PM_INTERMISSION )
+#define PM_Live( x )      ( (x) == PM_NORMAL || (x) == PM_JETPACK ||\
+                            (x) == PM_GRABBED )
+
 typedef enum
 {
   WEAPON_READY,
