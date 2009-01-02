@@ -4483,6 +4483,14 @@ static void Cmd_Ignore_f( gentity_t *ent )
  
      return;
    }
+
+  if( g_floodMinTime.integer )
+   if ( G_Flood_Limited( ent ) )
+   {
+    trap_SendServerCommand( ent-g_entities, "print \"Your shares are flood-limited; wait before sharing again\n\"" );
+    return;
+   }
+
  
    team = ent->client->pers.teamSelection;
  
@@ -4687,11 +4695,11 @@ static void Cmd_Ignore_f( gentity_t *ent )
      return;
    }
    if( level.extremeSuddenDeath ) 
-    {
+   {
     trap_SendServerCommand( ent-g_entities,
     "print \"Donate is disabled during ESD.\n\"" );
      return;
-    }
+   }
 
    if( ent->client->pers.teamSelection == PTE_ALIENS )
      divisor = level.numAlienClients-1;
@@ -4718,6 +4726,14 @@ static void Cmd_Ignore_f( gentity_t *ent )
        "print \"donate: very funny\n\"" );
      return;
    }
+
+   if( g_floodMinTime.integer )
+    if ( G_Flood_Limited( ent ) )
+    {
+     trap_SendServerCommand( ent-g_entities, "print \"Your donations are flood-limited; wait before donating again\n\"" );
+     return;
+    }
+
    if( value > ent->client->ps.persistant[ PERS_CREDIT ] )
      value = ent->client->ps.persistant[ PERS_CREDIT ];
  
