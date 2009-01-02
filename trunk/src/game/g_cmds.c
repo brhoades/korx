@@ -862,8 +862,10 @@ void Cmd_Team_f( gentity_t *ent )
        BG_InventoryContainsWeapon( WP_HBUILD2, ent->client->ps.stats ) ) &&
       ent->client->ps.stats[ STAT_MISC ] > 0 )
   {
-    trap_SendServerCommand( ent-g_entities,
-        va( "print \"You cannot change teams until build timer expires\n\"" ) );
+    if( ent->client->pers.teamSelection == PTE_ALIENS )
+      G_TriggerMenu( ent->client->ps.clientNum, MN_A_TEAMCHANGEBUILDTIMER );
+    else
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_TEAMCHANGEBUILDTIMER );
     return;
   }
 
@@ -3006,8 +3008,7 @@ void Cmd_Class_f( gentity_t *ent )
             currentClass == PCL_ALIEN_BUILDER0_UPG ) &&
             ent->client->ps.stats[ STAT_MISC ] > 0 )
       {
-        trap_SendServerCommand( ent-g_entities,
-            va( "print \"You cannot evolve until build timer expires\n\"" ) );
+        G_TriggerMenu( ent->client->ps.clientNum, MN_A_EVOLVEBUILDTIMER );
         return;
       }
 
@@ -3454,8 +3455,7 @@ void Cmd_Buy_f( gentity_t *ent )
         !G_BuildableRange( ent->client->ps.origin, 100, BA_H_REPEATER ) &&
         !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) )
     {
-      trap_SendServerCommand( ent-g_entities, va(
-        "print \"You must be near a reactor, repeater or armoury\n\"" ) );
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOENERGYAMMOHERE );
       return;
     }
   }
@@ -3464,7 +3464,7 @@ void Cmd_Buy_f( gentity_t *ent )
     //no armoury nearby
     if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) )
     {
-      trap_SendServerCommand( ent-g_entities, va( "print \"You must be near a powered armoury\n\"" ) );
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
       return;
     }
   }
@@ -3589,6 +3589,19 @@ void Cmd_Buy_f( gentity_t *ent )
       G_GiveClientMaxAmmo( ent, buyingEnergyAmmo );
     else
     {
+      if( upgrade == UP_BATTLESUIT )
+      {
+        vec3_t newOrigin;
+
+        if( !G_RoomForClassChange( ent, PCL_HUMAN_BSUIT, newOrigin ) )
+        {
+          G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOROOMBSUITON );
+          return;
+        }
+        VectorCopy( newOrigin, ent->s.pos.trBase );
+        ent->client->ps.stats[ STAT_PCLASS ] = PCL_HUMAN_BSUIT;
+      }
+
       //add to inventory
       BG_AddUpgradeToInventory( upgrade, ent->client->ps.stats );
     }
@@ -3659,7 +3672,7 @@ void Cmd_Sell_f( gentity_t *ent )
   //no armoury nearby
   if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) )
   {
-    trap_SendServerCommand( ent-g_entities, va( "print \"You must be near a powered armoury\n\"" ) );
+    G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
     return;
   }
 
@@ -3682,7 +3695,7 @@ void Cmd_Sell_f( gentity_t *ent )
       if( ( weapon == WP_HBUILD || weapon == WP_HBUILD2 ) &&
           ent->client->ps.stats[ STAT_MISC ] > 0 )
       {
-        trap_SendServerCommand( ent-g_entities, va( "print \"Cannot sell until build timer expires\n\"" ) );
+        G_TriggerMenu( ent->client->ps.clientNum, MN_H_ARMOURYBUILDTIMER );
         return;
       }
 
@@ -3707,6 +3720,21 @@ void Cmd_Sell_f( gentity_t *ent )
     //remove upgrade if carried
     if( BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
     {
+      // shouldn't really need to test for this, but just to be safe
+      if( upgrade == UP_BATTLESUIT )
+      {
+        vec3_t newOrigin;
+
+        if( !G_RoomForClassChange( ent, PCL_HUMAN, newOrigin ) )
+        {
+          G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOROOMBSUITOFF );
+          return;
+        }
+        VectorCopy( newOrigin, ent->s.pos.trBase );
+        ent->client->ps.stats[ STAT_PCLASS ] = PCL_HUMAN;
+      }
+
+      //add to inventory
       BG_RemoveUpgradeFromInventory( upgrade, ent->client->ps.stats );
 
       if( upgrade == UP_BATTPACK )
@@ -3737,7 +3765,7 @@ void Cmd_Sell_f( gentity_t *ent )
       if( ( i == WP_HBUILD || i == WP_HBUILD2 ) &&
           ent->client->ps.stats[ STAT_MISC ] > 0 )
       {
-        trap_SendServerCommand( ent-g_entities, va( "print \"Cannot sell until build timer expires\n\"" ) );
+        G_TriggerMenu( ent->client->ps.clientNum, MN_H_ARMOURYBUILDTIMER );
         continue;
       }
 
@@ -3763,6 +3791,21 @@ void Cmd_Sell_f( gentity_t *ent )
       if( BG_InventoryContainsUpgrade( i, ent->client->ps.stats ) &&
           BG_FindPurchasableForUpgrade( i ) )
       {
+
+        // shouldn't really need to test for this, but just to be safe
+        if( i == UP_BATTLESUIT )
+        {
+          vec3_t newOrigin;
+
+          if( !G_RoomForClassChange( ent, PCL_HUMAN, newOrigin ) )
+          {
+            G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOROOMBSUITOFF );
+            continue;
+          }
+          VectorCopy( newOrigin, ent->s.pos.trBase );
+          ent->client->ps.stats[ STAT_PCLASS ] = PCL_HUMAN;
+        }
+
         BG_RemoveUpgradeFromInventory( i, ent->client->ps.stats );
 
         if( i == UP_BATTPACK || i == UP_BATTLESUIT )

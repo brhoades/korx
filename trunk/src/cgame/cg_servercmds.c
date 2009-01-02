@@ -647,20 +647,6 @@ void CG_Menu( int menu )
       cmd       = "menu tremulous_human_dialog\n";
       break;
 
-    case MN_H_NOARMOURYHERE:
-      longMsg   = "You must be near a powered Armoury in order to purchase "
-                  "weapons, upgrades or non-energy ammunition.";
-      shortMsg  = "You must be near a powered Armoury\n";
-      cmd       = "menu tremulous_human_dialog\n";
-      break;
-
-    case MN_H_NOENERGYAMMOHERE:
-      longMsg   = "You must be near an Armoury, Reactor or Repeater in order "
-                  "to purchase energy ammunition.";
-      shortMsg  = "You must be near an Armoury, Reactor or Repeater\n";
-      cmd       = "menu tremulous_human_dialog\n";
-      break;
-
     case MN_H_NOROOMBSUITON:
       longMsg   = "There is not enough room here to put on a Battle Suit. "
                   "Make sure you have enough head room to climb in.";
@@ -675,11 +661,17 @@ void CG_Menu( int menu )
       cmd       = "menu tremulous_human_dialog\n";
       break;
 
-    case MN_H_ARMOURYBUILDTIMER:
-      longMsg   = "You are not allowed to buy or sell weapons until your "
-                  "build timer has expired.";
-      shortMsg  = "You can not buy or sell weapos until your build timer "
-                  "expires\n";
+    case MN_H_NOARMOURYHERE:
+      longMsg   = "You must be near a powered Armoury in order to purchase "
+                  "weapons, upgrades or non-energy ammunition.";
+      shortMsg  = "You must be near a powered Armoury\n";
+      cmd       = "menu tremulous_human_dialog\n";
+      break;
+
+    case MN_H_NOENERGYAMMOHERE:
+      longMsg   = "You must be near an Armoury, Reactor or Repeater in order "
+                  "to purchase energy ammunition.";
+      shortMsg  = "You must be near an Armoury, Reactor or Repeater\n";
       cmd       = "menu tremulous_human_dialog\n";
       break;
 
@@ -765,12 +757,6 @@ void CG_Menu( int menu )
       cmd       = "menu tremulous_alien_dialog\n";
       break;
 
-    case MN_A_EVOLVEBUILDTIMER:
-      longMsg   = "You cannot Evolve until your build timer has expired.";
-      shortMsg  = "You cannot Evolve until your build timer expires\n";
-      cmd       = "menu tremulous_alien_dialog\n";
-      break;
-
     case MN_A_HOVEL_OCCUPIED:
       longMsg   = "This Hovel is already occupied by another builder.";
       shortMsg  = "This Hovel is already occupied by another builder\n";
@@ -788,6 +774,12 @@ void CG_Menu( int menu )
       longMsg   = "The exit to this Hovel would always be blocked. Please choose "
                   "a more suitable location.";
       shortMsg  = "The exit to this Hovel would always be blocked\n";
+      cmd       = "menu tremulous_alien_dialog\n";
+      break;
+
+    case MN_A_EVOLVEBUILDTIMER:
+      longMsg   = "You cannot Evolve until your build timer has expired.";
+      shortMsg  = "You cannot Evolve until your build timer expires\n";
       cmd       = "menu tremulous_alien_dialog\n";
       break;
 
