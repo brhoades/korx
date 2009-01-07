@@ -18,6 +18,7 @@ New Votes
 New Commands
   * listmaps, bound to !register and !help flag
   * switch, bound to m, a new flag
+/donate can now be used in chat.<br />
 
 ===Gameplay===
 *Adv. Rants no longer take falling damage.<br />
@@ -39,12 +40,18 @@ Donations are disabled in ESD. <br />
 Buildables can no longer have 0 HP without being dead. <br />
 Buildables are now built with > 0 HP. <br />
 Grangers in hovels can now rotate the camera freely. <br />
-Grangers can growl in hovels. <br />
 If you attempt to get into a occupied hovel, it tells who is in it.<br />
 The build timer now passes with the blaster out. <br />
-You can now heal structures/players with a build timer, as a human.<br />
 Spectators on a team can now rotate the camera freely. <br />
-
+Grangers that die in a hovel no longer stay inside it. <br />
+Added a flood limit to sharing and donating. <br />
+Added several missing suicide death messages. <br />
+Added newbie numbering patch. <br />
+It is impossible to be completely immune from infection ('aids'). You can buy objects that increase your percentage accordingly. <br />
+Humans no longer make a fall sound when dead. <br />
+*Bsuits can no longer be bought or sold without sufficent room. <br />
+The bsuit was made taller than the regular human (now the hitbox/viewbox matches up with the model). <br />
+Added credit overflow <br /> *
 
 ===Graphics===
 <a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep</a> has been added, creep by Garoth of MG. This also affects rant acid and granger spit.<br />
