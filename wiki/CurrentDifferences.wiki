@@ -47,7 +47,8 @@ Grangers that die in a hovel no longer stay inside it. <br />
 Added a flood limit to sharing and donating. <br />
 Added several missing suicide death messages. <br />
 Added newbie numbering patch. <br />
-It is impossible to be completely immune from infection ('aids'). You can buy objects that increase your percentage accordingly. <br />
+It is impossible to be completely immune from infection ('aids'). You can buy objects that increase your immune percentage accordingly. <br />
+Infection ('aids') range for spreading was cut down by 1/3. <br />
 Humans no longer make a fall sound when dead. <br />
 *Bsuits can no longer be bought or sold without sufficent room. <br />
 The bsuit was made taller than the regular human (now the hitbox/viewbox matches up with the model). <br />
