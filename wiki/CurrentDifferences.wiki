@@ -19,6 +19,7 @@ New Commands
   * listmaps, bound to !register and !help flag
   * switch, bound to m, a new flag
 /donate can now be used in chat.<br />
+!specme now has a delay time after using it. It defaults to one minute. This is to prevent misuse of the command. (team switching, avoiding getting killed, etc)<br />
 
 ===Gameplay===
 *Adv. Rants no longer take falling damage.<br />
@@ -53,6 +54,7 @@ Humans no longer make a fall sound when dead. <br />
 *Bsuits can no longer be bought or sold without sufficent room. <br />
 The bsuit was made taller than the regular human (now the hitbox/viewbox matches up with the model). <br />
 Added credit overflow <br /> *
+Booster poisons humans who touch it. It gives an appropriate death message if it needs to.<br />
 
 ===Graphics===
 <a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep</a> has been added, creep by Garoth of MG. This also affects rant acid and granger spit.<br />
