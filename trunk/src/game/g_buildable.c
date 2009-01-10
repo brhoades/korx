@@ -301,7 +301,7 @@ G_countDCC
 
 count how many active DCCs there are
 ================
-*/
+
 static int G_CountDCC( void )
 {
   int       i;
@@ -323,7 +323,7 @@ static int G_CountDCC( void )
 
   return dccCount;
 }
-/*
+
 ================
 G_IsDCCBuilt
 
@@ -1997,7 +1997,7 @@ void HMedistat_Think( gentity_t *self )
 	  continue; // notarget cancels even beneficial effects?
 
         if( player->client && player->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
-	{
+	      {
           if( player->health < player->client->ps.stats[ STAT_MAX_HEALTH ] &&
               player->client->ps.pm_type != PM_DEAD )
           {
@@ -2032,7 +2032,7 @@ void HMedistat_Think( gentity_t *self )
 //      if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE )
 //        self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
 
-      self->enemy->health+=1+G_CountDCC();
+      self->enemy->health += 1;
 
       //if they're completely healed, give them a medkit
       if( self->enemy->health >= self->enemy->client->ps.stats[ STAT_MAX_HEALTH ] &&
@@ -2746,7 +2746,7 @@ void G_BuildableThink( gentity_t *ent, int msec )
         bRegen && ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
       ent->health += bRegen;
     else if( ent->biteam == BIT_HUMANS && ent->health > 0 && ent->health < bHealth && bRegen && G_IsDCCBuilt() && ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time )
-      ent->health += bRegen * G_CountDCC();
+      ent->health += bRegen;
 
     if( ent->health > bHealth )
       ent->health = bHealth;
