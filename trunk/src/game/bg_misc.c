@@ -4518,7 +4518,7 @@ upgradeAttributes_t bg_upgrades[ ] =
     SLOT_BACKPACK,          //int   slots;
     "cloak",             //char  *upgradeName;
     "Cloak",         //char  *upgradeHumanName;
-    "icons/iconu_surge",
+    "icons/iconu_cloak",
     qtrue,                  //qboolean purchasable
     qtrue,                 //qboolean usable
     WUT_HUMANS              //WUTeam_t  team;
