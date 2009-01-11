@@ -2976,14 +2976,14 @@ static void PM_Weapon( void )
    }
 
   //Slightly edited for the Xael
-   if ( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] < XAEL_MIN_CHARGE && ( attack3 || attack2 ) )
+   if ( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] < XAEL_MIN_CHARGE && ( attack3 || attack1 ) )
    {
      attack1 = qtrue;			//So we can't run around holding these buttons and firing full charges.
      attack2 = qfalse;
      attack3 = qfalse;
 	 	 pm->ps->stats[ STAT_MISC ] = 0;
    }
-   else if( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] >= XAEL_MIN_CHARGE && (attack2 || attack3) )
+   else if( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] >= XAEL_MIN_CHARGE && ( attack1 || attack3 ) )
    {
      attack1 = qfalse;
      attack2 = qtrue;
