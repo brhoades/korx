@@ -2305,7 +2305,6 @@ void CheckVote( void )
 {
   int votePercentToPass=level.votePercentToPass;
   int voteYesPercent;
-  qboolean mapvote;
 	
   if( level.voteExecuteTime && level.voteExecuteTime < level.time )
   {
@@ -2314,10 +2313,7 @@ void CheckVote( void )
     trap_SendConsoleCommand( EXEC_APPEND, va( "%s\n", level.voteString ) );
     if( !Q_stricmp( level.voteString, "map_restart" ) ||
         !Q_stricmpn( level.voteString, "map", 3 ) )
-    {
       level.restarted = qtrue;
-      mapvote = qtrue;
-    } 
   }
 
   if( !level.voteTime )
@@ -2350,7 +2346,7 @@ void CheckVote( void )
   }
   else if( level.time - level.voteTime >= VOTE_TIME )
   {
-    if( voteYesPercent > votePercentToPass && level.voteYes > (int)((double)level.numConnectedClients * ((double)votePercentToPass/100.0)) )
+    if( voteYesPercent >= votePercentToPass && level.voteYes > (int)((double)level.numConnectedClients * ((double)votePercentToPass/100.0)) )
     {
       // execute the command, then remove the vote
       trap_SendServerCommand( -1, va("print \"^2Vote Passed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ) );
