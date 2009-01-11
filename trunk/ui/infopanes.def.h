@@ -228,7 +228,7 @@
   name regenitem
   text "Bio Kit\n\n"
   text "An implant that helps its user to regenerate health and stamina "
-  text "and makes you immune to spreadable infections.\n\n"
+  text "and makes you slightly more immune to spreadable infections.\n\n"
   CREDITS( REGEN_PRICE )
 }
 
