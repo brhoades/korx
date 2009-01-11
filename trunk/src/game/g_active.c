@@ -1054,9 +1054,9 @@ void ClientIntermissionThink( gclient_t *client )
   // the level will exit when everyone wants to or after timeouts
 
   // swap and latch button actions
-  // client->oldbuttons = client->buttons;
+  client->oldbuttons = client->buttons;
   client->buttons = client->pers.cmd.buttons;
-  if( client->buttons & ( BUTTON_ATTACK | BUTTON_USE_HOLDABLE ) & ( client->oldbuttons ^ client->buttons ) )
+  if( client->buttons & ( BUTTON_ATTACK | BUTTON_USE_HOLDABLE ) )
     client->readyToExit = 1;
 }
 
