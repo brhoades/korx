@@ -2612,11 +2612,15 @@ static void PM_BeginWeaponChange( int weapon )
     return;
 
   //special case to prevent storing a charged up lcannon
-  if( pm->ps->weapon == WP_LUCIFER_CANNON )
+  if( pm->ps->weapon == WP_LUCIFER_CANNON && pm->ps->stats[ STAT_MISC ] < LCANNON_MIN_CHARGE  )
     pm->ps->stats[ STAT_MISC ] = 0;
+  else if( pm->ps->weapon == WP_LUCIFER_CANNON )
+    return;
   //special case to prevent storing a charged up xael
-  if( pm->ps->weapon == WP_XAEL )
+  if( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] < XAEL_MIN_CHARGE )
     pm->ps->stats[ STAT_MISC ] = 0;
+  else if( pm->ps->weapon == WP_XAEL )
+    return;
 
   PM_AddEvent( EV_CHANGE_WEAPON );
   pm->ps->weaponstate = WEAPON_DROPPING;
