@@ -482,7 +482,7 @@
   name level4upgclass
   text "Advanced Tyrant\n\n"
   text "It has an acid ball that can be used only once unless it is boosted."
-  text "The acid ball does not damage structures unless you score a direct hit.\n\n"
+  text "The acid ball does little damage to structures without a direct hit.\n\n"
   text "Evos: 11 (Tyrant + 6)"
 }
 
