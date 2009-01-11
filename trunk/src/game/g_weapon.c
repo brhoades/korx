@@ -1075,7 +1075,7 @@ qboolean CheckVenomAttack2( gentity_t *ent )
       return qfalse;
     if( traceEnt->client->ps.stats[ STAT_HEALTH ] <= 0 )
       return qfalse;
-    if( !traceEnt->client->infected && ( rand( ) % 1 > traceEnt->client->pers.aidresistance ) )
+    if( !traceEnt->client->infected && ( rand( ) > traceEnt->client->pers.aidresistance ) )
     {
       traceEnt->client->infected = qtrue;
       traceEnt->client->infectionTime = level.time;
