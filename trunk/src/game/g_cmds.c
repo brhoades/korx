@@ -1357,7 +1357,7 @@ static void Cmd_Say_f( gentity_t *ent )
       !Q_stricmpn( args, "say_team /say_clan ", 20) )
   {
       mode = SAY_CLAN;
-      offset =3;
+      offset = 3;
   }
   
    if( mode == SAY_ADMINS)  
@@ -1388,7 +1388,7 @@ static void Cmd_Say_f( gentity_t *ent )
   	  }
   	}
 
-  if(!Q_stricmpn( args, "say /me ", 8 ) )
+  if( !Q_stricmpn( args, "say /me ", 8 ) )
   {
    if( g_allowActions.integer ) 
    { 
@@ -1441,11 +1441,11 @@ static void Cmd_Say_f( gentity_t *ent )
   if( trap_Argc( ) < 2 )
     return;
 
-//  p = G_SayConcatArgs( 1 + skipargs );
+  p = G_SayConcatArgs( 1 + skipargs );
 
-//  p += offset;
+  p += offset;
 
-  p = ConcatArgs( 1 );
+  //p = ConcatArgs( 1 );
   
   G_Say( ent, NULL, mode, p );
 }
@@ -5000,74 +5000,49 @@ int G_SayArgc()
 
 qboolean G_SayArgv( int n, char *buffer, int bufferLength )
 {
-  int bc = 1;
-  int c = 0;
   char *s;
 
   if( bufferLength < 1 )
     return qfalse;
-  if(n < 0)
+  if( n < 0 )
     return qfalse;
-  *buffer = '\0';
   s = ConcatArgs( 0 );
-  while( *s )
+  while( 1 )
   {
-    if( c == n )
-    {
-      while( *s && ( bc < bufferLength ) )
-      {
-        if( *s == ' ' )
-        {
-          *buffer = '\0';
-          return qtrue;
-        }
-        *buffer = *s;
-        buffer++;
-        s++;
-        bc++;
-      }
-      *buffer = '\0';
-      return qtrue;
-    }
-    if( *s == ' ' )
-    {
+    while( *s == ' ' )
       s++;
-      if( *s != ' ' )
-      {
-        c++;
-        continue;
-      }
-      while( *s && *s == ' ' )
-        s++;
-      c++;
-    }
-    s++;
+    if( !*s || n == 0 )
+      break;
+    n--;
+    while( *s && *s != ' ' )
+      s++;
   }
-  return qfalse;
+  if( n > 0 )
+    return qfalse;
+  //memccpy( buffer, s, ' ', bufferLength );
+  while( *s && *s != ' ' && bufferLength > 1 )
+  {
+    *buffer++ = *s++;
+    bufferLength--;
+  }
+  *buffer = 0;
+  return qtrue;
 }
 
-char *G_SayConcatArgs(int start)
+char *G_SayConcatArgs( int start )
 {
   char *s;
-  int c = 0;
 
   s = ConcatArgs( 0 );
-  while( *s ) {
-    if( c == start )
-      return s;
-    if( *s == ' ' )
-    {
+  while( 1 )
+  {
+    while( *s == ' ' )
       s++;
-      if( *s != ' ' )
-      {
-        c++;
-        continue;
-      }
-      while( *s && *s == ' ' )
-        s++;
-      c++;
-    }
-    s++;
+    if( !*s || start == 0 )
+      break;
+    start--;
+    while( *s && *s != ' ' )
+      s++;
   }
   return s;
 }
