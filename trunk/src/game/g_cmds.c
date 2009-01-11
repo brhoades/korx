@@ -1106,6 +1106,7 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
   char        text[ MAX_SAY_TEXT ];
   char        location[ 64 ];
 	color = COLOR_WHITE;
+
   // Bail if the text is blank.
   if( ! chatText[0] )
      return;
@@ -1203,8 +1204,8 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
 			}
 			else
 			{
-				G_LogPrintf( "say_admins: A[PLAYER]%s: %s\n", ent->client->pers.netname, chatText );
-				Com_sprintf( name, sizeof( name ), "%sA[PLAYER]%s%c%c"EC": ", prefix,
+				G_LogPrintf( "say_admins: [A][PLAYER]%s: %s\n", ent->client->pers.netname, chatText );
+				Com_sprintf( name, sizeof( name ), "%s[A][PLAYER]%s%c%c"EC": ", prefix,
 					ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE );
 				color = COLOR_MAGENTA;
 				break;
@@ -1222,8 +1223,8 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
 			}
 			else
 			{
-				G_LogPrintf( "say_clan: C[PLAYER]%s: %s\n", ent->client->pers.netname, chatText );
-				Com_sprintf( name, sizeof( name ), "%sC[PLAYER]%s%c%c"EC": ", prefix,
+				G_LogPrintf( "say_clan: [C][PLAYER]%s: %s\n", ent->client->pers.netname, chatText );
+				Com_sprintf( name, sizeof( name ), "%s[C][PLAYER]%s%c%c"EC": ", prefix,
 					ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE );
 				color = COLOR_WHITE;
 				break;
