@@ -1667,17 +1667,16 @@ void CalculateRanks( void )
       if( level.clients[ i ].pers.teamSelection != PTE_NONE )
       {
         level.numPlayingClients++;
-      if( level.clients[ i ].pers.teamSelection == PTE_HUMANS ||
-          level.clients[ i ].pers.teamSelection == PTE_ALIENS )
+        if( level.clients[ i ].sess.sessionTeam != TEAM_SPECTATOR )
           level.numNonSpectatorClients++;
 
-        if( level.clients[ i ].pers.teamSelection == PTE_HUMANS )
+        if( level.clients[ i ].pers.teamSelection == PTE_ALIENS )
         {
           level.numAlienClients++;
           if( level.clients[ i ].sess.sessionTeam != TEAM_SPECTATOR )
             level.numLiveAlienClients++;
         }
-        else if( level.clients[ i ].pers.teamSelection == PTE_ALIENS )
+        else if( level.clients[ i ].pers.teamSelection == PTE_HUMANS )
         {
           level.numHumanClients++;
           if( level.clients[ i ].sess.sessionTeam != TEAM_SPECTATOR )
