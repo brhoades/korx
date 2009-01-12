@@ -4705,6 +4705,10 @@ static void Cmd_Ignore_f( gentity_t *ent )
      creds,
      ( team == PTE_HUMANS ) ? "c" : "e",
      level.clients[ clientNum ].pers.netname );
+
+   //keep everything in sync
+   ent->client->ps.persistant[ PERS_CREDIT] = ent->client->pers.credit;
+   level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ] = level.clients[ clientNum ].pers.credit;
  }
 
  /*
@@ -4769,8 +4773,8 @@ static void Cmd_Ignore_f( gentity_t *ent )
      return;
     }
 
-   if( value > ent->client->ps.persistant[ PERS_CREDIT ] )
-     value = ent->client->ps.persistant[ PERS_CREDIT ];
+   if( value > ent->client->pers.credit )
+     value = ent->client->pers.credit;
  
    // allocate memory for distribution amounts
    amounts = G_Alloc( level.maxclients * sizeof( int ) );
@@ -4787,14 +4791,14 @@ static void Cmd_Ignore_f( gentity_t *ent )
             ent->client != level.clients + i &&
             level.clients[ i ].pers.teamSelection ==
             ent->client->pers.teamSelection ) {
-         new_credits = level.clients[ i ].ps.persistant[ PERS_CREDIT ] + portion;
+         new_credits = level.clients[ i ].pers.credit + portion;
          amounts[ i ] = portion;
          if( new_credits > max ) {
            amounts[ i ] -= new_credits - max;
            new_credits = max;
          }
          if( amounts[ i ] ) {
-           level.clients[ i ].ps.persistant[ PERS_CREDIT ] = new_credits;
+           level.clients[ i ].pers.credit = new_credits;
            donated = qtrue;
            value -= amounts[ i ];
            if( value < portion ) break;
