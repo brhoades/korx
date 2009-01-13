@@ -4799,6 +4799,7 @@ static void Cmd_Ignore_f( gentity_t *ent )
          }
          if( amounts[ i ] ) {
            level.clients[ i ].pers.credit = new_credits;
+           level.clients[ i ].ps.persistant[ PERS_CREDIT ] = level.clients[ i ].pers.credit;
            donated = qtrue;
            value -= amounts[ i ];
            if( value < portion ) break;
@@ -4820,6 +4821,7 @@ static void Cmd_Ignore_f( gentity_t *ent )
    trap_SendServerCommand( ent-g_entities,
      va( "print \"Donated %d %s to the cause.\n\"",
      total-value, type ) );
+     ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.credit;
  }
 
 commands_t cmds[ ] = {
