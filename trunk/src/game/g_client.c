@@ -83,21 +83,29 @@ void SP_info_human_intermission( gentity_t *ent )
 void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 {
   int       i;
-  short     overflow = 0, max = 0;
+  short     overflow = 0, max = 0, overflowamt = 0, overflowed = 0, overflowtotal = 0;
+  char      type[8];
   gclient_t *cl;
 
   if( !client )
     return;
 
   if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+  {
     max = ALIEN_MAX_KILLS;
+    strcpy(type, "evo");
+  }
   else if( client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+  {
     max = HUMAN_MAX_CREDITS;
+    strcpy(type, "credit");
+  }
 
   if( cap && client->pers.credit + credit > max )
   {
     overflow = client->pers.credit + credit - max;
     client->pers.credit = max;
+    overflowtotal = overflow;
 
     // give precedence to live players
     for( i = level.numConnectedClients - 1; overflow > 0 && i >= 0; i-- )
@@ -110,18 +118,37 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( cl->sess.sessionTeam == TEAM_SPECTATOR )
         continue;
 
+      overflowed++;
+      overflowamt = 0;
+
       if( cl->pers.credit + overflow > max )
       {
-        overflow -= max - cl->pers.credit;
-        cl->pers.credit = max;
+        overflowamt = max - cl->pers.credit;
+        overflow -= overflowamt;
+        cl->pers.credit = max;  
+        cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       }
       else
       {
+        overflowamt = overflow;
         cl->pers.credit += overflow;
         overflow = 0;
+        cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       }
 
+      if( overflowamt > 1 )
+      {      
+        if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+          strcpy(type, "evos");
+        else
+          strcpy(type, "credits");
+      }
+      trap_SendServerCommand( i,
+      va( "print \"%s^7 overflowed %d %s to you!\n\"",
+      cl->pers.netname, overflowamt, type ) );
+
       cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
+      overflowamt = 0;
     }
     // give anything else to dead players
     for( i = 0; overflow > 0 && i < level.numConnectedClients; i++ )
@@ -136,15 +163,36 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       if( cl->pers.credit + overflow > max )
       {
-        overflow -= max - cl->pers.credit;
+        overflowamt = max - cl->pers.credit;
+        overflow -= overflowamt;
         cl->pers.credit = max;
+        overflowed++;
       }
       else
       {
+        overflowamt = overflow;
         cl->pers.credit += overflow;
         overflow = 0;
+        overflowed++;
       }
+      if( overflowamt > 1 )
+      {
+        if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+          strcpy(type, "evos");
+        else
+          strcpy(type, "credits");
+      }
+
+      trap_SendServerCommand( i,
+      va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
+      cl->pers.netname, overflowamt, type ) );
+
     }
+    trap_SendServerCommand( client - level.clients,
+    va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
+    overflowtotal, type, overflowed, 
+    ( overflowed == 1 ) ? "person" : "people" ) );
+
   }
   else
   {
