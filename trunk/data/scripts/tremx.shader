@@ -31,22 +31,27 @@ gfx/invisfade
     rgbgen wave sin 0.0 1.0 0.25 0.5
   }
   {
-    map gfx/invis.jpg
-    blendFunc GL_ONE GL_ONE
-    tcmod scale 2 2
-    tcMod scroll 0.2 -0.2
-    //tcGen environment
+	  map gfx/invis.tga
+	  blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	  alphaFunc GT0
+	  depthWrite
+	  tcMod rotate 15
+	  tcmod stretch sin 1.5 1 0 0.2
+	  alphaGen wave sin 0.5 0.2 0 0.3
   }
 }
 gfx/invis
 {
   nopicmip
   {
-    map gfx/invis.jpg
-    blendFunc GL_ONE GL_ONE
-    tcmod scale 2 2
-    tcMod scroll 0.2 -0.2
-    //tcGen environment
+	  map gfx/invis.tga
+	  blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	  alphaFunc GT0
+	  depthWrite
+	  rgbGen identity
+	  tcMod rotate 15
+	  tcmod stretch sin 1.5 1 0 0.2
+	  alphaGen wave sin 0.5 0.2 0 0.3
   }
 }
 
