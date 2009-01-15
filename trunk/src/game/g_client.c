@@ -101,7 +101,8 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
     strcpy(type, "credit");
   }
 
-  if( cap && client->pers.credit + credit > max )
+  //This doesn't work so well in ESD or with /give all
+  if( cap && client->pers.credit + credit > max && !g_extremeSuddenDeath.value && !g_cheats.value && g_allowShare.value )
   {
     overflow = client->pers.credit + credit - max;
     client->pers.credit = max;
