@@ -137,16 +137,11 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       }
 
-      if( overflowamt > 1 )
-      {      
-        if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
-          strcpy(type, "evos");
-        else
-          strcpy(type, "credits");
-      }
-      trap_SendServerCommand( i,
-      va( "print \"%s^7 overflowed %d %s to you!\n\"",
-      cl->pers.netname, overflowamt, type ) );
+    if( overflowed > 0 )
+     trap_SendServerCommand( client - level.clients,
+       va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
+       overflowtotal, type, overflowed, 
+       ( overflowed == 1 ) ? "person" : "people" ) );
 
       cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       overflowamt = 0;
@@ -176,23 +171,17 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         overflow = 0;
         overflowed++;
       }
-      if( overflowamt > 1 )
-      {
-        if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
-          strcpy(type, "evos");
-        else
-          strcpy(type, "credits");
-      }
 
       trap_SendServerCommand( i,
-      va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
-      cl->pers.netname, overflowamt, type ) );
+      va( "print \"%s^7 overflowed ^2%i ^7%s%s to you!\n\"",
+      cl->pers.netname, overflowamt, type, ( overflowamt == 1) ? "" : "s" ) );
 
     }
-    trap_SendServerCommand( client - level.clients,
-    va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
-    overflowtotal, type, overflowed, 
-    ( overflowed == 1 ) ? "person" : "people" ) );
+    if( overflowed > 0 )
+     trap_SendServerCommand( client - level.clients,
+       va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
+       overflowtotal, type, overflowed, 
+       ( overflowed == 1 ) ? "person" : "people" ) );
 
   }
   else
