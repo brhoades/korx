@@ -26,7 +26,7 @@ models/players/level1/level1adv
 gfx/invisfade
 {
   {
-    map models/players/level1/level1upg.tga
+    map models/players/level1/level1upg.jpg
     blendFunc GL_ONE GL_ONE
     rgbgen wave sin 0.0 1.0 0.25 0.5
   }
