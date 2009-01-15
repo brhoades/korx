@@ -201,6 +201,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   if( BG_InventoryContainsUpgrade( UP_CLOAK, self->client->ps.stats ) )
     BG_DeactivateUpgrade( UP_CLOAK, self->client->ps.stats );
 
+  if( self->client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
+    self->client->ps.stats[ STAT_STATE ] &= ~SS_BOOSTED;
+
   //TA: deactivate all upgrades
   for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
     BG_DeactivateUpgrade( i, self->client->ps.stats );
