@@ -137,11 +137,9 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       }
 
-    if( overflowed > 0 )
-     trap_SendServerCommand( client - level.clients,
-       va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
-       overflowtotal, type, overflowed, 
-       ( overflowed == 1 ) ? "person" : "people" ) );
+      trap_SendServerCommand( i,
+      va( "print \"%s^7 overflowed ^2%i ^7%s%s to you!\n\"",
+      cl->pers.netname, overflowamt, type, ( overflowamt == 1) ? "" : "s" ) );
 
       cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       overflowamt = 0;
