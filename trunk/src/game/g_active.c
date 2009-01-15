@@ -1597,7 +1597,7 @@ void ClientThink_real( gentity_t *ent )
   client->ps.stats[ STAT_BOOSTTIME ] = level.time - client->lastBoostedTime;
 
   if( client->ps.stats[ STAT_STATE ] & SS_BOOSTED &&
-      client->lastBoostedTime + BOOST_TIME < level.time )
+      client->lastBoostedTime + ( BOOST_TIME - 25 ) < level.time )
     client->ps.stats[ STAT_STATE ] &= ~SS_BOOSTED;
 
   if( client->ps.stats[ STAT_STATE ] & SS_POISONCLOUDED &&
