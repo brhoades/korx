@@ -6,9 +6,9 @@ Major Changes are in *BOLD*
 New Vote Messages and functionality.
   * No longer automatically vote yes.
   * Vote results are displayed at the end of the vote.
-  * No one can vote, causing a vote to fail
-  * Map votes can now require a certain percent of participation to pass, defaults to 50%.
-  * Vote reasons can be forced with g_forcevotereason (enabled by default)
+  * No one can vote, causing a vote to fail.
+  * Vote reasons can be forced with g_forcevotereason (enabled by default).
+  * Votes that land on 75% with that as a requirement now pass.
 Name Exploits patched from MGDev<br />
 Adjustban now tells who did it<br />
 New Votes
@@ -20,6 +20,7 @@ New Commands
   * switch, bound to m, a new flag
 /donate can now be used in chat.<br />
 !specme now has a delay time after using it. It defaults to one minute. This is to prevent misuse of the command. (team switching, avoiding getting killed, etc)<br />
+UI updates to the Adv. Rant and Biokit to reflect their changes.<br />
 
 ===Gameplay===
 *Adv. Rants no longer take falling damage.<br />
@@ -55,10 +56,18 @@ Humans no longer make a fall sound when dead. <br />
 The bsuit was made taller than the regular human (now the hitbox/viewbox matches up with the model). <br />
 Added credit overflow <br /> *
 Booster poisons humans who touch it. It gives an appropriate death message if it needs to.<br />
+*Several improvements to credit overflow added. It now tells you when you overflow, you don't overflow in esd or devmap, and you are told if you are overflowed to.*<br />
+More attempts at eliminating all Xael bugs were added.<br />
+*Trying to switch weapons with a charged Luci or Xael causes it to fire now.* <br />
+
 
 ===Graphics===
 <a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep</a> has been added, creep by Garoth of MG. This also affects rant acid and granger spit.<br />
 A special no Overmind icon was added instead of a lightening bolt.<br />
+Cloak has been made more complex, it is now more balanced in dark and light lighting (Intrepid/Akane). <br />
+New Cloak and Xael icon (Fox_One)<br />
+
+
 
 ===Misc===
 Booster no longer boosts while dead.<br />
@@ -74,4 +83,5 @@ Removed lock messages during ESD.<br />
 Telefrags now give their original death message. <br />
 A message is now given when someone goes from humans/aliens to the spectators using menus.<br />
 Clan chat can now be used by regular players. They have a c in front of PLAYER, while adminchat has a a in front.<br />
-*Space bug has been fixed.*
+*Space bug has been fixed.* <br />
+Color breaks have been added to all votes.<br />
