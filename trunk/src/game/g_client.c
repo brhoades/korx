@@ -997,6 +997,10 @@ static void ClientCleanName( const char *in, char *out, int outSize )
 
   *out = 0;
 
+  //Don't allow names shorter than three letters
+  if( colorlessLen < 3 )
+    Q_strncpyz( p, "UnnamedPlayer", outSize );
+
   // don't allow empty names
   if( *p == 0 || colorlessLen == 0 )
     Q_strncpyz( p, "UnnamedPlayer", outSize );
