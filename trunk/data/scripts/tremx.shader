@@ -30,19 +30,19 @@ gfx/invisfade
     blendFunc GL_ONE GL_ONE
     rgbgen wave sin 0.0 1.0 0.25 0.5
   }
-  {
-                map gfx/invis.jpg
-                tcMod rotate 15
-                tcmod stretch sin 0.5 0.2 0 0.05
-                rgbGen wave sin 0.1 0.1 0 0.2
-                blendFunc add
-  }
         {
                 map gfx/invis.jpg
+                tcMod rotate 15
+                tcmod stretch sin 0.5 0.05 0 0.05
+                rgbGen wave sin 0.1 0.1 0 0.1
+                blendFunc add
+        }
+        {
+                map gfx/invis_b.jpg
                 blendFunc gl_zero gl_one_minus_src_color
                 tcMod rotate -10
-                tcmod stretch sin 0.5 0.2 0 0.12
-                rgbGen wave sin 1 0.5 0 0.05
+                tcmod stretch sin 0.5 0.05 0 0.05
+                rgbGen wave sin 1 1 0.5 0.1
         }
 }
 gfx/invis
@@ -50,16 +50,16 @@ gfx/invis
         {
                 map gfx/invis.jpg
                 tcMod rotate 15
-                tcmod stretch sin 0.5 0.2 0 0.05
-                rgbGen wave sin 0.1 0.1 0 0.2
+                tcmod stretch sin 0.5 0.05 0 0.05
+                rgbGen wave sin 0.1 0.1 0 0.1
                 blendFunc add
         }
         {
-                map gfx/invis.jpg
+                map gfx/invis_b.jpg
                 blendFunc gl_zero gl_one_minus_src_color
                 tcMod rotate -10
-                tcmod stretch sin 0.5 0.2 0 0.1
-                rgbGen wave sin 1 0.5 0 0.05
+                tcmod stretch sin 0.5 0.05 0 0.05
+                rgbGen wave sin 1 1 0.5 0.1
         }
 }
 
