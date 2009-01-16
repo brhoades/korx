@@ -1586,7 +1586,9 @@ void Cmd_CallVote_f( gentity_t *ent )
     if( !arg3plus[ 0 ] && g_forcevotereason.integer )
     {
       trap_SendServerCommand( ent-g_entities,
-        "print \"callvote: please specify a reason\n\"" );
+        "print \"callvote: please specify a reason with the following syntax:\n\"" );
+      trap_SendServerCommand( ent-g_entities,
+        "print \"/callvote command player reason \n\"" );
       return;
     }
 
