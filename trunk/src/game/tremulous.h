@@ -130,7 +130,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_CHARGE_REPEAT        1000
 #define LEVEL4_CHARGE_DMG           ADM(110)
 #define LEVEL4_EBLOB_THINK_TIME     5000
-#define LEVEL4_EBLOB_REPEAT         2500
+#define LEVEL4_EBLOB_REPEAT         5000
 #define LEVEL4_EBLOB_SPEED          500.0f
 #define LEVEL4_EBLOB_RANGE          200.0f
 #define LEVEL4_EBLOB_DMG            ADM(200)
@@ -223,7 +223,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_UPG_SPEED                1.2f
 #define LEVEL4_UPG_VALUE                AVM(1000)
 #define LEVEL4_UPG_HEALTH               AHM(600)
-#define LEVEL4_UPG_REGEN                10
+#define LEVEL4_UPG_REGEN                5
 #define LEVEL4_UPG_COST                 6
 
 
