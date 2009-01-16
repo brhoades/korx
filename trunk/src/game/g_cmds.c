@@ -738,16 +738,16 @@ void Cmd_Team_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
       return; 
     }
+    if( level.alienTeamLocked && g_extremeSuddenDeath.value )
+    {   
+      trap_SendServerCommand( ent-g_entities,
+        va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
+    }
     if( level.alienTeamLocked && !g_extremeSuddenDeath.value )
     {
       trap_SendServerCommand( ent-g_entities,
         va( "print \"Alien team has been ^1LOCKED\n\"" ) );
       return; 
-    }
-    else if( level.alienTeamLocked && g_extremeSuddenDeath.value )
-    {   
-      trap_SendServerCommand( ent-g_entities,
-        va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
     }
     else if( level.humanTeamLocked )
     {
@@ -779,16 +779,16 @@ void Cmd_Team_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
       return; 
     }
+    if( level.humanTeamLocked && g_extremeSuddenDeath.value )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
+      return; 
+    }
     if( level.humanTeamLocked && !g_extremeSuddenDeath.value )
     {
       trap_SendServerCommand( ent-g_entities,
         va( "print \"Human team has been ^1LOCKED\n\"" ) );
-      return; 
-    }
-    else if( level.humanTeamLocked && g_extremeSuddenDeath.value )
-    {
-      trap_SendServerCommand( ent-g_entities,
-        va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
       return; 
     }
     else if( level.alienTeamLocked )
