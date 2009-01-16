@@ -182,6 +182,10 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
        ( overflowed == 1 ) ? "person" : "people" ) );
 
   }
+  else if( client->pers.credit + credit > max )
+  {
+    client->pers.credit = max;
+  }
   else
   {
     client->pers.credit += credit;
