@@ -1168,6 +1168,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     return;
   }
 
+  //The acid blob doesn't do 200 damage and instant kill a ret this way. 
+  if( targ->s.eType == ET_BUILDABLE && mod == MOD_LEVEL4_EBLOB )
+    damage = damage*.25;
+
   client = targ->client;
 
   if( client )
