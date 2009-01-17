@@ -540,12 +540,12 @@ qboolean G_admin_permission( gentity_t *ent, char flag )
           // by the '*' wildcard.  They must be specified manually.
           switch( flag )
           {
-          case ADMF_INCOGNITO:
-          case ADMF_IMMUTABLE:
-          case ADMF_DBUILDER:
-            return qfalse; 
-          default:
-            return qtrue;
+            case ADMF_INCOGNITO:
+            case ADMF_IMMUTABLE:
+            case ADMF_DBUILDER:
+             return qfalse; 
+            default:
+              return qtrue;
           } 
         }
         flags++;
@@ -3544,7 +3544,7 @@ qboolean G_admin_register(gentity_t *ent, int skiparg ){
   trap_SendConsoleCommand( EXEC_APPEND,va( "!setlevel %d %d;",ent - g_entities, level) );
   ClientUserinfoChanged( ent - g_entities );
   
-  AP( va( "print \"^3!register: ^7%s^7 is now a protected nickname.\n\"", ent->client->pers.netname) );
+  AP( va( "print \"^3!register: ^7%s^7 is now a protected nickname.\n\"", ent->client->pers.netname ) );
   
   return qtrue;
 }

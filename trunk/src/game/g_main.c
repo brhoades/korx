@@ -1376,7 +1376,8 @@ void G_CalculateBuildPoints( void )
 			
 			for( i = 0; i < MAX_CLIENTS; i++ )
       {
-					level.clients[i].pers.credit = 2000; // give everyone max credits, aliens get a few extra
+			  level.clients[i].pers.credit = 2000; // give everyone max credits, aliens get a few extra
+        if( level.clients[i].sess.sessionTeam != TEAM_SPECTATOR )
           level.clients[i].ps.persistant[ PERS_CREDIT ] = level.clients[i].pers.credit;
       }
 			

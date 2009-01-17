@@ -4709,8 +4709,10 @@ static void Cmd_Ignore_f( gentity_t *ent )
      level.clients[ clientNum ].pers.netname );
 
    //keep everything in sync
-   ent->client->ps.persistant[ PERS_CREDIT] = ent->client->pers.credit;
-   level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ] = level.clients[ clientNum ].pers.credit;
+   if( ent->client->sess.sessionTeam != TEAM_SPECTATOR )
+     ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.credit;
+   if( level.clients[ clientNum ].sess.sessionTeam != TEAM_SPECTATOR )
+     level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ] = level.clients[ clientNum ].pers.credit;
  }
 
  /*

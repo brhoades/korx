@@ -93,12 +93,12 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
   {
     max = ALIEN_MAX_KILLS;
-    strcpy(type, "evo");
+    strcpy( type, "evo" );
   }
   else if( client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
   {
     max = HUMAN_MAX_CREDITS;
-    strcpy(type, "credit");
+    strcpy( type, "credit" );
   }
 
   //This doesn't work so well in ESD or with /give all
@@ -139,7 +139,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s%s to you!\n\"",
-      cl->pers.netname, overflowamt, type, ( overflowamt == 1) ? "" : "s" ) );
+      cl->pers.netname, overflowamt, type, ( overflowamt == 1 ) ? "" : "s" ) );
 
       cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       overflowamt = 0;
@@ -172,7 +172,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s%s to you!\n\"",
-      cl->pers.netname, overflowamt, type, ( overflowamt == 1) ? "" : "s" ) );
+      cl->pers.netname, overflowamt, type, ( overflowamt == 1 ) ? "" : "s" ) );
 
     }
     if( overflowed > 0 )
@@ -186,14 +186,14 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   {
     client->pers.credit = max;
   }
-  else
+  else if( client->pers.credit + credit <= max )
   {
     client->pers.credit += credit;
   }
-/* try allowing negative credits ;-)
+
   if( client->pers.credit < 0 )
     client->pers.credit = 0;
-*/
+
   // if not a following spec, keep pers.credit in sync for next ClientSpawn() 
   if( client->sess.sessionTeam != TEAM_SPECTATOR )
     client->ps.persistant[ PERS_CREDIT ] = client->pers.credit;
