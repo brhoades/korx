@@ -812,6 +812,81 @@ void ClientTimerActions( gentity_t *ent, int msec )
     }
   }
 
+  //Alien Regeneration
+  if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+    level.surrenderTeam != PTE_ALIENS )
+  {
+    int       entityList[ MAX_GENTITIES ];
+    vec3_t    range = { LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE };
+    vec3_t    mins, maxs;
+    int       i, num, regen;
+    gentity_t *boostEntity;
+    float     advRantModifier = 1.0f;
+    float     boostModifier = 1.0f;
+
+    VectorAdd( client->ps.origin, range, maxs );
+    VectorSubtract( client->ps.origin, range, mins );
+
+    num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
+    for( i = 0; i < num; i++ )
+    {
+      boostEntity = &g_entities[ entityList[ i ] ];
+
+      if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
+          boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4_UPG )
+        advRantModifier = LEVEL4_REGEN_MOD;
+      else if( boostEntity->s.eType == ET_BUILDABLE &&
+          boostEntity->s.modelindex == BA_A_BOOSTER &&
+          boostEntity->spawned )
+        boostModifier = BOOSTER_REGEN_MOD;
+      if (advRantModifier + boostModifier == 4.0f)
+      	break;
+    }
+    regen = BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) * advRantModifier * boostModifier;
+
+    if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
+      ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time && ent->nextHealTime < level.time 
+      && regen > 0 )
+    {
+      ent->health++;
+      //The heal rate is inversely proportinal to the regeneration rate
+      ent->nextHealTime = level.time + ( 1000 / ( regen ) );
+    }
+
+    if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
+      ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
+  }
+
+  //Human Regeneration
+  if( client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
+    level.surrenderTeam != PTE_HUMANS)
+  {
+    int regen = REGEN_HEALTH_RATE;
+    //regen stamina too
+    if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
+    {
+      regen *= 2;
+      if( client->ps.stats[ STAT_STAMINA ] < MAX_STAMINA )
+        client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
+      else
+        client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
+    }
+    else if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
+      regen *= 2;
+      
+    //regen health
+    if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
+        ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time && ent->nextHealTime < level.time
+        && regen > 0 )
+    {
+      ent->health++;
+      //The heal rate is inversely proportinal to the regeneration rate
+      ent->nextHealTime = level.time + ( 1000 / regen );
+    }
+    if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
+      ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
+  }
+
   while( client->time1000 >= 1000 )
   {
     client->time1000 -= 1000;
@@ -840,78 +915,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
       G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL, NULL,
                 damage, 0, MOD_POISON );
-    }
-
-    //replenish alien health
-    if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-      level.surrenderTeam != PTE_ALIENS )
-    {
-      int       entityList[ MAX_GENTITIES ];
-      vec3_t    range = { LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE };
-      vec3_t    mins, maxs;
-      int       i, num;
-      gentity_t *boostEntity;
-      float     advRantModifier = 1.0f;
-      float     boostModifier = 1.0f;
-
-      VectorAdd( client->ps.origin, range, maxs );
-      VectorSubtract( client->ps.origin, range, mins );
-
-      num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
-      for( i = 0; i < num; i++ )
-      {
-        boostEntity = &g_entities[ entityList[ i ] ];
-
-        if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-            boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4_UPG )
-        {
-          advRantModifier = LEVEL4_REGEN_MOD;
-        }
-        else if( boostEntity->s.eType == ET_BUILDABLE &&
-            boostEntity->s.modelindex == BA_A_BOOSTER &&
-            boostEntity->spawned )
-        {
-          boostModifier = BOOSTER_REGEN_MOD;
-        }
-        if (advRantModifier + boostModifier == 4.0f)
-        {
-        	break;
-        }
-      }
-
-      if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
-          ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
-        {
-          ent->health += BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) * advRantModifier * boostModifier;
-        }
-
-      if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
-        ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
-    }
-   
-    //use regen upgrade
-    if( client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
-      level.surrenderTeam != PTE_HUMANS)
-    {
-      int regen = REGEN_HEALTH_RATE;
-      //regen stamina too
-      if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
-      {
-        regen *= 2;
-        if( client->ps.stats[ STAT_STAMINA ] < MAX_STAMINA )
-          client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
-        else
-          client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
-      }
-      else if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
-        regen *= 2;
-      
-      //regen health
-      if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
-          ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
-        ent->health += regen;
-      if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
-        ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
     }
     
     if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )

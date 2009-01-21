@@ -1128,6 +1128,7 @@ void G_SpawnClients( pTeam_t team )
       ent->client->sess.sessionTeam = TEAM_FREE;
       ClientUserinfoChanged( clientNum );
       ClientSpawn( ent, spawn, spawn_origin, spawn_angles );
+      ent->nextHealTime = level.time;
     }
   }
 }

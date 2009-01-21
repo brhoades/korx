@@ -240,6 +240,7 @@ struct gentity_s
   int               suicideTime;                    // when the client will suicide
 
   int               lastDamageTime;
+  int               nextHealTime;
 };
 
 typedef enum
