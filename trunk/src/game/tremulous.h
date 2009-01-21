@@ -519,7 +519,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MEDKIT_PRICE                0
 
 #define REGEN_PRICE                 250
-#define REGEN_HEALTH_RATE           1
+#define REGEN_HEALTH_RATE           2
 #define REGEN_STAMINA_RATE          25
 
 #define BATTPACK_PRICE              100
