@@ -680,7 +680,7 @@ void CG_Menu( int menu )
                   "build timer has expired.";
       shortMsg  = "You can not buy or sell weapons until your build timer "
                   "expires";
-      type      = DT_ARMOURYEVOLVE;
+      cmd       = "menu tremulous_human_dialog\n";
       break;
 
 
