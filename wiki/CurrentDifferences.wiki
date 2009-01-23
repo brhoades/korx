@@ -54,19 +54,24 @@ Infection ('aids') range for spreading was cut down by 1/3. <br />
 Humans no longer make a fall sound when dead. <br />
 *Bsuits can no longer be bought or sold without sufficent room. <br />
 The bsuit was made taller than the regular human (now the hitbox/viewbox matches up with the model). <br />
-Added credit overflow <br /> *
+Added credit overflow <br /> 
+Credit overflow has new prompts among other features for players <br />*
 Booster poisons humans who touch it. It gives an appropriate death message if it needs to.<br />
 *Several improvements to credit overflow added. It now tells you when you overflow, you don't overflow in esd or devmap, and you are told if you are overflowed to.*<br />
 More attempts at eliminating all Xael bugs were added.<br />
-*Trying to switch weapons with a charged Luci or Xael causes it to fire now.* <br />
-
+*Trying to switch weapons with a charged Luci or Xael causes it to fire now. <br />
+Adv Mara, Goon, and Rant's barb firing rates are now based upon the last barb fired, instead of on a every ten second basis.<br />
+Adv. Rant's acid no longer hurts teammates if the splash hits them.<br />
+Adv. Rant's acid will no longer instantly kill rets.<br /> 
+Players no longer heal in chunks, it's smooth healing one hp at a time now. <br />*
 
 ===Graphics===
 <a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep</a> has been added, creep by Garoth of MG. This also affects rant acid and granger spit.<br />
 A special no Overmind icon was added instead of a lightening bolt.<br />
 Cloak has been made more complex, it is now more balanced in dark and light lighting (Intrepid/Akane). <br />
 New Cloak and Xael icon (Fox_One)<br />
-
+New Xael texture (Axis)<br />
+New Ckit and Adv. Ckit texture and screen (Fox_One)<br />
 
 
 ===Misc===
