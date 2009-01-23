@@ -1001,52 +1001,43 @@ void ClientTimerActions( gentity_t *ent, int msec )
     
   }
 
-  while( client->time10000 >= 10000 )
+  if( client->ps.weapon == WP_ALEVEL3_UPG && ent->nextReloadTime <= level.time )
   {
-    client->time10000 -= 10000;
+    int ammo, maxAmmo;
 
-    if( client->ps.weapon == WP_ALEVEL3_UPG && ent->nextReloadTime <= level.time )
+    BG_FindAmmoForWeapon( WP_ALEVEL3_UPG, &maxAmmo, NULL );
+    BG_UnpackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+    ent->nextReloadTime = level.time + LEVEL3_BOUNCEBALL_TIME;
+
+    if( ammo < maxAmmo )
     {
-      int ammo, maxAmmo;
-
-      BG_FindAmmoForWeapon( WP_ALEVEL3_UPG, &maxAmmo, NULL );
-      BG_UnpackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
-      ent->nextReloadTime = level.time + LEVEL3_BOUNCEBALL_TIME;
-
-      if( ammo < maxAmmo )
-      {
-        ammo++;
-        BG_PackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
-      }
+      ammo++;
+      BG_PackAmmoArray( WP_ALEVEL3_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
     }
-    else if( client->ps.weapon == WP_ALEVEL2_UPG && ent->nextReloadTime <= level.time )
+  }
+  else if( client->ps.weapon == WP_ALEVEL2_UPG && ent->nextReloadTime <= level.time )
+  {
+    int ammo, maxAmmo;
+    BG_FindAmmoForWeapon( WP_ALEVEL2_UPG, &maxAmmo, NULL );
+    BG_UnpackAmmoArray( WP_ALEVEL2_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+
+    if( ammo == 0 )
     {
-      int ammo, maxAmmo;
-
-      BG_FindAmmoForWeapon( WP_ALEVEL2_UPG, &maxAmmo, NULL );
-      BG_UnpackAmmoArray( WP_ALEVEL2_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
-      ent->nextReloadTime = level.time + LEVEL2_BOUNCEBALL_TIME;
-
-      if( ammo == 0 )
-      {
-        ammo = maxAmmo;
-        BG_PackAmmoArray( WP_ALEVEL2_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
-      }
+      ammo = maxAmmo;
+      BG_PackAmmoArray( WP_ALEVEL2_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
     }
-    else if( client->ps.weapon == WP_ALEVEL4_UPG && ent->nextReloadTime <= level.time )
+  }
+  else if( client->ps.weapon == WP_ALEVEL4_UPG && ent->nextReloadTime <= level.time )
+  {
+    int ammo, maxAmmo;
+    BG_FindAmmoForWeapon( WP_ALEVEL4_UPG, &maxAmmo, NULL );
+    BG_UnpackAmmoArray( WP_ALEVEL4_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+    //near booster regain ammo
+
+    if( (ammo < maxAmmo) && (client->ps.stats[ STAT_STATE ] & SS_BOOSTED) )
     {
-      int ammo, maxAmmo;
-
-      BG_FindAmmoForWeapon( WP_ALEVEL4_UPG, &maxAmmo, NULL );
-      BG_UnpackAmmoArray( WP_ALEVEL4_UPG, client->ps.ammo, client->ps.powerups, &ammo, NULL );
-      //near booster regain ammo
-      ent->nextReloadTime = level.time + LEVEL4_EBLOB_TIME;
-
-      if( (ammo < maxAmmo) && (client->ps.stats[ STAT_STATE ] & SS_BOOSTED) )
-      {
-        ammo++;
-        BG_PackAmmoArray( WP_ALEVEL4_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
-      }
+      ammo++;
+      BG_PackAmmoArray( WP_ALEVEL4_UPG, client->ps.ammo, client->ps.powerups, ammo, 0 );
     }
   }
 }

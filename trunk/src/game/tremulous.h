@@ -92,7 +92,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LEVEL2_BOUNCEBALL_DMG       ADM(40)
 #define LEVEL2_BOUNCEBALL_REPEAT    600
-#define LEVEL2_BOUNCEBALL_TIME      10000
+#define LEVEL2_BOUNCEBALL_TIME      4000
 #define LEVEL2_BOUNCEBALL_SPEED     3000.0f
 
 #define LEVEL3_CLAW_DMG             ADM(80)
@@ -113,7 +113,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_POUNCE_TIME          400
 #define LEVEL3_BOUNCEBALL_DMG       ADM(110)
 #define LEVEL3_BOUNCEBALL_REPEAT    1000
-#define LEVEL3_BOUNCEBALL_TIME      10000
+#define LEVEL3_BOUNCEBALL_TIME      8000
 #define LEVEL3_BOUNCEBALL_SPEED     1000.0f
 
 #define LEVEL4_CLAW_DMG             ADM(100)

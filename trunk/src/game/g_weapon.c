@@ -443,6 +443,7 @@ void eBlobFire( gentity_t *ent )
   gentity_t *m;
 
   m = fire_eBlob( ent, muzzle, forward );
+  ent->nextReloadTime = level.time + LEVEL4_EBLOB_TIME;
 
 //  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
 }
@@ -1597,6 +1598,8 @@ void bounceBallFire_level2( gentity_t *ent )
   m = fire_bounceBall( ent, muzzle, forward,
         WP_ALEVEL2_UPG, LEVEL2_BOUNCEBALL_DMG, MOD_LEVEL2_BOUNCEBALL, LEVEL2_BOUNCEBALL_SPEED );
 
+  ent->nextReloadTime = level.time + LEVEL2_BOUNCEBALL_TIME;
+
 //  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
 }
 
@@ -1606,6 +1609,8 @@ void bounceBallFire_level3( gentity_t *ent )
 
   m = fire_bounceBall( ent, muzzle, forward,
         WP_ALEVEL3_UPG, LEVEL3_BOUNCEBALL_DMG, MOD_LEVEL3_BOUNCEBALL, LEVEL3_BOUNCEBALL_SPEED );
+
+  ent->nextReloadTime = level.time + LEVEL3_BOUNCEBALL_TIME;
 
 //  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
 }
