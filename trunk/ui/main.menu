@@ -36,19 +36,15 @@
 
     itemDef
     {
-      name title
-      text "^1K ^1o ^1R ^1x"
-      style WINDOW_STYLE_EMPTY
+      name "title"
+      style WINDOW_STYLE_SHADER
       textstyle ITEM_TEXTSTYLE_NORMAL
       textalign ITEM_ALIGN_CENTER
-      textscale .4
-      rect 0 50 640 40
-      textalign 1 
-      textaligny 32
-      textalignx 320 
-      forecolor .75 .75 .75 .75
-      visible 1 
-      decoration 
+      rect 113 0 413 100
+      forecolor 1 1 1 1
+      visible 1
+      background "ui/assets/korx.jpg"
+      decoration
     }
 
     itemDef
@@ -61,7 +57,7 @@
       model_fovx 80
       model_fovy 60
       model_angle 180
-      //model_rotation 1
+      model_rotation 1
       //model_axis 1 1 1
       model_animplay 0 29 10
       visible 1
@@ -157,7 +153,7 @@
     itemDef
     {
       name copyright
-      text "Tremulous (C) 2005-2006 darklegion development"
+      text "KoRx (C) 2007-2009 KnightsofReason.org"
       style WINDOW_STYLE_EMPTY
       textstyle ITEM_TEXTSTYLE_NORMAL
       textscale .25
