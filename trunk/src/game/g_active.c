@@ -715,6 +715,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
       BG_UnpackAmmoArray( WP_LUCIFER_CANNON, client->ps.ammo, client->ps.powerups, &ammo, NULL );
 
+      client->ps.eFlags &= ~EF_WARN_CHARGE;
+      if( client->ps.stats[ STAT_MISC ] > ( LCANNON_TOTAL_CHARGE - ( LCANNON_TOTAL_CHARGE / 3 ) ) )
+        client->ps.eFlags |= EF_WARN_CHARGE;
+
       if( client->ps.stats[ STAT_MISC ] < LCANNON_TOTAL_CHARGE && ucmd->buttons & BUTTON_ATTACK )
         client->ps.stats[ STAT_MISC ] += ( 100.0f / LCANNON_CHARGE_TIME ) * LCANNON_TOTAL_CHARGE;
 
@@ -731,6 +735,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
       int ammo;
 
       BG_UnpackAmmoArray( WP_XAEL, client->ps.ammo, client->ps.powerups, &ammo, NULL );
+
+     // Set overcharging flag so other players can hear warning  	 	 
+     client->ps.eFlags &= ~EF_WARN_CHARGE;
+     if( client->ps.stats[ STAT_MISC ] > ( LCANNON_TOTAL_CHARGE - ( XAEL_TOTAL_CHARGE / 3 ) ) )
+       client->ps.eFlags |= EF_WARN_CHARGE;
+
 
       if( client->ps.stats[ STAT_MISC ] < XAEL_TOTAL_CHARGE && ucmd->buttons & BUTTON_ATTACK2 && !( ucmd->buttons & BUTTON_ATTACK ))
         client->ps.stats[ STAT_MISC ] += ( 100.0f / XAEL_CHARGE_TIME ) * XAEL_TOTAL_CHARGE;

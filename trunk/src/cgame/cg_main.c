@@ -749,6 +749,7 @@ static void CG_RegisterSounds( void )
   cgs.media.buildableRepairedSound  = trap_S_RegisterSound( "sound/buildables/human/repaired.wav", qfalse );
 
   cgs.media.lCannonWarningSound     = trap_S_RegisterSound( "models/weapons/lcannon/warning.wav", qfalse );
+  cgs.media.lCannonWarningSound2    = trap_S_RegisterSound( "sound/weapons/lcannon/warning2.wav", qfalse );
 }
 
 

@@ -858,6 +858,13 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
       trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, weapon->readySound );
   }
 
+  // Lucifer cannon / Xael charge warning beep
+  // FIXME: should not send this to aliens at all, rather than just ignoring it
+  if( ( weaponNum == WP_LUCIFER_CANNON || weaponNum == WP_XAEL ) &&
+      ( cent->currentState.eFlags & EF_WARN_CHARGE ) && cg.snap->ps.stats[ PERS_TEAM ] != PTE_ALIENS )          
+    trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
+                            vec3_origin, cgs.media.lCannonWarningSound2 );
+
   if( !noGunModel )
   {
     CG_PositionEntityOnTag( &gun, parent, parent->hModel, "tag_weapon" );

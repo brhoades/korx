@@ -1283,6 +1283,7 @@ typedef struct
   qhandle_t   teslaZapTS;
 
   sfxHandle_t lCannonWarningSound;
+  sfxHandle_t lCannonWarningSound2;
 
   qhandle_t   buildWeaponTimerPie[ 8 ];
   qhandle_t   upgradeClassIconShader;
