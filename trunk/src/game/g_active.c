@@ -843,9 +843,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
       boostEntity = &g_entities[ entityList[ i ] ];
 
       if( boostEntity->client && boostEntity->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
-          boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4_UPG )
+          boostEntity->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL4_UPG &&
+          boostEntity->client != client )
         advRantModifier = LEVEL4_REGEN_MOD;
-      else if( boostEntity->s.eType == ET_BUILDABLE &&
+      if( boostEntity->s.eType == ET_BUILDABLE &&
           boostEntity->s.modelindex == BA_A_BOOSTER &&
           boostEntity->spawned )
         boostModifier = BOOSTER_REGEN_MOD;
