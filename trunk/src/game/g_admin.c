@@ -314,14 +314,14 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3name|slot^7]"
     },
 
+    {"print",G_admin_print2, "X",
+			"prints text to everyone's console",
+			"[text to print]"
+    },
+
     {"setlevel", G_admin_setlevel, "Z",
       "sets the admin level of a player",
       "[^3name|slot#|admin#^7] [^3level^7]"
-    },
-
-    {"print",G_admin_print2, "Z",
-			"prints text to everyone's console",
-			"[text to print]"
     }
 
   };
