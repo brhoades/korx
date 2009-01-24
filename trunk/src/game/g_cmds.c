@@ -3747,8 +3747,10 @@ void Cmd_Sell_f( gentity_t *ent )
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
       }
 
-      //add to funds
-      G_AddCreditToClient( ent->client, (short)BG_FindPriceForUpgrade( upgrade ), qfalse );
+      //add to funds --- Causes issues with overflow and 2000 credits, doing it manually
+      //G_AddCreditToClient( ent->client, (short)BG_FindPriceForUpgrade( upgrade ), qfalse );
+      ent->client->pers.credit += BG_FindPriceForUpgrade( upgrade );
+      ent->client->ps.persistant[ PERS_CREDIT ] += BG_FindPriceForUpgrade( upgrade );
     }
   }
   else if( !Q_stricmp( s, "weapons" ) )

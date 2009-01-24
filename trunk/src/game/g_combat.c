@@ -1246,7 +1246,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( targ != attacker && OnSameTeam( targ, attacker ) )
     {
       if( g_dretchPunt.integer &&
-        ( targ->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL0||
+        ( targ->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL0 ||
           targ->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_LEVEL0_UPG ) )
       {
         vec3_t dir, push;
