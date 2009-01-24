@@ -254,6 +254,7 @@ typedef enum
 #define SS_CHARGING             0x00002000
 
 #define SB_VALID_TOGGLEBIT      0x00004000
+#define SS_SLOWLOCKED2          0x00008000
 
 #define MAX_STAMINA             1000
 

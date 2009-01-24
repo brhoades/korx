@@ -483,6 +483,7 @@ struct gclient_s
   int                 unlaggedTime;
   
   int                 tkcredits[ MAX_CLIENTS ];
+  int                 blobs;
 };
 
 

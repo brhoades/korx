@@ -191,10 +191,17 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
         other->client->ps.stats[ STAT_STATE ] |= SS_BLOBLOCKED;
         other->client->lastLockTime = level.time;
       }
-      else
+      else if( other->s.weapon >= WP_ALEVEL3 && other->client->blobs <= 3 )
+      {
+        other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED2;
+        other->client->lastSlowTime = level.time;
+        other->client->blobs++;
+      }
+      else if( other->s.weapon >= WP_ALEVEL3 && other->client->blobs > 3 )
       {
         other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;
         other->client->lastSlowTime = level.time;
+        other->client->blobs++;
       }
       AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );

@@ -406,6 +406,8 @@ static float PM_CmdScale( usercmd_t *cmd )
   //slow the player if slow locked
   if( pm->ps->stats[ STAT_STATE ] & SS_SLOWLOCKED )
     modifier *= ABUILDER_BLOB_SPEED_MOD;
+  else if( pm->ps->stats[ STAT_STATE ] & SS_SLOWLOCKED2 )
+    modifier *= PRIFLE_BLOB_SPEED_MOD;
 
   if( pm->ps->pm_type == PM_GRABBED )
     modifier = 0.0f;
