@@ -184,12 +184,11 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   }
   else if( client->pers.credit + credit > max )
   {
-    client->pers.credit = max;
+    if( client->pers.credit < max )
+      client->pers.credit = max;
   }
   else if( client->pers.credit + credit <= max )
-  {
     client->pers.credit += credit;
-  }
 
   if( client->pers.credit < 0 )
     client->pers.credit = 0;
