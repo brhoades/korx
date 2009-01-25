@@ -1669,8 +1669,9 @@ void CalculateRanks( void )
         continue;
 
       level.numVotingClients++;
-      if( level.clients[ i ].pers.teamSelection != PTE_NONE )
-      {
+      if( level.clients[ i ].pers.teamSelection == PTE_HUMANS ||
+          level.clients[ i ].pers.teamSelection == PTE_ALIENS )
+        {
         level.numPlayingClients++;
         if( level.clients[ i ].sess.sessionTeam != TEAM_SPECTATOR )
           level.numNonSpectatorClients++;
@@ -1878,7 +1879,7 @@ void ExitLevel( void )
   }
   if ( !g_scrimMode.integer )
   {
-		if( g_nextmap.string != "0" )
+		if( !strcmp( g_nextmap.string, "0" )  )
     {
       trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextmap.string ) );
     }

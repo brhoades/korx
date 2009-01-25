@@ -42,7 +42,6 @@ static void CG_Obituary( entityState_t *ent )
   char          targetName[ 32 ];
   char          attackerName[ 32 ];
   char          className[ 64 ];
-  gender_t      gender;
   clientInfo_t  *ci;
   qboolean      teamKill = qfalse;
 
@@ -136,78 +135,35 @@ static void CG_Obituary( entityState_t *ent )
 
   if( attacker == target )
   {
-    /*
-    if( cl_gender.string == "male" || cl_gender.string == "Male" )
-      gender = GENDER_MALE;
-    else if( cl_gender.string == "female" || cl_gender.string == "Female" )
-      gender = GENDER_FEMALE;         //Doesn't work
-    else
-      gender = GENDER_NEUTER;*/
 
     switch( mod )
     {
       case MOD_FLAMER_SPLASH:
-        if( gender == GENDER_FEMALE )
-          message = "toasted herself";
-        else if( gender == GENDER_NEUTER )
-          message = "toasted itself";
-        else
-          message = "toasted himself";
+        message = "toasted himself";
         break;
 
       case MOD_LCANNON_SPLASH:
-        if( gender == GENDER_FEMALE )
-          message = "irradiated herself";
-        else if( gender == GENDER_NEUTER )
-          message = "irradiated itself";
-        else
-          message = "irradiated himself";
+        message = "irradiated himself";
         break;
 
       case MOD_XAEL_SPLASH:
-        if( gender == GENDER_FEMALE )
-          message = "pulverized herself";
-        if( gender == GENDER_NEUTER )
-          message = "pulverized itself";
-        else
-          message = "pulverized himself";
-
+        message = "pulverized himself";
         break;
 
       case MOD_GRENADE:
-        if( gender == GENDER_FEMALE )
-          message = "blew herself up";
-        else if( gender == GENDER_NEUTER )
-          message = "blew itself up";
-        else
-          message = "blew himself up";
+        message = "blew himself up";
         break;
 
       case MOD_POISON:
-        if( gender == GENDER_FEMALE )
-          message = "poisoned herself";
-        else if( gender == GENDER_MALE )
-          message = "poisoned himself";
-        else
-          message = "poisoned itself";
+        message = "poisoned itself";
         break;
 
       case MOD_LEVEL4_EBLOB:
-        if( gender == GENDER_FEMALE )
-          message = "burnt herself to a crisp in her own acid";
-        else if( gender == GENDER_MALE )
-          message = "burnt himself to a crisp in his own acid";
-        else
-          message = "burnt itself to a crisp in its own acid";
+        message = "burnt itself to a crisp in its own acid";
         break;
 
       default:
-        if( gender == GENDER_FEMALE )
-          message = "killed herself";
-        else if( gender == GENDER_MALE )
-          message = "killed himself";
-        else
-          message = "killed itself";
+        message = "killed itself";
         break;
     }
   }
