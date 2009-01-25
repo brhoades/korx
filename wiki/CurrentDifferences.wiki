@@ -63,15 +63,22 @@ More attempts at eliminating all Xael bugs were added.<br />
 Adv Mara, Goon, and Rant's barb firing rates are now based upon the last barb fired, instead of on a every ten second basis.<br />
 Adv. Rant's acid no longer hurts teammates if the splash hits them.<br />
 Adv. Rant's acid will no longer instantly kill rets.<br /> 
-Players no longer heal in chunks, it's smooth healing one hp at a time now. <br />*
+Players no longer heal in chunks, it's smooth healing one hp at a time now. <br />
+All barbs are now based upon a last barb fired system to reload. <br /> *
 
-===Graphics===
+
+===Graphics/Sound===
 <a href="http://img381.imageshack.us/img381/7319/shot0000ii8.jpg">MGdev creep</a> has been added, creep by Garoth of MG. This also affects rant acid and granger spit.<br />
 A special no Overmind icon was added instead of a lightening bolt.<br />
 Cloak has been made more complex, it is now more balanced in dark and light lighting (Intrepid/Akane). <br />
 New Cloak and Xael icon (Fox_One)<br />
 New Xael texture (Axis)<br />
 New Ckit and Adv. Ckit texture and screen (Fox_One)<br />
+New Mass Driver sound, by Akane/Intrepid.<br />
+New Mass Driver shader from trepidus<br />
+People near you can now hear your Xael / Luci's beep. <br />
+New main menu and new KoRx 'logo' (by Fox_One)<br />
+Slightly modified Xael texture.<br />
 
 
 ===Misc===
