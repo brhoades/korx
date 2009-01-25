@@ -44,7 +44,7 @@ float pm_flyaccelerate = 4.0f;
 
 float pm_friction = 6.0f;
 float pm_waterfriction = 1.0f;
-float pm_flightfriction = 6.0f;
+float pm_flightfriction = 2.0f;
 float pm_spectatorfriction = 5.0f;
 
 int   c_pmove = 0;
@@ -2614,14 +2614,10 @@ static void PM_BeginWeaponChange( int weapon )
     return;
 
   //special case to prevent storing a charged up lcannon
-  if( pm->ps->weapon == WP_LUCIFER_CANNON && pm->ps->stats[ STAT_MISC ] < LCANNON_MIN_CHARGE  )
-    pm->ps->stats[ STAT_MISC ] = 0;
-  else if( pm->ps->weapon == WP_LUCIFER_CANNON )
+  if( pm->ps->weapon == WP_LUCIFER_CANNON && pm->ps->stats[ STAT_MISC ] != 0 )
     return;
   //special case to prevent storing a charged up xael
-  if( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] < XAEL_MIN_CHARGE )
-    pm->ps->stats[ STAT_MISC ] = 0;
-  else if( pm->ps->weapon == WP_XAEL )
+  if( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] != 0 )
     return;
 
   PM_AddEvent( EV_CHANGE_WEAPON );
@@ -2967,7 +2963,7 @@ static void PM_Weapon( void )
   }
 
    //A modified copy off of Latiku's QVM.
-   if ( pm->ps->weapon == WP_LUCIFER_CANNON && pm->ps->stats[ STAT_MISC ] < LCANNON_MIN_CHARGE && ( attack3 || attack2 ) )
+   if ( pm->ps->weapon == WP_LUCIFER_CANNON && pm->ps->stats[ STAT_MISC ] < LCANNON_MIN_CHARGE && attack2 )
    {
      attack1 = qfalse;
      attack2 = qtrue;			//So we can't run around holding these buttons and firing full charges.
@@ -2982,7 +2978,7 @@ static void PM_Weapon( void )
    }
 
   //Slightly edited for the Xael
-   if ( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] < XAEL_MIN_CHARGE && ( attack3 || attack1 ) )
+   if ( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] < XAEL_MIN_CHARGE && attack1 )
    {
      attack1 = qtrue;			//So we can't run around holding these buttons and firing full charges.
      attack2 = qfalse;
