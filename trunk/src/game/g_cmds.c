@@ -1943,7 +1943,7 @@ void Cmd_CallVote_f( gentity_t *ent )
   Com_sprintf( level.voteDisplayString,
         sizeof( level.voteDisplayString ), va( "%s^7 called a vote: %s", ent->client->pers.netname, level.voteDisplayString ) );
 
-  //ent->client->pers.voteCount++;
+  ent->client->pers.voteCount++;
 
   // start the voting, the caller automatically votes yes
   level.voteTime = level.time;
