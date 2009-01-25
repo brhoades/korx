@@ -75,10 +75,10 @@ New Cloak and Xael icon (Fox_One)<br />
 New Xael texture (Axis)<br />
 New Ckit and Adv. Ckit texture and screen (Fox_One)<br />
 New Mass Driver sound, by Akane/Intrepid.<br />
-New Mass Driver shader from trepidus<br />
+New Mass Driver shader from trepidus, modified by akane/intrepid<br />
 People near you can now hear your Xael / Luci's beep. <br />
 New main menu and new KoRx 'logo' (by Fox_One)<br />
-Slightly modified Xael texture.<br />
+*New shaders, make the game look much better (from trepidus)<br />*
 
 
 ===Misc===
