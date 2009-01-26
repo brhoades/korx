@@ -1527,9 +1527,9 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
   if( self->health <= 0 )
     return;
 
-  //only allow boostage once every 20 seconds
-  //if( client->lastBoostedTime BOOSTER_INTERVAL ) > level.time )
-  //  return;
+  //only allow boostage once every 5 seconds
+  if( ( client->lastBoostedTime + BOOSTER_INTERVAL - 15 ) > level.time )
+    return;
 
   if( !( client->ps.stats[ STAT_STATE ] & SS_BOOSTED ) )
   {
