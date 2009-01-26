@@ -1170,7 +1170,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
   //The acid blob doesn't do 200 damage and instant kill a ret this way. 
   if( targ->s.eType == ET_BUILDABLE && mod == MOD_LEVEL4_EBLOB )
-    damage = damage*.25;
+    damage = damage*.50;
 
   client = targ->client;
 
@@ -1579,7 +1579,7 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
 		
 		// spread from adv rant acid bomb doesn't hurt buildables as badly as humans
 		if( ent->s.eType == ET_BUILDABLE && mod == MOD_LEVEL4_EBLOB )
-      damage = damage*.25;
+      damage = damage*.50;
     // spread from adv rant's acid bomb doesn't hurt fellow aliens, it's like an acid tube :D
     if( ent->client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS && mod == MOD_LEVEL4_EBLOB )
       continue;
