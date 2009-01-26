@@ -1879,7 +1879,7 @@ void ExitLevel( void )
   }
   if ( !g_scrimMode.integer )
   {
-		if( !strcmp( g_nextmap.string, "0" )  )
+		if( strcmp( g_nextmap.string, "0" )  )
     {
       trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextmap.string ) );
     }
