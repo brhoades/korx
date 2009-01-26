@@ -69,13 +69,13 @@ models/players/human_base/base
 {
   cull disable
   {
-    map models/players/human_base/base.jpg
+    map models/players/human_base/base.tga
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/base.jpg
+    map models/players/human_base/base.tga
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -87,13 +87,13 @@ models/players/human_base/light
 {
   cull disable
   {
-    map models/players/human_base/light.jpg
+    map models/players/human_base/light.tga
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/light.jpg
+    map models/players/human_base/light.tga
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular

@@ -63,6 +63,53 @@ gfx/invis
         }
 }
 
+models/weapons/xael/xael
+{
+	cull disable
+	{
+		map models/weapons/xael/xael.jpg
+		rgbGen lightingDiffuse
+	}
+	{
+		map models/weapons/xael/xael.jpg
+		blendFunc GL_SRC_ALPHA GL_ONE
+		detail
+		alphaGen lightingSpecular
+	}
+	{
+		map models/buildables/mgturret/ref_map.jpg
+		blendFunc GL_DST_COLOR GL_ONE
+		detail
+		tcGen environment
+	}
+	{
+		map models/weapons/xael/xael_glow.jpg
+		blendfunc add
+		rgbGen wave noise 0.2 0.5 0 3.17 
+	}
+	{
+		map models/weapons/xael/xael_glow.tga
+		blendfunc add
+		rgbGen wave sawtooth 0 0.15 0 3.17 
+	}
+	{
+		map models/weapons/xael/xael_glow.tga
+		blendfunc add
+		rgbGen wave sin 0.25 0.25 0 0.17 
+	}
+}
+
+models/weapons/xael/glow
+{
+
+	cull disable
+	{
+		map models/weapons/xael/glow.jpg
+		blendfunc GL_ONE GL_ONE
+		tcMod scroll -9.0 9.0
+	}
+}
+
 models/weapons/xael/flash
 {
   sort additive
@@ -121,22 +168,6 @@ models/weapons/xael/trail_s
 		tcMod scale -1 1
 	}
 }
-
-/*
-models/weapons/xael/xael
-{
-	sort additive
-	cull disable
-	surfaceparm trans
-	{
-		map models/weapons/xael/xael.tga
-		depthWrite
-		alphaFunc GE128
-		rgbGen lightingDiffuse
-		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-	}
-}
-*/
 
 models/weapons/xael/droid
 {
