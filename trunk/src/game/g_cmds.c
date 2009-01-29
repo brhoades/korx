@@ -1792,6 +1792,7 @@ void Cmd_CallVote_f( gentity_t *ent )
   }
   else if( !Q_stricmp( arg1, "custom" ) )
   {
+    Com_sprintf( level.voteString, sizeof( level.voteString ), nullstring);
     arg2s = atoi(arg2);
     if( arg2s <= 100 && arg2s > 0 )
       level.votePercentToPass = arg2s;
@@ -1803,6 +1804,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 				"print \"/callvote custom percent polltext\n\"" );
       return;
     }
+    trap_SendConsoleCommand( EXEC_APPEND, va( "%s\n", level.voteString ) )
     Com_sprintf( level.voteDisplayString,
     sizeof( level.voteDisplayString ), "[Custom] \'%s^7\'", arg3plus);
   }
