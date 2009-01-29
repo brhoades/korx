@@ -1804,9 +1804,8 @@ void Cmd_CallVote_f( gentity_t *ent )
 				"print \"/callvote custom percent polltext\n\"" );
       return;
     }
-    trap_SendConsoleCommand( EXEC_APPEND, va( "%s\n", level.voteString ) )
     Com_sprintf( level.voteDisplayString,
-    sizeof( level.voteDisplayString ), "[Custom] \'%s^7\'", arg3plus);
+        sizeof( level.voteDisplayString ), "[Custom] \'%s^7\'", arg3plus );
   }
   else if( !Q_stricmp( arg1, "sudden_death" ) )
   {
