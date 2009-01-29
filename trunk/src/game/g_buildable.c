@@ -1521,7 +1521,8 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
     client->lastPoisonTime = level.time;
     client->lastPoisonClient = self;
   }
-  else if( client && client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
+
+  if( client && client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
     return;
 
   if( self->health <= 0 )
