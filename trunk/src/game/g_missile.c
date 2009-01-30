@@ -185,7 +185,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
   {
     if( other->client )
     {
-      if( ( other->client->ps.stats[ STAT_STATE ] & SS_SLOWLOCKED ) &&
+      if( ( ( other->client->ps.stats[ STAT_STATE ] & SS_SLOWLOCKED ) || ( other->client->ps.stats[ STAT_STATE ] & SS_SLOWLOCKED2 ) )  &&
           other->s.weapon < WP_ALEVEL3 )
       {
         other->client->ps.stats[ STAT_STATE ] |= SS_BLOBLOCKED;
@@ -196,6 +196,11 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
         other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED2;
         other->client->lastSlowTime = level.time;
         other->client->blobs++;
+      }
+      else if( other->s.weapon < WP_ALEVEL3 )
+      {
+        other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;
+        other->client->lastSlowTime = level.time;
       }
       else if( other->s.weapon >= WP_ALEVEL3 && other->client->blobs > 3 )
       {

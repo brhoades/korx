@@ -1600,10 +1600,10 @@ void ClientThink_real( gentity_t *ent )
     client->ps.stats[ STAT_STATE ] &= ~SS_GRABBED;
 
   if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED &&
-      client->lastLockTime + LOCKBLOB_LOCKTIME < level.time 
+      client->lastLockTime + LOCKBLOB_LOCKTIME < level.time )
       client->ps.stats[ STAT_STATE ] &= ~SS_BLOBLOCKED;
 
-  if( client->ps.stats[ STAT_STATE ] & ( SS_SLOWLOCKED || SS_SLOWLOCKED2 ) &&
+  if( ( ( client->ps.stats[ STAT_STATE ] & SS_SLOWLOCKED ) || ( client->ps.stats[ STAT_STATE ] & SS_SLOWLOCKED2 ) ) &&
       client->lastSlowTime + ABUILDER_BLOB_TIME < level.time )
     {
       client->ps.stats[ STAT_STATE ] &= ~SS_SLOWLOCKED;
