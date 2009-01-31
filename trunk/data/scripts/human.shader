@@ -2,13 +2,13 @@ models/players/human_base/h_base
 {
   cull disable
   {
-    map models/players/human_base/h_base.tga
+    map models/players/human_base/h_base.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/h_base.tga
+    map models/players/human_base/h_base.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -44,13 +44,13 @@ models/players/human_base/battpack
 {
   cull disable
   {
-    map models/players/human_base/battpack.tga
+    map models/players/human_base/battpack.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    models/players/human_base/battpack.tga
+    models/players/human_base/battpack.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -69,13 +69,13 @@ models/players/human_base/base
 {
   cull disable
   {
-    map models/players/human_base/base.tga
+    map models/players/human_base/base.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/base.tga
+    map models/players/human_base/base.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -87,13 +87,13 @@ models/players/human_base/light
 {
   cull disable
   {
-    map models/players/human_base/light.tga
+    map models/players/human_base/light.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/light.tga
+    map models/players/human_base/light.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -155,7 +155,7 @@ models/players/human_bsuit/human_bsuit
 {
   cull disable
   {
-    map models/players/human_bsuit/human_bsuit.tga
+    map models/players/human_bsuit/human_bsuit.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
