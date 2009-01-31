@@ -2585,7 +2585,7 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
     }
   }
 
-  if( cg.predictedPlayerState.stats[ STAT_PTEAM ] == PTE_ALIENS && CG_AtHighestClass( ) )
+  if( cg.predictedPlayerState.stats[ STAT_PTEAM ] == PTE_ALIENS && CG_AtHighestClass( ))
   {
     if( cg.time - cg.lastEvolveAttempt <= NO_CREDITS_TIME )
     {
@@ -2593,6 +2593,19 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
         color[ 3 ] = 0.0f;
     }
   }
+  
+  if( cg.predictedPlayerState.stats[ STAT_PTEAM ] == PTE_ALIENS && cent->currentState.weapon == WP_ALEVEL1_UPG 
+  		&& cg.predictedPlayerState.stats[ STAT_STATE ] & SS_BOOSTED )
+	{
+		color[ 3 ] = 0.1f;
+    if( cg.predictedPlayerState.stats[ STAT_BOOSTTIME ] >= ( BOOST_TIME*.8 ) )
+      if( ( cg.time / 500 ) % 2 )
+        color[ 3 ] = .5f;
+    
+	}
+	else if( cg.predictedPlayerState.stats[ STAT_PTEAM ] == PTE_ALIENS && cent->currentState.weapon == WP_ALEVEL1_UPG
+		&& cg.predictedPlayerState.eFlags & EF_MOVER_STOP )
+		color[ 3 ] = 0.1f;
 
   trap_R_SetColor( color );
   CG_DrawPic( rect->x, rect->y, rect->w, rect->h, cg_weapons[ cent->currentState.weapon ].weaponIcon );
