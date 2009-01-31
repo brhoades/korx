@@ -204,6 +204,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   if( self->client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
     self->client->ps.stats[ STAT_STATE ] &= ~SS_BOOSTED;
 
+  //Reset suicide
+  self->suicideTime = 0;
+
   //TA: deactivate all upgrades
   for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
     BG_DeactivateUpgrade( i, self->client->ps.stats );
