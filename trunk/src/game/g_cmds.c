@@ -738,17 +738,31 @@ void Cmd_Team_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
       return; 
     }
-    if( level.alienTeamLocked && g_extremeSuddenDeath.value )
+    if( level.alienTeamLocked && g_extremeSuddenDeath.integer )
     {   
       trap_SendServerCommand( ent-g_entities,
         va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
+      return;
     }
-    if( level.alienTeamLocked && !g_extremeSuddenDeath.value )
+    if( level.alienTeamLocked && !g_extremeSuddenDeath.integer )
     {
       trap_SendServerCommand( ent-g_entities,
         va( "print \"Alien team has been ^1LOCKED\n\"" ) );
       return; 
     }
+    if( level.goWarning != TW_PASSED && g_doWarmup.integer && g_doCountdown.integer )
+   	{
+   	  trap_SendServerCommand( ent-g_entities,
+        va( "print \"The countdown has not yet finished.\n\"" ) );
+      return; 
+   	}
+   	if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+      return;
+    } 
     else if( level.humanTeamLocked )
     {
       // if only one team has been locked, let people join the other
@@ -762,14 +776,6 @@ void Cmd_Team_f( gentity_t *ent )
       return;
     }
 
-    if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
-    {
-      trap_SendServerCommand( ent-g_entities,
-       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
-        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
-      return;
-    } 
-
     team = PTE_ALIENS;
   }
   else if( !Q_stricmp( s, "humans" ) )
@@ -779,17 +785,30 @@ void Cmd_Team_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
       return; 
     }
-    if( level.humanTeamLocked && g_extremeSuddenDeath.value )
+    if( level.humanTeamLocked && g_extremeSuddenDeath.integer )
     {
       trap_SendServerCommand( ent-g_entities,
         va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
       return; 
     }
-    if( level.humanTeamLocked && !g_extremeSuddenDeath.value )
+    if( level.humanTeamLocked && !g_extremeSuddenDeath.integer )
     {
       trap_SendServerCommand( ent-g_entities,
         va( "print \"Human team has been ^1LOCKED\n\"" ) );
       return; 
+    }
+   	if( level.goWarning != TW_PASSED && g_doWarmup.integer && g_doCountdown.integer )
+   	{
+   	  trap_SendServerCommand( ent-g_entities,
+        va( "print \"The countdown has not yet finished.\n\"" ) );
+      return; 
+   	}
+   	if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+      return;
     }
     else if( level.alienTeamLocked )
     {
@@ -803,14 +822,6 @@ void Cmd_Team_f( gentity_t *ent )
       G_TriggerMenu( ent - g_entities, MN_H_TEAMFULL );
       return;
     }
-
-    if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
-    {
-      trap_SendServerCommand( ent-g_entities,
-       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
-        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
-      return;
-    } 
 
     team = PTE_HUMANS;
   }
@@ -828,7 +839,14 @@ void Cmd_Team_f( gentity_t *ent )
        va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
         ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
       return;
-    } 
+    }
+     
+    if( level.goWarning != TW_PASSED && g_doWarmup.integer && g_doCountdown.integer )
+   	{
+   	  trap_SendServerCommand( ent-g_entities,
+        va( "print \"The countdown has not yet finished.\n\"" ) );
+      return; 
+   	}
 
     if( level.humanTeamLocked && level.alienTeamLocked )
       team = PTE_NONE;
@@ -869,6 +887,13 @@ void Cmd_Team_f( gentity_t *ent )
     return;
   }
 
+	//make sure we don't spam everyone
+  if( g_floodMinTime.integer )
+  	if ( G_Flood_Limited( ent ) )
+  	{
+ 			trap_SendServerCommand( ent-g_entities, "print \"You're spamming everyone with messages, try again later.\n\"" );
+   	  return;
+		}
 
   G_ChangeTeam( ent, team );
 

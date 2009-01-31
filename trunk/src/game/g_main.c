@@ -1220,68 +1220,68 @@ void G_DoSpamMessages( void )
 			}
 			level.spamWebsite = TW_PASSED;
 		}
-		if ( g_doWarmup.integer && g_doCountdown.integer)
+		if ( g_doWarmup.integer && g_doCountdown.integer )
 		{
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 5000 && level.countdownWarning5 < TW_IMMINENT)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 5000 && level.countdownWarning5 < TW_IMMINENT )
 			{
 				trap_SendServerCommand( -1, "cp \"^2>>>>>^75^2<<<<<\"" );
 				level.countdownWarning5 = TW_IMMINENT;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 4500 && level.countdownWarning5 < TW_PASSED)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 4500 && level.countdownWarning5 < TW_PASSED )
 			{
 				trap_SendServerCommand( -1, "cp \"^0>^2>>>>^75^2<<<<^0<\"" );
 				level.countdownWarning5 = TW_PASSED;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 4000 && level.countdownWarning4 < TW_IMMINENT)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 4000 && level.countdownWarning4 < TW_IMMINENT )
 			{
 				trap_SendServerCommand( -1, "cp \"^2>>>>^74^2<<<<\"" );
 				level.countdownWarning4 = TW_IMMINENT;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 3500 && level.countdownWarning4 < TW_PASSED)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 3500 && level.countdownWarning4 < TW_PASSED )
 			{
 				trap_SendServerCommand( -1, "cp \"^0>^2>>>^74^2<<<^0<\"" );
 				level.countdownWarning4 = TW_PASSED;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 3000 && level.countdownWarning3 < TW_IMMINENT)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 3000 && level.countdownWarning3 < TW_IMMINENT )
 			{
 				trap_SendServerCommand( -1, "cp \"^2>>>^73^2<<<\"" );
 				level.countdownWarning3 = TW_IMMINENT;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 2500 && level.countdownWarning3 < TW_PASSED)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 2500 && level.countdownWarning3 < TW_PASSED )
 			{
 				trap_SendServerCommand( -1, "cp \"^0>^2>>^73^2<<^0<\"" );
 				level.countdownWarning3 = TW_PASSED;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 2000 && level.countdownWarning2 < TW_IMMINENT)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 2000 && level.countdownWarning2 < TW_IMMINENT )
 			{
 				trap_SendServerCommand( -1, "cp \"^2>>^72^2<<\"" );
 				level.countdownWarning2 = TW_IMMINENT;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 1500 && level.countdownWarning2 < TW_PASSED)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 1500 && level.countdownWarning2 < TW_PASSED )
 			{
 				trap_SendServerCommand( -1, "cp \"^0>^2>^72^2<^0<\"" );
 				level.countdownWarning2 = TW_PASSED;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 1000 && level.countdownWarning1 < TW_IMMINENT)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 1000 && level.countdownWarning1 < TW_IMMINENT )
 			{
 				trap_SendServerCommand( -1, "cp \"^2>^71^2<\"" );
 				level.countdownWarning1 = TW_IMMINENT;
 			}
-			if ( level.time - level.startTime > g_warmup.integer*1000 - 500 && level.countdownWarning1 < TW_PASSED)
+			if ( level.time - level.startTime > g_warmup.integer*1000 - 500 && level.countdownWarning1 < TW_PASSED )
 			{
 				trap_SendServerCommand( -1, "cp \"^0>^71^2^0<\"" );
 				level.countdownWarning1 = TW_PASSED;
 			}
 		}
 	}
-	else if (level.goWarning < TW_PASSED && g_doWarmup.integer && g_doCountdown.integer)
+	else if ( level.goWarning < TW_PASSED && g_doWarmup.integer && g_doCountdown.integer )
 	{
-		if (level.goWarning < TW_IMMINENT)
+		if ( level.goWarning < TW_IMMINENT )
 		{
 			trap_SendServerCommand( -1, "cp \"^2<<<< ^7GO ^2>>>>\"" );
 			level.goWarning = TW_IMMINENT;
 		}
-		else if (level.time - level.startTime > g_warmup.integer*1000 + 500)
+		else if ( level.time - level.startTime > g_warmup.integer*1000 + 500 )
 		{
 			trap_SendServerCommand( -1, "cp \"^2\"" );
 			level.goWarning = TW_PASSED;
