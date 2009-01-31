@@ -172,7 +172,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s%sto you!\n\"",
       cl->pers.netname, overflowamt, type, ( overflowamt == 1 ) ? " " : "s " ) );
-
+      overflowamt = 0;
     }
     if( overflowed > 0 )
      trap_SendServerCommand( client - level.clients,
