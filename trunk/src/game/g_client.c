@@ -79,7 +79,6 @@ void SP_info_human_intermission( gentity_t *ent )
 {
 }
 
-// adds overflow support
 void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 {
   int       i;
@@ -138,8 +137,8 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       }
 
       trap_SendServerCommand( i,
-      va( "print \"%s^7 overflowed ^2%i ^7%s%s to you!\n\"",
-      cl->pers.netname, overflowamt, type, ( overflowamt == 1 ) ? "" : "s" ) );
+      va( "print \"%s^7 overflowed ^2%i ^7%s%sto you!\n\"",
+      cl->pers.netname, overflowamt, type, ( overflowamt == 1 ) ? " " : "s " ) );
 
       cl->ps.persistant[ PERS_CREDIT ] = cl->pers.credit;
       overflowamt = 0;
@@ -172,7 +171,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s%s to you!\n\"",
-      cl->pers.netname, overflowamt, type, ( overflowamt == 1 ) ? "" : "s" ) );
+      cl->pers.netname, overflowamt, type, ( overflowamt == 1 ) ? " " : "s " ) );
 
     }
     if( overflowed > 0 )
