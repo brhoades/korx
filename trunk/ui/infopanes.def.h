@@ -11,7 +11,7 @@
   name alienteam
   text "The Alien Team\n\n"
   text "The Aliens' strengths are in movement "
-  text "and the ability to quickly construct new bases quickly. They possess a "
+  text "and the ability to quickly construct new bases. They possess a "
   text "range of abilities including basic melee attacks, movement-"
   text "crippling poisons and more."
   align left
@@ -164,7 +164,7 @@
   text "Helmet\n\n"
   text "In addition to protecting your head, the helmet provides a "
   text "scanner indicating the presence of any non-human lifeforms in your "
-  text "immediate vicinity.\n\n"
+  text "immediate vicinity. Increases immunity to airborne poisons and viruses."\n\n"
   CREDITS( HELMET_PRICE )
 }
 
@@ -213,7 +213,7 @@
   text "Battle Suit\n\n"
   text "A full body armour that is highly effective at repelling alien attacks. "
   text "It allows the user to enter hostile situations with a greater degree "
-  text "of confidence.\n\n"
+  text "of confidence. Greatly increases immunity to airborne pathogens and viruses.\n\n"
   CREDITS( BSUIT_PRICE )
 }
 
