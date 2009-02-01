@@ -20,13 +20,13 @@ models/players/human_base/h_helmet
 {
   cull disable
   {
-    map models/players/human_base/h_helmet.tga
+    map models/players/human_base/h_helmet.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/h_helmet.tga
+    map models/players/human_base/h_helmet.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -105,13 +105,13 @@ models/players/human_base/armour
 {
   cull disable
   {
-    map models/players/human_base/armour.tga
+    map models/players/human_base/armour.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/armour.tga
+    map models/players/human_base/armour.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -130,13 +130,13 @@ models/players/human_base/shoulderpads
 {
   cull disable
   {
-    map models/players/human_base/shoulderpads.tga
+    map models/players/human_base/shoulderpads.jpg
     rgbGen lightingDiffuse
     alphaFunc GE128
     depthWrite
   }
   {
-    map models/players/human_base/shoulderpads.tga
+    map models/players/human_base/shoulderpads.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
@@ -167,7 +167,7 @@ models/players/human_bsuit/human_bsuit
     depthFunc equal
   }
   {
-    map models/players/human_bsuit/human_bsuit.tga
+    map models/players/human_bsuit/human_bsuit.jpg
     blendFunc GL_SRC_ALPHA GL_ONE
     detail
     alphaGen lightingSpecular
