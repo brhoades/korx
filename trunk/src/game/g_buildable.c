@@ -2224,7 +2224,7 @@ void HForceField_Shrink( gentity_t *self, qboolean shrink )
   }
   if ( !shrink &&
        ( !self->shrunkTime ||
-         level.time < self->shrunkTime + BARRICADE_SHRINKTIMEOUT ) )
+         level.time < self->shrunkTime + FORCEFIELD_SHRINKTIMEOUT ) )
     return;
   BG_FindBBoxForBuildable( BA_H_FORCEFIELD, self->r.mins, self->r.maxs );
   if ( shrink )

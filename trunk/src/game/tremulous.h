@@ -657,6 +657,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FORCEFIELD_SPLASHDAMAGE       50
 #define FORCEFIELD_SPLASHRADIUS       100
 #define FORCEFIELD_SHRINKPROP					0.1f
+#define	FORCEFIELD_SHRINKTIMEOUT			250
 
 
 /*
