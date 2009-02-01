@@ -307,7 +307,9 @@
 {
 	name forcefieldbuild
 	text "Force Field\n\n"
-	text "A force field that can take heavy damage\n\n"
+	text "A force field that can take heavy damage."
+	text "Using the forcefield (Q by default) causes it to"
+	text "shut down temporarily to allow passage.\n\n"
 	HUMAN_BCOST( FORCEFIELD_BP )
 }
 //alien structures
