@@ -2195,8 +2195,105 @@ void HMedistat_Think( gentity_t *self )
   }
 }
 
+/*
+================
+HForceField_Shrink
 
+Set shrink state for a barricade. When unshrinking, checks to make sure there
+is enough room.
+================
+*/
+void HForceField_Shrink( gentity_t *self, qboolean shrink )
+{
+  if ( !self->spawned || self->health <= 0 )
+    shrink = qtrue;
+  if ( shrink && self->shrunkTime )
+  {
+    int anim;
 
+    // We need to make sure that the animation has been set to shrunk mode
+    // because we start out shrunk but with the construct animation when built
+    self->shrunkTime = level.time;
+    anim = self->s.torsoAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
+    if ( self->spawned && self->health > 0 && anim != BANIM_DESTROYED )
+    {
+      G_SetIdleBuildableAnim( self, BANIM_DESTROYED );
+      G_SetBuildableAnim( self, BANIM_ATTACK1, qtrue );
+    }
+    return;
+  }
+  if ( !shrink &&
+       ( !self->shrunkTime ||
+         level.time < self->shrunkTime + BARRICADE_SHRINKTIMEOUT ) )
+    return;
+  BG_FindBBoxForBuildable( BA_H_FORCEFIELD, self->r.mins, self->r.maxs );
+  if ( shrink )
+  {
+    self->r.maxs[ 2 ] = (int)( self->r.maxs[ 2 ] * FORCEFIELD_SHRINKPROP );
+    self->shrunkTime = level.time;
+
+    // shrink animation, the destroy animation is used
+    if ( self->spawned && self->health > 0 )
+    {
+      G_SetBuildableAnim( self, BANIM_ATTACK1, qtrue );
+      G_SetIdleBuildableAnim( self, BANIM_DESTROYED );
+    }
+  }
+  else
+  {
+    trace_t tr;
+    int anim;
+
+    trap_Trace( &tr, self->s.origin, self->r.mins, self->r.maxs,
+                self->s.origin, self->s.number, MASK_PLAYERSOLID );
+    if ( tr.startsolid || tr.fraction < 1.f )
+    {
+      self->r.maxs[ 2 ] = (int)( self->r.maxs[ 2 ] * FORCEFIELD_SHRINKPROP );
+      return;
+    }
+    self->shrunkTime = 0;
+
+    // unshrink animation, IDLE2 has been hijacked for this
+    anim = self->s.legsAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
+    if ( self->spawned && self->health > 0 &&
+         anim != BANIM_CONSTRUCT1 && anim != BANIM_CONSTRUCT2 )
+    {
+      G_SetIdleBuildableAnim( self, BANIM_IDLE1 );
+      G_SetBuildableAnim( self, BANIM_ATTACK2, qtrue );
+    }
+  }
+
+  // a change in size requires a relink
+  if ( self->spawned )
+    trap_LinkEntity( self );
+}
+
+/*
+================
+HForceField_Touch
+
+Barricades shrink when they are come into contact with an Alien that can
+pass through
+================
+*/
+
+void HForceField_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
+{
+  gclient_t *client = other->client;
+  int client_z, min_z;
+
+  if( !client || client->pers.teamSelection != PTE_HUMANS )
+    return;
+
+  // Client must be high enough to pass over. Note that STEPSIZE (18) is
+  // hardcoded here because we don't include bg_local.h!
+  client_z = other->s.origin[ 2 ] + other->r.mins[ 2 ];
+  min_z = self->s.origin[ 2 ] - 18 +
+          (int)( self->r.maxs[ 2 ] * FORCEFIELD_SHRINKPROP );
+  if( client_z < min_z )
+    return;
+  HForceField_Shrink( self, qtrue );
+}
 
 /*
 ================
@@ -2210,16 +2307,11 @@ void HForceField_Think( gentity_t *self )
   //make sure we have power
   self->nextthink = level.time + POWER_REFRESH_TIME;
 
+  HForceField_Shrink( self, !G_FindPower( self ) );
   self->powered = G_FindPower( self );
 }
 
-
-
-
 //==================================================================================
-
-
-
 
 /*
 ================
@@ -2644,10 +2736,11 @@ void HSpawn_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   new->next = NULL;
   G_LogBuild( new );
     
+  if( self->s.modelindex == BA_H_FORCEFIELD )
+  	HForceField_Shrink( self, qtrue );
   //pretty events and cleanup
   G_SetBuildableAnim( self, BANIM_DESTROY1, qtrue );
   G_SetIdleBuildableAnim( self, BANIM_DESTROYED );
-
   self->die = nullDieFunction;
   self->powered = qfalse; //free up power
   //prevent any firing effects and cancel structure protection
@@ -3667,6 +3760,9 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
     case BA_H_FORCEFIELD:
       built->think = HForceField_Think;
       built->die = HSpawn_Die;
+      built->touch = HForceField_Touch;
+      built->shrunkTime = 0;
+      HForceField_Shrink( built, qtrue );
       break;
 
     default:
