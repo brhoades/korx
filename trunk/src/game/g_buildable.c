@@ -902,12 +902,12 @@ void AOvermind_Think( gentity_t *self )
 
 /*
 ================
-ABarricade_Pain
+AGeneric_Pain
 
 pain function for Alien Spawn
 ================
 */
-void ABarricade_Pain( gentity_t *self, gentity_t *attacker, int damage )
+void AGeneric_Pain( gentity_t *self, gentity_t *attacker, int damage )
 {
   if( rand( ) % 1 )
     G_SetBuildableAnim( self, BANIM_PAIN1, qfalse );
@@ -917,12 +917,12 @@ void ABarricade_Pain( gentity_t *self, gentity_t *attacker, int damage )
 
 /*
 ================
-ABarricade_Blast
+AGeneric_Blast
 
 Called when an alien spawn dies
 ================
 */
-void ABarricade_Blast( gentity_t *self )
+void AGeneric_Blast( gentity_t *self )
 {
   vec3_t  dir;
 
@@ -945,12 +945,12 @@ void ABarricade_Blast( gentity_t *self )
 
 /*
 ================
-ABarricade_Die
+AGeneric_Die
 
 Called when an alien spawn dies
 ================
 */
-void ABarricade_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod )
+void AGeneric_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod )
 {
   buildHistory_t *new;
   new = G_Alloc( sizeof( buildHistory_t ) );
@@ -973,7 +973,7 @@ void ABarricade_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker,
   G_SetIdleBuildableAnim( self, BANIM_DESTROYED );
 
   self->die = nullDieFunction;
-  self->think = ABarricade_Blast;
+  self->think = AGeneric_Blast;
   self->s.eFlags &= ~EF_FIRING; //prevent any firing effects
 
   if( self->spawned )
@@ -1000,12 +1000,12 @@ void ABarricade_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker,
 
 /*
 ================
-ABarricade_Think
+AGeneric_Think
 
-Think function for Alien Barricade
+Generic alien think function
 ================
 */
-void ABarricade_Think( gentity_t *self )
+void AGeneric_Think( gentity_t *self )
 {
 
   G_CreepSlow( self );
@@ -3430,32 +3430,32 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
       break;
 
     case BA_A_BARRICADE:
-      built->die = ABarricade_Die;
-      built->think = ABarricade_Think;
-      built->pain = ABarricade_Pain;
+      built->die = AGeneric_Die;
+      built->think = AGeneric_Think;
+      built->pain = AGeneric_Pain;
       break;
 
     case BA_A_BOOSTER:
-      built->die = ABarricade_Die;
-      built->think = ABarricade_Think;
-      built->pain = ABarricade_Pain;
+      built->die = AGeneric_Die;
+      built->think = AGeneric_Think;
+      built->pain = AGeneric_Pain;
       built->touch = ABooster_Touch;
       break;
 
     case BA_A_ACIDTUBE:
-      built->die = ABarricade_Die;
+      built->die = AGeneric_Die;
       built->think = AAcidTube_Think;
       built->pain = ASpawn_Pain;
       break;
 
     case BA_A_HIVE:
-      built->die = ABarricade_Die;
+      built->die = AGeneric_Die;
       built->think = AHive_Think;
       built->pain = ASpawn_Pain;
       break;
 
     case BA_A_TRAPPER:
-      built->die = ABarricade_Die;
+      built->die = AGeneric_Die;
       built->think = ATrapper_Think;
       built->pain = ASpawn_Pain;
       break;
@@ -4177,7 +4177,7 @@ void G_CommitRevertedBuildable( gentity_t *ent )
          ent->think = ASpawn_Think;
          break;
       case BA_A_BARRICADE: 
-        ent->think = ABarricade_Think;
+        ent->think = AGeneric_Think;
         break;
       case BA_A_ACIDTUBE:
       case BA_A_BOOSTER:
