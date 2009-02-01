@@ -2270,14 +2270,13 @@ void HForceField_Shrink( gentity_t *self, qboolean shrink )
 
 /*
 ================
-HForceField_Touch
+HForceField_Use
 
-Barricades shrink when they are come into contact with an Alien that can
-pass through
+Forcefields get smaller when a human uses it (Q by default).
 ================
 */
 
-void HForceField_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
+void HForceField_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
 {
   gclient_t *client = other->client;
   int client_z, min_z;
@@ -3760,7 +3759,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
     case BA_H_FORCEFIELD:
       built->think = HForceField_Think;
       built->die = HSpawn_Die;
-      built->touch = HForceField_Touch;
+      built->use = HForceField_Use;
       built->shrunkTime = 0;
       HForceField_Shrink( built, qtrue );
       break;
