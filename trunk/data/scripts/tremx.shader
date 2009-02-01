@@ -83,7 +83,7 @@ models/weapons/xael/xael
 		tcGen environment
 	}
 	{
-		map models/weapons/xael/xael_glow.jpg
+		map models/weapons/xael/xael_glow.tga
 		blendfunc add
 		rgbGen wave noise 0.2 0.5 0 3.17 
 	}

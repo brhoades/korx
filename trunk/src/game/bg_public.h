@@ -1060,6 +1060,7 @@ typedef struct
   qboolean  replaceable;
 } buildableAttributes_t;
 
+
 typedef struct
 {
   char      models[ MAX_BUILDABLE_MODELS ][ MAX_QPATH ];

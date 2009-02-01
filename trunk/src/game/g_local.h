@@ -242,6 +242,7 @@ struct gentity_s
   int               lastDamageTime;
   int               nextHealTime;
   int               nextReloadTime;
+  int               shrunkTime;
 };
 
 typedef enum

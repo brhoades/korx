@@ -676,6 +676,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define HUMAN_REGEN_DAMAGE_TIME     1500 //msec since damage that regen starts again
 
+#define BARRICADE_SHRINKTIMEOUT     500
+#define BARRICADE_SHRINKPROP        0.25f
+
+
 /*
  * Misc
  */
