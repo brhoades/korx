@@ -187,20 +187,20 @@ models/weapons/xael/droid
 models/buildables/forcefield/energy
 {
   cull disable
-	//{
-	//	map models/buildables/repeater/energy.tga
-		//rgbGen wave sawtooth 0.3 1 0 0.5 
-  //  blendFunc GL_ONE GL_ONE
-	//	tcMod scale 2 1
-	//	tcMod scroll 0 1
-	//}
 	{
-		map textures/atcs/force_field.tga
+		map models/buildables/repeater/energy.tga
+		rgbGen wave sawtooth 0.1 0.1 0 0.5 
+    blendFunc GL_ONE GL_ONE
+		tcMod scale 1 1
+		tcMod scroll 0 1
+	}
+	{
+		map models/buildables/forcefield/forcefieldenergy.jpg
 		tcMod Scroll .1 0
 		blendFunc add
 	}
 	{
-		map textures/atcs/force_grid.jpg
+		map models/buildables/forcefield/forcefieldenergy_grid.jpg
 		tcMod Scroll -.01 0
 		blendFunc add
 		rgbgen wave sin .2 .2 0 .4
