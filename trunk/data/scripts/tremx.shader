@@ -200,7 +200,7 @@ models/buildables/forcefield/energy
 		blendFunc add
 	}
 	{
-		map textures/atcs/force_grid.tga
+		map textures/atcs/force_grid.jpg
 		tcMod Scroll -.01 0
 		blendFunc add
 		rgbgen wave sin .2 .2 0 .4
