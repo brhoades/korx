@@ -2678,6 +2678,7 @@ static void CG_TeamStatusDisplay( centity_t *cent )
   qboolean        visible = qfalse;
   vec3_t          mins, maxs;
   entityState_t   *hit;
+  float           transparency=0.5f;
 
   if( pteam == BIT_ALIENS )
     bs = &cgs.alienBuildStat;
@@ -2759,7 +2760,7 @@ static void CG_TeamStatusDisplay( centity_t *cent )
       cg.predictedPlayerState.stats[ STAT_PTEAM ] == PTE_HUMANS &&
       CG_WorldToScreen( origin, &x, &y ) )
   {
-    if( x > 450 && y > 290 )
+    if( x > 450 && y > 260 )
       visible = qfalse;
   }
 
@@ -2774,18 +2775,20 @@ static void CG_TeamStatusDisplay( centity_t *cent )
     cent->buildableStatus.lastTime  = cg.time;
   }
 
+	color[ 3 ] = transparency;
   // Fade up
   if( cent->buildableStatus.visible )
   {
     if( cent->buildableStatus.lastTime + STATUS_FADE_TIME > cg.time )
-      color[ 3 ] = (float)( cg.time - cent->buildableStatus.lastTime ) / STATUS_FADE_TIME;
+      color[ 3 ] = transparency*((float)( cg.time - cent->buildableStatus.lastTime ) / STATUS_FADE_TIME);
+
   }
 
   // Fade down
   if( !cent->buildableStatus.visible )
   {
     if( cent->buildableStatus.lastTime + STATUS_FADE_TIME > cg.time )
-      color[ 3 ] = 1.0f - (float)( cg.time - cent->buildableStatus.lastTime ) / STATUS_FADE_TIME;
+      color[ 3 ] = transparency*(1.0f - (float)( cg.time - cent->buildableStatus.lastTime ) / STATUS_FADE_TIME);
     else
       return;
   }
