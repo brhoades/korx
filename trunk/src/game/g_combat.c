@@ -260,10 +260,13 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	  
      if( ( g_devmapKillerHP.integer && g_cheats.integer ) || ( g_KillerHP.integer && !( g_cheats.integer ) ) ) 
      {
-			if( attacker->health < 0)
-				 attacker->health = 0;
-       trap_SendServerCommand( self-g_entities, va( "print \"^7Your killer, %s^7, had ^2%3i^7 HP.\n\"", 
-			killerName, attacker->health ) );
+     	 float athel;
+			 if( attacker->health < 0.0f )
+				 athel = 0.0f;
+			 else
+			 	 athel = attacker->health;
+       trap_SendServerCommand( self-g_entities, va( "print \"^7Your killer, %s^7, had ^2%3f^7 HP.\n\"", 
+			killerName, floor( athel + .5 ) ) );
      }
    }
 

@@ -226,7 +226,7 @@ typedef enum
   STAT_BUILDABLE, //TA: which ghost model to display for building
   STAT_BOOSTTIME, //TA: time left for boost (alien only)
   STAT_FALLDIST,  //TA: the distance the player fell
-  STAT_VIEWLOCK   //TA: direction to lock the view in
+  STAT_VIEWLOCK,   //TA: direction to lock the view in
 } statIndex_t;
 
 #define SCA_WALLCLIMBER         0x00000001
@@ -255,6 +255,10 @@ typedef enum
 
 #define SB_VALID_TOGGLEBIT      0x00004000
 #define SS_SLOWLOCKED2          0x00008000
+
+#define SS_CLOAKED							0x00012000
+#define SS_CLOAKEDLOW						0x00016000
+#define SS_CLOAKUSED						0x00020000
 
 #define MAX_STAMINA             1000
 

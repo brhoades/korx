@@ -3642,6 +3642,9 @@ void Cmd_Buy_f( gentity_t *ent )
     {
       ent->client->cloakReady = qtrue;
       ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+      ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKED;
+      ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
+      ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED; 
     }
 
     //subtract from funds
@@ -3771,6 +3774,9 @@ void Cmd_Sell_f( gentity_t *ent )
       {   
         ent->client->cloakReady = qfalse;
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+      	ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKED;
+      	ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
+      	ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED; 
       }
 
       //add to funds --- Causes issues with overflow and 2000 credits, doing it manually
@@ -3866,6 +3872,9 @@ void Cmd_Sell_f( gentity_t *ent )
         {   
           ent->client->cloakReady = qfalse;
           ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+          ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKED;
+      		ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
+      		ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED; 
         }
 
         //add to funds

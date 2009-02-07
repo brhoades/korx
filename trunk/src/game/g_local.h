@@ -162,7 +162,7 @@ struct gentity_s
   int               fly_sound_debounce_time;  // wind tunnel
   int               last_move_time;
 
-  int               health;
+  float             health;
   int               lastHealth; // currently only used for overmind
 
   qboolean          takedamage;
