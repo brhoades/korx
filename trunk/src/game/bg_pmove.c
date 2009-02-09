@@ -2620,6 +2620,10 @@ static void PM_BeginWeaponChange( int weapon )
   if( pm->ps->weapon == WP_XAEL && pm->ps->stats[ STAT_MISC ] != 0 )
     return;
 
+	//Just to be safe...
+	if( pm->ps->weapon == WP_XAEL || pm->ps->weapon == WP_LUCIFER_CANNON )
+		pm->ps->stats[ STAT_MISC ] = 0;
+	
   PM_AddEvent( EV_CHANGE_WEAPON );
   pm->ps->weaponstate = WEAPON_DROPPING;
   pm->ps->weaponTime += 200;
