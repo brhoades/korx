@@ -164,7 +164,7 @@
   text "Helmet\n\n"
   text "In addition to protecting your head, the helmet provides a "
   text "scanner indicating the presence of any non-human lifeforms in your "
-  text "immediate vicinity. Increases immunity to airborne poisons and viruses."\n\n"
+  text "immediate vicinity. Increases immunity to airborne poisons and viruses."\n\n
   CREDITS( HELMET_PRICE )
 }
 
