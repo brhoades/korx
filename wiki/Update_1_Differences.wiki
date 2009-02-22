@@ -1,11 +1,11 @@
-===Differences from Update 1.0 (r225) to Update 1. (r260)===
+===Differences from Update 1.0 (r225) to Update 1.1 (r260)===
 
 ==Bug Fixes==
-Possible booster bug fixed.<br />
+Possible booster bug fixed.(r225)<br />
 Blobs from prifle now wear off. (r228, r229, and r233) <br />
 Health reneration rates > 20 now work on a server with sv_fps = 20.<br />
 Dretch now rotates on the main menu again. (r225) <br />
-*Custom vote executing last vote string fixed.* (r226)<br />
+Custom vote executing last vote string fixed. (r226)<br />
 Suicide should now cancel when you die. (r235)<br />
 Adv. Rant acid now does large radial damage along with regular impact damage. (r222 & r234)<br />
 Booster boosts every five seconds, regardless if player is currently boosted. (r225)<br />
