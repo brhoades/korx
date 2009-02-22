@@ -1,4 +1,7 @@
 *Differences between Tremx-KoR* <br />
+
+=DATED=
+
 Major Changes are in *BOLD*
 ===Commands===
 [http://i299.photobucket.com/albums/mm308/Aaron5367-trem/feature-1.jpg]
