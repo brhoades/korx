@@ -34,7 +34,7 @@
 
 {
   name autoteam
-  text "Join the team with the least players."
+  text "Join the team that needs you."
 }
 
 
@@ -53,7 +53,7 @@
   text "Construction kit\n\n"
   text "Used for building all basic structures. This includes "
   text "spawns, power and basic defense.\n"
-  text "It can be used to heal aliens/humans too.\n\n"
+  text "It can be used to heal fellow humans and structures too.\n\n"
   text "Credits: Free"
 }
 
@@ -62,7 +62,7 @@
   text "Advanced Construction kit\n\n"
   text "Used for building/repairing advanced structures. This includes "
   text "combat computers and advanced defense.\n"
-  text "It can be used to heal aliens/humans too.\n\n"
+  text "It can be used to heal fellow humans and structures too.\n\n"
   text "Credits: Free"
 }
 
@@ -71,7 +71,7 @@
   text "Shotgun\n\n"
   text "Close range weapon that is useful against larger foes. "
   text "It has a slow repeat rate, but can be devastatingly "
-  text "effective.\n\n"
+  text "effective. Shoots small grenades that explode on impact.\n\n"
   CREDITS( SHOTGUN_PRICE )
 }
 
@@ -106,7 +106,8 @@
   name prifleitem
   text "Pulse Rifle\n\n"
   text "An energy weapon that fires pulses of concentrated energy at a fast "
-  text "rate. It requires re-energising every 50 pulses.\n\n"
+  text "rate. It requires re-energising every 50 pulses. Slows down smaller "
+  text "creatures with a single shot, and larger with several."
   CREDITS( PRIFLE_PRICE )
 }
 
@@ -122,7 +123,8 @@
 {
   name xaelitem
   text "X4-3L\n\n"
-  text "Access denied.\n\n"
+  text "A devestatingly powerful weapon. Has large fallout and does more "
+  text "damage than the already powerful Lucifer Cannon.\n\n"
   CREDITS( XAEL_PRICE )
 }
 
@@ -164,7 +166,7 @@
   text "Helmet\n\n"
   text "In addition to protecting your head, the helmet provides a "
   text "scanner indicating the presence of any non-human lifeforms in your "
-  text "immediate vicinity. Increases immunity to airborne poisons and viruses.\n\n"
+  text "immediate vicinity. Slightly increases immunity to airborne poisons and viruses.\n\n"
   CREDITS( HELMET_PRICE )
 }
 
@@ -195,7 +197,9 @@
 {
   name cloakitem
   text "Cloak\n\n"
-  text "jet/battery/ammo packs are still visible.\n\n"
+  text "Back-mounted device that renders you nearly invisible to other "
+  text "creatures. This device is far from perfect, and on occasion makes "
+  text "you slighly more visible."
   CREDITS( CLOAK_PRICE )
 }
 
@@ -213,7 +217,7 @@
   text "Battle Suit\n\n"
   text "A full body armour that is highly effective at repelling alien attacks. "
   text "It allows the user to enter hostile situations with a greater degree "
-  text "of confidence. Greatly increases immunity to airborne pathogens and viruses.\n\n"
+  text "of confidence. Increases immunity to airborne pathogens and viruses.\n\n"
   CREDITS( BSUIT_PRICE )
 }
 
@@ -228,7 +232,7 @@
   name regenitem
   text "Bio Kit\n\n"
   text "An implant that helps its user to regenerate health and stamina "
-  text "and makes you slightly more immune to spreadable infections.\n\n"
+  text "and makes you a great deal more immune to spreadable infections.\n\n"
   CREDITS( REGEN_PRICE )
 }
 
@@ -284,7 +288,8 @@
   text "Defense Computer\n\n"
   text "A structure coordinating the action of base defense so that "
   text "defense is distributed evenly among the enemy. "
-  text "This structure is required for building the Tesla Generator.\n\n"
+  text "This structure is required for building the Tesla Generator. "
+  text "This structure also heals other defensive structures.\n\n"
   HUMAN_BCOST( DC_BP )
 }
 
@@ -307,8 +312,8 @@
 {
 	name forcefieldbuild
 	text "Force Field\n\n"
-	text "A force field that can take heavy damage."
-	text "Using the forcefield (Q by default) causes it to"
+	text "A force field that can take heavy damage. "
+	text "Using the forcefield (Q by default) causes it to "
 	text "shut down temporarily to allow passage.\n\n"
 	HUMAN_BCOST( FORCEFIELD_BP )
 }
@@ -335,7 +340,8 @@
   name barricadebuild
   text "Barricade\n\n"
   text "Used to obstruct corridors and doorways, "
-  text "hindering humans from threatening the spawns and Overmind.\n\n"
+  text "hindering humans from threatening the spawns and Overmind. "
+  text "Will shrink for nearby aliens who require passage.\n\n"
   ALIEN_BCOST( BARRICADE_BP )
 }
 
@@ -373,7 +379,7 @@
   text "attacks. In addition to the default attack damage, the victim loses "
   text "health over time unless they heal themselves with a medkit."
   text "The booster also increases the rate of health regeneration for "
-  text "any nearby aliens.\n\n"
+  text "any nearby aliens. Will poison any human that touches it.\n\n"
   ALIEN_BCOST( BOOSTER_BP )
 }
 
@@ -400,7 +406,8 @@
   text "Advanced Granger\n\n"
   text "Similar to the base Granger, "
   text "except that in addition to being able to build structures it has a "
-  text "melee attack and the ability to crawl on walls.\n\n"
+  text "melee attack and the ability to crawl on walls. Can trap humans "
+  text "like a trapper with its spit."
   text "Evos: Free"
 }
 
@@ -416,7 +423,8 @@
   name level0upgclass
   text "Advanced Dretch\n\n"
   text "The Advanced Dretch has all the abilities of the basic Dretch. "
-  text "In addition it has drill ability.\n\n"
+  text "In addition it has drill ability. When biting it can cause a "
+  text "human to become infected with a highly infectious disease."
   text "Evos: 1 (Dretch + 1)"
 }
 
@@ -434,15 +442,15 @@
   text "Advanced Basilisk\n\n"
   text "In addition to the basic Basilisk abilities, the Advanced "
   text "Basilisk sprays a poisonous gas which disorientaits any "
-  text "nearby humans.\n"
-  text "It becomes invisible if stays still for a while.\n\n"
+  text "nearby humans. "
+  text "It becomes invisible if stays still for a while or is boosted.\n\n"
   text "Evos: 2 (Basilisk + 1)"
 }
 
 {
   name level2class
   text "Marauder\n\n"
-  text "Has a melee attack and the ability to jump off walls."
+  text "Has a melee attack and the ability to jump off walls. "
   text "This allows the Marauder to gather great speed in enclosed areas.\n\n"
   text "Evos: 2 (Basilisk + 1)"
 }
@@ -451,7 +459,8 @@
   name level2upgclass
   text "Advanced Marauder\n\n"
   text "The Advanced Marauder has all the abilities of the base Marauder "
-  text "including 3 barbs which may be used to attack humans from a distance.\n\n"
+  text "including 3 barbs which may be used to attack humans from a distance. "
+  text "It can also zap nearby humans or their structures.\n\n"
   text "Evos: 3 (Marauder + 1)"
 }
 
@@ -483,9 +492,9 @@
 {
   name level4upgclass
   text "Advanced Tyrant\n\n"
-  text "It has an acid ball that can be used only once unless it is boosted."
-  text "The acid ball does little damage to structures without a direct hit.\n\n"
-  text "Evos: 11 (Tyrant + 6)"
+  text "It has an acid ball that can be used only once unless it is boosted. "
+  text "The acid ball inflicts great damage to humans and their structures.\n\n"
+  text "Evos: 9 (Tyrant + 4)"
 }
 
 // graphic <top|bottom|left|right> <center|some numerical offset> <shadername> <width> <height>
