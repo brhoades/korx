@@ -1308,11 +1308,15 @@ void AHovel_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
 
   if( self->spawned && G_FindOvermind( self ) && !activator->client->pers.paused )
   {
-    if( self->active )
+    if( self->active && self->builder->health > 0 )
     {
       //this hovel is in use
       trap_SendServerCommand( activator->client->ps.clientNum,
       va( "print \"This Hovel is already occupied by %s^7.\n\"", self->builder->client->pers.netname ) );
+    }
+    else if( self->active && self->builder->health <= 0 )
+    {
+      self->active = qfalse;
     }
     else if( ( ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_BUILDER0 ) ||
                ( activator->client->ps.stats[ STAT_PCLASS ] == PCL_ALIEN_BUILDER0_UPG ) ) &&
