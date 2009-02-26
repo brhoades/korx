@@ -78,6 +78,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MAX_ADMIN_LISTITEMS 20
 #define MAX_ADMIN_SHOWBANS 10
 
+#define MAX_ADMIN_MAPLOG_LENGTH 5
+
 // important note: QVM does not seem to allow a single char to be a
 // member of a struct at init time.  flag has been converted to char*
 typedef struct
@@ -144,6 +146,7 @@ qboolean G_admin_readconfig( gentity_t *ent, int skiparg );
 qboolean G_admin_permission( gentity_t *ent, char flag );
 qboolean G_admin_name_check( gentity_t *ent, char *name, char *err, int len );
 void G_admin_namelog_update( gclient_t *ent, qboolean disconnect );
+void G_admin_maplog_result( char *flag );
 int G_admin_level( gentity_t *ent );
 
 // ! command functions
@@ -196,8 +199,10 @@ qboolean G_admin_designate( gentity_t *ent, int skiparg );
 qboolean G_admin_forcespec( gentity_t *ent, int skiparg );
 qboolean G_admin_unforcespec( gentity_t *ent, int skiparg );
 qboolean G_admin_print2( gentity_t *ent, int skiparg );
-qboolean G_admin_listmaps(gentity_t *ent, int skiparg);
 qboolean G_admin_switch( gentity_t *ent, int skiparg ); 
+void G_admin_maplog_update( void );
+qboolean G_admin_maplog( gentity_t *ent, int skiparg );
+qboolean G_admin_listmaps( gentity_t *ent, int skiparg );
 
 void G_admin_print( gentity_t *ent, char *m );
 void G_admin_buffer_print( gentity_t *ent, char *m );
