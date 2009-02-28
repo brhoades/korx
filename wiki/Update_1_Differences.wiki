@@ -1,4 +1,4 @@
-===Differences from Update 1.0 (r225) to Update 1.1 (r279)===
+===Differences from Update 1.0 (r225) to Update 1.1 (r284)===
 
 ==Bug Fixes==
 Possible booster bug fixed.(r225)<br />
@@ -13,7 +13,6 @@ Another Xael/Luci bug precaution. (r259)<br />
 Hovels with Grangers in them that die should work now. (r268)<br />
 No more pouncing through the floor. (r275)<br />
 Bodies no longer block your building, nor do doors (though they kill your stuff!). (r276)<br />
-Added the rotation command. Shows upcoming maps and states if there is a map override due to a vote (nextmap). (r277)<br />
 
 ==Graphical Improvements==
 All human textures are slightly darker. (Fox_One (r230 & r232)<br />
@@ -32,6 +31,7 @@ Forcefield has new UI info to reflect changes. (r254) <br />
 Various other UI bug fixes and enhancements (r252 & r260)<br />
 Lots of UI menus were updated to reflect changes in the game. (r267)<br />
 The new ATCS textures have been added and are forced in the pk3 (r271)<br />
+Bsuit's view height now matches where the eye is. (r284)<br />
 
 ==Gameplay Changes==
 Adv. Rant's acid is strong again, to counter Xael. (r222 & r234)<br />
@@ -41,3 +41,4 @@ Adv. Rants now have a healing rate of 10 hp/s and cost 9 evos instead of 11. (r2
 
 ==Command Changes==
 Added Lakitu's much better !listmaps, and a !maplog for those with revert (r270 & r272) <br />
+Added the rotation command. Shows upcoming maps and states if there is a map override due to a vote (nextmap). (r277)<br />
