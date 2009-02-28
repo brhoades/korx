@@ -1,4 +1,4 @@
-===Differences from Update 1.0 (r225) to Update 1.1 (r268)===
+===Differences from Update 1.0 (r225) to Update 1.1 (r279)===
 
 ==Bug Fixes==
 Possible booster bug fixed.(r225)<br />
