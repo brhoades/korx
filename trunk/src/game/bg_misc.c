@@ -2122,7 +2122,7 @@ classAttributes_t bg_classList[ ] =
     { -15, -15, -4 },                               //vec3_t  deadmins;
     { 15, 15, 4 },                                  //vec3_t  deadmaxs;
     -16.0f,                                           //float   zOffset
-    35, 35,                                         //int     viewheight, crouchviewheight;
+    25, 25,                                         //int     viewheight, crouchviewheight;
     100,                                            //int     health;
     1.0f,                                           //float   fallDamage;
     0,                                              //int     regenRate;
