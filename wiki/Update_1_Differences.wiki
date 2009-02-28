@@ -11,6 +11,9 @@ Adv. Rant acid now does large radial damage along with regular impact damage. (r
 Booster boosts every five seconds, regardless if player is currently boosted. (r225)<br />
 Another Xael/Luci bug precaution. (r259)<br />
 Hovels with Grangers in them that die should work now. (r268)<br />
+No more pouncing through the floor. (r275)<br />
+Bodies no longer block your building, nor do doors (though they kill your stuff!). (r276)<br />
+Added the rotation command. Shows upcoming maps and states if there is a map override due to a vote (nextmap). (r277)<br />
 
 ==Graphical Improvements==
 All human textures are slightly darker. (Fox_One (r230 & r232)<br />
