@@ -2307,11 +2307,11 @@ Think for force field
 */
 void HForceField_Think( gentity_t *self )
 {
+  self->powered = G_FindPower( self );
   //make sure we have power
   self->nextthink = level.time + POWER_REFRESH_TIME;
 
   HForceField_Shrink( self, !G_FindPower( self ) );
-  self->powered = G_FindPower( self );
 }
 
 //==================================================================================
