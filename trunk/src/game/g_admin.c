@@ -65,6 +65,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
       " admin name to your current name.",
       ""
     },
+    
+    {"listmaps", G_admin_listmaps, "a",
+      "display a list of available maps on the server",
+      "(^5map name^7)"
+    },
 
     {"listadmins", G_admin_listadmins, "A",
       "display a list of all server admins and their levels",
