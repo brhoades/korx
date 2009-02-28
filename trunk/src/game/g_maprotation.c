@@ -469,7 +469,7 @@ G_GetCurrentMap
 Return the current map in some rotation
 ===============
 */
-static int G_GetCurrentMap( int rotation )
+int G_GetCurrentMap( int rotation )
 {
   int   *p = G_GetCurrentMapArray( );
 
@@ -740,4 +740,16 @@ void G_InitMapRotations( void )
       trap_Cvar_Update( &g_initialMapRotation );
     }
   }
+}
+
+/*
+===============
+G_MapExists
+
+Check if a map exists
+===============
+*/
+qboolean G_MapExists( char *name )
+{
+  return trap_FS_FOpenFile( va( "maps/%s.bsp", name ), NULL, FS_READ );
 }

@@ -70,6 +70,12 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "display a list of available maps on the server",
       "(^5map name^7)"
     },
+    
+    {"rotation", G_admin_listrotation, "a",
+       "display a list of maps that are in the active map rotation",
+       ""
+    },
+
 
     {"listadmins", G_admin_listadmins, "A",
       "display a list of all server admins and their levels",
@@ -2844,6 +2850,70 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
 
   return qtrue;
 }
+
+qboolean G_admin_listrotation( gentity_t *ent, int skiparg )
+{
+  int i, j, statusColor;
+  char *status = '\0';
+
+  extern mapRotations_t mapRotations;
+
+  // Check for an active map rotation
+  if ( !G_MapRotationActive() ||
+       g_currentMapRotation.integer == NOT_ROTATING )
+  {
+    trap_SendServerCommand( ent-g_entities, "print \"^3!rotation: ^7There is no active map rotation on this server\n\"" );
+    return qfalse;
+  }
+
+  // Locate the active map rotation and output its contents
+  for( i = 0; i < mapRotations.numRotations; i++ )
+  {
+    if ( i == g_currentMapRotation.integer )
+    {
+      ADMBP_begin();
+      ADMBP( va( "^3!rotation: ^7%s\n", mapRotations.rotations[ i ].name ) );
+
+      for( j = 0; j < mapRotations.rotations[ i ].numMaps; j++ )
+      {
+        
+        if( j == 1 && strcmp( g_nextmap.string, "0" ) )
+        {
+          ADMBP( va( "  ^%iN^7  %-20s ^%i%s\n", 1, g_nextmap.string, 1, "next map vote" ) );
+        }
+        
+        if ( G_GetCurrentMap( i ) == j )
+        {
+          statusColor = 3;
+          status = "current slot";
+        }
+        else if ( !G_MapExists( mapRotations.rotations[ i ].maps[ j ].name ) )
+        {
+          statusColor = 1;
+          status = "missing";
+        }
+        else
+        {
+          statusColor = 7;
+          status = "";
+        }
+        ADMBP( va( "^%i%3i  %-20s ^%i%s\n", statusColor, j + 1, mapRotations.rotations[ i ].maps[ j ].name, statusColor, status ) );
+      }
+
+      ADMBP_end();
+
+      // No maps were found in the active map rotation
+      if ( mapRotations.rotations[ i ].numMaps < 1 )
+      {
+        trap_SendServerCommand( ent-g_entities, "print \"  - ^7Empty!\n\"" );
+        return qfalse;
+      }
+    }
+  }
+
+  return qtrue;
+}
+
 
 qboolean G_admin_showbans( gentity_t *ent, int skiparg )
 {
