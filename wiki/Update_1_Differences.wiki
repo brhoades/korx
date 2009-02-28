@@ -27,10 +27,14 @@ Forcefield shrinks when you hit Q (+button7) now. (r253)<br />
 Compressed tons of textures to jpg and removed several bulky xcf and tga files. (r249 & r241)<br />
 Forcefield has new UI info to reflect changes. (r254) <br />
 Various other UI bug fixes and enhancements (r252 & r260)<br />
-Lots of UI menus were updated to reflect changes in the game. (r267)
+Lots of UI menus were updated to reflect changes in the game. (r267)<br />
+The new ATCS textures have been added and are forced in the pk3 (r271)<br />
 
 ==Gameplay Changes==
 Adv. Rant's acid is strong again, to counter Xael. (r222 & r234)<br />
 Countdown stops you from joining now. (r236)<br />
 Health system is now in float, allowing for a more precise regeneration system. (r259)<br />
 Adv. Rants now have a healing rate of 10 hp/s and cost 9 evos instead of 11. (r255 & r256)<br />
+
+==Command Changes==
+Added Lakitu's much better !listmaps, and a !maplog for those with revert (r270 & r272) <br />
