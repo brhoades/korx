@@ -303,7 +303,7 @@ typedef enum
 #define EF_BLOBLOCKED       0x00020000    // TA: caught by a trapper
 #define EF_REAL_LIGHT       0x00040000    // TA: light sprites according to ambient light
 #define EF_DBUILDER         0x00080000    // designated builder protection
-#define EF_WARN_CHARGE      0x00100000    // Lucifer Cannon / Xael is about to overcharge
+#define EF_WARN_CHARGE      0x00040000    // Lucifer Cannon / Xael is about to overcharge
 
 typedef enum
 {
