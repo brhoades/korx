@@ -1002,7 +1002,6 @@ void CG_AddViewWeapon( playerState_t *ps )
   cent = &cg.predictedPlayerEntity; // &cg_entities[cg.snap->ps.clientNum];
 
   if( ( ps->persistant[PERS_TEAM] == TEAM_SPECTATOR ) ||
-      ( ps->stats[ STAT_STATE ] & SS_INFESTING ) ||
       ( ps->stats[ STAT_STATE ] & SS_HOVELING ) )
     return;
 

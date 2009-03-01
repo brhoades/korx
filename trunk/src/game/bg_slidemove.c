@@ -300,7 +300,7 @@ qboolean PM_StepSlideMove( qboolean gravity, qboolean predictive )
 
   if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
   {
-    if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+    if( pm->ps->eFlags & EF_WALLCLIMBCEILING )
       VectorSet( normal, 0.0f, 0.0f, -1.0f );
     else
       VectorCopy( pm->ps->grapplePoint, normal );

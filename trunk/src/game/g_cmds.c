@@ -562,9 +562,6 @@ void Cmd_Kill_f( gentity_t *ent )
   if( ent->client->ps.stats[ STAT_PTEAM ] == PTE_NONE )
     return;
 
-  if( ent->client->ps.stats[ STAT_STATE ] & SS_INFESTING )
-    return;
-
   if( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING )
   {
     trap_SendServerCommand( ent-g_entities, "print \"Leave the hovel first (use your destroy key)\n\"" );
@@ -2988,7 +2985,6 @@ void Cmd_Class_f( gentity_t *ent )
     return;
 
   if( ent->client->pers.teamSelection == PTE_ALIENS &&
-      !( ent->client->ps.stats[ STAT_STATE ] & SS_INFESTING ) &&
       !( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) )
   {
     if( newClass == PCL_NONE )
@@ -3001,7 +2997,7 @@ void Cmd_Class_f( gentity_t *ent )
     if( ent->client->pers.classSelection != PCL_NONE )
     {
       if( ( ent->client->ps.stats[ STAT_STATE ] & SS_WALLCLIMBING ) ||
-          ( ent->client->ps.stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING ) )
+          ( ent->client->ps.eFlags & EF_WALLCLIMBCEILING ) )
       {
         trap_SendServerCommand( ent-g_entities,
           "print \"You cannot evolve while wallwalking\n\"" );
@@ -3167,7 +3163,7 @@ void Cmd_Destroy_f( gentity_t *ent )
     }
     G_Damage( ent->client->hovel, ent, ent, forward, ent->s.origin, 10000, 0, MOD_SUICIDE );
 
-  if( !( ent->client->ps.stats[ STAT_STATE ] & SS_INFESTING ) )
+  if( !( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) )
   {
     AngleVectors( ent->client->ps.viewangles, forward, NULL, NULL );
     VectorMA( ent->client->ps.origin, 100, forward, end );
@@ -3651,9 +3647,7 @@ void Cmd_Buy_f( gentity_t *ent )
     {
       ent->client->cloakReady = qtrue;
       ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-      ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKED;
-      ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
-      ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED; 
+      ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED;
     }
 
     //subtract from funds
@@ -3783,9 +3777,7 @@ void Cmd_Sell_f( gentity_t *ent )
       {   
         ent->client->cloakReady = qfalse;
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-      	ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKED;
-      	ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
-      	ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED; 
+      	ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED;
       }
 
       //add to funds --- Causes issues with overflow and 2000 credits, doing it manually
@@ -3881,9 +3873,7 @@ void Cmd_Sell_f( gentity_t *ent )
         {   
           ent->client->cloakReady = qfalse;
           ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-          ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKED;
-      		ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
-      		ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED; 
+          ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED;
         }
 
         //add to funds
@@ -3968,7 +3958,6 @@ void Cmd_Build_f( gentity_t *ent )
 
   if( buildable != BA_NONE &&
       ( ( 1 << ent->client->ps.weapon ) & BG_FindBuildWeaponForBuildable( buildable ) ) &&
-      !( ent->client->ps.stats[ STAT_STATE ] & SS_INFESTING ) &&
       !( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) &&
       BG_BuildableIsAllowed( buildable ) &&
       ( ( team == PTE_ALIENS && BG_FindStagesForBuildable( buildable, g_alienStage.integer ) ) ||
@@ -4188,7 +4177,7 @@ void G_StopFollowing( gentity_t *ent )
   ent->client->ps.pm_flags &= ~PMF_FOLLOW;
 
   ent->client->ps.stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
-  ent->client->ps.stats[ STAT_STATE ] &= ~SS_WALLCLIMBINGCEILING;
+  ent->client->ps.eFlags &= ~EF_WALLCLIMBCEILING;
   ent->client->ps.eFlags &= ~EF_WALLCLIMB;
   ent->client->ps.viewangles[ PITCH ] = 0.0f;
 

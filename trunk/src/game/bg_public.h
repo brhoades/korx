@@ -239,26 +239,21 @@ typedef enum
 #define SCA_WALLJUMPER          0x00000080
 
 #define SS_WALLCLIMBING         0x00000001
-#define SS_WALLCLIMBINGCEILING  0x00000002
-#define SS_CREEPSLOWED          0x00000004
-#define SS_SPEEDBOOST           0x00000008
-#define SS_INFESTING            0x00000010
-#define SS_GRABBED              0x00000020
-#define SS_BLOBLOCKED           0x00000040
-#define SS_POISONED             0x00000080
-#define SS_HOVELING             0x00000100
-#define SS_BOOSTED              0x00000200
-#define SS_SLOWLOCKED           0x00000400
-#define SS_POISONCLOUDED        0x00000800
-#define SS_MEDKIT_ACTIVE        0x00001000
-#define SS_CHARGING             0x00002000
+#define SS_CREEPSLOWED          0x00000002
+#define SS_SPEEDBOOST           0x00000004
+#define SS_GRABBED              0x00000008
+#define SS_BLOBLOCKED           0x00000010
+#define SS_POISONED             0x00000020
+#define SS_HOVELING             0x00000080
+#define SS_BOOSTED              0x00000100
+#define SS_SLOWLOCKED           0x00000200
+#define SS_POISONCLOUDED        0x00000400
+#define SS_MEDKIT_ACTIVE        0x00000800
+#define SS_CHARGING             0x00001000
 
-#define SB_VALID_TOGGLEBIT      0x00004000
-#define SS_SLOWLOCKED2          0x00008000
-
-#define SS_CLOAKED							0x00012000
-#define SS_CLOAKEDLOW						0x00016000
-#define SS_CLOAKUSED						0x00020000
+#define SB_VALID_TOGGLEBIT      0x00002000
+#define SS_SLOWLOCKED2          0x00004000
+#define SS_CLOAKUSED						0x00008000
 
 #define MAX_STAMINA             1000
 
@@ -308,7 +303,7 @@ typedef enum
 #define EF_BLOBLOCKED       0x00020000    // TA: caught by a trapper
 #define EF_REAL_LIGHT       0x00040000    // TA: light sprites according to ambient light
 #define EF_DBUILDER         0x00080000    // designated builder protection
-#define EF_WARN_CHARGE      0x00040000    // Lucifer Cannon / Xael is about to overcharge
+#define EF_WARN_CHARGE      0x00100000    // Lucifer Cannon / Xael is about to overcharge
 
 typedef enum
 {

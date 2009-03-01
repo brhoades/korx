@@ -5105,7 +5105,7 @@ void BG_PlayerStateToEntityState( playerState_t *ps, entityState_t *s, qboolean 
 
   //TA: have to get the surfNormal thru somehow...
   VectorCopy( ps->grapplePoint, s->angles2 );
-  if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+  if( ps->eFlags & EF_WALLCLIMBCEILING)
     s->eFlags |= EF_WALLCLIMBCEILING;
 
   s->loopSound = ps->loopSound;
@@ -5217,7 +5217,7 @@ void BG_PlayerStateToEntityStateExtraPolate( playerState_t *ps, entityState_t *s
 
   //TA: have to get the surfNormal thru somehow...
   VectorCopy( ps->grapplePoint, s->angles2 );
-  if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+  if( ps->eFlags & EF_WALLCLIMBCEILING)
     s->eFlags |= EF_WALLCLIMBCEILING;
 
   s->loopSound = ps->loopSound;
@@ -5508,7 +5508,7 @@ void BG_PositionBuildableRelativeToPlayer( const playerState_t *ps,
 
   if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
   {
-    if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+    if( ps->eFlags & EF_WALLCLIMBCEILING )
       VectorSet( playerNormal, 0.0f, 0.0f, -1.0f );
     else
       VectorCopy( ps->grapplePoint, playerNormal );

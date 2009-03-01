@@ -280,7 +280,7 @@ static void CG_OffsetThirdPersonView( void )
 
   if( cg.predictedPlayerState.stats[ STAT_STATE ] & SS_WALLCLIMBING )
   {
-    if( cg.predictedPlayerState.stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+    if( cg.predictedPlayerState.eFlags & EF_WALLCLIMBCEILING )
       VectorSet( surfNormal, 0.0f, 0.0f, -1.0f );
     else
       VectorCopy( cg.predictedPlayerState.grapplePoint, surfNormal );
@@ -361,7 +361,7 @@ static void CG_StepOffset( void )
 
   if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
   {
-    if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+    if( ps->eFlags & EF_WALLCLIMBCEILING )
       VectorSet( normal, 0.0f, 0.0f, -1.0f );
     else
       VectorCopy( ps->grapplePoint, normal );
@@ -414,7 +414,7 @@ static void CG_OffsetFirstPersonView( void )
 
   if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
   {
-    if( ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+    if( ps->eFlags & EF_WALLCLIMBCEILING )
       VectorSet( normal, 0.0f, 0.0f, -1.0f );
     else
       VectorCopy( ps->grapplePoint, normal );
@@ -966,7 +966,7 @@ static void CG_smoothWWTransitions( playerState_t *ps, const vec3_t in, vec3_t o
   }
 
   //set surfNormal
-  if( !( ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING ) )
+  if( !( ps->eFlags & EF_WALLCLIMBCEILING ) )
     VectorCopy( ps->grapplePoint, surfNormal );
   else
     VectorCopy( ceilingNormal, surfNormal );

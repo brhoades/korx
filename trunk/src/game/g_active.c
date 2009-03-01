@@ -349,7 +349,6 @@ void  G_TouchTriggers( gentity_t *ent )
 
     // ignore most entities if a spectator
     if( ( ent->client->sess.sessionTeam == TEAM_SPECTATOR ) ||
-        ( ent->client->ps.stats[ STAT_STATE ] & SS_INFESTING ) ||
         ( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) )
     {
       if( hit->s.eType != ET_TELEPORT_TRIGGER &&
@@ -942,8 +941,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if( level.time - ent->client->cloakStartTime > BOOST_TIME || ent->health <= 0 )
       {
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-        ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKED;
-        ent->client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
         ent->client->ps.stats[ STAT_STATE ] |= SS_CLOAKUSED;        
       }
     }
@@ -1591,8 +1588,6 @@ void ClientThink_real( gentity_t *ent )
     client->ps.pm_type = PM_NOCLIP;
   else if( client->ps.stats[ STAT_HEALTH ] <= 0 )
     client->ps.pm_type = PM_DEAD;
-  else if( client->ps.stats[ STAT_STATE ] & SS_INFESTING )
-    client->ps.pm_type = PM_FREEZE;
   else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ||
            client->ps.stats[ STAT_STATE ] & SS_GRABBED )
     client->ps.pm_type = PM_GRABBED;
@@ -1677,16 +1672,10 @@ void ClientThink_real( gentity_t *ent )
       client->cloakReady = qfalse;
       client->cloakStartTime = level.time;
       client->ps.eFlags |= EF_MOVER_STOP;
-      client->ps.stats[ STAT_STATE ] |= SS_CLOAKED;
-      client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKEDLOW;
       client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED;    
     }
-    else if( level.time - client->cloakStartTime > BOOST_TIME*.75 && client->ps.stats[ STAT_STATE ] & SS_CLOAKED
-    				 && !( client->ps.stats[ STAT_STATE ] & SS_CLOAKEDLOW ) )
-    {
-      client->ps.stats[ STAT_STATE ] |= SS_CLOAKEDLOW;
+    else if( level.time - client->cloakStartTime > BOOST_TIME*.75 )
       client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED;  
-    }
   }
 
   if( BG_InventoryContainsUpgrade( UP_GRENADE, client->ps.stats ) &&
@@ -1776,8 +1765,7 @@ void ClientThink_real( gentity_t *ent )
   if( pm.ps->pm_type == PM_DEAD )
     pm.tracemask = MASK_PLAYERSOLID; // & ~CONTENTS_BODY;
 
-  if( pm.ps->stats[ STAT_STATE ] & SS_INFESTING ||
-      pm.ps->stats[ STAT_STATE ] & SS_HOVELING )
+  if( pm.ps->stats[ STAT_STATE ] & SS_HOVELING )
     pm.tracemask = MASK_PLAYERSOLID & ~CONTENTS_BODY;
   else
     pm.tracemask = MASK_PLAYERSOLID;

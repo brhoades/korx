@@ -729,7 +729,7 @@ static qboolean PM_CheckJump( void )
   {
     vec3_t normal = { 0, 0, -1 };
 
-    if( !( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING ) )
+    if( !( pm->ps->eFlags & EF_WALLCLIMBCEILING) )
       VectorCopy( pm->ps->grapplePoint, normal );
 
     VectorMA( pm->ps->velocity, BG_FindJumpMagnitudeForClass( pm->ps->stats[ STAT_PCLASS ] ),
@@ -1733,7 +1733,7 @@ static void PM_GroundClimbTrace( void )
 
   //TA: If we're on the ceiling then grapplePoint is a rotation normal.. otherwise its a surface normal.
   //    would have been nice if Carmack had left a few random variables in the ps struct for mod makers
-  if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+  if( pm->ps->eFlags & EF_WALLCLIMBCEILING)
     VectorCopy( ceilingNormal, surfNormal );
   else
     VectorCopy( pm->ps->grapplePoint, surfNormal );
@@ -1918,7 +1918,7 @@ static void PM_GroundClimbTrace( void )
         {
           CrossProduct( surfNormal, trace.plane.normal, pm->ps->grapplePoint );
           VectorNormalize( pm->ps->grapplePoint );
-          pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBINGCEILING;
+          pm->ps->eFlags |= EF_WALLCLIMBCEILING;
         }
 
         //transition from ceiling to wall
@@ -1942,7 +1942,7 @@ static void PM_GroundClimbTrace( void )
       {
         //so we know what surface we're stuck to
         VectorCopy( trace.plane.normal, pm->ps->grapplePoint );
-        pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBINGCEILING;
+        pm->ps->eFlags &= ~EF_WALLCLIMBCEILING;
       }
 
       //IMPORTANT: break out of the for loop if we've hit something
@@ -1965,7 +1965,7 @@ static void PM_GroundClimbTrace( void )
     pm->ps->eFlags &= ~EF_WALLCLIMB;
 
     //just transided from ceiling to floor... apply delta correction
-    if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+    if( pm->ps->eFlags & EF_WALLCLIMBCEILING )
     {
       vec3_t  forward, rotated, angles;
 
@@ -1977,7 +1977,7 @@ static void PM_GroundClimbTrace( void )
       pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( angles[ YAW ] - pm->ps->viewangles[ YAW ] );
     }
 
-    pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBINGCEILING;
+    pm->ps->eFlags &= ~EF_WALLCLIMBCEILING;
 
     //we get very bizarre effects if we don't do this :0
     VectorCopy( refNormal, pm->ps->grapplePoint );
@@ -2050,7 +2050,7 @@ static void PM_GroundTrace( void )
     }
 
     //just transided from ceiling to floor... apply delta correction
-    if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+    if( pm->ps->eFlags & EF_WALLCLIMBCEILING)
     {
       vec3_t  forward, rotated, angles;
 
@@ -2064,7 +2064,7 @@ static void PM_GroundTrace( void )
   }
 
   pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
-  pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBINGCEILING;
+  pm->ps->eFlags &= ~EF_WALLCLIMBCEILING;
   pm->ps->eFlags &= ~EF_WALLCLIMB;
 
   point[ 0 ] = pm->ps->origin[ 0 ];
@@ -2706,9 +2706,6 @@ static void PM_Weapon( void )
   if( pm->ps->persistant[ PERS_TEAM ] == TEAM_SPECTATOR )
     return;
 
-  if( pm->ps->stats[ STAT_STATE ] & SS_INFESTING )
-    return;
-
   if( pm->ps->stats[ STAT_STATE ] & SS_HOVELING )
     return;
 
@@ -3339,7 +3336,7 @@ void PM_UpdateViewAngles( playerState_t *ps, const usercmd_t *cmd )
 
   if( !( ps->stats[ STAT_STATE ] & SS_WALLCLIMBING ) ||
       !BG_RotateAxis( ps->grapplePoint, axis, rotaxis, qfalse,
-                      ps->stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING ) )
+                      ps->eFlags & EF_WALLCLIMBCEILING ) )
     AxisCopy( axis, rotaxis );
 
   //convert the new axis back to angles

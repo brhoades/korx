@@ -3549,7 +3549,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
     built->health = 1;
     if( builder->client->ps.stats[ STAT_STATE ] & SS_WALLCLIMBING )
     {
-      if( builder->client->ps.stats[ STAT_STATE ] & SS_WALLCLIMBINGCEILING )
+      if( builder->client->ps.eFlags & EF_WALLCLIMBCEILING )
         VectorSet( normal, 0.0f, 0.0f, -1.0f );
       else
         VectorCopy( builder->client->ps.grapplePoint, normal );
