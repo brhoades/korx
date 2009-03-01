@@ -247,13 +247,14 @@ typedef enum
 #define SS_HOVELING             0x00000080
 #define SS_BOOSTED              0x00000100
 #define SS_SLOWLOCKED           0x00000200
-#define SS_POISONCLOUDED        0x00000400
-#define SS_MEDKIT_ACTIVE        0x00000800
-#define SS_CHARGING             0x00001000
+#define SS_CHARGING             0x00000400
 
-#define SB_VALID_TOGGLEBIT      0x00002000
-#define SS_SLOWLOCKED2          0x00004000
-#define SS_CLOAKUSED						0x00008000
+#define SB_VALID_TOGGLEBIT      0x00000800
+#define SS_SLOWLOCKED2          0x00001000 // got shot with a prifle < 5 times as a >= goon
+#define SS_HEALING_ACTIVE       0x00002000 // medistat for humans, creep for aliens
+#define SS_HEALING_2X           0x00004000 // medkit or double healing rate
+#define SS_HEALING_4X           0x00008000 // quadruple healing rate
+
 
 #define MAX_STAMINA             1000
 
@@ -296,7 +297,7 @@ typedef enum
 #define EF_FIRING2          0x00000400    // alt fire
 #define EF_FIRING3          0x00000800    // third fire
 #define EF_MOVER_STOP       0x00001000    // will push otherwise
-#define EF_TALK             0x00002000    // draw a talk balloon
+#define EF_POISONCLOUDED    0x00002000    // client is poison clouded
 #define EF_CONNECTION       0x00004000    // draw a connection trouble sprite
 #define EF_VOTED            0x00008000    // already cast a vote
 #define EF_TEAMVOTED        0x00010000    // already cast a vote

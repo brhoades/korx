@@ -1759,13 +1759,6 @@ static void CG_PlayerSprites( centity_t *cent )
     CG_PlayerFloatSprite( cent, cgs.media.connectionShader );
     return;
   }
-
-  if( cent->currentState.eFlags & EF_TALK )
-  {
-    // the masses have decreed this to be wrong
-/*    CG_PlayerFloatSprite( cent, cgs.media.balloonShader );
-    return;*/
-  }
 }
 
 /*

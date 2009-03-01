@@ -3420,12 +3420,6 @@ void PmoveSingle( pmove_t *pmove )
   if( abs( pm->cmd.forwardmove ) > 64 || abs( pm->cmd.rightmove ) > 64 )
     pm->cmd.buttons &= ~BUTTON_WALKING;
 
-  // set the talk balloon flag
-  if( pm->cmd.buttons & BUTTON_TALK )
-    pm->ps->eFlags |= EF_TALK;
-  else
-    pm->ps->eFlags &= ~EF_TALK;
-
   // set the firing flag for continuous beam weapons
   if( !(pm->ps->pm_flags & PMF_RESPAWNED) && pm->ps->pm_type != PM_INTERMISSION &&
       ( pm->cmd.buttons & BUTTON_ATTACK ) &&

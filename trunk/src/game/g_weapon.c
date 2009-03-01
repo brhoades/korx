@@ -1264,9 +1264,9 @@ void poisonCloud( gentity_t *ent )
       if( humanPlayer->waterlevel == 3 )
         continue;
 
-      if( !( humanPlayer->client->ps.stats[ STAT_STATE ] & SS_POISONCLOUDED ) )
+      if( !( humanPlayer->client->ps.eFlags & EF_POISONCLOUDED ) )
       {
-        humanPlayer->client->ps.stats[ STAT_STATE ] |= SS_POISONCLOUDED;
+        humanPlayer->client->ps.eFlags |= EF_POISONCLOUDED;
         humanPlayer->client->lastPoisonCloudedTime = level.time;
         humanPlayer->client->lastPoisonCloudedClient = ent;
         trap_SendServerCommand( humanPlayer->client->ps.clientNum, "poisoncloud" );

@@ -868,7 +868,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
         break;
     }
 
-    if( client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE )
+    if( client->ps.stats[ STAT_STATE ] & SS_HEALING_2X )
     {
       int remainingStartupTime = MEDKIT_STARTUP_TIME - ( level.time - client->lastMedKitTime );
 
@@ -882,7 +882,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
           ent->health++;
         }
         else
-          ent->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
+          ent->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
       }
       else
       {
@@ -901,7 +901,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
           }
         }
         else
-          ent->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
+          ent->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
       }
     }
   }
@@ -911,7 +911,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
     client->time1000 -= 1000;
 
     //client is poison clouded
-    if( client->ps.stats[ STAT_STATE ] & SS_POISONCLOUDED )
+    if( client->ps.eFlags & EF_POISONCLOUDED )
       G_Damage( ent, client->lastPoisonCloudedClient, client->lastPoisonCloudedClient, NULL, NULL,
                 LEVEL1_PCLOUD_DMG, 0, MOD_LEVEL1_PCLOUD );
 
@@ -939,10 +939,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
     if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
     {	
       if( level.time - ent->client->cloakStartTime > BOOST_TIME || ent->health <= 0 )
-      {
-        ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-        ent->client->ps.stats[ STAT_STATE ] |= SS_CLOAKUSED;        
-      }
+        ent->client->ps.eFlags &= ~EF_MOVER_STOP;      
     }
 
     // turn off life support when a team admits defeat 
@@ -1065,7 +1062,6 @@ ClientIntermissionThink
 */
 void ClientIntermissionThink( gclient_t *client )
 {
-  client->ps.eFlags &= ~EF_TALK;
   client->ps.eFlags &= ~EF_FIRING;
   client->ps.eFlags &= ~EF_FIRING2;
 
@@ -1620,9 +1616,9 @@ void ClientThink_real( gentity_t *ent )
       client->lastBoostedTime + BOOST_TIME < level.time )
     client->ps.stats[ STAT_STATE ] &= ~SS_BOOSTED;
 
-  if( client->ps.stats[ STAT_STATE ] & SS_POISONCLOUDED &&
+  if( client->ps.eFlags & EF_POISONCLOUDED &&
       client->lastPoisonCloudedTime + LEVEL1_PCLOUD_TIME < level.time )
-    client->ps.stats[ STAT_STATE ] &= ~SS_POISONCLOUDED;
+    client->ps.eFlags &= ~EF_POISONCLOUDED;
 
   if( client->ps.stats[ STAT_STATE ] & SS_POISONED &&
       client->lastPoisonTime + ALIEN_POISON_TIME < level.time )
@@ -1637,7 +1633,7 @@ void ClientThink_real( gentity_t *ent )
       BG_UpgradeIsActive( UP_MEDKIT, client->ps.stats ) )
   {
     //if currently using a medkit or have no need for a medkit now
-    if( client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE ||
+    if( client->ps.stats[ STAT_STATE ] & SS_HEALING_2X ||
         ( client->ps.stats[ STAT_HEALTH ] == client->ps.stats[ STAT_MAX_HEALTH ] &&
           !( client->ps.stats[ STAT_STATE ] & SS_POISONED ) ) )
     {
@@ -1652,7 +1648,7 @@ void ClientThink_real( gentity_t *ent )
       client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
       client->poisonImmunityTime = level.time + MEDKIT_POISON_IMMUNITY_TIME;
 
-      client->ps.stats[ STAT_STATE ] |= SS_MEDKIT_ACTIVE;
+      client->ps.stats[ STAT_STATE ] |= SS_HEALING_2X;
       client->lastMedKitTime = level.time;
       client->medKitHealthToRestore =
         client->ps.stats[ STAT_MAX_HEALTH ] - client->ps.stats[ STAT_HEALTH ];
@@ -1671,11 +1667,8 @@ void ClientThink_real( gentity_t *ent )
       BG_DeactivateUpgrade( UP_CLOAK, client->ps.stats );
       client->cloakReady = qfalse;
       client->cloakStartTime = level.time;
-      client->ps.eFlags |= EF_MOVER_STOP;
-      client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED;    
+      client->ps.eFlags |= EF_MOVER_STOP;   
     }
-    else if( level.time - client->cloakStartTime > BOOST_TIME*.75 )
-      client->ps.stats[ STAT_STATE ] &= ~SS_CLOAKUSED;  
   }
 
   if( BG_InventoryContainsUpgrade( UP_GRENADE, client->ps.stats ) &&

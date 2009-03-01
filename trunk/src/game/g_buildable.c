@@ -2192,8 +2192,8 @@ void HMedistat_Think( gentity_t *self )
       {
         for( i = 0; i < MAX_CLIENTS; i++ )
           self->enemy->client->tkcredits[ i ] = 0;
-        if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE )
-          self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
+        if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_HEALING_2X )
+          self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
       }
     }
   }
