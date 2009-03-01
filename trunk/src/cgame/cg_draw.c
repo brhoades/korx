@@ -1143,17 +1143,67 @@ static void CG_DrawPlayerHealthBar( rectDef_t *rect, vec4_t color, float scale,
 CG_DrawPlayerHealthCross
 ==============
 */
-static void CG_DrawPlayerHealthCross( rectDef_t *rect, vec4_t color, qhandle_t shader )
+static void CG_DrawPlayerHealthCross( rectDef_t *rect, vec4_t ref_color )
 {
-  playerState_t *ps = &cg.snap->ps;
-  int           health = ps->stats[ STAT_HEALTH ];
+  qhandle_t shader;
+  vec4_t color;
+  float ref_alpha;
 
-  if( health < 10 )
+  // Pick the current icon
+  shader = cgs.media.healthCross;
+  if( cg.snap->ps.stats[ STAT_STATE ] & SS_HEALING_4X )
+    shader = cgs.media.healthCross4X;
+  else if( cg.snap->ps.stats[ STAT_STATE ] & SS_HEALING_2X )
+  {
+    if( cg.snap->ps.stats[ STAT_PTEAM ] == PTE_ALIENS )
+      shader = cgs.media.healthCross2X;
+    else
+      shader = cgs.media.healthCrossMedkit;
+  }
+  else if( cg.snap->ps.stats[ STAT_STATE ] & SS_POISONED )
+    shader = cgs.media.healthCrossPoisoned;
+
+  // Pick the alpha value
+  Vector4Copy( ref_color, color );
+  if( cg.snap->ps.stats[ STAT_PTEAM ] == PTE_HUMANS &&
+      cg.snap->ps.stats[ STAT_HEALTH ] < 10 )
   {
     color[ 0 ] = 1.0f;
     color[ 1 ] = color[ 2 ] = 0.0f;
   }
+  ref_alpha = ref_color[ 3 ];
+  if( cg.snap->ps.stats[ STAT_STATE ] & SS_HEALING_ACTIVE )
+    ref_alpha = 1.f;
+    
+  // Don't fade from nothing
+  if( !cg.lastHealthCross )
+    cg.lastHealthCross = shader;
+  
+  // Fade the icon during transition
+  if( cg.lastHealthCross != shader )
+  {
+    cg.healthCrossFade += cg.frametime / 500.0f;
+    if( cg.healthCrossFade > 1.0f )
+    {
+      cg.healthCrossFade = 0.0f;
+      cg.lastHealthCross = shader;
+    }
+    else
+    {
+      // Fading between two icons
+      color[ 3 ] = ref_alpha * cg.healthCrossFade;
+      trap_R_SetColor( color );
+      CG_DrawPic( rect->x, rect->y, rect->w, rect->h, shader );
+      color[ 3 ] = ref_alpha * ( 1.f - cg.healthCrossFade );
+      trap_R_SetColor( color );
+      CG_DrawPic( rect->x, rect->y, rect->w, rect->h, cg.lastHealthCross );
+      trap_R_SetColor( NULL );
+      return;
+    }
+  }
 
+  // Not fading, draw a single icon
+  color[ 3 ] = ref_alpha;
   trap_R_SetColor( color );
   CG_DrawPic( rect->x, rect->y, rect->w, rect->h, shader );
   trap_R_SetColor( NULL );
@@ -2818,7 +2868,7 @@ void CG_OwnerDraw( float x, float y, float w, float h, float text_x,
       CG_DrawPlayerHealthBar( &rect, color, scale, align, textStyle, special );
       break;
     case CG_PLAYER_HEALTH_CROSS:
-      CG_DrawPlayerHealthCross( &rect, color, shader );
+      CG_DrawPlayerHealthCross( &rect, color );
       break;
     case CG_PLAYER_CHARGE_BAR_BG:
       CG_DrawPlayerChargeBarBG( &rect, color, shader );

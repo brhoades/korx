@@ -1149,6 +1149,9 @@ typedef struct
   float         chargeMeterAlpha;
   float         chargeMeterValue;
   
+  qhandle_t     lastHealthCross;
+  float         healthCrossFade;
+  
 	int           lastCelOutlineCheckTime; // holds the last time that r_celoutline was checked for
 } cg_t;
 
@@ -1287,6 +1290,11 @@ typedef struct
 
   qhandle_t   buildWeaponTimerPie[ 8 ];
   qhandle_t   upgradeClassIconShader;
+  qhandle_t   healthCross;
+  qhandle_t   healthCross2X;
+  qhandle_t   healthCross4X;
+  qhandle_t   healthCrossMedkit;
+  qhandle_t   healthCrossPoisoned;
 } cgMedia_t;
 
 typedef struct

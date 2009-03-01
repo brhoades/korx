@@ -557,11 +557,18 @@ void ClientTimerActions( gentity_t *ent, int msec )
   client->time100 += msec;
   client->time1000 += msec;
   client->time10000 += msec;
+  
+  if( ent->client->pers.teamSelection == PTE_ALIENS )
+  {
+    client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_ACTIVE;
+    client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
+    client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_4X;
+  }
 
   //Alien Regeneration
 	if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
     	level.surrenderTeam != PTE_ALIENS && 
-    	ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
+    	ent->health > 0 &&
       ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time && 
       ent->nextHealTime < level.time )
   {
@@ -592,9 +599,18 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if ( advRantModifier + boostModifier == 4.0f )
       	break;
     }
-    regen = BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] ) * advRantModifier * boostModifier;
+    regen = advRantModifier * boostModifier;
 
-    if( regen > 0 )
+    if( regen == 1.0f )
+      client->ps.stats[ STAT_STATE ] |= SS_HEALING_ACTIVE;
+    else if( regen >= 2.0f && regen < 4.0f )
+      client->ps.stats[ STAT_STATE ] |= SS_HEALING_2X;
+    else if( regen >= 4.0f )
+      client->ps.stats[ STAT_STATE ] |= SS_HEALING_4X;
+    
+    regen *= BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] );
+
+    if( regen > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] )
     {
     	if( regen > 20 )		//Account for any issues with sv_fps and regen rates >= 20
       	ent->health += ( regen / 20 );
