@@ -265,7 +265,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define BARRICADE_BP                6
 #define BARRICADE_BT                20000
-#define BARRICADE_HEALTH            ABHM(500)//200
+#define BARRICADE_HEALTH            ABHM(800)
 #define BARRICADE_REGEN             14
 #define BARRICADE_SPLASHDAMAGE      50
 #define BARRICADE_SPLASHRADIUS      50
@@ -485,7 +485,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_TOTAL_CHARGE        255
 #define LCANNON_MIN_CHARGE          50
 
-#define XAEL_PRICE               800
+#define XAEL_PRICE               100
 #define XAEL_AMMO                120
 #define XAEL_REPEAT              500
 #define XAEL_K_SCALE             1.0f
