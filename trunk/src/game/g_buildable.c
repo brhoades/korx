@@ -2090,6 +2090,10 @@ void HMedistat_Think( gentity_t *self )
 
   self->nextthink = level.time + BG_FindNextThinkForBuildable( self->s.modelindex );
 
+  //clear target's healing flag
+  if( self->enemy && self->enemy->client )
+    self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_4X;
+
   //make sure we have power
   if( !( self->powered = G_FindPower( self ) ) )
   {
@@ -2141,8 +2145,8 @@ void HMedistat_Think( gentity_t *self )
       {
         player = &g_entities[ entityList[ i ] ];
 
-	if( player->flags & FL_NOTARGET )
-	  continue; // notarget cancels even beneficial effects?
+        if( player->flags & FL_NOTARGET )
+          continue; // notarget cancels even beneficial effects?
 
         if( player->client && player->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS )
 	      {
@@ -2169,6 +2173,8 @@ void HMedistat_Think( gentity_t *self )
     {
       G_SetBuildableAnim( self, BANIM_CONSTRUCT2, qtrue );
       G_SetIdleBuildableAnim( self, BANIM_IDLE1 );
+      if( self->enemy->client->ps.stats[ STAT_STATE ] & SS_HEALING_4X )
+        self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_4X;
 
       self->active = qfalse;
     }
@@ -2180,6 +2186,7 @@ void HMedistat_Think( gentity_t *self )
 //      if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_MEDKIT_ACTIVE )
 //        self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_MEDKIT_ACTIVE;
 
+      self->enemy->client->ps.stats[ STAT_STATE ] |= SS_HEALING_4X;
       self->enemy->health += 1;
 
       //if they're completely healed, give them a medkit
@@ -2194,6 +2201,9 @@ void HMedistat_Think( gentity_t *self )
           self->enemy->client->tkcredits[ i ] = 0;
         if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_HEALING_2X )
           self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
+          
+        if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_HEALING_4X )
+          self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_4X;
       }
     }
   }
@@ -2759,6 +2769,10 @@ void HSpawn_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     self->think = HSpawn_Disappear;
     self->nextthink = level.time; //blast immediately
   }
+  
+    //clear target's healing flag
+  if( self->enemy && self->enemy->client )
+    self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_4X;
 
   if( attacker && attacker->client )
   {

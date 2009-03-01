@@ -558,13 +558,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
   client->time1000 += msec;
   client->time10000 += msec;
   
-  if( ent->client->pers.teamSelection == PTE_ALIENS )
-  {
-    client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_ACTIVE;
-    client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
-    client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_4X;
-  }
-
   //Alien Regeneration
 	if( client->ps.stats[ STAT_PTEAM ] == PTE_ALIENS &&
     	level.surrenderTeam != PTE_ALIENS && 
@@ -575,11 +568,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
     int       entityList[ MAX_GENTITIES ];
     vec3_t    range = { LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE, LEVEL4_REGEN_RANGE };
     vec3_t    mins, maxs;
-    int       i, num, regen;
+    int       i, num;
     gentity_t *boostEntity;
     float     advRantModifier = 1.0f;
     float     boostModifier = 1.0f;
-
+    float     regen;
+    
     VectorAdd( client->ps.origin, range, maxs );
     VectorSubtract( client->ps.origin, range, mins );
 
@@ -600,24 +594,25 @@ void ClientTimerActions( gentity_t *ent, int msec )
       	break;
     }
     regen = advRantModifier * boostModifier;
-
-    if( regen == 1.0f )
+    
+    client->ps.stats[ STAT_STATE ] &= ~( SS_HEALING_2X | SS_HEALING_4X | SS_HEALING_ACTIVE );
+    if( regen >= 1.0f )
       client->ps.stats[ STAT_STATE ] |= SS_HEALING_ACTIVE;
-    else if( regen >= 2.0f && regen < 4.0f )
+    if( regen >= 2.0f && regen < 4.0f )
       client->ps.stats[ STAT_STATE ] |= SS_HEALING_2X;
     else if( regen >= 4.0f )
       client->ps.stats[ STAT_STATE ] |= SS_HEALING_4X;
     
     regen *= BG_FindRegenRateForClass( client->ps.stats[ STAT_PCLASS ] );
 
-    if( regen > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] )
+    if( regen > 0.0f && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] )
     {
-    	if( regen > 20 )		//Account for any issues with sv_fps and regen rates >= 20
-      	ent->health += ( regen / 20 );
+    	if( regen > 20.0f )		//Account for any issues with sv_fps and regen rates >= 20
+      	ent->health += ( regen / 20.0f );
       else
       	ent->health++;
       //The heal rate is inversely proportional to the regeneration rate
-      ent->nextHealTime = level.time + ( 1000 / regen );
+      ent->nextHealTime = level.time + ( 1000 / (int)regen );
     }
 
     if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
