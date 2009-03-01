@@ -361,6 +361,7 @@ typedef struct
   char                ip[ 16 ];
   qboolean            muted;
   qboolean            denyBuild;
+  qboolean            override;
   qboolean            paused;
   qboolean            jgrab;
   int                 adminLevel;

@@ -192,6 +192,7 @@ qboolean G_admin_abps( gentity_t *ent, int skiparg );
 qboolean G_admin_hbps( gentity_t *ent, int skiparg ); 
 qboolean G_admin_hstage( gentity_t *ent, int skiparg ); 
 qboolean G_admin_astage( gentity_t *ent, int skiparg );
+qboolean G_admin_override( gentity_t *ent, int skiparg );
 qboolean G_admin_kill( gentity_t *ent, int skiparg );
 qboolean G_admin_warn( gentity_t *ent, int skiparg );
 qboolean G_admin_slap( gentity_t *ent, int skiparg );

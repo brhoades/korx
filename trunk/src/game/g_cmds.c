@@ -3014,14 +3014,15 @@ void Cmd_Class_f( gentity_t *ent )
         other = &g_entities[ entityList[ i ] ];
 
         if( ( other->client && other->client->ps.stats[ STAT_PTEAM ] == PTE_HUMANS ) ||
-            ( other->s.eType == ET_BUILDABLE && other->biteam == BIT_HUMANS ) )
+            ( other->s.eType == ET_BUILDABLE && other->biteam == BIT_HUMANS && !ent->client->pers.override ) )
         {
           G_TriggerMenu( clientNum, MN_A_TOOCLOSE );
           return;
         }
       }
 
-      if( !level.overmindPresent && newClass != PCL_ALIEN_BUILDER0 && newClass != PCL_ALIEN_BUILDER0_UPG )
+      if( !level.overmindPresent && newClass != PCL_ALIEN_BUILDER0 && newClass != PCL_ALIEN_BUILDER0_UPG 
+          && !ent->client->pers.override )
       {
         G_TriggerMenu( clientNum, MN_A_NOOVMND_EVOLVE );
         return;
@@ -3031,7 +3032,8 @@ void Cmd_Class_f( gentity_t *ent )
       if( ent->client->sess.sessionTeam != TEAM_SPECTATOR &&
           ( currentClass == PCL_ALIEN_BUILDER0 ||
             currentClass == PCL_ALIEN_BUILDER0_UPG ) &&
-            ent->client->ps.stats[ STAT_MISC ] > 0 )
+            ent->client->ps.stats[ STAT_MISC ] > 0 
+            && !ent->client->pers.override )
       {
         G_TriggerMenu( ent->client->ps.clientNum, MN_A_EVOLVEBUILDTIMER );
         return;
@@ -3043,10 +3045,10 @@ void Cmd_Class_f( gentity_t *ent )
 
       if( G_RoomForClassChange( ent, newClass, infestOrigin ) )
       {
-        //...check we can evolve to that class
-        if( numLevels >= 0 &&
+        //...check if we can evolve to that class
+        if( (numLevels >= 0 &&
             BG_FindStagesForClass( newClass, g_alienStage.integer ) &&
-            BG_ClassIsAllowed( newClass ) )
+            BG_ClassIsAllowed( newClass ) ) || ent->client->pers.override )
         {
           ent->client->pers.evolveHealthFraction = (float)ent->client->ps.stats[ STAT_HEALTH ] /
             (float)BG_FindHealthForClass( currentClass );
@@ -3222,29 +3224,11 @@ void Cmd_Destroy_f( gentity_t *ent )
         return;
 
       // Don't allow destruction of buildables that cannot be rebuilt
-      if( 
-				( level.suddenDeath || level.extremeSuddenDeath )
-				&& 
-				traceEnt->health > 0 
-				&&
-				(
-					(
-						g_suddenDeathMode.integer == SDMODE_SELECTIVE
-						&&
-						!BG_FindReplaceableTestForBuildable( traceEnt->s.modelindex )
-					)
-					||
-					(
-						g_suddenDeathMode.integer == SDMODE_BP
-						&&
-						BG_FindBuildPointsForBuildable( traceEnt->s.modelindex )
-					)
-					||
-					g_suddenDeathMode.integer == SDMODE_NO_BUILD
-					||
-					level.extremeSuddenDeath
-				)
-				)
+      if( ( level.suddenDeath || level.extremeSuddenDeath ) && traceEnt->health > 0 
+        &&	( ( g_suddenDeathMode.integer == SDMODE_SELECTIVE
+						&& !BG_FindReplaceableTestForBuildable( traceEnt->s.modelindex ) )
+					|| ( g_suddenDeathMode.integer == SDMODE_BP && BG_FindBuildPointsForBuildable( traceEnt->s.modelindex ) ) 
+               || g_suddenDeathMode.integer == SDMODE_NO_BUILD || level.extremeSuddenDeath ) && !ent->client->pers.override )
       {
         trap_SendServerCommand( ent-g_entities,
           "print \"During Sudden Death you can only decon buildings that "
@@ -3335,7 +3319,7 @@ void Cmd_ActivateItem_f( gentity_t *ent )
   if( ent->client->pers.classSelection == PCL_NONE )
     return;
 
-  if( upgrade != UP_NONE && BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
+  if( upgrade != UP_NONE && BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ))
     BG_ActivateUpgrade( upgrade, ent->client->ps.stats );
   else if( weapon != WP_NONE && BG_InventoryContainsWeapon( weapon, ent->client->ps.stats ) )
     G_ForceWeaponChange( ent, weapon );
@@ -3461,7 +3445,7 @@ void Cmd_Buy_f( gentity_t *ent )
   trap_Argv( 1, s, sizeof( s ) );
 
   //aliens don't buy stuff
-  if( ent->client->pers.teamSelection != PTE_HUMANS )
+  if( ent->client->pers.teamSelection != PTE_HUMANS && !ent->client->pers.override )
     return;
 
   weapon = BG_FindWeaponNumForName( s );
@@ -3478,7 +3462,8 @@ void Cmd_Buy_f( gentity_t *ent )
     //no armoury nearby
     if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_REACTOR ) &&
         !G_BuildableRange( ent->client->ps.origin, 100, BA_H_REPEATER ) &&
-        !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) )
+        !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) &&
+        !ent->client->pers.override )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOENERGYAMMOHERE );
       return;
@@ -3487,7 +3472,8 @@ void Cmd_Buy_f( gentity_t *ent )
   else
   {
     //no armoury nearby
-    if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) )
+    if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY )  &&
+        !ent->client->pers.override )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
       return;
@@ -3504,20 +3490,21 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     //can afford this?
-    if( BG_FindPriceForWeapon( weapon ) > (short)ent->client->ps.persistant[ PERS_CREDIT ] )
+    if( BG_FindPriceForWeapon( weapon ) > (short)ent->client->ps.persistant[ PERS_CREDIT ]  &&
+        !ent->client->pers.override )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOFUNDS );
       return;
     }
 
     //have space to carry this?
-    if( BG_FindSlotsForWeapon( weapon ) & ent->client->ps.stats[ STAT_SLOTS ] )
+    if( BG_FindSlotsForWeapon( weapon ) & ent->client->ps.stats[ STAT_SLOTS ]  && !ent->client->pers.override )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOSLOTS );
       return;
     }
 
-    if( BG_FindTeamForWeapon( weapon ) != WUT_HUMANS )
+    if( BG_FindTeamForWeapon( weapon ) != WUT_HUMANS && !ent->client->pers.override )
     {
       //shouldn't need a fancy dialog
       trap_SendServerCommand( ent-g_entities, va( "print \"You can't buy alien items\n\"" ) );
@@ -3532,7 +3519,8 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     //are we /allowed/ to buy this?
-    if( !BG_FindStagesForWeapon( weapon, g_humanStage.integer ) || !BG_WeaponIsAllowed( weapon ) )
+    if( (!BG_FindStagesForWeapon( weapon, g_humanStage.integer ) || !BG_WeaponIsAllowed( weapon ))  &&
+        !ent->client->pers.override )
     {
       trap_SendServerCommand( ent-g_entities, va( "print \"You can't buy this item\n\"" ) );
       return;
@@ -3576,17 +3564,18 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     //can afford this?
-    if( BG_FindPriceForUpgrade( upgrade ) > (short)ent->client->ps.persistant[ PERS_CREDIT ] )
+    if( BG_FindPriceForUpgrade( upgrade ) > (short)ent->client->ps.persistant[ PERS_CREDIT ]  &&
+        !ent->client->pers.override )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOFUNDS );
       return;
     }
 
     //have space to carry this?
-    if( BG_FindSlotsForUpgrade( upgrade ) & ent->client->ps.stats[ STAT_SLOTS ] )
+    if( BG_FindSlotsForUpgrade( upgrade ) & ent->client->ps.stats[ STAT_SLOTS ] && !ent->client->pers.override )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOSLOTS );
-      return;
+      return; 
     }
 
     if( BG_FindTeamForUpgrade( upgrade ) != WUT_HUMANS )
@@ -3597,14 +3586,15 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     //are we /allowed/ to buy this?
-    if( !BG_FindPurchasableForUpgrade( upgrade ) )
+    if( !BG_FindPurchasableForUpgrade( upgrade ) && !ent->client->pers.override )
     {
       trap_SendServerCommand( ent-g_entities, va( "print \"You can't buy this item\n\"" ) );
       return;
     }
 
     //are we /allowed/ to buy this?
-    if( !BG_FindStagesForUpgrade( upgrade, g_humanStage.integer ) || !BG_UpgradeIsAllowed( upgrade ) )
+    if( (!BG_FindStagesForUpgrade( upgrade, g_humanStage.integer ) || !BG_UpgradeIsAllowed( upgrade ) )  &&
+        !ent->client->pers.override )
     {
       trap_SendServerCommand( ent-g_entities, va( "print \"You can't buy this item\n\"" ) );
       return;
@@ -3691,11 +3681,12 @@ void Cmd_Sell_f( gentity_t *ent )
   trap_Argv( 1, s, sizeof( s ) );
 
   //aliens don't sell stuff
-  if( ent->client->pers.teamSelection != PTE_HUMANS )
+  if( ent->client->pers.teamSelection != PTE_HUMANS && !ent->client->pers.override  )
     return;
 
   //no armoury nearby
-  if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) )
+  if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY )  &&
+        !ent->client->pers.override )
   {
     G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
     return;
@@ -3714,11 +3705,12 @@ void Cmd_Sell_f( gentity_t *ent )
     }
 
     //remove weapon if carried
-    if( BG_InventoryContainsWeapon( weapon, ent->client->ps.stats ) )
+    if( BG_InventoryContainsWeapon( weapon, ent->client->ps.stats ))
     {
       //guard against selling the HBUILD weapons exploit
       if( ( weapon == WP_HBUILD || weapon == WP_HBUILD2 ) &&
-          ent->client->ps.stats[ STAT_MISC ] > 0 )
+          ent->client->ps.stats[ STAT_MISC ] > 0 &&
+        !ent->client->pers.override)
       {
         G_TriggerMenu( ent->client->ps.clientNum, MN_H_ARMOURYBUILDTIMER );
         return;
@@ -3790,7 +3782,8 @@ void Cmd_Sell_f( gentity_t *ent )
     {
       //guard against selling the HBUILD weapons exploit
       if( ( i == WP_HBUILD || i == WP_HBUILD2 ) &&
-          ent->client->ps.stats[ STAT_MISC ] > 0 )
+          ent->client->ps.stats[ STAT_MISC ] > 0  &&
+        !ent->client->pers.override )
       {
         G_TriggerMenu( ent->client->ps.clientNum, MN_H_ARMOURYBUILDTIMER );
         continue;
@@ -4047,7 +4040,7 @@ void Cmd_Protect_f( gentity_t *ent )
   trace_t     tr;
   gentity_t   *traceEnt;
 
-  if( !ent->client->pers.designatedBuilder )
+  if( !ent->client->pers.designatedBuilder && !ent->client->pers.override )
   {
     trap_SendServerCommand( ent-g_entities, "print \"Only designated"
         " builders can toggle structure protection.\n\"" );
@@ -4961,14 +4954,14 @@ void ClientCommand( int clientNum )
   if( !( cmds[ i ].cmdFlags & CMD_INTERMISSION ) && level.intermissiontime )
     return;
 
-  if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer )
+  if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer && !ent->client->pers.override )
   {
     trap_SendServerCommand( clientNum,
       "print \"Cheats are not enabled on this server\n\"" );
     return;
   }
 
-  if( cmds[ i ].cmdFlags & CMD_MESSAGE && ent->client->pers.muted )
+  if( cmds[ i ].cmdFlags & CMD_MESSAGE && ent->client->pers.muted && !ent->client->pers.override )
     return;
 
   if( cmds[ i ].cmdFlags & CMD_TEAM &&
@@ -4995,7 +4988,7 @@ void ClientCommand( int clientNum )
   }
 
   if( cmds[ i ].cmdFlags & CMD_HUMAN &&
-      ent->client->pers.teamSelection != PTE_HUMANS )
+      ent->client->pers.teamSelection != PTE_HUMANS && !ent->client->pers.override )
   {
     trap_SendServerCommand( clientNum,
       "print \"Must be human to use this command\n\"" );
@@ -5004,7 +4997,7 @@ void ClientCommand( int clientNum )
 
   if( cmds[ i ].cmdFlags & CMD_LIVING &&
     ( ent->client->ps.stats[ STAT_HEALTH ] <= 0 ||
-      ent->client->sess.sessionTeam == TEAM_SPECTATOR ) )
+      ent->client->sess.sessionTeam == TEAM_SPECTATOR )  && !ent->client->pers.override )
   {
     trap_SendServerCommand( clientNum,
       "print \"Must be living to use this command\n\"" );
@@ -5120,7 +5113,7 @@ void G_PrivateMessage( gentity_t *ent )
   qboolean nteammater = qfalse;
   gentity_t *tmpent;
 
-  if( !g_privateMessages.integer )
+  if( !g_privateMessages.integer && !ent->client->pers.override )
   {
     ADMP( "Sorry, but private messages have been disabled\n" );
     return;

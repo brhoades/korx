@@ -282,6 +282,16 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "enable joining of teams for a player",
       "[^3name|slot#^7]"
     },
+  
+    {"allowoverride", G_admin_override, "O",
+      "override checks for various things",
+      "(^5name|slot^7)"
+    },
+
+    {"denyoverride", G_admin_override, "O",
+      "deny override",
+      "(^5name|slot^7)"
+    },
 
     {"restart", G_admin_restart, "r",
       "restart the current map (optionally using named layout or "
@@ -5065,6 +5075,97 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
 	  ( ent ) ? ent->client->pers.netname : "console" ) );
       if( targeted )
 	AP( va( "print \"^3!pause: ^7%s^7 paused by %s\n\"", 
+	    vic->client->pers.netname,
+            ( ent ) ? ent->client->pers.netname : "console" ) );
+    }
+    ClientUserinfoChanged( pids[ i ] );
+  }
+  return qtrue;
+}
+
+qboolean G_admin_override( gentity_t *ent, int skiparg )
+{ //this is all very similar to denybuild, 
+  //it performs an essentially identical function
+  int i, j = 0, pids[ MAX_CLIENTS + 1 ];
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  char command[ MAX_ADMIN_CMD_LEN ], *cmd;
+  qboolean targeted = qfalse;
+  //targeted is set to ensure we don't get spam when pausing everybody
+  gentity_t *vic;
+
+  G_SayArgv( skiparg, command, sizeof( command ) );
+  cmd = command;
+  if( cmd && *cmd == '!' )
+    cmd++;
+  if( G_SayArgc() == 1 + skiparg )
+  {
+    for( i = 0; i < MAX_CLIENTS; i++ )
+    {
+      vic = &g_entities[ i ];
+      if( vic && vic->client &&
+          vic->client->pers.connected == CON_CONNECTED )
+      {
+	pids[ j ] = i;
+        j++;
+      }
+    }
+    pids[ j ] = -1;
+  }
+  else if( G_SayArgc() == 2 + skiparg )
+  {
+    G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+    if( G_ClientNumbersFromString( name, pids ) != 1 )
+    {
+      G_MatchOnePlayer( pids, err, sizeof( err ) );
+      ADMP( va( "^3!%s: ^7%s\n", cmd, err ) );
+      return qfalse;
+    }
+    targeted = qtrue;
+  }
+  else if( G_SayArgc() > 2 + skiparg )
+  {
+    ADMP( va( "^3!%s: ^7usage: ^3!%s ^7(^5name|slot^7)\n", cmd, cmd ) );
+    return qfalse;
+  }
+  for( i = 0; pids[ i ] >= 0; i++ )
+  {
+    vic = &g_entities[ pids[ i ] ];
+    if ( !vic || !vic->client ) continue;
+    if( !admin_higher( ent, vic ) )
+    {
+      if( targeted )
+	ADMP( va( "^3!%s: ^7sorry, but your intended victim has a higher admin"
+		    " level than you\n", cmd ) );
+      continue;
+    }
+    if( vic->client->pers.override )
+    {
+      if( !Q_stricmp( cmd, "allowoverride" ) )
+      {
+        if( targeted )
+	  ADMP( "^3!allowoverride: ^7player already allowed to override\n" );
+	continue;
+      }
+      vic->client->pers.override = qfalse;
+      CPx( pids[ i ], "cp \"^2You've been denied override\"" );
+      if( targeted )
+	AP( va( "print \"^3!denyoverride: ^7%s^7 override denied by %s\n\"",
+	    vic->client->pers.netname,
+	    ( ent ) ? ent->client->pers.netname : "console" ) );
+    }
+    else
+    {
+      if( !Q_stricmp( cmd, "denyoverride" ) )
+      {
+	if( targeted )
+	  ADMP( "^3!denyoverride: ^7player is already denied overide\n" );
+	continue;
+      }
+      vic->client->pers.override = qtrue;
+      CPx( pids[ i ], va( "cp \"^1You've been allowed to override by ^7%s\"", 
+	  ( ent ) ? ent->client->pers.netname : "console" ) );
+      if( targeted )
+	AP( va( "print \"^3!allowoverride: ^7%s^7 allowed to override by %s\n\"", 
 	    vic->client->pers.netname,
             ( ent ) ? ent->client->pers.netname : "console" ) );
     }
