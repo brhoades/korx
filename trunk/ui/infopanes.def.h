@@ -396,8 +396,8 @@
 {
   name builderclass
   text "Granger\n\n"
-  text "Responsible for building and maintaining all "
-  text "the alien structures.\n\n"
+  text "Responsible for building and maintaining all the alien structures."
+  text "Heals friendly buildings with spit.\n\n"
   text "Evos: Free"
 }
 
@@ -407,7 +407,7 @@
   text "Similar to the base Granger, "
   text "except that in addition to being able to build structures it has a "
   text "melee attack and the ability to crawl on walls. Can trap humans "
-  text "like a trapper with its spit."
+  text "like a trapper with its spit. Heals friendly buildings with spit.\n\n"
   text "Evos: Free"
 }
 
