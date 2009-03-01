@@ -107,7 +107,7 @@
   text "Pulse Rifle\n\n"
   text "An energy weapon that fires pulses of concentrated energy at a fast "
   text "rate. It requires re-energising every 50 pulses. Slows down smaller "
-  text "creatures with a single shot, and larger with several."
+  text "creatures with a single shot, and larger with several.\n\n"
   CREDITS( PRIFLE_PRICE )
 }
 
@@ -199,7 +199,7 @@
   text "Cloak\n\n"
   text "Back-mounted device that renders you nearly invisible to other "
   text "creatures. This device is far from perfect, and on occasion makes "
-  text "you slighly more visible."
+  text "you slighly more visible.\n\n"
   CREDITS( CLOAK_PRICE )
 }
 
@@ -424,7 +424,7 @@
   text "Advanced Dretch\n\n"
   text "The Advanced Dretch has all the abilities of the basic Dretch. "
   text "In addition it has drill ability. When biting it can cause a "
-  text "human to become infected with a highly infectious disease."
+  text "human to become infected with a highly infectious disease.\n\n"
   text "Evos: 1 (Dretch + 1)"
 }
 
