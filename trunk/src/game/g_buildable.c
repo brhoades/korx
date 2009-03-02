@@ -1314,7 +1314,7 @@ void AHovel_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
       trap_SendServerCommand( activator->client->ps.clientNum,
       va( "print \"This Hovel is already occupied by %s^7.\n\"", self->builder->client->pers.netname ) );
     }
-    else if( self->active && self->builder->health <= 0 )
+    else if( self->active && ( self->builder->health <= 0 || !( self->builder->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) ) )
     {
       self->active = qfalse;
     }
