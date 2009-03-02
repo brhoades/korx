@@ -485,7 +485,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_TOTAL_CHARGE        255
 #define LCANNON_MIN_CHARGE          50
 
-#define XAEL_PRICE               100
+#define XAEL_PRICE               1000
 #define XAEL_AMMO                120
 #define XAEL_REPEAT              500
 #define XAEL_K_SCALE             1.0f
