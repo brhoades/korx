@@ -247,6 +247,16 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "go to the next map in the cycle",
       ""
     },
+    
+    {"drug", G_admin_drug, "M",
+      "induce a gas-like effect on a player",
+      "[^3name|slot#^7]"
+    },
+    
+    {"detonate", G_admin_detonate, "M",
+      "make a player explode",
+      "[^3name|slot#^7]"
+    },
 
     {"switch", G_admin_switch, "m",
       "switch places with someone",
@@ -309,8 +319,13 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3name|slot#^7] [^3h|a|s^7]"
     },
 
+    {"kill", G_admin_kill, "S",
+      "Kill a player.",
+      "[^3name|slot^7]"
+    },
+
     {"slap", G_admin_slap, "S",
-      "abuses your authoritay!",
+      "abuses your authority!",
       "[^3name|slot^7] (damage)"
     },
 
@@ -328,10 +343,10 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "change the stage for aliens",
       "[^3#^7]"
     },
-
-    {"kill", G_admin_kill, "v",
-      "Kill a player.",
-      "[^3name|slot^7]"
+    
+    {"fireworks", G_admin_fireworks, "v",
+      "Play the ending animation for the current map",
+      "[^3a|h^7]"
     },
 
     {"print",G_admin_print2, "X",
@@ -5416,3 +5431,134 @@ ent->client->noclip = qfalse;
   return qtrue;
 
 }
+
+qboolean G_admin_drug( gentity_t *ent, int skiparg )
+{
+  int pids[ MAX_CLIENTS ];
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  int minargc;
+  gentity_t *vic;
+
+
+    minargc = 2 + skiparg;
+
+  if( G_SayArgc() < minargc )
+  {
+    ADMP( "^3!drug: ^7usage: !drug [name|slot#]\n" );
+    return qfalse;
+  }
+  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+
+  if( G_ClientNumbersFromString( name, pids ) != 1 )
+  {
+    G_MatchOnePlayer( pids, err, sizeof( err ) );
+    ADMP( va( "^3!drug: ^7%s\n", err ) );
+    return qfalse;
+  }
+
+  vic = &g_entities[ pids[ 0 ] ];
+
+  if( !admin_higher( ent, &g_entities[ pids[ 0 ] ] ) )
+  {
+    ADMP( "^3!drug: ^7sorry, but that player has a higher admin"
+        " level than you\n" );
+    return qfalse;
+  }
+
+  vic->client->ps.eFlags |= EF_POISONCLOUDED;
+  vic->client->lastPoisonCloudedTime = level.time;
+  trap_SendServerCommand( vic->client->ps.clientNum, "poisoncloud" );
+
+  return qtrue;
+}
+
+qboolean G_admin_detonate( gentity_t *ent, int skiparg )
+{
+  int pids[ MAX_CLIENTS ];
+  int oldhealth, damage = 0;
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  char command[ MAX_ADMIN_CMD_LEN ], *cmd;
+  gentity_t *vic;
+  gentity_t *tent;
+
+  if( G_SayArgc() < 2 + skiparg )
+  {
+    ADMP( "^3!detonate: ^7usage: !detonate: [name|slot#]\n" );
+    return qfalse;
+  }
+  G_SayArgv( skiparg, command, sizeof( command ) );
+  cmd = command;
+  if( cmd && *cmd == '!' )
+    cmd++;
+  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+  if( ( G_ClientNumbersFromString( name, pids ) ) != 1 )
+  {
+    G_MatchOnePlayer( pids, err, sizeof( err ) );
+    ADMP( va( "^3!detonate: ^7%s\n", err ) );
+    return qfalse;
+  }
+  if( !admin_higher( ent, &g_entities[ pids[ 0 ] ] ) )
+  {
+    ADMP( "^3!detonate: ^7sorry, but your intended victim has a higher admin"
+        " level than you\n" );
+    return qfalse;
+  }
+  vic = &g_entities[ pids[ 0 ] ];
+  if( vic->client->pers.teamSelection == PTE_NONE ||
+      vic->client->pers.classSelection == PCL_NONE || vic->client->ps.pm_flags & PMF_QUEUED ) {
+    ADMP( "^3!detonate: ^7can't detonate: a ghost\n" );
+    return qfalse;
+  }
+  
+  //make them explode...
+	tent = G_TempEntity( vic->s.origin, EV_HUMAN_BUILDABLE_EXPLOSION );
+	oldhealth = vic->health;
+	damage = BG_FindHealthForClass( vic->client->ps.stats[ STAT_PCLASS ] );
+	vic->health -= damage;
+	vic->client->ps.stats[ STAT_HEALTH ] = vic->health;
+	vic->lastDamageTime = level.time;
+	if( vic->health <= 0 )
+	{
+		vic->enemy = ent;
+		vic->die( vic, ent, ent, damage, MOD_KILL );
+	}
+	CPx( pids[ 0 ], "cp \"^1You've been detonated!\"" );
+	AP( va( "print \"^3!detonate: ^7%s^7 was detonated by ^7%s\n\"",
+					vic->client->pers.netname,
+					( ent ) ? ent->client->pers.netname : "console" ) );
+
+  //ClientUserinfoChanged( pids[ 0 ] );
+  return qtrue;
+}
+
+qboolean G_admin_fireworks( gentity_t *ent, int skiparg )
+{
+  char teamName[2] = {""};
+  pTeam_t team;
+  int i;
+
+  if( G_SayArgc() > 2 + skiparg )
+  {
+    ADMP( "^3!fireworks: ^7usage: !fireworks [a|h]\n" );
+    return qfalse;
+  }
+  G_SayArgv( 1 + skiparg, teamName, sizeof( teamName ) );
+  if( teamName[ 0 ] == 'a' || teamName[ 0 ] == 'A' )
+    team = PTE_ALIENS;
+  else if( teamName[ 0 ] == 'h' || teamName[ 0 ] == 'H' )
+    team = PTE_HUMANS;
+  else
+    team = PTE_NONE;
+  for( i = 1, ent = g_entities + i ; i < level.num_entities ; i++, ent++ )
+  {
+    if( !ent->inuse )
+      continue;
+
+    if( !Q_stricmp( ent->classname, "trigger_win" ) )
+    {
+      if( team == PTE_NONE || team == ent->stageTeam )
+        ent->use( ent, ent, ent );
+    }
+  }
+  return qtrue;
+} 

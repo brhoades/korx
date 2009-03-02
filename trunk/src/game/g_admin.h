@@ -205,6 +205,9 @@ void G_admin_maplog_update( void );
 qboolean G_admin_maplog( gentity_t *ent, int skiparg );
 qboolean G_admin_listmaps( gentity_t *ent, int skiparg );
 qboolean G_admin_listrotation( gentity_t *ent, int skiparg );
+qboolean G_admin_drug( gentity_t *ent, int skiparg ); 
+qboolean G_admin_detonate( gentity_t *ent, int skiparg );
+qboolean G_admin_fireworks( gentity_t *ent, int skiparg );
 
 void G_admin_print( gentity_t *ent, char *m );
 void G_admin_buffer_print( gentity_t *ent, char *m );
