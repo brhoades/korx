@@ -588,7 +588,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
         advRantModifier = LEVEL4_REGEN_MOD;
       if( boostEntity->s.eType == ET_BUILDABLE &&
           boostEntity->s.modelindex == BA_A_BOOSTER &&
-          boostEntity->spawned )
+          boostEntity->spawned && level.overmindPresent )
         boostModifier = BOOSTER_REGEN_MOD;
       if ( advRantModifier + boostModifier == 4.0f )
       	break;
