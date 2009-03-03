@@ -3871,6 +3871,99 @@ void Cmd_Sell_f( gentity_t *ent )
       }
     }
   }
+  else if( !Q_stricmp( s, "all" ) || !Q_stricmp( s, "everything" ) )
+  {
+    for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
+    {
+      //guard against selling the HBUILD weapons exploit
+      if( ( i == WP_HBUILD || i == WP_HBUILD2 ) &&
+          ent->client->ps.stats[ STAT_MISC ] > 0  &&
+        !ent->client->pers.override )
+      {
+        G_TriggerMenu( ent->client->ps.clientNum, MN_H_ARMOURYBUILDTIMER );
+        continue;
+      }
+
+      if( BG_InventoryContainsWeapon( i, ent->client->ps.stats ) &&
+          BG_FindPurchasableForWeapon( i ) )
+      {
+        BG_RemoveWeaponFromInventory( i, ent->client->ps.stats );
+
+        //add to funds
+        G_AddCreditToClient( ent->client, (short)BG_FindPriceForWeapon( i ), qfalse );
+      }
+
+      //if we have this weapon selected, force a new selection
+      if( i == ent->client->ps.weapon )
+        G_ForceWeaponChange( ent, WP_NONE );
+    }
+
+    for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
+    {
+      //remove upgrade if carried
+      if( BG_InventoryContainsUpgrade( i, ent->client->ps.stats ) &&
+          BG_FindPurchasableForUpgrade( i ) )
+      {
+
+        // shouldn't really need to test for this, but just to be safe
+        if( i == UP_BATTLESUIT )
+        {
+          vec3_t newOrigin;
+
+          if( !G_RoomForClassChange( ent, PCL_HUMAN, newOrigin ) )
+          {
+            G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOROOMBSUITOFF );
+            continue;
+          }
+          VectorCopy( newOrigin, ent->s.pos.trBase );
+          ent->client->ps.stats[ STAT_PCLASS ] = PCL_HUMAN;
+        }
+
+        BG_RemoveUpgradeFromInventory( i, ent->client->ps.stats );
+
+        if( i == UP_BATTPACK || i == UP_BATTLESUIT )
+        {
+          int j;
+
+          //remove energy
+          for( j = WP_NONE; j < WP_NUM_WEAPONS; j++ )
+          {
+            if( BG_InventoryContainsWeapon( j, ent->client->ps.stats ) &&
+                BG_FindUsesEnergyForWeapon( j ) &&
+                !BG_FindInfinteAmmoForWeapon( j ) )
+            {
+              BG_PackAmmoArray( j, ent->client->ps.ammo, ent->client->ps.powerups, 0, 0 );
+            }
+          }
+        }
+
+        if( i == UP_AMMOPACK || i == UP_BATTLESUIT )
+        {
+          int j;
+
+          //remove ammo
+          for( j = WP_NONE; j < WP_NUM_WEAPONS; j++ )
+          {
+            if( BG_InventoryContainsWeapon( j, ent->client->ps.stats ) &&
+                !BG_FindUsesEnergyForWeapon( j ) &&
+                !BG_FindInfinteAmmoForWeapon( j ) )
+            {
+              BG_PackAmmoArray( j, ent->client->ps.ammo, ent->client->ps.powerups, 0, 0 );
+            }
+          }
+        }
+        
+        if( i == UP_CLOAK )
+        {   
+          ent->client->cloakReady = qfalse;
+          ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+        }
+
+        //add to funds
+        G_AddCreditToClient( ent->client, (short)BG_FindPriceForUpgrade( i ), qfalse );
+      }
+    }
+  }
   else
     trap_SendServerCommand( ent-g_entities, va( "print \"Unknown item\n\"" ) );
 
@@ -5118,7 +5211,6 @@ void G_PrivateMessage( gentity_t *ent )
     ADMP( "Sorry, but private messages have been disabled\n" );
     return;
   }
-
 
   if( g_floodMinTime.integer )
    if ( G_Flood_Limited( ent ) )
