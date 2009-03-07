@@ -1,0 +1,228 @@
+Trepidus Feature List
+
+Changes in alpha 3:
+aliens can wall walk on all buildables.
+teammate health is now transparent
+allow black in names, g_allowBlackInNames defaults to 1
+new forcefield model
+new smaller idle sound for forcefield
+new forcefield energy textures
+better smooth alien health regen code
+changed alien health regen so all classes fully heal in 25 seconds
+allow automatic hiding of health bars if they are full cg_hide(buildable/team)status
+changed connect menu to be consistant with main menu
+changed loading menu to be consistant with main menu
+merged tremfusion 1169
+fixed color escapeing of the player name in killerhp message
+added override commands(still buggy)
+added dretch and granger emoticons
+turrets now droop down when unpowered
+
+stuff in alpha 2:
+Human Weapons:
+Construction Kit
+blaster
+rifle
+Pain Saw
+Shotgun
+Las Gun
+Mass Driver
+Chaingun
+Pulse Rifle
+Flame Thrower
+Lucifer Cannon
+Xael
+
+Changes to Human Weapons vs. Regular Tremulous:
+Shotgun has an alternate fire mode which lanches a small mortor round
+Mass Driver alternate fire causes it to zoom
+Chaingun has an alternate fire which fires faster but each shot does less damage(gives it better coverage)
+Pulse Rifle alternate fire is a slow red orb that slows down whatever it hits. if it hits something small several times, it will trap it in place.
+Xael is similar to the Lucifer Cannon but has a larger splash area, does more damage, and is more dangerous to use, because the charged shot explodes closer to you based on how much you charge it up.
+Combined Advanced Construction Kit and Regular so there is no need to buy a new one at s2
+Contruction kit can heal teammates.
+Weapons that charge have a grapical bar to indicate the level that flashes when almost full
+Las Gun has a 2x zoom
+
+Human Upgrades:
+Light Armour
+Helmet
+Battery Pack
+Jet Pack
+Battle Suit
+Grenade
+Cloak 
+Ammo Pack
+Surge
+Biokit
+
+Changes to Human Upgrades vs. Regular Tremulous:
+Battle Suit has an integrated Ammo Pack and Battery Pack.
+Cloak allows players to become invisible for a short period of time. icon changes color to indicate the status of cloak.
+Ammo Pack allows players to carry extra clips for non-energy weapons.
+Surge makes the Las Gun and Mass Driver fire %50 faster and do %50 more damage.
+Biokit makes humans regenerate health faster. It also makes them immune to infection from advanced dretches.
+
+Human Buildables:
+Reactor
+Telenode
+Armoury
+Medistation
+Defense Computer
+Machine Gun Turret
+Tesla Generator
+Force Field
+
+Changes to Human Buildables vs. Regular Tremulous:
+Force Field is like a barricade. It retracts down to allow humans to pass through, but blocks aliens.
+Defense Computers heal human buildings, multiple defense computers increases that heal rate.
+Medistation can heal multiple humans at the same time, also it heals faster with multiple defense computers.
+
+General Changes to Humans vs Regular Tremulous:
+Stamina has been increased for humans.
+Humans can now dodge
+Updated Human HUD from mgdev
+Uses credits system for human stage advancement instead of kills
+
+Alien Classes:
+Granger
+Advanced Granger
+Dretch
+Advanced Dretch
+Basilisk
+Advanced Basilisk
+Marauder
+Advanced Marauder
+Dragoon
+Advanced Dragoon
+Tyrant
+Advanced Tyrant
+
+Changes to Alien Classes vs. Regular Tremulous:
+Granger can slash and launch blobs
+Advanced Granger's blobs function like a trapper blob
+Granger and Advanced Granger blobs heal alien structures
+Advanced Dretch has more health, the ability to pounce, and spreads a communicable infection to humans
+Advanced Basilisk is invisible while boosted or when sitting still as long as the Overmind is alive
+Advanced Marauder has a new electic shock, and can launch 3 barbs
+Advanced Dragoon is availible at stage 2 and its barbs have splash damage
+Advanced Tyrant has 600hp does more damage, casts a 1.5x healing aura, and can launch a acid bomb which does impact damage and splash damage(to players).
+
+Changes to Alien Buildables vs Regular Tremulous:
+Barricade now retracts to allow aliens to pass but not humans.
+Acid tubes fire through baricades.
+
+Other Changes to Aliens vs. Regular Tremulous:
+Alien health regeneration increments smoothly intead of in chucks every second.
+Alien health regen has multipliers for standing on creep, being near a basi/tyrant, and or booster.
+Dretches and Advanced Dretches can devolve into a granger at any time, with or without an overmind
+Granger is no longer available as a selection on the alien spawn menu
+Grangers can no longer evolve into a dretch and must have an evo to evolve to basilisk
+Aliens have graphical hit feedback.
+Aliens have an indicator that tell you how much your health regeneration rate is increased
+Aliens that have some kind of charge attack now have a graphical bar that indicates the level
+Booster will now reboost whenever you touch it
+
+Misc Changes:
+new countdown
+sudden death
+extreme sudden death
+sd modes
+emoticons
+rounded corners for user interface windows
+in-game help dropdown menu
+
+
+Admin System:
+
+additional admin commands:
+!restart keepteams/switchteams(lock)
+!subnetban
+!listrotation
+!maplog
+!listmaps
+!cp
+!layoutsave
+!designate
+!undesignate
+!detonate
+!slap
+!fireworks
+!drug
+!report
+!switch
+!info
+!revert
+!buildlog
+!forcespec
+!unforcespec
+!pause
+!unpause
+!L0
+!L1
+!L2
+!kill
+!warn
+!print
+!hstage
+!astage
+!abps
+!hbps
+!speed
+!gravity
+!devmap
+!register
+!specme
+
+
+additional cvars:
+g_myStats(needs lots of work still)
+g_retribution
+g_warmupMode
+g_mapVotesPercent 
+g_requireVoteReasons
+g_banNotice
+g_antiSpawnBlock
+g_friendlyFireMovementAttacks
+g_mapvoteMaxTime
+g_teamImbalanceWarnings
+g_adminMaxBan
+g_decolourLogfiles
+g_forceAutoSelect
+g_voteMinTime
+g_newbieNumbering
+g_newbieNamePrefix
+g_msgTime
+g_msg
+g_devmapNoGod
+g_devmapNoStructDmg
+g_clientUpgradeNotice
+g_devmapKillerHP
+g_KillerHP
+g_lockteamsatstart
+g_minLevelToJoinTeam
+g_decondead
+g_adminSayFilter
+g_allowShare
+g_actionPrefix
+g_minLevelToSpecMM1
+
+additional commands:
+/say_area
+/share
+/donate
+/me
+/me_team
+
+additional flags:
+ADMF_ADMINSTEALTH
+ADMF_DBUILDER
+
+additional votes:
+designate teamvote
+
+
+
+
+stuff that needs to be added:
+
