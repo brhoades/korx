@@ -648,6 +648,12 @@ void Cmd_Team_f( gentity_t *ent )
         trap_SendServerCommand( ent-g_entities, "print \"You can only join teams using autoselect\n\"" );
         return;
       }
+      if( level.humanTeamLocked && g_extremeSuddenDeath.integer )
+      {
+        trap_SendServerCommand( ent-g_entities,
+          va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
+        return; 
+      }
       if( level.alienTeamLocked )
       {
         trap_SendServerCommand( ent-g_entities,
@@ -676,6 +682,12 @@ void Cmd_Team_f( gentity_t *ent )
       {
         trap_SendServerCommand( ent-g_entities, "print \"You can only join teams using autoselect\n\"" );
         return;
+      }
+      if( level.humanTeamLocked && g_extremeSuddenDeath.integer )
+      {
+        trap_SendServerCommand( ent-g_entities,
+          va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
+        return; 
       }
       if( level.humanTeamLocked )
       {
