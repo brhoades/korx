@@ -227,6 +227,7 @@ vmCvar_t  cg_voice;
 vmCvar_t  cg_emoticons;
 vmCvar_t  cg_drawAlienFeedback;
 
+vmCvar_t  cl_jetpackmute;
 
 typedef struct
 {
@@ -369,7 +370,8 @@ static cvarTable_t cvarTable[ ] =
   { &cg_voice, "voice", "default", CVAR_USERINFO|CVAR_ARCHIVE},
 
   { &cg_emoticons, "cg_emoticons", "1", CVAR_LATCH|CVAR_ARCHIVE},
-  { &cg_drawAlienFeedback, "cg_drawAlienFeedback", "1", 0}
+  { &cg_drawAlienFeedback, "cg_drawAlienFeedback", "1", 0 },
+  { &cl_jetpackmute, "cl_jetpackmute", "0", CVAR_ARCHIVE }
 };
 
 static int   cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );
