@@ -49,6 +49,8 @@ vmCvar_t  g_extremeSuddenDeath;
 vmCvar_t  g_extremeSuddenDeathVotePercent;
 vmCvar_t  g_extremeSuddenDeathVoteMinTime;
 vmCvar_t  g_extremeSuddenDeathVoteDelay;
+vmCvar_t  g_extremeSuddenDeathVote;
+vmCvar_t  g_smartesd;
 
 vmCvar_t  g_friendlyFire;
 vmCvar_t  g_friendlyFireAliens;
@@ -231,8 +233,10 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_extremeSuddenDeath, "g_extremeSuddenDeath", "0", 0, 0, qfalse },
   { &g_extremeSuddenDeathTime, "g_extremeSuddenDeathTime", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
   { &g_extremeSuddenDeathVotePercent, "g_extremeSuddenDeathVotePercent", "75", CVAR_ARCHIVE, 0, qfalse },
-  { &g_extremeSuddenDeathVoteMinTime, "g_extremeSuddenDeathVoteMinTime", "10", CVAR_ARCHIVE, 0, qfalse },
+  { &g_extremeSuddenDeathVoteMinTime, "g_extremeSuddenDeathVoteMinTime", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_extremeSuddenDeathVoteDelay, "g_extremeSuddenDeathVoteDelay", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_extremeSuddenDeathVote, "g_extremeSuddenDeathVote", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_smartesd, "g_smartesd", "1", CVAR_ARCHIVE, 0, qfalse },
   { &g_synchronousClients, "g_synchronousClients", "0", CVAR_SYSTEMINFO, 0, qfalse  },
 
   { &g_friendlyFire, "g_friendlyFire", "0", CVAR_ARCHIVE, 0, qtrue  },
@@ -783,14 +787,15 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   //reset sd/esd settings
   trap_Cvar_Set( "g_suddenDeath", "0" );
   trap_Cvar_Set( "g_extremeSuddenDeath", "0" );
+  trap_Cvar_Set( "g_extremeSuddenDeathVote", "0" );
   level.suddenDeath = qfalse;
   level.extremeSuddenDeath = qfalse;
   level.suddenDeathVote = qfalse;
   level.extremeSuddenDeathVote = qfalse;
 
   //this allows for the vote delay to be precise
-  level.suddenDeathTime= g_suddenDeathTime.integer*60000;
-  level.extremeSuddenDeathTime= g_extremeSuddenDeathTime.integer*60000;
+  level.suddenDeathTime = g_suddenDeathTime.integer*60000;
+  level.extremeSuddenDeathTime = g_extremeSuddenDeathTime.integer*60000;
 
   G_Printf( "-----------------------------------\n" );
 
@@ -1274,14 +1279,14 @@ void G_CalculateBuildPoints( void )
   if( level.suddenDeath && ! g_suddenDeath.integer )
   {
     level.suddenDeath = qfalse;
-    trap_SendServerCommand( -1, "print \"Sudden Death Has Been Turned Off\"" );
+    trap_SendServerCommand( -1, "print \"Sudden Death Has Been Turned Off\n\"" );
   }
 
   //check to see if extremesuddendeath has been turned off
   if( level.extremeSuddenDeath && ! g_extremeSuddenDeath.integer )
   {
     level.extremeSuddenDeath = qfalse;
-    trap_SendServerCommand( -1, "print \"Extreme Sudden Death Has Been Turned Off\"" );
+    trap_SendServerCommand( -1, "print \"Extreme Sudden Death Has Been Turned Off\n\"" );
   }
 
   //check if suddendeathtime has been changed by hand
@@ -1406,6 +1411,22 @@ void G_CalculateBuildPoints( void )
       trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death in 1 minute!\n\"" );
       level.extremeSuddenDeathWarning = TW_IMMINENT;
     }
+    // how to handle a passed esd vote
+		if ( g_extremeSuddenDeathVote.integer && level.extremeSuddenDeathWarning < TW_CLOSE )
+		{
+			if( g_smartesd.integer )
+			{
+				level.extremeSuddenDeathWarning = TW_CLOSE;
+				g_timelimit.integer = (int) ( ( g_timelimit.value - g_extremeSuddenDeathTime.value ) + ( ( ( level.time - level.startTime + 120000) /60000 ) ) );
+				g_extremeSuddenDeathTime.integer = (int)( ( (level.time - level.startTime + 120000)/60000));
+				AP( va( "print \"^7Extreme Sudden Death will now start at %d\n\"", g_extremeSuddenDeathTime.integer));
+				AP( va( "print \"^7Time Limit is now at %d\n\"", g_timelimit.integer));
+			}
+			else
+			{
+				g_extremeSuddenDeath.integer = 1;
+			}
+		}
   }
   //set BP at each cycle
   if( level.extremeSuddenDeath )
