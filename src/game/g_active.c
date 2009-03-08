@@ -1617,9 +1617,12 @@ void ClientThink_real( gentity_t *ent )
   if( client->ps.stats[ STAT_STATE ] & SS_POISONED &&
       client->lastPoisonTime + ALIEN_POISON_TIME < level.time )
     client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
-
-  client->ps.gravity = g_gravity.value;
-
+    
+  if( !client->pers.jgrab )
+    client->ps.gravity = g_gravity.value;
+  else
+    client->ps.gravity = 0;
+    
   if( BG_InventoryContainsUpgrade( UP_MEDKIT, client->ps.stats ) &&
       BG_UpgradeIsActive( UP_MEDKIT, client->ps.stats ) )
   {
@@ -1682,7 +1685,7 @@ void ClientThink_real( gentity_t *ent )
   }
 
   // set speed
-  if( !client->pers.paused )
+  if( !client->pers.paused && !client->pers.jgrab )
   {
     if( client->ps.pm_type == PM_NOCLIP )
       client->ps.speed = client->pers.flySpeed;
@@ -1691,9 +1694,7 @@ void ClientThink_real( gentity_t *ent )
         BG_Class( client->ps.stats[ STAT_CLASS ] )->speed;
   }
   else
-  {
     client->ps.speed = 0;
-  }
 
   if( client->lastCreepSlowTime + CREEP_TIMEOUT < level.time )
     client->ps.stats[ STAT_STATE ] &= ~SS_CREEPSLOWED;
@@ -1976,6 +1977,12 @@ void ClientThink_real( gentity_t *ent )
 
     ent->suicideTime = 0;
   }
+  
+  if( ( client->pers.jgrab && !(client->ps.stats[ STAT_STATE ] & SS_GRABBED ) ) )
+    client->pers.jgrab = qfalse;
+  
+  if( !BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && client->pers.jgrab)
+    client->pers.jgrab = qfalse;
 }
 
 /*
