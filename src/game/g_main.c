@@ -168,6 +168,7 @@ vmCvar_t  g_slapDamage;
 
 vmCvar_t  g_privateMessages;
 vmCvar_t  g_publicAdminMessages;
+vmCvar_t  g_publicClanMessages;
 vmCvar_t  g_minLevelToSpecMM1;
 vmCvar_t  g_actionPrefix;
 vmCvar_t  g_myStats;
@@ -356,6 +357,7 @@ static cvarTable_t   gameCvarTable[ ] =
 
   { &g_privateMessages, "g_privateMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_publicAdminMessages, "g_publicAdminMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
+  { &g_publicClanMessages, "g_publicClanMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_minLevelToSpecMM1, "g_minLevelToSpecMM1", "0", CVAR_ARCHIVE, 0, qfalse  },
   { &g_actionPrefix, "g_actionPrefix", "* ", CVAR_ARCHIVE, 0, qfalse },
   { &g_myStats, "g_myStats", "1", CVAR_ARCHIVE, 0, qfalse  },
@@ -2054,14 +2056,27 @@ void QDECL G_AdminMessage( const char *prefix, const char *fmt, ... )
   }
 
   // Create the final string
-  Com_sprintf( outstring, sizeof( outstring ), "%s " S_COLOR_MAGENTA "%s",
+  Com_sprintf( outstring, sizeof( outstring ), "%s%s",
                prefix, string );
-
-  // Send to all appropriate clients
-  for( i = 0; i < level.maxclients; i++ )
-    if( G_admin_permission( &g_entities[ i ], ADMF_ADMINCHAT) ) 
-       trap_SendServerCommand( i, va( "chat \"%s\"", outstring ) );
-
+               
+  // Send to all appropriate clients --- DO NOT REMOVE BRACKETS IN THIS CONDITIONAL
+  if( !strcmp( prefix, "[ADMIN]" ) || !strcmp( prefix, "[SERVER]:" ) || !strcmp( prefix, "[A]" )  )
+  {
+    for( i = 0; i < level.maxclients; i++ )
+    {
+      if( G_admin_permission( &g_entities[ i ], ADMF_ADMINCHAT ) ) 
+        trap_SendServerCommand( i, va( "chat \"%s\"", outstring ) );
+    }
+  }
+  else if( !strcmp( prefix, "[CLAN]" )  || !strcmp( prefix, "[C]") ) 
+  {
+    for( i = 0; i < level.maxclients; i++ )
+    {
+      if( G_admin_permission( &g_entities[ i ], ADMF_CLANCHAT ) ) 
+        trap_SendServerCommand( i, va( "chat \"%s\"", outstring ) );
+    }
+  }
+        
   // Send to the logfile and server console
   G_LogPrintf("adminmsg: %s\n", outstring );
 }
@@ -2087,13 +2102,11 @@ void QDECL G_AdminsPrintf( const char *fmt, ... )
   for( j = 0; j < level.maxclients; j++ )
   {
     tempent = &g_entities[ j ];
-    if( G_admin_permission( tempent, ADMF_ADMINCHAT) ) 
-    {
-       trap_SendServerCommand(tempent-g_entities,va( "print \"^6[Admins]^7 %s\"", string) ); 
-    }
+    if( G_admin_permission( tempent, ADMF_ADMINCHAT ) ) 
+       trap_SendServerCommand( tempent-g_entities, va( "print \"^7[ADMIN]:^6 %s\"", string ) ); 
   }
   
-  G_LogPrintf("%s",string);
+  G_LogPrintf( "%s", string );
 
 }
 
