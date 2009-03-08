@@ -3046,21 +3046,11 @@ static void PM_Weapon( void )
   if( pm->ps->pm_flags & PMF_RESPAWNED )
     return;
 
-  // no bite during pounce
-  if( ( pm->ps->weapon == WP_ALEVEL3 || pm->ps->weapon == WP_ALEVEL3_UPG )
-      && ( pm->cmd.buttons & BUTTON_ATTACK )
-      && ( pm->ps->pm_flags & PMF_CHARGE ) )
-    return;
-
   // pump weapon delays (repeat times etc)
   if( pm->ps->weaponTime > 0 )
     pm->ps->weaponTime -= pml.msec;
   if( pm->ps->weaponTime < 0 )
     pm->ps->weaponTime = 0;
-
-  // no slash during charge
-  if( pm->ps->stats[ STAT_STATE ] & SS_CHARGING )
-    return;
 
   // check for weapon change
   // can't change if weapon is firing, but can change
