@@ -1266,6 +1266,7 @@ void Cmd_CallVote_f( gentity_t *ent )
   char  name[ MAX_NETNAME ];
   char *arg1plus;
   char *arg2plus;
+  char *arg3plus;
   char nullstring[] = "";
   char  message[ MAX_STRING_CHARS ];
   char targetname[ MAX_NAME_LENGTH] = "";
@@ -1274,6 +1275,7 @@ void Cmd_CallVote_f( gentity_t *ent )
 
   arg1plus = G_SayConcatArgs( 1 );
   arg2plus = G_SayConcatArgs( 2 );
+  arg3plus = G_SayConcatArgs( 3 );
 
   if( !g_allowVote.integer )
   {
@@ -1292,7 +1294,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     && ent->client->pers.firstConnect 
     && level.time - ent->client->pers.enterTime < g_voteMinTime.integer * 1000
     && !G_admin_permission( ent, ADMF_NO_VOTE_LIMIT ) 
-    && (level.numPlayingClients > 0 && level.numConnectedClients>1) )
+    && ( level.numPlayingClients > 0 && level.numConnectedClients > 1 ) )
   {
     trap_SendServerCommand( ent-g_entities, va(
       "print \"You must wait %d seconds after connecting before calling a vote\n\"",
@@ -1374,8 +1376,12 @@ void Cmd_CallVote_f( gentity_t *ent )
 
   // detect clientNum for partial name match votes
   if( !Q_stricmp( arg1, "kick" ) ||
+    !Q_stricmp( arg1, "denybuild" ) ||
+    !Q_stricmp( arg1, "allowbuild" ) ||
     !Q_stricmp( arg1, "mute" ) ||
-    !Q_stricmp( arg1, "unmute" ) )
+    !Q_stricmp( arg1, "unmute" ) || 
+    !Q_stricmp( arg1, "forcespec" ) ||
+    !Q_stricmp( arg1, "unforcespec" ) )
   {
     int clientNums[ MAX_CLIENTS ] = { -1 };
     int numMatches=0;
@@ -1454,16 +1460,19 @@ void Cmd_CallVote_f( gentity_t *ent )
     {
       trap_SendServerCommand( ent-g_entities,
         "print \"callvote: admin is immune from vote kick\n\"" );
-      G_AdminsPrintf("%s\n",message);
+      G_AdminsPrintf( "%s\n", message );
       return;
     }
 
     // use ip in case this player disconnects before the vote ends
-    Com_sprintf( level.voteString, sizeof( level.voteString ),
-      "!ban %s \"%s\" vote kick", level.clients[ clientNum ].pers.ip,
-      g_adminTempBan.string );
-    if ( reason[0]!='\0' )
-      Q_strcat( level.voteString, sizeof( level.voteDisplayString ), va( "(%s^7)", reason ) );
+    if( reason[0] != '\0' )
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "!ban %s \"%s\" vote kick: %s", level.clients[ clientNum ].pers.ip,
+        g_adminTempBan.string, reason );
+    else
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "!ban %s \"%s\" vote kick: no reason", level.clients[ clientNum ].pers.ip,
+        g_adminTempBan.string );
     Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
       "Kick player \'%s\'", name );
   }
@@ -1618,7 +1627,8 @@ void Cmd_CallVote_f( gentity_t *ent )
     }
   }
   else if( !Q_stricmp( arg1, "extreme_sudden_death" ) ||
-    !Q_stricmp( arg1, "extremesuddendeath" ) )
+    !Q_stricmp( arg1, "extremesuddendeath" ) ||
+    !Q_stricmp( arg1, "esd" ) )
   {
     if( g_extremeSuddenDeathVoteMinTime.integer * 60000 < (level.time - level.startTime) )
     {
@@ -1639,8 +1649,8 @@ void Cmd_CallVote_f( gentity_t *ent )
     } 
     else if( G_TimeTilExtremeSuddenDeath() <= g_extremeSuddenDeathVoteDelay.integer * 1000 )
     {
-    trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Extreme Sudden Death is already immenent\n\"") );
-    return;
+      trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Extreme Sudden Death is already immenent\n\"") );
+      return;
     }
     else 
     {
@@ -1651,8 +1661,39 @@ void Cmd_CallVote_f( gentity_t *ent )
 
       if( g_extremeSuddenDeathVoteDelay.integer )
         Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " in %d seconds", g_extremeSuddenDeathVoteDelay.integer ) );
-
     }
+  }
+  else if( !Q_stricmp( arg1, "forcespec" ) )
+  {
+    if( level.clients[ clientNum ].pers.specd )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: player is already forced to the spectator team\n\"" );
+      return;
+    }
+    if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: admin is immune from forcespec\n\"" );
+      return;
+    }
+    Com_sprintf( level.voteString, sizeof( level.voteString ),
+      "!forcespec %i", clientNum );
+   	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
+      "Forcespec player \'%s^7\'", name );
+  }
+  else if( !Q_stricmp( arg1, "unforcespec" ) )
+  {
+    if( !level.clients[ clientNum ].pers.specd )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: player is not currently forced to be on the spectator team\n\"" );
+      return;
+    }
+    Com_sprintf( level.voteString, sizeof( level.voteString ),
+      "!unforcespec %i", clientNum );
+   	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
+      "Un-Forcespec player \'%s^7\'", name );
   }
   else
   {
