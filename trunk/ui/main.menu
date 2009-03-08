@@ -33,6 +33,9 @@ aspectBias ASPECT_NONE
 
     //onOpen { uiScript stopRefresh ; playlooped "ui/assets/beef_rock_8-12-04.ogg" }	
     onESC { open quit_popmenu }
+    
+    #define logo_height 300
+    #define logo_width 900
 
     itemDef
     {
@@ -40,10 +43,10 @@ aspectBias ASPECT_NONE
       style WINDOW_STYLE_SHADER
       textstyle ITEM_TEXTSTYLE_NORMAL
       textalign ITEM_ALIGN_CENTER
-      rect 175 50 280 80
+      rect 175 50 (logo_height/2) (logo_width/2)
       forecolor 1 1 1 1
       visible 1
-      background "ui/assets/trepidus.jpg"
+      background "ui/assets/korx.jpg"
       decoration
     }
 
@@ -57,7 +60,7 @@ aspectBias ASPECT_NONE
       model_fovx 80
       model_fovy 60
       model_angle 180
-      //model_rotation 1
+      model_rotation 1
       //model_axis 1 1 1
       model_animplay 0 29 10
       visible 1
@@ -145,7 +148,7 @@ aspectBias ASPECT_NONE
     itemDef
     {
       name copyright
-      text "Trepidus (C) 2009 Randomkeywhacking.com"
+      text "KoRx (Tremx-KoR) (C) 2007-2009 KnightsofReason.org"
       style WINDOW_STYLE_EMPTY
       textstyle ITEM_TEXTSTYLE_NORMAL
       textscale .25

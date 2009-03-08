@@ -8,6 +8,8 @@
 #define BUTT_W      (BUTT_BAR_W/3)
 #define BUTT_H      BUTT_BAR_H
 #define BUTT_TEXT_S 20
+#define logo_height 300
+#define logo_width 900
 
   assetGlobalDef
   {
@@ -66,9 +68,9 @@
     {
       name "title"
       style WINDOW_STYLE_SHADER
-      rect 380 0 196 56
+      rect 380 0 (logo_width/6) (logo_height/6)
       visible 1
-      background "ui/assets/trepidus.jpg"
+      background "ui/assets/korx.jpg"
       decoration
     }
 

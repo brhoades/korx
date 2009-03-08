@@ -113,7 +113,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_POUNCE_DMG           ADM(100)
 #define LEVEL3_POUNCE_RANGE         72.0f
 #define LEVEL3_POUNCE_UPG_RANGE     LEVEL3_POUNCE_RANGE + 6.0f
-#define LEVEL3_POUNCE_WIDTH\         16.0f
+#define LEVEL3_POUNCE_WIDTH         16.0f
 #define LEVEL3_POUNCE_TIME          700      // msec for full Dragoon pounce
 #define LEVEL3_POUNCE_TIME_UPG      700      // msec for full Adv. Dragoon pounce
 #define LEVEL3_POUNCE_TIME_MIN      200      // msec before which pounce cancels  
