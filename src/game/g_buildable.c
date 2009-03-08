@@ -1951,10 +1951,6 @@ void HMedistat_Think( gentity_t *self )
     for( i = 0; i < num; i++ )
     {
       player = &g_entities[ entityList[ i ] ];
-      
-      //remove poison from everyone, not just the healed player
-      if( player->client && player->client->ps.stats[ STAT_STATE ] & SS_POISONED )
-        player->client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
 
       if( self->enemy == player && player->client &&
           player->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
@@ -2012,7 +2008,10 @@ void HMedistat_Think( gentity_t *self )
       if( self->enemy->client->ps.stats[ STAT_STAMINA ] > MAX_STAMINA )
         self->enemy->client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
 
-      self->enemy->health += 1+G_FindDCC(self);
+      if( self->enemy->client && self->enemy->client->ps.stats[ STAT_STATE ] & SS_POISONED )
+        self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
+
+      self->enemy->health += 1;
 
       //if they're completely healed, give them a medkit
       if( self->enemy->health >= self->enemy->client->ps.stats[ STAT_MAX_HEALTH ] )
@@ -2255,14 +2254,8 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
   {
     angularSpeed = MGTURRET_ANGULARSPEED_GRAB;
   }
-  else if ( self->dcc > 0 )
-  {
-    angularSpeed = MGTURRET_ANGULARSPEED_DCC + ( self->dcc - 1 );
-  }
   else
-  {
-    angularSpeed = MGTURRET_ANGULARSPEED;
-  }
+    angularSpeed = MGTURRET_ANGULARSPEED_DCC;
 
   VectorSubtract( self->enemy->s.pos.trBase, self->s.pos.trBase, dirToTarget );
   VectorNormalize( dirToTarget );
