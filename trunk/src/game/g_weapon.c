@@ -1106,11 +1106,12 @@ qboolean CheckVenomAttack( gentity_t *ent )
   if( !traceEnt->client && !traceEnt->s.eType == ET_BUILDABLE )
     return qfalse;
 
-  // only allow bites to work against buildings as they are constructing
+  //allow bites to work against defensive buildables only
   if( traceEnt->s.eType == ET_BUILDABLE )
   {
     if( traceEnt->s.modelindex != BA_H_MGTURRET &&
-        traceEnt->s.modelindex != BA_H_TESLAGEN )
+        traceEnt->s.modelindex != BA_H_TESLAGEN  && 
+        traceEnt->s.modelindex != BA_H_FORCEFIELD )
       return qfalse;
 
     //hackery
