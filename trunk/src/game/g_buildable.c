@@ -2351,7 +2351,6 @@ Think function for MG turret
 */
 void HMGTurret_Think( gentity_t *self )
 {
-  float temp;
   self->nextthink = level.time + 
                     BG_Buildable( self->s.modelindex )->nextthink;
 
