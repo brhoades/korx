@@ -1662,12 +1662,12 @@ void Cmd_CallVote_f( gentity_t *ent )
     return;
   }
   
-  if( level.votePassThreshold!=50 )
+  if( level.votePassThreshold != 50 )
   {
     Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " (Needs > %d percent)", level.votePassThreshold ) );
   }
   
-  if ( reason[0]!='\0' )
+  if ( reason[0] != '\0' )
     Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " Reason: '%s^7'", reason ) );
   
 
@@ -1680,27 +1680,17 @@ void Cmd_CallVote_f( gentity_t *ent )
 
   ent->client->pers.voteCount++;
 
-  // start the voting, the caller autoamtically votes yes
   level.voteTime = level.time;
   level.voteNo = 0;
 
   for( i = 0 ; i < level.maxclients ; i++ )
     level.clients[i].ps.eFlags &= ~EF_VOTED;
-
-  if( !Q_stricmp( arg1, "poll" ) )
-  {
-    level.voteYes = 0;
-  }
-  else
-  {
-   level.voteYes = 1;
-   ent->client->ps.eFlags |= EF_VOTED;
-  }
+  level.voteYes = 0;
 
   trap_SetConfigstring( CS_VOTE_TIME, va( "%i", level.voteTime ) );
   trap_SetConfigstring( CS_VOTE_STRING, level.voteDisplayString );
-  trap_SetConfigstring( CS_VOTE_YES, va( "%i", level.voteYes ) );
-  trap_SetConfigstring( CS_VOTE_NO, va( "%i", level.voteNo ) );
+  trap_SetConfigstring( CS_VOTE_YES, "0" );
+  trap_SetConfigstring( CS_VOTE_NO, "0" );
 }
 
 /*
