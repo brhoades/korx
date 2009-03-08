@@ -605,7 +605,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SURGE_DMG_MOD               1.1f
 #define SURGE_TIME_MOD              0.8f
 
-#define CLOAK_PRICE                 300
+#define CLOAK_PRICE                 600
 #define CLOAK_TIME                  30000
 
 #define JETPACK_PRICE               120
