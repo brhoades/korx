@@ -4684,6 +4684,7 @@ void Cmd_PrivateMessage_f( gentity_t *ent )
   int skipargs = 0;
   qboolean teamonly = qfalse;
   gentity_t *tmpent;
+  qboolean nteammater = qfalse;
 
   if( !g_privateMessages.integer && ent )
   {
@@ -4721,6 +4722,9 @@ void Cmd_PrivateMessage_f( gentity_t *ent )
       if( teamonly && !OnSameTeam( ent, tmpent ) )
         continue;
 
+      if( !OnSameTeam( ent, tmpent ) )
+        nteammater = qtrue;
+
       if( BG_ClientListTest( &tmpent->client->sess.ignoreList,
         ent-g_entities ) )
       {
@@ -4737,6 +4741,12 @@ void Cmd_PrivateMessage_f( gentity_t *ent )
   {
     matches = pcount;
   }
+
+ if( g_smartesd.integer && g_extremeSuddenDeath.integer && nteammater == qtrue )
+ {
+   ADMP( "Sorry, but you cannot pm anyone who isn't a teammate during ESD.\n" );
+   return;
+ }
 
   color = teamonly ? COLOR_CYAN : COLOR_YELLOW;
 
