@@ -43,7 +43,7 @@ aspectBias ASPECT_NONE
       style WINDOW_STYLE_SHADER
       textstyle ITEM_TEXTSTYLE_NORMAL
       textalign ITEM_ALIGN_CENTER
-      rect 175 50 (logo_height/2) (logo_width/2)
+      rect 175 50 (logo_width/3) (logo_height/3)
       forecolor 1 1 1 1
       visible 1
       background "ui/assets/korx.jpg"
