@@ -318,7 +318,7 @@ static cvarTable_t cvarTable[ ] =
   { &cg_disableCommandDialogs, "cg_disableCommandDialogs", "0", CVAR_ARCHIVE },
   { &cg_disableScannerPlane, "cg_disableScannerPlane", "0", CVAR_ARCHIVE },
   { &cg_tutorial, "cg_tutorial", "1", CVAR_ARCHIVE },
-  { &cg_hudFilesTrep, "cg_hudFilesTrep", "ui/trepidus-hud.txt", CVAR_ARCHIVE},
+  { &cg_hudFilesTrep, "cg_hudFilesTrep", "ui/korx-hud.txt", CVAR_ARCHIVE},
   { &cg_hudFilesEnableTrep, "cg_hudFilesEnableTrep", "0", CVAR_ARCHIVE},
 
   { &cg_painBlendUpRate, "cg_painBlendUpRate", "10.0", 0 },
@@ -1836,7 +1836,7 @@ void CG_LoadHudMenu( void )
   hudSet = buff;
 
   if( !cg_hudFilesEnableTrep.integer || hudSet[ 0 ] == '\0' )
-    hudSet = "ui/trepidus-hud.txt";
+    hudSet = "ui/korx-hud.txt";
 
   CG_LoadMenus( hudSet );
   cgDC.hudloading = qfalse;

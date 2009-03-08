@@ -43,7 +43,7 @@
     itemDef
     {
       name confirm
-      text "Quit Trepidus?"
+      text "Quit KoRx?"
       style WINDOW_STYLE_EMPTY
       textscale .3
       textstyle WINDOW_STYLE_SHADER
