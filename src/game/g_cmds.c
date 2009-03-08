@@ -1647,7 +1647,7 @@ void Cmd_CallVote_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, "print \"callvote: Extreme Sudden Death votes have been disabled\n\"" );
       return;
     } 
-    else if( G_TimeTilExtremeSuddenDeath() <= g_extremeSuddenDeathVoteDelay.integer * 1000 )
+    else if( G_TimeTilExtremeSuddenDeath() <= g_extremeSuddenDeathVoteDelay.integer * 1000 || g_extremeSuddenDeathVote.integer)
     {
       trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Extreme Sudden Death is already immenent\n\"") );
       return;
@@ -1655,7 +1655,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     else 
     {
       level.votePassThreshold = g_extremeSuddenDeathVotePercent.integer;
-      Com_sprintf( level.voteString, sizeof( level.voteString ), "extremesuddendeath" );
+      Com_sprintf( level.voteString, sizeof( level.voteString ), "set g_extremeSuddenDeathVote 1" );
       Com_sprintf( level.voteDisplayString,
           sizeof( level.voteDisplayString ), "Begin Extreme Sudden Death" );
 

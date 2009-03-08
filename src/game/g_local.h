@@ -1260,6 +1260,8 @@ extern  vmCvar_t  g_extremeSuddenDeath;
 extern  vmCvar_t  g_extremeSuddenDeathVotePercent;
 extern  vmCvar_t  g_extremeSuddenDeathVoteMinTime;
 extern  vmCvar_t  g_extremeSuddenDeathVoteDelay;
+extern  vmCvar_t  g_extremeSuddenDeathVote;
+extern  vmCvar_t  g_smartesd;
 extern  vmCvar_t  g_friendlyFire;
 extern  vmCvar_t  g_friendlyFireHumans;
 extern  vmCvar_t  g_friendlyFireAliens;
