@@ -788,6 +788,9 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   trap_Cvar_Set( "g_suddenDeath", "0" );
   trap_Cvar_Set( "g_extremeSuddenDeath", "0" );
   trap_Cvar_Set( "g_extremeSuddenDeathVote", "0" );
+  
+  //reset nextmap
+  trap_Cvar_Set( "g_nextMap", "" );
   level.suddenDeath = qfalse;
   level.extremeSuddenDeath = qfalse;
   level.suddenDeathVote = qfalse;
@@ -1412,7 +1415,7 @@ void G_CalculateBuildPoints( void )
       level.extremeSuddenDeathWarning = TW_IMMINENT;
     }
     // how to handle a passed esd vote
-		if ( g_extremeSuddenDeathVote.integer && level.extremeSuddenDeathWarning < TW_CLOSE )
+		if( g_extremeSuddenDeathVote.integer && level.extremeSuddenDeathWarning < TW_CLOSE )
 		{
 			if( g_smartesd.integer )
 			{
@@ -1423,9 +1426,7 @@ void G_CalculateBuildPoints( void )
 				AP( va( "print \"^7Time Limit is now at %d\n\"", g_timelimit.integer));
 			}
 			else
-			{
 				g_extremeSuddenDeath.integer = 1;
-			}
 		}
   }
   //set BP at each cycle
@@ -1990,12 +1991,12 @@ void ExitLevel( void )
       BG_Free( mark );
     }
   }
-  if( G_MapRotationActive( ) )
+  if( g_nextMap.string )
+    trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextMap.string ) );
+  else if( G_MapRotationActive( ) )
     G_AdvanceMapRotation( );
   else
     trap_SendConsoleCommand( EXEC_APPEND, "map_restart\n" );
-
-  trap_Cvar_Set( "g_nextMap", "" );
 
   level.restarted = qtrue;
   level.changemap = NULL;
