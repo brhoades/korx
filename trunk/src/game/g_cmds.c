@@ -4117,6 +4117,13 @@ void Cmd_Donate_f( gentity_t *ent ) {
     return;
   }
   
+  if( level.extremeSuddenDeath ) 
+  {
+    trap_SendServerCommand( ent-g_entities,
+    "print \"Donate is disabled during ESD.\n\"" );
+    return;
+  }
+  
   if( g_floodMinTime.integer )
   if ( G_FloodLimited( ent ) )
   {
