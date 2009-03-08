@@ -99,6 +99,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_BOUNCEBALL_SPEED     3000.0f
 #define LEVEL2_BOUNCEBALL_RADIUS    0
 #define LEVEL2_BOUNCEBALL_SPLASH_DMG 0
+#define LEVEL2_BOUNCEBALL_TIME      4000
 #define LEVEL2_BOUNCEBALL_REGEN     3300
 
 #define LEVEL3_CLAW_DMG             ADM(80)
@@ -112,7 +113,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_POUNCE_DMG           ADM(100)
 #define LEVEL3_POUNCE_RANGE         72.0f
 #define LEVEL3_POUNCE_UPG_RANGE     LEVEL3_POUNCE_RANGE + 6.0f
-#define LEVEL3_POUNCE_WIDTH         16.0f
+#define LEVEL3_POUNCE_WIDTH\         16.0f
 #define LEVEL3_POUNCE_TIME          700      // msec for full Dragoon pounce
 #define LEVEL3_POUNCE_TIME_UPG      700      // msec for full Adv. Dragoon pounce
 #define LEVEL3_POUNCE_TIME_MIN      200      // msec before which pounce cancels  
@@ -168,7 +169,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_HLTH_MODIFIER         1.0f
 #define AHM(h)                      ((int)((float)h*ALIEN_HLTH_MODIFIER))
 
-#define ALIEN_VALUE_MODIFIER        1.2f
+#define ALIEN_VALUE_MODIFIER        1.0f
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ALIEN_REGEN_DAMAGE_TIME     1500 //msec since damage that regen starts again
@@ -182,7 +183,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_REGEN_MSEC         ARMSEC(ABUILDER_HEALTH)
 #define ABUILDER_COST               0
 
-#define ABUILDER_UPG_SPEED          0.7f
+#define ABUILDER_UPG_SPEED          1.0f
 #define ABUILDER_UPG_VALUE          AVM(250)
 #define ABUILDER_UPG_HEALTH         AHM(75)
 #define ABUILDER_UPG_REGEN          3
@@ -300,9 +301,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ASPAWN_CREEPSIZE            120
 #define ASPAWN_VALUE                ABVM(ASPAWN_BP)
 
-#define BARRICADE_BP                10
+#define BARRICADE_BP                6
 #define BARRICADE_BT                20000
-#define BARRICADE_HEALTH            ABHM(300)
+#define BARRICADE_HEALTH            ABHM(800)
 #define BARRICADE_REGEN             14
 #define BARRICADE_SPLASHDAMAGE      50
 #define BARRICADE_SPLASHRADIUS      50
@@ -361,7 +362,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_CREEPSIZE           30
 #define TRAPPER_RANGE               400
 #define TRAPPER_REPEAT              1000
-#define TRAPPER_VALUE               ABVM(0)
+#define TRAPPER_VALUE               ABVM(25)
 #define LOCKBLOB_SPEED              650.0f
 #define LOCKBLOB_LOCKTIME           5000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
@@ -475,7 +476,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_NADE_DAMAGE         HDM(40)
 #define SHOTGUN_NADE_RANGE          100.0f
 #define SHOTGUN_NADE_SPEED          800.0f
-#define SHOTGUN_NADE_TAKE           4
+#define SHOTGUN_NADE_TAKE           2
 
 #define LASGUN_PRICE                250
 #define LASGUN_AMMO                 200
@@ -613,7 +614,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_DISABLE_TIME        1000 //time to disable the jetpack when player damaged
 #define JETPACK_DISABLE_CHANCE      0.3f
 
-#define BSUIT_PRICE                 400
+#define BSUIT_PRICE                 500
 #define BSUIT_POISON_PROTECTION     4
 #define BSUIT_PCLOUD_PROTECTION     3000
 
@@ -713,7 +714,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ARMOURY_BP                  10
 #define ARMOURY_BT                  10000
-#define ARMOURY_HEALTH              HBHM(420)
+#define ARMOURY_HEALTH              HBHM(280)
 #define ARMOURY_DCC_REGEN           2
 #define ARMOURY_SPLASHDAMAGE        50
 #define ARMOURY_SPLASHRADIUS        100
