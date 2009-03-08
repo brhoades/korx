@@ -394,6 +394,7 @@ typedef struct
   qboolean            denyBuild;
   qboolean            override;
   qboolean            paused;
+  qboolean            jgrab;
   qboolean            specd;
   qboolean            saved;
   qboolean            demoClient;
