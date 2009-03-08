@@ -1386,9 +1386,11 @@ void G_CalculateBuildPoints( void )
     if( g_humanStage.integer < 2 )
         trap_Cvar_Set( "g_humanStage", "2" ); // set humans to stage 3
 
-    level.alienTeamLocked = qtrue;// lock alien team
-    level.humanTeamLocked = qtrue;// lock human team
-
+    if( g_smartesd.integer )
+    {
+      level.alienTeamLocked = qtrue;// lock alien team
+      level.humanTeamLocked = qtrue;// lock human team
+    }
     for( i = 0; i < MAX_CLIENTS; i++ )
         level.clients[i].ps.persistant[PERS_CREDIT] = 2000; // give everyone max credits, aliens get a few extra
     if( level.extremeSuddenDeathWarning < TW_PASSED )
