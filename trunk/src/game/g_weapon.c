@@ -1263,6 +1263,9 @@ void CheckGrabAttack( gentity_t *ent )
     if( !traceEnt->lev1Grabbed )
       G_AddPredictableEvent( ent, EV_LEV1_GRAB, 0 );
 
+    if( BG_UpgradeIsActive( UP_JETPACK, traceEnt->client->ps.stats ) )
+      traceEnt->client->pers.jgrab = qtrue;
+
     traceEnt->lev1Grabbed = qtrue;
     traceEnt->lev1GrabTime = level.time;
   }
