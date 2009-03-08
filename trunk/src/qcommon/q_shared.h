@@ -1365,12 +1365,13 @@ typedef enum {
 #define MAX_PINGREQUESTS					32
 #define MAX_SERVERSTATUSREQUESTS	16
 
-#define SAY_ALL		0
-#define SAY_TEAM	1
-#define SAY_TELL	2
+#define SAY_ALL		      0
+#define SAY_TEAM	      1
+#define SAY_TELL	      2
 #define SAY_ACTION      3
 #define SAY_ACTION_T    4
-#define SAY_ADMINS    5
+#define SAY_ADMINS      5
+#define SAY_CLAN        6
 
 #define MAX_EMOTICON_NAME_LEN 16
 #define MAX_EMOTICONS 64

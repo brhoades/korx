@@ -782,6 +782,9 @@ static void G_SayTo( gentity_t *ent, gentity_t *other, int mode, int color, cons
   if( mode == SAY_ADMINS && !G_admin_permission( other, ADMF_ADMINCHAT) )
      return;
 
+  if( mode == SAY_CLAN && !G_admin_permission( other, ADMF_CLANCHAT) )
+     return;
+
   if( BG_ClientListTest( &other->client->sess.ignoreList, ent-g_entities ) )
     ignore = qtrue;
 
@@ -890,7 +893,7 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
 
   }
 
-  if( mode!=SAY_TEAM && ent && ent->client && ent->client->pers.teamSelection == TEAM_NONE &&
+  if( mode != SAY_TEAM && ent && ent->client && ent->client->pers.teamSelection == TEAM_NONE &&
       G_admin_level(ent)<g_minLevelToSpecMM1.integer )
   {
     trap_SendServerCommand( ent-g_entities,va( "print \"Sorry, but your admin level may only use teamchat while spectating.\n\"") ); 
@@ -1013,8 +1016,10 @@ static void Cmd_Say_f( gentity_t *ent )
   args = G_SayConcatArgs( 0 );
   if( Q_stricmpn( args, "say_team ", 9 ) == 0 )
     mode = SAY_TEAM;
-  if( Q_stricmpn( args, "say_admins ", 11 ) == 0 || Q_stricmpn( args, "a ", 2 ) == 0)
+  if( Q_stricmpn( args, "say_admins ", 11 ) == 0 || Q_stricmpn( args, "a ", 2 ) == 0 )
     mode = SAY_ADMINS;
+  if( Q_stricmpn( args, "say_clan ", 9 ) == 0 || Q_stricmpn( args, "c ", 2 ) == 0 )
+    mode = SAY_CLAN;
 
   // support parsing /m out of say text since some people have a hard
   // time figuring out what the console is.
@@ -1034,6 +1039,16 @@ static void Cmd_Say_f( gentity_t *ent )
        !Q_stricmpn( args, "say_team /say_admins ", 21) )
    {
       Cmd_AdminMessage_f( ent );
+      return;
+   }
+   
+  // support parsing /c out of say text for the same reason
+   if( !Q_stricmpn( args, "say /c ", 7) ||
+       !Q_stricmpn( args, "say_team /c ", 12) ||
+       !Q_stricmpn( args, "say /say_clan ", 14) ||
+       !Q_stricmpn( args, "say_team /say_clan ", 19) )
+   {
+      Cmd_ClanMessage_f( ent );
       return;
    }
 
@@ -4329,10 +4344,12 @@ commands_t cmds[ ] = {
   { "say", CMD_MESSAGE|CMD_INTERMISSION, Cmd_Say_f },
   { "say_team", CMD_MESSAGE|CMD_INTERMISSION, Cmd_Say_f },
   { "say_admins", CMD_MESSAGE|CMD_INTERMISSION, Cmd_AdminMessage_f },
+  { "say_clan", CMD_MESSAGE|CMD_INTERMISSION, Cmd_ClanMessage_f },
   { "vsay", CMD_MESSAGE|CMD_INTERMISSION, Cmd_VSay_f },
   { "vsay_team", CMD_MESSAGE|CMD_INTERMISSION, Cmd_VSay_f },
   { "vsay_local", CMD_MESSAGE|CMD_INTERMISSION, Cmd_VSay_f },
   { "a", CMD_MESSAGE|CMD_INTERMISSION, Cmd_AdminMessage_f },
+  { "c", CMD_MESSAGE|CMD_INTERMISSION, Cmd_ClanMessage_f },
   { "m", CMD_MESSAGE|CMD_INTERMISSION, Cmd_PrivateMessage_f },
   { "mt", CMD_MESSAGE|CMD_INTERMISSION, Cmd_PrivateMessage_f },
   { "me", CMD_MESSAGE|CMD_INTERMISSION, Cmd_Say_f },
@@ -4821,13 +4838,15 @@ void Cmd_AdminMessage_f( gentity_t *ent )
 {
   char cmd[ sizeof( "say_team" ) ];
   char prefix[ 50 ];
+  char postprefix[ 50 ];
   char *msg;
   int skiparg = 0;
 
   // Check permissions and add the appropriate user [prefix]
   if( !ent )
   {
-    Com_sprintf( prefix, sizeof( prefix ), "[CONSOLE]:" );
+    Com_sprintf( postprefix, sizeof( postprefix ), "[CONSOLE]" S_COLOR_WHITE ": " S_COLOR_MAGENTA );
+    Com_sprintf( prefix, sizeof( prefix ), "[ADMIN]" );
   }
   else if( !G_admin_permission( ent, ADMF_ADMINCHAT ) )
   {
@@ -4838,16 +4857,18 @@ void Cmd_AdminMessage_f( gentity_t *ent )
     }
     else
     {
-      Com_sprintf( prefix, sizeof( prefix ), "[PLAYER] %s" S_COLOR_WHITE ":",
+      Com_sprintf( postprefix, sizeof( postprefix ), "[PLAYER]%s" S_COLOR_WHITE ": " S_COLOR_MAGENTA,
                    ent->client->pers.netname );
+      Com_sprintf( prefix, sizeof( prefix ), "[A]" );
       ADMP( "Your message has been sent to any available admins "
             "and to the server logs.\n" );
     }
   }
   else
   {
-    Com_sprintf( prefix, sizeof( prefix ), "[ADMIN] %s" S_COLOR_WHITE ":",
+    Com_sprintf( postprefix, sizeof( postprefix ), "%s" S_COLOR_WHITE ": " S_COLOR_MAGENTA,
                  ent->client->pers.netname );
+    Com_sprintf( prefix, sizeof( prefix ), "[ADMIN]" );
   }
 
   // Skip say/say_team if this was used from one of those
@@ -4866,7 +4887,7 @@ void Cmd_AdminMessage_f( gentity_t *ent )
   msg = G_SayConcatArgs( 1 + skiparg );
 
   // Send it
-  G_AdminMessage( prefix, "%s", msg );
+  G_AdminMessage( prefix, "%s%s", postprefix, msg );
 }
 
 void G_CP( gentity_t *ent )
@@ -4954,3 +4975,65 @@ void G_CP( gentity_t *ent )
     G_Printf( "cp: %s\n", ConcatArgs( 1 ) );
 }
 
+/*
+=================
+Cmd_ClanMessage_f
+
+Send a message to all active clanmates
+=================
+*/
+void Cmd_ClanMessage_f( gentity_t *ent )
+{
+  char cmd[ sizeof( "say_team" ) ];
+  char prefix[ 50 ];
+  char postprefix[ 50 ];
+  char *msg;
+  int skiparg = 0;
+
+  // Check permissions and add the appropriate user [prefix]
+  if( !ent )
+  {
+    Com_sprintf( postprefix, sizeof( postprefix ), "[CONSOLE]" S_COLOR_WHITE ": " );
+    Com_sprintf( prefix, sizeof( prefix ), "[CLAN]" );
+  }
+  else if( !G_admin_permission( ent, ADMF_CLANCHAT ) )
+  {
+    if( !g_publicClanMessages.integer )
+    {
+      ADMP( "Sorry, but use of /c by non-clanmembers has been disabled.\n" );
+      return;
+    }
+    else
+    {
+      Com_sprintf( postprefix, sizeof( postprefix ), "[PLAYER]%s" S_COLOR_WHITE ": ",
+                   ent->client->pers.netname );
+      Com_sprintf( prefix, sizeof( prefix ), "[C]" );
+      ADMP( "Your message has been sent to any available admins "
+            "and to the server logs.\n" );
+    }
+  }
+  else
+  {
+    Com_sprintf( postprefix, sizeof( postprefix ), "%s" S_COLOR_WHITE ": ",
+                 ent->client->pers.netname );
+    Com_sprintf( prefix, sizeof( prefix ), "[CLAN]" );
+  }
+
+  // Skip say/say_team if this was used from one of those
+  G_SayArgv( 0, cmd, sizeof( cmd ) );
+  if( !Q_stricmp( cmd, "say" ) || !Q_stricmp( cmd, "say_team" ) )
+  {
+    skiparg = 1;
+    G_SayArgv( 1, cmd, sizeof( cmd ) );
+  }
+  if( G_SayArgc( ) < 2 + skiparg )
+  {
+    ADMP( va( "usage: %s [message]\n", cmd ) );
+    return;
+  }
+
+  msg = G_SayConcatArgs( 1 + skiparg );
+
+  // Send it
+  G_AdminMessage( prefix, "%s%s", postprefix, msg );
+}

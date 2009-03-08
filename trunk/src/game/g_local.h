@@ -817,6 +817,7 @@ void      G_ParseEscapedString( char *buffer );
 void      G_SanitiseString( char *in, char *out, int len );
 void      Cmd_PrivateMessage_f( gentity_t *ent );
 void      Cmd_AdminMessage_f( gentity_t *ent );
+void      Cmd_ClanMessage_f( gentity_t *ent );
 int       G_FloodLimited( gentity_t *ent );
 void      G_WordWrap( char *buffer, int maxwidth );
 void      G_CP( gentity_t *ent );
@@ -1366,6 +1367,7 @@ extern  vmCvar_t  g_slapDamage;
 
 extern  vmCvar_t  g_privateMessages;
 extern  vmCvar_t  g_publicAdminMessages;
+extern  vmCvar_t  g_publicClanMessages;
 extern  vmCvar_t  g_minLevelToSpecMM1;
 extern  vmCvar_t  g_actionPrefix;
 extern  vmCvar_t  g_myStats;

@@ -476,15 +476,17 @@ static void Svcmd_PrintQueue_f( void )
   }
 }
 
-// dumb wrapper for "a" and "m"
+// dumb wrapper for "a", "m", and "c"
 static void Svcmd_MessageWrapper( void )
 {
   char cmd[ 2 ];
   trap_Argv( 0, cmd, sizeof( cmd ) );
   if( !Q_stricmp( cmd, "a" ) )
     Cmd_AdminMessage_f( NULL );
-  else
+  else if( !Q_stricmp( cmd, "m" ) )
     Cmd_PrivateMessage_f( NULL );
+  else if( !Q_stricmp( cmd, "c" ) )
+    Cmd_ClanMessage_f( NULL );
 }
 
 struct
@@ -514,7 +516,8 @@ struct
   { "chat", qtrue, Svcmd_SendMessage },
   { "cp", qtrue, Svcmd_CenterPrint_f },
   { "m", qtrue, Svcmd_MessageWrapper },
-  { "a", qtrue, Svcmd_MessageWrapper }
+  { "a", qtrue, Svcmd_MessageWrapper },
+  { "c", qtrue, Svcmd_MessageWrapper }
 };
 
 /*
