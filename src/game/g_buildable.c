@@ -629,15 +629,19 @@ Tests for creep and kills the buildable if there is none
 void AGeneric_CreepCheck( gentity_t *self )
 {
   gentity_t *spawn;
+  int damagetotake;
 
   spawn = self->parentNode;
   if( !G_FindCreep( self ) )
   {
-    if( spawn && self->killedBy != ENTITYNUM_NONE )
-      G_Damage( self, NULL, g_entities + self->killedBy, NULL, NULL,
-                self->health, 0, MOD_NOCREEP );
-    else
-      G_Damage( self, NULL, NULL, NULL, NULL, self->health, 0, MOD_NOCREEP );
+    damagetotake = BG_FindHealthForBuildable( self->s.modelindex )/30;
+    //if( spawn && self->killedBy != ENTITYNUM_NONE )
+    //  G_Damage( self, NULL, g_entities + self->killedBy, NULL, NULL,
+    //            damagetotake, 0 , MOD_NOCREEP );
+    //else
+    //The above is a good idea, but currently causes graphical defects
+      G_Damage( self, NULL, NULL, NULL, NULL, damagetotake, 0, MOD_NOCREEP );
+      self->nextthink = level.time + 1000;
     return;
   }
   G_CreepSlow( self );
