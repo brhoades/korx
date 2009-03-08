@@ -79,6 +79,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TEAM_OVERLAY_MAXNAME_WIDTH  12
 #define TEAM_OVERLAY_MAXLOCATION_WIDTH  16
 
+#define CELL_OUTLINE_CHECK_FREQ 7500
+
 typedef enum
 {
   FOOTSTEP_NORMAL,
@@ -1169,6 +1171,7 @@ typedef struct
   
   int           nextWeaponClickTime;
 
+	int           lastCelOutlineCheckTime;   // holds the last time that r_celoutline was checked for
   centity_t     *locationHead;
 } cg_t;
 

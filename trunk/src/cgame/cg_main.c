@@ -501,6 +501,8 @@ void CG_UpdateCvars( void )
 {
   int         i;
   cvarTable_t *cv;
+  char        var[ MAX_TOKEN_CHARS ];
+  int         celoutline;
 
   for( i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++ )
     if( cv->vmCvar )
@@ -510,6 +512,23 @@ void CG_UpdateCvars( void )
 
   CG_SetUIVars( );
   CG_SetPVars( );
+  
+  if ( cg.lastCelOutlineCheckTime + CELL_OUTLINE_CHECK_FREQ < cg.time )
+  {
+  	trap_Cvar_VariableStringBuffer( "r_celoutline", var, sizeof( var ) );
+  	celoutline = atoi( var );
+  	if (!(celoutline == 0))
+  	{
+      trap_Cvar_Set( "r_celoutline", "0" );
+    	trap_Cvar_VariableStringBuffer( "r_celoutline", var, sizeof( var ) );
+  	  celoutline = atoi( var );
+      if (celoutline == 0)
+        trap_SendClientCommand( "a Cell Outline Cheat was Enabled by myself and Deactivated by the server" );
+      else
+        trap_SendClientCommand( "an Attempted Cell Outline Cheat Deactivation Failed!" );
+  	}
+  	cg.lastCelOutlineCheckTime = cg.time;
+  }
 }
 
 
