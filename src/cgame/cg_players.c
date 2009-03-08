@@ -1586,9 +1586,10 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
           cent->jetPackPS = CG_SpawnNewParticleSystem( cgs.media.jetPackAscendPS );
           cent->jetPackState = JPS_ASCENDING;
         }
-
-        trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
-                                vec3_origin, cgs.media.jetpackAscendSound );
+        
+        if( !cl_jetpackmute.integer)
+          trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
+                                  vec3_origin, cgs.media.jetpackAscendSound );
       }
       else if( es->pos.trDelta[ 2 ] < -10.0f )
       {
@@ -1600,9 +1601,10 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
           cent->jetPackPS = CG_SpawnNewParticleSystem( cgs.media.jetPackDescendPS );
           cent->jetPackState = JPS_DESCENDING;
         }
-
-        trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
-                                vec3_origin, cgs.media.jetpackDescendSound );
+        
+        if( !cl_jetpackmute.integer )
+          trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
+                                  vec3_origin, cgs.media.jetpackDescendSound );
       }
       else
       {
@@ -1615,8 +1617,9 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
           cent->jetPackState = JPS_HOVERING;
         }
 
-        trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
-                                vec3_origin, cgs.media.jetpackIdleSound );
+        if( !cl_jetpackmute.integer )
+          trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
+                                  vec3_origin, cgs.media.jetpackIdleSound );
       }
 
       memset( &flash, 0, sizeof( flash ) );

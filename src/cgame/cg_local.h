@@ -1591,6 +1591,8 @@ extern  vmCvar_t    cg_suppressWAnimWarnings;
 
 extern  vmCvar_t    cg_emoticons;
 
+extern  vmCvar_t    cl_jetpackmute;
+
 //
 // cg_main.c
 //
