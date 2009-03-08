@@ -219,6 +219,12 @@ static void ClientShove( gentity_t *ent, gentity_t *victim )
   float force;
   int entMass, vicMass;
 
+  //If a builder is placing a building, don't shove.
+ 	if ( ( victim->client->ps.weapon >= WP_ABUILD ) &&
+       ( victim->client->ps.weapon <= WP_HBUILD ) &&
+ 	     ( victim->client->ps.stats[ STAT_BUILDABLE ] != BA_NONE ) )
+    return;
+
   // Don't push if the entity is not trying to move
   if( !ent->client->pers.cmd.rightmove && !ent->client->pers.cmd.forwardmove &&
       !ent->client->pers.cmd.upmove )
