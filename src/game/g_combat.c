@@ -1808,6 +1808,10 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
     if( !ent->takedamage )
       continue;
 
+    // spread from adv rant acid bomb doesn't hurt aliens, but it does push them
+    //if( ent->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS && mod == MOD_LEVEL4_EBLOB )
+    //  points = 0;
+      
     // find the distance from the edge of the bounding box
     for( i = 0; i < 3; i++ )
     {
@@ -1824,13 +1828,6 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
       continue;
 
     points = damage * ( 1.0 - dist / radius );
-
-    // spread from adv rant acid bomb does 10% damage to buildables
-    if( ent->s.eType == ET_BUILDABLE && 
-        ( mod == MOD_LEVEL4_EBLOBSPLASH || mod == MOD_LEVEL3_BOUNCEBALL ) )
-    {
-      points *= 0.1f;
-    }
     
     if( CanDamage( ent, origin ) )
     {
