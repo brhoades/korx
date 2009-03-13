@@ -3775,7 +3775,7 @@ void PmoveSingle( pmove_t *pmove )
     return;
   }
 
-  if( pm->ps->pm_type == PM_FREEZE)
+  if( pm->ps->pm_type == PM_FREEZE )
     return;   // no movement at all
 
   if( pm->ps->pm_type == PM_INTERMISSION )
