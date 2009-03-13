@@ -328,7 +328,7 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_CLAW:
-        message = "was mauled by";
+        message = "was slashed to a pulp by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
