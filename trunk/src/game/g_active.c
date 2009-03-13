@@ -463,13 +463,15 @@ void SpectatorThink( gentity_t *ent, usercmd_t *ucmd )
   // We are either not following anyone or following a spectator
   if( !following )
   {
-    if( client->sess.spectatorState == SPECTATOR_LOCKED ||
-        client->sess.spectatorState == SPECTATOR_FOLLOW )
+    if( client->sess.spectatorState == SPECTATOR_FOLLOW )
       client->ps.pm_type = PM_FREEZE;
     else if( client->noclip )
       client->ps.pm_type = PM_NOCLIP;
-    else
+    else if( client->sess.spectatorState != SPECTATOR_LOCKED )
       client->ps.pm_type = PM_SPECTATOR;
+    else if( client->sess.spectatorState == SPECTATOR_LOCKED )
+      client->ps.pm_type = PM_HOVELING;
+    //Not literally hoveling
     if( queued )
       client->ps.pm_flags |= PMF_QUEUED;
 
