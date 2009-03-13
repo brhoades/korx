@@ -5,12 +5,12 @@ ui/assets/tremxbg
   }
 }
 
-ui/assets/level0
+ui/assets/builder
 {
   {
-    map ui/assets/level0.jpg
-    blendFunc add
-    rgbGen lightingDiffuse
+    map ui/assets/builder.jpg
+    //blendFunc add
+    //rgbGen lightingDiffuse
   }
 }
 
