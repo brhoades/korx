@@ -1583,7 +1583,7 @@ void ClientThink_real( gentity_t *ent )
   else if( client->ps.stats[ STAT_HEALTH ] <= 0 )
     client->ps.pm_type = PM_DEAD;
   else if( client->ps.stats[ STAT_STATE ] & SS_HOVELING )
-    client->ps.pm_type = PM_FREEZE;
+    client->ps.pm_type = PM_HOVELING;
   else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ||
            client->ps.stats[ STAT_STATE ] & SS_GRABBED )
     client->ps.pm_type = PM_GRABBED;
