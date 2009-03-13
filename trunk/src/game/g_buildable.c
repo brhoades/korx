@@ -1364,7 +1364,9 @@ void AHovel_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
     if( self->active )
     {
       //this hovel is in use
-      G_TriggerMenu( activator->client->ps.clientNum, MN_A_HOVEL_OCCUPIED );
+      //this hovel is in use
+      trap_SendServerCommand( activator->client->ps.clientNum,
+      va( "print \"This Hovel is already occupied by %s^7.\n\"", self->builder->client->pers.netname ) );
     }
     else if( ( ( activator->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0 ) ||
                ( activator->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0_UPG ) ) &&
