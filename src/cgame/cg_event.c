@@ -286,13 +286,13 @@ static void CG_Obituary( entityState_t *ent )
         message = "was bitten by";
         break;
       case MOD_LEVEL1_CLAW:
-        message = "was swiped by";
+        message = "got his face clawed off by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL1 )->humanName );
         message2 = className;
         break;
       case MOD_LEVEL2_CLAW:
-        message = "was clawed by";
+        message = "was bitten beyond recognition by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL2 )->humanName );
         message2 = className;
@@ -344,13 +344,13 @@ static void CG_Obituary( entityState_t *ent )
         message2 = "'s weight";
         break;
       case MOD_LEVEL4_EBLOB:
-        message = "was sniped by";
-        Com_sprintf( className, 64, "'s %s",
+        message = "got the acid of";
+        Com_sprintf( className, 64, "'s %s in his eyes",
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
         break;
       case MOD_LEVEL4_EBLOBSPLASH:
-        message = "couldn't escape the acid of";
+        message = "was burnt to a crisp in the acid of";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
