@@ -625,6 +625,43 @@ void ClientTimerActions( gentity_t *ent, int msec )
       }
     }
   }
+  
+  //use regen upgrade
+  if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
+    level.surrenderTeam != TEAM_HUMANS)
+  {
+    int regen = REGEN_HEALTH_RATE;
+    //regen stamina too
+    if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
+    {
+      regen *= 2;
+      if( client->ps.stats[ STAT_STAMINA ] + REGEN_STAMINA_RATE <= MAX_STAMINA )
+        client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
+      else
+        client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
+    }
+    else if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
+      regen *= 2;
+
+    //regen human health
+    if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
+        ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time )
+      {
+        if( regen > 0 &&
+        ent->health > 0 &&
+        ent->health < client->ps.stats[ STAT_MAX_HEALTH ] )
+      {
+        while( ent->nextRegenTime < level.time )
+        {
+          ent->health += 1;
+          ent->nextRegenTime += 1/regen;
+        } 
+      }
+    if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
+      ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
+      }
+    }
+
   while ( client->time100 >= 100 )
   {
     weapon_t weapon = BG_GetPlayerWeapon( &client->ps );
@@ -663,6 +700,14 @@ void ClientTimerActions( gentity_t *ent, int msec )
         if( client->ps.stats[ STAT_MISC ] < 0 )
           client->ps.stats[ STAT_MISC ] = 0;
     }
+  if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
+  {	
+    if( ent->client->cloakReady == qfalse && (level.time - ent->client->cloakStartTime > CLOAK_TIME || ent->health <= 0 ) )
+    {
+      ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+      ent->client->ps.stats[ STAT_CLOAK ] = 0;
+    }
+  }
     if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
     {
       if( client->cloakReady == qtrue )
@@ -867,40 +912,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
  
     }
        
-    //use regen upgrade
-    if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
-      level.surrenderTeam != TEAM_HUMANS)
-    {
-      int regen = REGEN_HEALTH_RATE;
-      //regen stamina too
-      if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
-      {
-        regen *= 2;
-        if( client->ps.stats[ STAT_STAMINA ] + REGEN_STAMINA_RATE <= MAX_STAMINA )
-          client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
-        else
-          client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
-      }
-      else if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
-        regen *= 2;
-
-      //regen health
-      if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
-          ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time )
-        ent->health += regen;
-      if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
-        ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
-    }
-
-    if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
-    {	
-      if( ent->client->cloakReady == qfalse && (level.time - ent->client->cloakStartTime > CLOAK_TIME || ent->health <= 0 ) )
-      {
-        ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-        ent->client->ps.stats[ STAT_CLOAK ] = 0;
-      }
-    }
-
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
     {
       ent->client->pers.statscounters.timealive++;
