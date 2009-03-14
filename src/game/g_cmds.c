@@ -3908,10 +3908,11 @@ void Cmd_Share_f( gentity_t *ent )
   }
   
   if( g_floodMinTime.integer )
-  if ( G_FloodLimited( ent ) )
-  {
-    return;
-  }
+    if ( G_FloodLimited( ent ) )
+    {
+      trap_SendServerCommand( ent-g_entities, "print \"Your shares are flood-limited; wait before shareing again\n\"" );
+      return;
+    }
 
   team = ent->client->pers.teamSelection;
 
@@ -4152,10 +4153,11 @@ void Cmd_Donate_f( gentity_t *ent ) {
   }
   
   if( g_floodMinTime.integer )
-  if ( G_FloodLimited( ent ) )
-  {
-    return;
-  }
+    if ( G_FloodLimited( ent ) )
+    {
+      trap_SendServerCommand( ent-g_entities, "print \"Your donations are flood-limited; wait before donating again\n\"" );
+      return;
+    }
 
 
   if( ent->client->pers.teamSelection == TEAM_ALIENS )
