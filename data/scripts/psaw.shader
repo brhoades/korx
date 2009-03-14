@@ -40,3 +40,13 @@ models/weapons/psaw/battery
 		tcMod scroll 0.04 -0.02
 	}
 }
+
+models/weapons/psaw/glow
+{
+	cull disable
+	{
+		map models/weapons/psaw/glow.jpg
+		blendfunc GL_ONE GL_ONE
+		tcMod scroll -9.0 9.0
+	}
+}
