@@ -81,7 +81,7 @@ static void CG_Obituary( entityState_t *ent )
   switch( mod )
   {
     case MOD_SUICIDE:
-      message = "suicides";
+      message = "can't take it anymore";
       break;
     case MOD_FALLING:
       message = "fell fowl to gravity";
