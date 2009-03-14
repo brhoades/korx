@@ -1,11 +1,11 @@
 {
   "^3Welcome to KoRx!^7"
   {
-    "This mod is under ongoing development. It is probably buggy. "
+    "This mod is under heavy, ongoing development. "
     "Please visit the KnightsofReason.org website at:\n"
     "http://www.knightsofreason.org/\n\n"
     "We can also be reached on Freenode IRC:\n"
-    "#knightsofreason.org"
+    "#knightsofreason"
   }
   "Alien Healing"
   {
@@ -121,8 +121,11 @@
     "Graphics:\n"
     "  Fox_One\n"
     "  Intrepid\n"
+    "  Eagle\n"
+    "  KnightsofReason.org Forum\n"
     "\n"
     "Testers:\n"
+    "  Metal\n"
     "  The KoR clan\n"
     "  The |KoR|Tremx Server\n"
   }
@@ -146,6 +149,17 @@
     "[kor][[kor]\n"
     "[rk][[rk]\n"
     "[mg][[mg]\n"
+    "\n"
+    "\n"
+    "More KoR:\n"
+    "[kor1][[kor1]\n"
+    "[kor2][[kor2]\n"
+    "[kor3][[kor3]\n"
+    "\n"
+    "KoR Developers/Contributors ONLY please:\n"
+    "[korx1][[korx1]\n"
+    "[korx2][[korx2]\n"
+    "[korx3][[korx3]\n"
   }
   "Emoticons: Aliens"
   {
