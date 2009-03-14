@@ -2045,7 +2045,7 @@ void HForceField_Shrink( gentity_t *self, qboolean shrink );
 
 /*
 ================
-HForceField__die
+HForceField_die
 
 Called when a force field dies
 ================
@@ -2114,14 +2114,12 @@ void HForceField_Think( gentity_t *self )
 
 /*
 ================
-HForceField_Touch
+HForceField_Use
 
-Force Fields shrink when they come into contact with a Human that can
-pass through
+Force Fields shrink when a human uses them
 ================
 */
-
-void HForceField_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
+void HForceField_Use( gentity_t *self, gentity_t *other, gentity_t *trace )
 {
   gclient_t *client = other->client;
   int client_z, min_z;
@@ -2136,7 +2134,7 @@ void HForceField_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
           (int)( self->r.maxs[ 2 ] * FORCEFIELD_SHRINKPROP );
   if( client_z < min_z )
     return;
-  ABarricade_Shrink( self, qtrue );
+  HForceField_Shrink( self, qtrue );
 }
 
 
@@ -3705,7 +3703,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
     case BA_H_FORCEFIELD:
       built->think = HForceField_Think;
       built->die = HForceField_Die;
-      built->touch = HForceField_Touch;
+      built->use = HForceField_Use;
       built->shrunkTime = 0;
       HForceField_Shrink( built, qtrue );
       break;
