@@ -126,6 +126,7 @@ char *modNames[ ] =
   "MOD_POISON",
   "MOD_INFECTION",
   "MOD_SWARM",
+  "MOD_BOOSTER",
 
   "MOD_HSPAWN",
   "MOD_TESLAGEN",

@@ -1486,7 +1486,7 @@ void AHovel_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 ================
 ABooster_Touch
 
-Called when an alien touches a booster
+Called when an entity touches a booster
 ================
 */
 void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
@@ -1502,7 +1502,16 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
   if( !client )
     return;
 
-  if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+  if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS && 
+      client->poisonImmunityTime < level.time )
+  {
+    //Poison them!
+    client->ps.stats[ STAT_STATE ] |= SS_POISONED;
+    client->lastPoisonTime = level.time;
+    client->lastPoisonClient = self;
+  }
+
+  if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
     return;
 
   client->ps.stats[ STAT_STATE ] |= SS_BOOSTED;

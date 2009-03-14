@@ -125,11 +125,11 @@ static void CG_Obituary( entityState_t *ent )
     case MOD_REACTOR:
       message = "got too close to the reactor";
       break;
-    case MOD_SLOWBLOB:
-      message = "should have visited a medical station";
-      break;
     case MOD_SWARM:
       message = "was hunted down by the swarm";
+      break;
+    case MOD_BOOSTER:
+      message = "shouldn't have touched the booster";
       break;
     default:
       message = NULL;
@@ -359,11 +359,11 @@ static void CG_Obituary( entityState_t *ent )
         message = "should have used a medkit against";
         message2 = "'s poison";
         break;
-
-      case MOD_INFECTION:
-        message = "got infected by";
-        break;
-
+      case MOD_SLOWBLOB:
+        message = "shouldn't have provoked";
+        Com_sprintf( className, 64, "'s %s",
+            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
+        message2 = className;
       case MOD_LEVEL1_PCLOUD:
         message = "was gassed by";
         Com_sprintf( className, 64, "'s %s",
@@ -371,7 +371,9 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
 
-
+      case MOD_INFECTION:
+        message = "got infected by";
+        break;
       case MOD_TELEFRAG:
         message = "tried to invade";
         message2 = "'s personal space";
