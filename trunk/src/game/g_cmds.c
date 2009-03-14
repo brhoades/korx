@@ -3105,6 +3105,76 @@ void Cmd_Sell_f( gentity_t *ent )
       }
     }
   }
+  else if( !Q_stricmp( s, "all" ) || !Q_stricmp( s, "everything" ) )
+  {
+    weapon_t selected = BG_GetPlayerWeapon( &ent->client->ps );
+
+    if( !BG_PlayerCanChangeWeapon( &ent->client->ps ) &&
+        !ent->client->pers.override )
+      return;
+
+    for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
+    {
+      //guard against selling the HBUILD weapons exploit
+      if( i == WP_HBUILD && ent->client->ps.stats[ STAT_MISC ] > 0 &&
+          !ent->client->pers.override )
+      {
+        G_TriggerMenu( ent->client->ps.clientNum, MN_H_ARMOURYBUILDTIMER );
+        continue;
+      }
+
+      if( BG_InventoryContainsWeapon( i, ent->client->ps.stats ) &&
+          BG_Weapon( i )->purchasable )
+      {
+        ent->client->ps.stats[ STAT_WEAPON ] = WP_NONE;
+
+        //add to funds
+        G_AddCreditToClient( ent->client, (short)BG_Weapon( i )->price, qfalse );
+      }
+
+      //if we have this weapon selected, force a new selection
+      if( i == selected )
+        G_ForceWeaponChange( ent, WP_NONE );
+    }
+    for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
+    {
+      //remove upgrade if carried
+      if( BG_InventoryContainsUpgrade( i, ent->client->ps.stats ) &&
+          BG_Upgrade( i )->purchasable )
+      {
+
+        // shouldn't really need to test for this, but just to be safe
+        if( i == UP_BATTLESUIT )
+        {
+          vec3_t newOrigin;
+
+          if( !G_RoomForClassChange( ent, PCL_HUMAN, newOrigin ) )
+          {
+            G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOROOMBSUITOFF );
+            continue;
+          }
+          VectorCopy( newOrigin, ent->client->ps.origin );
+          ent->client->ps.stats[ STAT_CLASS ] = PCL_HUMAN;
+          ent->client->pers.classSelection = PCL_HUMAN;
+          ent->client->ps.eFlags ^= EF_TELEPORT_BIT;
+        }
+
+        BG_RemoveUpgradeFromInventory( i, ent->client->ps.stats );
+
+        if( i == UP_BATTPACK || i == UP_AMMOPACK || i == UP_BATTLESUIT )
+          G_GiveClientMaxAmmo( ent, qtrue );
+
+        if( i == UP_CLOAK )
+        {
+          ent->client->cloakReady = qfalse;
+          ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+        }
+
+        //add to funds
+        G_AddCreditToClient( ent->client, (short)BG_Upgrade( i )->price, qfalse );
+      }
+    }
+  }
   else
     G_TriggerMenu( ent->client->ps.clientNum, MN_H_UNKNOWNITEM );
 
