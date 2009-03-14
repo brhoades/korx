@@ -790,8 +790,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, client->ps.stats ) )
         damage -= LIGHTARMOUR_POISON_PROTECTION;
 
-      G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL,
-        0, damage, 0, MOD_POISON );
+      if( client->lastPoisonClient->s.eType == ET_BUILDABLE )
+        G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL,
+          0, damage, 0, MOD_BOOSTER );
+      else
+        G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL,
+          0, damage, 0, MOD_POISON );
     }
 
     //recalulate alien heal rate
