@@ -260,7 +260,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_UPG_HEALTH           AHM(600)
 #define LEVEL4_UPG_REGEN            15
 #define LEVEL4_UPG_REGEN_MSEC       ARMSEC(LEVEL4_UPG_HEALTH)
-#define LEVEL4_UPG_COST             6
+#define LEVEL4_UPG_COST             4
 #define LEVEL4_UPG_REGEN_MOD        1.5f
 
 /*
@@ -549,7 +549,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_CHARGE_TIME_WARN    2000
 #define LCANNON_CHARGE_AMMO         10       // ammo cost of a full charge shot
 
-#define XAEL_PRICE               800
+#define XAEL_PRICE               100
 #define XAEL_AMMO                120
 #define XAEL_REPEAT              500
 #define XAEL_K_SCALE             1.0f
