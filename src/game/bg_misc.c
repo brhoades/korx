@@ -3058,7 +3058,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     UP_CLOAK,            //int   upgradeNum;
     CLOAK_PRICE,         //int   price;
     ( 1 << S2 )|( 1 << S3 ), //int  stages
-    SLOT_BACKPACK,          //int   slots;
+    SLOT_CLOAK,          //int   slots;
     "cloak",             //char  *upgradeName;
     "Cloak",         //char  *upgradeHumanName;
     "An invisibility cloak that can be used to sneak up on aliens "
@@ -3088,7 +3088,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     UP_BATTLESUIT,          //int   upgradeNum;
     BSUIT_PRICE,            //int   price;
     ( 1 << S3 ),            //int  stages
-    SLOT_HEAD|SLOT_TORSO|SLOT_ARMS|SLOT_LEGS|SLOT_BACKPACK, //int   slots;
+    SLOT_HEAD|SLOT_TORSO|SLOT_ARMS|SLOT_LEGS|SLOT_BACKPACK|SLOT_CLOAK, //int   slots;
     "bsuit",                //char  *upgradeName;
     "Battlesuit",           //char  *humanName;
     "A full body armour that is highly effective at repelling alien attacks. "

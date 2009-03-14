@@ -399,6 +399,7 @@ typedef enum
 #define SLOT_BACKPACK   0x00000010
 #define SLOT_WEAPON     0x00000020
 #define SLOT_SIDEARM    0x00000040
+#define SLOT_CLOAK      0x00000080
 
 typedef enum
 {

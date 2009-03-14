@@ -2295,7 +2295,7 @@ void CG_Player( centity_t *cent )
       head.customSkin = ci->headSkin;
 
     //invis
-    if( es->eFlags & EF_MOVER_STOP )
+    if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) )
     {
       head.customShader = cgs.media.invisShader;
     }
