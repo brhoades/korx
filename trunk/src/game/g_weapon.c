@@ -1416,6 +1416,9 @@ void G_UpdateZaps( gentity_t *ent )
 
   ent->zapDmg += ( (float)( level.time - level.previousTime ) / 1000.0f )
                      * LEVEL2_AREAZAP_DMG;
+  //fry them cloaks!
+  ent->client->cloakReady = qfalse;
+  ent->client->ps.stats[ STAT_CLOAK ] = 0;
   damage = (int)ent->zapDmg;
   // wait until we've accumulated enough damage for bsuit to take at
   // least 1 HP
