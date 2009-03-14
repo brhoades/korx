@@ -3260,6 +3260,7 @@ qboolean G_admin_spec999( gentity_t *ent, int skiparg )
       continue;
     if( vic->client->ps.ping == 999 )
     {
+		  vic->client->pers.saved =  qtrue;									//It isn't fair if they have connection problems and loose their credits & score.
       G_ChangeTeam( vic, TEAM_NONE );
       AP( va( "print \"^3!spec999: ^7%s^7 moved ^7%s^7 to spectators\n\"",
         ( ent ) ? ent->client->pers.netname : "console",
