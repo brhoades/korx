@@ -2042,6 +2042,8 @@ void CG_Player( centity_t *cent )
   vec3_t        angles;
   int           held = es->modelindex;
   vec3_t        surfNormal = { 0.0f, 0.0f, 1.0f };
+  int           team;
+  int           ourteam = cg.snap->ps.stats[ STAT_TEAM ];
 
   // the client number is stored in clientNum.  It can't be derived
   // from the entity number, because a single client may have
@@ -2060,6 +2062,8 @@ void CG_Player( centity_t *cent )
   //don't draw
   if( es->eFlags & EF_NODRAW )
     return;
+
+  team = ci->team;
 
   // get the player model information
   renderfx = 0;
@@ -2150,7 +2154,7 @@ void CG_Player( centity_t *cent )
     else
       legs.customSkin = ci->legsSkin;
     //invis
-    if( es->eFlags & EF_MOVER_STOP )
+    if( es->eFlags & EF_MOVER_STOP && team != ourteam )
     {
       legs.customShader = cgs.media.invisShader;
     }
@@ -2162,9 +2166,9 @@ void CG_Player( centity_t *cent )
     if( es->weapon == WP_ALEVEL1_UPG )
     {
       //ZOMG UBER HACK
-      if( es->eFlags & EF_MOVER_STOP)
+      if( es->eFlags & EF_MOVER_STOP )
       {
-        if(!cent->invis)
+        if( !cent->invis )
         {
           cent->invisTime = cg.time;
           cent->invis = qtrue;
@@ -2172,14 +2176,14 @@ void CG_Player( centity_t *cent )
       }
       else
       {
-        if(cent->invis)
+        if( cent->invis && team != ourteam )
         {
           cent->invisTime = cg.time;
           cent->invis = qfalse;
         }
       }
 
-      if( cent->invis)
+      if( cent->invis && team != ourteam )
       {
         legs.shaderTime = cent->invisTime/1000.0f;
         if( cg.time - cent->invisTime < 1000  )
@@ -2187,7 +2191,7 @@ void CG_Player( centity_t *cent )
         else
           legs.customShader = cgs.media.invisShader;
       }
-      else
+      else if( team != ourteam )
       {
         if( cg.time - cent->invisTime < 500  )
         {
@@ -2267,7 +2271,7 @@ void CG_Player( centity_t *cent )
       torso.customSkin = ci->torsoSkin;
 
     //invis
-    if( es->eFlags & EF_MOVER_STOP )
+    if( es->eFlags & EF_MOVER_STOP && team != ourteam )
     {
       torso.customShader = cgs.media.invisShader;
     }
@@ -2295,7 +2299,7 @@ void CG_Player( centity_t *cent )
       head.customSkin = ci->headSkin;
 
     //invis
-    if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) )
+    if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) && team != ourteam )
     {
       head.customShader = cgs.media.invisShader;
     }
