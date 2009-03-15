@@ -1394,7 +1394,10 @@ void G_CalculateBuildPoints( void )
       level.humanTeamLocked = qtrue;// lock human team
     }
     for( i = 0; i < MAX_CLIENTS; i++ )
-        level.clients[i].ps.persistant[PERS_CREDIT] = 2000; // give everyone max credits, aliens get a few extra
+    {
+        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 2000; // give everyone max credits, aliens get a few extra
+        level.clients[ i ].pers.credit = 2000; 
+    }
     if( level.extremeSuddenDeathWarning < TW_PASSED )
     {
       trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! NO SPAWNS, NO BUILDING\"" );
