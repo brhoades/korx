@@ -516,6 +516,7 @@ struct gclient_s
   int                 healRate;
   int                 lastCrushTime;        // Tyrant crush
   int                 lastspecmeTime;
+  int                 blobs;
 };
 
 
