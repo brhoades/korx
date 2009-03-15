@@ -1086,7 +1086,8 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
   {
     CG_PositionEntityOnTag( &gun, parent, parent->hModel, "tag_weapon" );
 
-    if( cent->currentState.eFlags & EF_MOVER_STOP )
+    //lazy cloak avoidance for humans
+    if( cent->currentState.eFlags & EF_MOVER_STOP && cg.snap->ps.stats[ STAT_TEAM ] != TEAM_HUMANS )
       gun.customShader = cgs.media.invisShader;
 
     CG_WeaponAnimation( cent, &gun.oldframe, &gun.frame, &gun.backlerp );
