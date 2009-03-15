@@ -18,10 +18,19 @@ models/weapons/mdriver/mdriver
 		tcGen environment
 	}
 	{
-		map models/weapons/mdriver/mdriver_glow.jpg
-		blendFunc add
-		rgbGen wave sawtooth .6 .1 0 7
-		detail
+		map models/weapons/mdriver/mdriver_glow.tga
+		blendfunc add
+		rgbGen wave noise 0.2 0.5 0 3.17 
+	}
+	{
+		map models/weapons/mdriver/mdriver_glow.tga
+		blendfunc add
+		rgbGen wave sawtooth 0 0.15 0 3.17 
+	}
+	{
+		map models/weapons/mdriver/mdriver_glow.tga
+		blendfunc add
+		rgbGen wave sin 0.25 0.25 0 0.17 
 	}
 }
 
