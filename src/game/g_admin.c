@@ -38,37 +38,49 @@ static char g_bfb[ 32000 ];
 // note: list ordered alphabetically
 g_admin_cmd_t g_admin_cmds[ ] = 
   {
-
-    {"abps", G_admin_abps, "N",
-      "change the build points for aliens",
-      "[^3#^7]"
-    },
-
-    {"adjustban", G_admin_adjustban, "b",
-      "change the length or reason of a ban.  time is specified as numbers "
-      "followed by units 'w' (weeks), 'd' (days), 'h' (hours) or 'm' (minutes),"
-      " or seconds if no units are specified",
-      "[^5ban #^7] (^3length|reason^7)"
-    },
-
     {"admintest", G_admin_admintest, "a",
       "display your current admin level",
       ""
     },
 
-    {"allowbuild", G_admin_denybuild, "d",
-      "restore a player's ability to build",
-      "[^3name|slot#^7]"
-    },
-
-    {"allready", G_admin_allready, "F",
-      "makes everyone ready in intermission",
+    {"listplayers", G_admin_listplayers, "a",
+      "display a list of players, their client numbers and their levels",
       ""
     },
 
-    {"astage", G_admin_astage, "u",
-      "change the stage for aliens",
-      "[^3#^7]"
+    {"info", G_admin_info, "a",
+      "read the server's information files",
+      "(^5subject^7)"
+    },
+
+    {"specme", G_admin_putmespec, "a",
+        "moves you to the spectators",
+				""
+    },
+
+    {"help", G_admin_help, "a",
+      "display commands available to you or help on a specific command",
+      "(^5command^7)"
+    },
+
+    {"register", G_admin_register, "a",
+      "Registers your name to protect it from being used by others or updates your"      
+      " admin name to your current name.",
+      ""
+    },
+
+    {"listadmins", G_admin_listadmins, "A",
+      "display a list of all server admins and their levels",
+      "(^5name|start admin#^7) (^5minimum level to display^7)"
+    },
+
+    {"subnetban", G_admin_subnetban, "b",
+      "Add or change a subnet mask on a ban",
+      "[^3ban#^7] [^5CIDR mask^7]"
+      "\n ^3Example:^7 '!subnetban 10 16' changes ban #10 to be a ban on XXX.XXX.*.*"
+      "\n ^3Example:^7 '!subnetban 10 24' changes ban #10 to be a ban on XXX.XXX.XXX.*"
+      "\n ^3Example:^7 '!subnetban 10 32' changes ban #10 to be a regular (non-subnet) ban"
+      "\n ^1WARNING:^7 Use of this command may make your admin.dat incompatible with other game.qvms"
     },
 
     {"ban", G_admin_ban, "b",
@@ -79,10 +91,22 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3name|slot#|IP^7] (^5time^7) (^5reason^7)"
     },
 
-    {"buildlog", G_admin_buildlog, "e",
-      "display a list of recent builds and deconstructs, optionally specifying"
-      " a team",
-      "(^5xnum^7) (^5#skip^7) (^5-name|num^7) (^5a|h^7)",
+    {"unban", G_admin_unban, "b",
+      "unbans a player specified by the slot as seen in showbans",
+      "[^3ban #^7]"
+    },
+
+    {"adjustban", G_admin_adjustban, "b",
+      "change the length or reason of a ban.  time is specified as numbers "
+      "followed by units 'w' (weeks), 'd' (days), 'h' (hours) or 'm' (minutes),"
+      " or seconds if no units are specified",
+      "[^5ban #^7] (^3length|reason^7)"
+    },
+
+
+    {"showbans", G_admin_showbans, "B",
+      "display a (partial) list of active bans",
+      "(^5start at ban#^7|name|IP)"
     },
 
     {"cancelvote", G_admin_cancelvote, "c",
@@ -90,9 +114,15 @@ g_admin_cmd_t g_admin_cmds[ ] =
       ""
     },
 
-    {"cp", G_admin_cp, "Z",
-      "display a CP message to users, optionally specifying team(s) to send to",
-      "(-AHS) [^3message^7]"
+    {"time", G_admin_time, "C",
+      "show the current local server time",
+      ""
+    },
+
+
+    {"allowbuild", G_admin_denybuild, "d",
+      "restore a player's ability to build",
+      "[^3name|slot#^7]"
     },
 
     {"denybuild", G_admin_denybuild, "d",
@@ -105,9 +135,20 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3name|slot#^7]"
     },
 
-    {"detonate", G_admin_detonate, "v",
-      "make a player explode",
+    {"undesignate", G_admin_designate, "D",
+      "revoke designated builder privileges",
       "[^3name|slot#^7]"
+    },
+
+    {"buildlog", G_admin_buildlog, "e",
+      "display a list of recent builds and deconstructs, optionally specifying"
+      " a team",
+      "(^5starting log index^7)(^5a|h^7)",
+    },
+
+    {"revert", G_admin_revert, "E",
+      "revert one or more buildlog events, optionally of only one team",
+      "(^5number^7)(^5a|h^7)"
     },
 
     {"devmap", G_admin_devmap, "f",
@@ -115,138 +156,8 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3mapname^7] (^5layout^7)"
     },
 
-    {"drug", G_admin_drug, "M",
-      "induce a gas like effect on a player",
-      "[^3name|slot#^7]"
-    },
-
-    {"fireworks", G_admin_fireworks, "v",
-      "Play the ending animation for the current map",
-      "[^3a|h^7]"
-    },
-
-    {"forcespec", G_admin_forcespec, "p",
-      "disable joining of teams for a player",
-      "[^3name|slot#^7]"
-    },
-
-    {"gravity", G_admin_gravity, "n",
-      "change the gravity level",
-      "[^3#^7]"
-    },
-
-    {"hbps", G_admin_hbps, "N",
-      "change the build points for humans",
-      "[^3#^7]"
-    },
-
-    {"help", G_admin_help, "a",
-      "display commands available to you or help on a specific command",
-      "(^5command^7)"
-    },
-
-    {"hstage", G_admin_hstage, "u",
-      "change the stage for humans",
-      "[^3#^7]"
-    },
-
-    {"info", G_admin_info, "a",
-      "read the server's information files",
-      "(^5subject^7)"
-    },
-
-    {"kick", G_admin_kick, "K",
-      "kick a player with an optional reason",
-      "(^5reason^7)"
-    },
-
-    {"kill", G_admin_kill, "v",
-      "Kill a player.",
-      "[^3name|slot^7]"
-    },
-
-    {"L0", G_admin_L0, "l",
-      "Sets a level 1+ to level 0",
-      "(^3name|slot#^7)"
-    },
-
-    {"L1", G_admin_L1, "l",
-      "Sets a level 0 to level 1",
-      "[^3name|slot#^7]"
-    },
-
-    {"L2", G_admin_L2, "l",
-      "Sets a level 0 or 1 to level 2",
-      "[^3name|slot#^7]"
-    },
-
-    {"layoutsave", G_admin_layoutsave, "k",
-      "save a map layout",
-      "[^3mapname^7]"
-    },
-
-    {"listadmins", G_admin_listadmins, "A",
-      "display a list of all server admins and their levels",
-      "(^5name|start admin#^7) (^5minimum level to display^7)"
-    },
-
-    {"listlayouts", G_admin_listlayouts, "k",
-      "display a list of all available layouts for a map",
-      "(^5mapname^7)"
-    },
-
-    {"listmaps", G_admin_listmaps, "j",
-      "display a list of available maps on the server",
-      "(^5map name^7)"
-    },
-
-    {"listplayers", G_admin_listplayers, "a",
-      "display a list of players, their client numbers and their levels",
-      ""
-    },
-
-    {"lock", G_admin_lock, "G",
-      "lock a team to prevent anyone from joining it",
-      "[^3a|h^7]"
-    },
-
-    {"map", G_admin_map, "L",
-      "load a map (and optionally force layout)",
-      "[^3mapname^7] (^5layout^7)"
-    },
-
-    {"maplog", G_admin_maplog, "o",
-      "show recently played maps",
-      ""
-    },
-
-    {"mute", G_admin_mute, "h",
-      "mute a player",
-      "[^3name|slot#^7]"
-    },
-
-    {"namelog", G_admin_namelog, "i",
-      "display a list of names used by recently connected players",
-      "(^5name^7)"
-    },
-
-    {"nextmap", G_admin_nextmap, "L",
-      "go to the next map in the cycle",
-      ""
-    },
-
-    {"allowoverride", G_admin_override, "O",
-      "override checks for various things",
-      "(^5name|slot^7)"
-    },
-
-    {"denyoverride", G_admin_override, "O",
-      "deny override",
-      "(^5name|slot^7)"
-    },
-
-    {"passvote", G_admin_passvote, "R",
-      "pass a vote currently taking place",
+    {"allready", G_admin_allready, "F",
+      "makes everyone ready in intermission",
       ""
     },
 
@@ -255,115 +166,14 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "(^5name|slot^7)"
     },
 
-    {"print",G_admin_print2, "Z",
-      "prints text",
-      "[text to print]"
+    {"unpause", G_admin_pause, "g",
+      "carry on with the game",
+      "(^5name|slot^7)"
     },
 
-    {"putteam", G_admin_putteam, "s",
-      "move a player to a specified team",
-      "[^3name|slot#^7] [^3h|a|s^7]"
-    },
-
-    {"readconfig", G_admin_readconfig, "I",
-      "reloads the admin config file and refreshes permission flags",
-      ""
-    },
-
-    {"register", G_admin_register, "a",
-      "Registers your name to protect it from being used by others or updates your"      
-      " admin name to your current name.",
-      ""
-    },
-
-    {"report", G_admin_report, "H",
-      "report abuse to the server",
-      "[detailed but concise description]"
-    },
-
-    {"rename", G_admin_rename, "J",
-      "rename a player",
-      "[^3name|slot#^7] [^3new name^7]"
-    },
-
-    {"restart", G_admin_restart, "r",
-      "restart the current map (optionally using named layout or "
-      "keeping/switching teams)",
-      "(^5layout^7) (^5keepteams|switchteams|keepteamslock|switchteamslock^7)"
-    },
-
-    {"revert", G_admin_revert, "E",
-      "revert one or more buildlog events, optionally of only one team",
-      "(^5xnum^7) (^5#ID^7) (^5-name|num^7) (^5a|h^7)"
-    },
-
-    {"rotation", G_admin_listrotation, "a",
-       "display a list of maps that are in the active map rotation",
-       ""
-    },
-
-    {"setlevel", G_admin_setlevel, "Z",
-      "sets the admin level of a player",
-      "[^3name|slot#|admin#^7] [^3level^7]"
-    },
-
-    {"showbans", G_admin_showbans, "B",
-      "display a (partial) list of active bans",
-      "(^5start at ban#^7|name|IP)"
-    },
-
-    {"slap", G_admin_slap, "S",
-      "abuses your authoritay!",
-      "[^3name|slot^7] (damage)"
-    },
-
-    {"spec999", G_admin_spec999, "j",
-      "move 999 pingers to the spectator team",
-      ""
-    },
-
-    {"specme", G_admin_putmespec, "a",
-        "moves you to the spectators",
-        ""
-    },
-
-    {"speed", G_admin_speed, "n",
-      "change the speed level",
-      "[^3#^7]"
-    },
-
-    {"subnetban", G_admin_subnetban, "b",
-      "Add or change a subnet mask on a ban",
-      "[^3ban#^7] [^5CIDR mask^7]"
-      "\n ^3Example:^7 '!subnetban 10 16' changes ban #10 to be a ban on XXX.XXX.*.*"
-      "\n ^3Example:^7 '!subnetban 10 24' changes ban #10 to be a ban on XXX.XXX.XXX.*"
-      "\n ^3Example:^7 '!subnetban 10 32' changes ban #10 to be a regular (non-subnet) ban"
-      "\n ^1WARNING:^7 Use of this command may make your admin.dat incompatible with other game.qvms"
-    },
-
-    {"switch", G_admin_switch, "m",
-      "switch places with someone",
-      "[^3name|slot#^7]"
-    },
-
-    {"time", G_admin_time, "C",
-      "show the current local server time",
-      ""
-    },
-
-    {"unban", G_admin_unban, "b",
-      "unbans a player specified by the slot as seen in showbans",
-      "[^3ban #^7]"
-    },
-
-    {"undesignate", G_admin_designate, "D",
-      "revoke designated builder privileges",
-      "[^3name|slot#^7]"
-    },
-
-    {"unforcespec", G_admin_unforcespec, "p",
-      "enable joining of teams for a player",
-      "[^3name|slot#^7]"
+    {"lock", G_admin_lock, "G",
+      "lock a team to prevent anyone from joining it",
+      "[^3a|h^7]"
     },
 
     {"unlock", G_admin_unlock, "G",
@@ -376,14 +186,189 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3name|slot#^7]"
     },
 
-    {"unpause", G_admin_pause, "g",
-      "carry on with the game",
+    {"mute", G_admin_mute, "h",
+      "mute a player",
+      "[^3name|slot#^7]"
+    },
+
+    {"report", G_admin_report, "H",
+      "report abuse to the server",
+      "[detailed but concise description]"
+    },
+
+    {"namelog", G_admin_namelog, "i",
+      "display a list of names used by recently connected players",
+      "(^5name^7)"
+    },
+
+    {"readconfig", G_admin_readconfig, "I",
+      "reloads the admin config file and refreshes permission flags",
+      ""
+    },
+
+    {"spec999", G_admin_spec999, "j",
+      "move 999 pingers to the spectator team",
+      ""},
+
+    {"rename", G_admin_rename, "J",
+      "rename a player",
+      "[^3name|slot#^7] [^3new name^7]"
+    },
+
+    {"layoutsave", G_admin_layoutsave, "k",
+      "save a map layout",
+      "[^3mapname^7]"
+    },
+    
+    {"listlayouts", G_admin_listlayouts, "k",
+      "display a list of all available layouts for a map",
+      "(^5mapname^7)"
+    },
+
+    {"kick", G_admin_kick, "K",
+      "kick a player with an optional reason",
+      "(^5reason^7)"
+    },
+
+    {"L0", G_admin_L0, "l",
+      "Sets a level 1+ to level 0",
+       "(^3name|slot#^7)"
+    },
+    
+    {"L1", G_admin_L1, "l",
+      "Sets a level 0 to level 1",
+      "[^3name|slot#^7]"
+    },
+
+    {"L2", G_admin_L2, "l",
+      "Sets a level 0 or 1 to level 2",
+      "[^3name|slot#^7]"
+    },
+
+    {"map", G_admin_map, "L",
+      "load a map (and optionally force layout)",
+      "[^3mapname^7] (^5layout^7)"
+    },
+
+    {"nextmap", G_admin_nextmap, "L",
+      "go to the next map in the cycle",
+      ""
+    },
+
+    {"switch", G_admin_switch, "m",
+      "switch places with someone",
+      "[^3name|slot#^7]"
+    },
+
+    {"drug", G_admin_drug, "M",
+      "induce a gas like effect on a player",
+      "[^3name|slot#^7]"
+    },
+
+    {"speed", G_admin_speed, "n",
+      "change the speed level",
+      "[^3#^7]"
+    },
+
+    {"gravity", G_admin_gravity, "n",
+      "change the gravity level",
+      "[^3#^7]"
+    },
+
+    {"abps", G_admin_abps, "N",
+      "change the build points for aliens",
+      "[^3#^7]"
+    },
+
+    {"hbps", G_admin_hbps, "N",
+      "change the build points for humans",
+      "[^3#^7]"
+    },
+  
+    {"allowoverride", G_admin_override, "O",
+      "override checks for various things",
       "(^5name|slot^7)"
+    },
+
+    {"denyoverride", G_admin_override, "O",
+      "deny override",
+      "(^5name|slot^7)"
+    },
+
+    {"forcespec", G_admin_forcespec, "p",
+      "disable joining of teams for a player",
+      "[^3name|slot#^7]"
+    },
+ 
+    {"unforcespec", G_admin_unforcespec, "p",
+      "enable joining of teams for a player",
+      "[^3name|slot#^7]"
+    },
+
+    {"restart", G_admin_restart, "r",
+      "restart the current map (optionally using named layout or "
+      "keeping/switching teams)",
+      "(^5layout^7) (^5keepteams|switchteams|keepteamslock|switchteamslock^7)"
+    },
+
+    {"passvote", G_admin_passvote, "R",
+      "pass a vote currently taking place",
+      ""
+    },
+
+    {"putteam", G_admin_putteam, "s",
+      "move a player to a specified team",
+      "[^3name|slot#^7] [^3h|a|s^7]"
+    },
+
+    {"slap", G_admin_slap, "S",
+      "abuses your authoritay!",
+      "[^3name|slot^7] (damage)"
     },
 
     {"warn", G_admin_warn, "t",
       "Warn a player to cease or face admin intervention",
       "[^3name|slot#^7] [reason]"
+    },
+
+    {"hstage", G_admin_hstage, "u",
+      "change the stage for humans",
+      "[^3#^7]"
+    },
+
+    {"astage", G_admin_astage, "u",
+      "change the stage for aliens",
+      "[^3#^7]"
+    },
+
+    {"kill", G_admin_kill, "v",
+      "Kill a player.",
+      "[^3name|slot^7]"
+    },
+    
+    {"detonate", G_admin_detonate, "v",
+      "make a player explode",
+      "[^3name|slot#^7]"
+    },
+  
+    {"fireworks", G_admin_fireworks, "v",
+      "Play the ending animation for the current map",
+      "[^3a|h^7]"
+    },
+
+    {"setlevel", G_admin_setlevel, "Z",
+      "sets the admin level of a player",
+      "[^3name|slot#|admin#^7] [^3level^7]"
+    },
+    
+    {"print",G_admin_print2, "Z",
+			"prints text",
+			"[text to print]"
+    },
+      
+    {"cp", G_admin_cp, "Z",
+      "display a CP message to users, optionally specifying team(s) to send to",
+      "(-AHS) [^3message^7]"
     }
 
   };

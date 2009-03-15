@@ -32,14 +32,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ADMBP_end() G_admin_buffer_end(ent)
 
 #define MAX_ADMIN_LEVELS 32 
-#define MAX_ADMIN_ADMINS 1024
+#define MAX_ADMIN_ADMINS 2048
 #define MAX_ADMIN_BANS 1024
 #define MAX_ADMIN_NAMELOGS 128
 #define MAX_ADMIN_NAMELOG_NAMES 5
 #define MAX_ADMIN_FLAGS 64
 #define MAX_ADMIN_COMMANDS 64
 #define MAX_ADMIN_CMD_LEN 20
-#define MAX_ADMIN_BAN_REASON 50
+#define MAX_ADMIN_BAN_REASON 75
 
 /*
  * 1 - cannot be vote kicked, vote muted
