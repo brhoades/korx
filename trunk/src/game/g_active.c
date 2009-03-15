@@ -965,6 +965,15 @@ void ClientTimerActions( gentity_t *ent, int msec )
       G_Damage( ent, NULL, NULL, NULL, NULL, 5, DAMAGE_NO_ARMOR, MOD_SUICIDE );
     }
 
+    //calculate resistance to infection ('aids')
+    client->pers.aidresistance = 0;
+    if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
+      client->pers.aidresistance += .75;
+    if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, ent->client->ps.stats ) )
+      client->pers.aidresistance += .2;
+    if( BG_InventoryContainsUpgrade( UP_HELMET, ent->client->ps.stats ) )
+      client->pers.aidresistance += .13;
+
     //infection - stay away from teh infected ones!!! :)
     if( client->infected && !OnSameTeam( client->infector , ent ) )
     {
@@ -985,7 +994,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
           // it must a client + not infected + human + visible + not same + lives
           if( target->client && !(target->client->infected) &&
               target->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
-              G_Visible( ent, target, CONTENTS_SOLID ) && ent != target && target->health > 0 )
+              G_Visible( ent, target, CONTENTS_SOLID ) && ent != target 
+              && target->health > 0 
+              && rand( ) % 100 > client->pers.aidresistance * 100 )
           {
             target->client->infected = qtrue;
             target->client->infectionTime = level.time;
