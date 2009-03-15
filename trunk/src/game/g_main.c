@@ -1398,7 +1398,10 @@ void G_CalculateBuildPoints( void )
     }
     for( i = 0; i < MAX_CLIENTS; i++ )
     {
-        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 2000; // give everyone max credits, aliens get a few extra
+      if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 2000;
+      else if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 9;
     }
     if( level.extremeSuddenDeathWarning < TW_PASSED )
     {
