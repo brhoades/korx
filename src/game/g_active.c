@@ -1626,12 +1626,16 @@ void ClientThink_real( gentity_t *ent )
 
   if( ( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ) &&
       client->lastLockTime + LOCKBLOB_LOCKTIME < level.time )
+  {
     client->ps.stats[ STAT_STATE ] &= ~SS_BLOBLOCKED;
-
+    client->blobs = 0;
+  }
   if( ( client->ps.stats[ STAT_STATE ] & SS_SLOWLOCKED ) &&
       client->lastSlowTime + ABUILDER_BLOB_TIME < level.time )
+  {
     client->ps.stats[ STAT_STATE ] &= ~SS_SLOWLOCKED;
-
+    client->blobs = 0;
+  }
   // Update boosted state flags
   client->ps.stats[ STAT_STATE ] &= ~SS_BOOSTEDWARNING;
   if( client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
