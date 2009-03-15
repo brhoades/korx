@@ -2487,6 +2487,19 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
         color[ 3 ] = 0.0f;
     }
   }
+  
+  if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS && cent->currentState.weapon == WP_ALEVEL1_UPG 
+  		&& cg.predictedPlayerState.stats[ STAT_STATE ] & SS_BOOSTED )
+	{
+		color[ 3 ] = 0.1f;
+    if( cg.snap->ps.stats[ STAT_STATE ] & SS_BOOSTEDWARNING )
+      if( ( cg.time / 500 ) % 2 )
+        color[ 3 ] = .5f;
+    
+	}
+	else if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS && cent->currentState.weapon == WP_ALEVEL1_UPG
+		&& cg.predictedPlayerState.eFlags & EF_MOVER_STOP )
+		color[ 3 ] = 0.1f;
 
   trap_R_SetColor( color );
   CG_DrawPic( rect->x, rect->y, rect->w, rect->h,
