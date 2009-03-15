@@ -603,9 +603,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
   client->time100 += msec;
   client->time1000 += msec;
 
-  // smooth alien heal
+  // smooth alien regeneration
   if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS &&
-    level.surrenderTeam != TEAM_ALIENS )
+    level.surrenderTeam != TEAM_ALIENS && 
+    ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
   {
     if( client->healRate > 0 &&
         ent->health > 0 &&
@@ -626,42 +627,35 @@ void ClientTimerActions( gentity_t *ent, int msec )
     }
   }
   
-  //use regen upgrade
+  // 'smooth' human regeneration
   if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
-    level.surrenderTeam != TEAM_HUMANS)
+    level.surrenderTeam != TEAM_HUMANS && 
+    ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time 
+    && ent->health < client->ps.stats[ STAT_MAX_HEALTH ]
+    && ent->health > 0 && ent->nextRegenTime < level.time )
   {
+    //calculate regen rate
     int regen = REGEN_HEALTH_RATE;
-    //regen stamina too
     if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
-    {
       regen *= 2;
-      if( client->ps.stats[ STAT_STAMINA ] + REGEN_STAMINA_RATE <= MAX_STAMINA )
-        client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
-      else
-        client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
-    }
     else if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
       regen *= 2;
-
-    //regen human health
-    if( ent->health > 0 && ent->health < client->ps.stats[ STAT_MAX_HEALTH ] &&
-        ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time )
-      {
-        if( regen > 0 &&
-        ent->health > 0 &&
-        ent->health < client->ps.stats[ STAT_MAX_HEALTH ] )
-      {
-        while( ent->nextRegenTime < level.time )
-        {
-          ent->health += 1;
-          ent->nextRegenTime += 1/regen;
-        } 
-      }
-    if( ent->health > client->ps.stats[ STAT_MAX_HEALTH ] )
-      ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
-      }
+      
+    if( ent->nextRegenTime < level.time && regen > 0 )
+    {
+      ent->health += 1;
+      ent->nextRegenTime = level.time + 1000/regen;
     }
-
+    
+    if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
+    {
+      int i;
+      ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
+      for( i = 0; i < MAX_CLIENTS; i++ )
+        ent->credits[ i ] = 0;
+    }
+  }
+  
   while ( client->time100 >= 100 )
   {
     weapon_t weapon = BG_GetPlayerWeapon( &client->ps );
@@ -690,6 +684,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
       client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
     else if( client->ps.stats[ STAT_STAMINA ] < -MAX_STAMINA )
       client->ps.stats[ STAT_STAMINA ] = -MAX_STAMINA;
+
+    //Regen some stamina
+    if( client->ps.stats[ STAT_STAMINA ] + REGEN_STAMINA_RATE <= MAX_STAMINA )
+      client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
+    else
+      client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
 
     // Update build timer
     if( weapon == WP_ABUILD || weapon == WP_ABUILD2 ||
