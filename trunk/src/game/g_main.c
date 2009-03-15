@@ -194,6 +194,8 @@ vmCvar_t  g_devmapNoStructDmg;
 vmCvar_t  g_voteMinTime;
 vmCvar_t  g_mapvoteMaxTime;
 
+vmCvar_t  g_specmetimeout;
+
 vmCvar_t  g_decolourLogfiles;
 
 vmCvar_t  g_banNotice;
@@ -277,6 +279,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_voteLimit, "g_voteLimit", "5", CVAR_ARCHIVE, 0, qfalse },
   { &g_mapVotesPercent, "g_mapVotesPercent", "50", CVAR_ARCHIVE, 0, qfalse },
   { &g_voteMinTime, "g_voteMinTime", "120", CVAR_ARCHIVE, 0, qfalse },
+  { &g_specmetimeout, "g_specmetimeout", "1", 0, 0, qfalse },
   { &g_mapvoteMaxTime, "g_mapvoteMaxTime", "240", CVAR_ARCHIVE, 0, qfalse },
   { &g_designateVotes, "g_designateVotes", "1", CVAR_ARCHIVE, 0, qfalse },
   { &g_listEntity, "g_listEntity", "0", 0, 0, qfalse },
