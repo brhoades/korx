@@ -1721,7 +1721,7 @@ void FireWeapon2( gentity_t *ent )
       break;
 
     case WP_XAEL:
-      XChargeFire( ent, qtrue );
+      XChargeFire( ent, qfalse );
       break;
 
     case WP_CHAINGUN:
