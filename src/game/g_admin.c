@@ -3574,6 +3574,7 @@ qboolean G_admin_putmespec( gentity_t *ent, int skiparg )
   }
   G_ChangeTeam( ent, TEAM_NONE );
   AP( va("print \"^3!specme: ^7%s^7 decided to join the spectators\n\"", ent->client->pers.netname ) );
+  ent->client->lastspecmeTime = level.time;
   return qtrue;
 }
 

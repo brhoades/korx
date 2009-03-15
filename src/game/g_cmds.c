@@ -621,6 +621,13 @@ void Cmd_Team_f( gentity_t *ent )
       team = TEAM_NONE;
       trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
     }
+   	if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+    {
+      trap_SendServerCommand( ent-g_entities,
+       va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+      return;
+    } 
 
     else if( level.humanTeamLocked && level.alienTeamLocked )
       team = TEAM_NONE;
@@ -660,6 +667,13 @@ void Cmd_Team_f( gentity_t *ent )
           "print \"Alien team has been ^1LOCKED\n\"" );
         return;
       }
+      if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+      {
+        trap_SendServerCommand( ent-g_entities,
+        va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+          ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+        return;
+      } 
       if( level.humanTeamLocked )
         force = qtrue;
 
@@ -695,6 +709,13 @@ void Cmd_Team_f( gentity_t *ent )
           "print \"Human team has been ^1LOCKED\n\"" );
         return;
       }
+      if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
+      {
+        trap_SendServerCommand( ent-g_entities,
+        va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
+          ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+        return;
+      } 
       if( level.alienTeamLocked )
         force = qtrue;
 
