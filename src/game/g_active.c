@@ -637,8 +637,15 @@ void ClientTimerActions( gentity_t *ent, int msec )
     //calculate regen rate
     int regen = REGEN_HEALTH_RATE;
     if( BG_InventoryContainsUpgrade( UP_REGEN, client->ps.stats ) )
+    {
       regen *= 2;
-    else if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
+      //Regen some stamina
+      if( client->ps.stats[ STAT_STAMINA ] + REGEN_STAMINA_RATE <= MAX_STAMINA )
+        client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
+      else
+        client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
+    }
+    if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
       regen *= 2;
       
     if( ent->nextRegenTime < level.time && regen > 0 )
@@ -684,12 +691,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
       client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
     else if( client->ps.stats[ STAT_STAMINA ] < -MAX_STAMINA )
       client->ps.stats[ STAT_STAMINA ] = -MAX_STAMINA;
-
-    //Regen some stamina
-    if( client->ps.stats[ STAT_STAMINA ] + REGEN_STAMINA_RATE <= MAX_STAMINA )
-      client->ps.stats[ STAT_STAMINA ] += REGEN_STAMINA_RATE;
-    else
-      client->ps.stats[ STAT_STAMINA ] = MAX_STAMINA;
 
     // Update build timer
     if( weapon == WP_ABUILD || weapon == WP_ABUILD2 ||
