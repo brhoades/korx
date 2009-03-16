@@ -237,7 +237,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     "Laces the attacks of any alien that touches it with a poison "
       "that will gradually deal damage to any humans exposed to it. "
       "The booster also increases the rate of health regeneration for "
-      "any nearby aliens.",
+      "any nearby aliens. Poisons humans that touch it. ",
     "team_alien_booster",  //char      *entityName;
     { -26, -26, -9 },     //vec3_t     mins;
     { 26, 26, 9 },        //vec3_t     maxs;
@@ -665,7 +665,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     "forcefield",            //char      *buildName;
     "Force Field",            //char      *humanName;
     "A barrier that blocks attacking aliens, but permits humans"
-    " to pass through.",
+    " to pass through. Using the Q key causes the forcefield to lower.",
     "team_human_forcefield", //char      *entityName;
 //     { "models/buildables/ffield/ffield.md3", 0, 0, 0 },
 //     1.0f,                  //float     modelScale;
@@ -3032,7 +3032,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "regen",               //char  *upgradeName;
     "Biokit",               //char  *upgradeHumanName;
     "An implant that helps its user to regenerate health and "
-     "stamina and makes you immune to spreadable infections.",
+     "stamina and makes slightly more immune to spreadable infections.",
     "icons/iconu_regen",
     qtrue,                 //qboolean purchasable
     qfalse,                  //qboolean usable
@@ -3063,7 +3063,8 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "Cloak",         //char  *upgradeHumanName;
     "An invisibility cloak that can be used to sneak up on aliens "
      "without being seen. The cloak lasts for 30 seconds once it "
-     " is activated. You can recharge your cloak by buying ammo.",
+     " is activated. You can recharge your cloak by buying ammo."
+     " The cloak is now more visible to your allies.",
     "icons/iconu_cloak",
     qtrue,                  //qboolean purchasable
     qtrue,                 //qboolean usable
