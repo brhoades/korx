@@ -2158,6 +2158,10 @@ void CG_Player( centity_t *cent )
     {
       legs.customShader = cgs.media.invisShader;
     }
+    else if( es->eFlags & EF_MOVER_STOP && team == ourteam )
+    {
+      legs.customShader = cgs.media.invisShaderTeam;
+    }
   }
   else
   {
@@ -2190,6 +2194,14 @@ void CG_Player( centity_t *cent )
           legs.customShader = cgs.media.invisFadeShader;
         else
           legs.customShader = cgs.media.invisShader;
+      }
+      else if( cent->invis && team == ourteam )
+      {
+        legs.shaderTime = cent->invisTime/1000.0f;
+        if( cg.time - cent->invisTime < 1000  )
+          legs.customShader = cgs.media.invisFadeShader;
+        else
+          legs.customShader = cgs.media.invisShaderTeam;
       }
       else if( team != ourteam )
       {
@@ -2275,6 +2287,10 @@ void CG_Player( centity_t *cent )
     {
       torso.customShader = cgs.media.invisShader;
     }
+    else if( es->eFlags & EF_MOVER_STOP && team == ourteam )
+    {
+      torso.customShader = cgs.media.invisShaderTeam;
+    }
 
     if( !torso.hModel )
       return;
@@ -2302,6 +2318,10 @@ void CG_Player( centity_t *cent )
     if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) && team != ourteam )
     {
       head.customShader = cgs.media.invisShader;
+    }
+    else if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) && team == ourteam )
+    {
+      head.customShader = cgs.media.invisShaderTeam;
     }
 
     if( !head.hModel )

@@ -1,43 +1,56 @@
-
-gfx/invisfade
+gfx/invis/invis
+{
+  {
+    map gfx/invis/light.jpg
+    tcMod rotate 15
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 0.1 0.1 0 0.1
+    blendFunc add
+  }
+  {
+    map gfx/invis/dark.jpg
+    blendFunc gl_zero gl_one_minus_src_color
+    tcMod rotate -10
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 1 1 0.5 0.1
+  }
+}
+gfx/invis/fade
 {
   {
     map models/players/level1/level1upg.jpg
     blendFunc GL_ONE GL_ONE
     rgbgen wave sin 0.0 1.0 0.25 0.5
   }
-        {
-                map gfx/invis.jpg
-                tcMod rotate 15
-                tcmod stretch sin 0.5 0.05 0 0.05
-                rgbGen wave sin 0.1 0.1 0 0.1
-                blendFunc add
-        }
-        {
-                map gfx/invis_b.jpg
-                blendFunc gl_zero gl_one_minus_src_color
-                tcMod rotate -10
-                tcmod stretch sin 0.5 0.05 0 0.05
-                rgbGen wave sin 1 1 0.5 0.1
-        }
+  {
+    map gfx/invis/light.jpg
+    tcMod rotate 15
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 0.1 0.1 0 0.1
+    blendFunc add
+  }
+  {
+    map gfx/invis/dark.jpg
+    blendFunc gl_zero gl_one_minus_src_color
+    tcMod rotate -10
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 1 1 0.5 0.1
+  }
 }
-
-gfx/invis
+gfx/invis/team
 {
-        {
-                map gfx/invis.jpg
-                tcMod rotate 15
-                tcmod stretch sin 0.5 0.05 0 0.05
-                rgbGen wave sin 0.1 0.1 0 0.1
-                blendFunc add
-        }
-        {
-                map gfx/invis_b.jpg
-                blendFunc gl_zero gl_one_minus_src_color
-                tcMod rotate -10
-                tcmod stretch sin 0.5 0.05 0 0.05
-                rgbGen wave sin 1 1 0.5 0.1
-        }
+  {
+    map gfx/invis/team.tga
+    tcMod rotate 90
+    tcmod stretch sin 0.5 0.05 0 0.05
+    blendFunc add
+  }
+  {
+    map gfx/invis/team.tga
+    tcMod rotate -90
+    tcmod stretch sin 0.5 0.05 0 0.05
+    blendFunc add
+  }
 }
 
 models/weapons/xael/flash

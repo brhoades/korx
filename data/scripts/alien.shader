@@ -75,7 +75,7 @@ models/players/level1/level1upg
     //rgbgen wave sin 0.0 1.0 0.0 1.0
   }
   {
-    map gfx/invis.jpg
+    map gfx/invis/light.jpg
     blendFunc GL_ONE GL_ONE
     tcmod scale 2 2
     tcMod scroll 0.2 -0.2

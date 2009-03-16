@@ -312,7 +312,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BARRICADE_SHRINKTIMEOUT     500
 #define BARRICADE_VALUE             ABVM(0)
 
-#define BOOSTER_BP                  12
+#define BOOSTER_BP                  14
 #define BOOSTER_BT                  15000
 #define BOOSTER_HEALTH              ABHM(150)
 #define BOOSTER_REGEN               8
@@ -324,7 +324,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BOOST_TIME                  30000
 #define BOOST_WARN_TIME             25000
 
-#define ACIDTUBE_BP                 8
+#define ACIDTUBE_BP                 6
 #define ACIDTUBE_BT                 15000
 #define ACIDTUBE_HEALTH             ABHM(125)
 #define ACIDTUBE_REGEN              10
