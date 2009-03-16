@@ -7,7 +7,7 @@
     "We can also be reached on Freenode IRC:\n"
     "#knightsofreason"
   }
-  "Aids / Infection and Biokits"
+  "Infection and Biokits"
   {
     "The Aids system, as it is called, has been changed in KoRx. Bites from "
     "Advanced Dretches cause unprotected Humans to become infected. This "
@@ -46,9 +46,9 @@
   }
   "Human Buildables"
   {
-    "The Defense Computer will automatically repair Human buildables. \n
-    "Tesla Generators can fire over turrets as well. \n"
-    "ForceFields can be lowered by using the Q button. \n"
+    "The Defense Computer will automatically repair Human buildables. 
+    "Tesla Generators can fire over turrets as well. "
+    "ForceFields can be lowered by using the Q button. "
   }
   "Human Weapons"
   {
