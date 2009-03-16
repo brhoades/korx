@@ -2044,6 +2044,7 @@ void CG_Player( centity_t *cent )
   vec3_t        surfNormal = { 0.0f, 0.0f, 1.0f };
   int           team;
   int           ourteam = cg.snap->ps.stats[ STAT_TEAM ];
+  qboolean      self;
 
   // the client number is stored in clientNum.  It can't be derived
   // from the entity number, because a single client may have
@@ -2073,6 +2074,7 @@ void CG_Player( centity_t *cent )
       renderfx = RF_THIRD_PERSON;     // only draw in mirrors
     else if( cg_cameraMode.integer )
       return;
+    self = qtrue;
   }
 
   if( cg_drawBBOX.integer )
@@ -2154,7 +2156,7 @@ void CG_Player( centity_t *cent )
     else
       legs.customSkin = ci->legsSkin;
     //invis
-    if( es->eFlags & EF_MOVER_STOP && team != ourteam )
+    if( es->eFlags & EF_MOVER_STOP && ( team != ourteam || self ) )
     {
       legs.customShader = cgs.media.invisShader;
     }
@@ -2187,7 +2189,7 @@ void CG_Player( centity_t *cent )
         }
       }
 
-      if( cent->invis && team != ourteam )
+      if( cent->invis && ( team != ourteam || self ) )
       {
         legs.shaderTime = cent->invisTime/1000.0f;
         if( cg.time - cent->invisTime < 1000  )
@@ -2283,7 +2285,7 @@ void CG_Player( centity_t *cent )
       torso.customSkin = ci->torsoSkin;
 
     //invis
-    if( es->eFlags & EF_MOVER_STOP && team != ourteam )
+    if( es->eFlags & EF_MOVER_STOP && ( team != ourteam || self ) )
     {
       torso.customShader = cgs.media.invisShader;
     }
@@ -2315,7 +2317,7 @@ void CG_Player( centity_t *cent )
       head.customSkin = ci->headSkin;
 
     //invis
-    if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) && team != ourteam )
+    if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) && ( team != ourteam || self ) )
     {
       head.customShader = cgs.media.invisShader;
     }

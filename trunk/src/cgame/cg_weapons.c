@@ -1087,7 +1087,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
     CG_PositionEntityOnTag( &gun, parent, parent->hModel, "tag_weapon" );
 
     //lazy cloak avoidance for humans
-    if( cent->currentState.eFlags & EF_MOVER_STOP && cg.snap->ps.stats[ STAT_TEAM ] != TEAM_HUMANS )
+    if( cent->currentState.eFlags & EF_MOVER_STOP && ( cg.snap->ps.stats[ STAT_TEAM ] != TEAM_HUMANS || cent->currentState.number == cg.snap->ps.clientNum ) )
       gun.customShader = cgs.media.invisShader;
     // lazy teamcloak non-avoidance for humans
     else if( cent->currentState.eFlags & EF_MOVER_STOP && cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
@@ -1121,9 +1121,9 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 
       CG_PositionRotatedEntityOnTag( &barrel, &gun, gun.hModel, "tag_barrel" );
 
-      if( cent->currentState.eFlags & EF_MOVER_STOP&& cg.snap->ps.stats[ STAT_TEAM ] != TEAM_HUMANS)
+      if( cent->currentState.eFlags & EF_MOVER_STOP && ( cg.snap->ps.stats[ STAT_TEAM ] != TEAM_HUMANS || cent->currentState.number == cg.snap->ps.clientNum ) )
         barrel.customShader = cgs.media.invisShader;
-      else if( cent->currentState.eFlags & EF_MOVER_STOP&& cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS)
+      else if( cent->currentState.eFlags & EF_MOVER_STOP && cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
         barrel.customShader = cgs.media.invisShaderTeamH;
 
       trap_R_AddRefEntityToScene( &barrel );
