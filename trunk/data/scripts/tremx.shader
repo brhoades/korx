@@ -37,16 +37,61 @@ gfx/invis/fade
     rgbGen wave sin 1 1 0.5 0.1
   }
 }
-gfx/invis/team
+
+gfx/invis/ateam
 {
   {
-    map gfx/invis/team.tga
+    map gfx/invis/light.jpg
+    tcMod rotate 15
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 0.1 0.1 0 0.1
+    blendFunc add
+  }
+  {
+    map gfx/invis/dark.jpg
+    blendFunc gl_zero gl_one_minus_src_color
+    tcMod rotate -10
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 1 1 0.5 0.1
+  }
+  {
+    map gfx/invis/ateam.tga
     tcMod rotate 90
     tcmod stretch sin 0.5 0.05 0 0.05
     blendFunc add
   }
   {
-    map gfx/invis/team.tga
+    map gfx/invis/ateam.tga
+    tcMod rotate -90
+    tcmod stretch sin 0.5 0.05 0 0.05
+    blendFunc add
+  }
+}
+
+gfx/invis/hteam
+{
+  {
+    map gfx/invis/light.jpg
+    tcMod rotate 15
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 0.1 0.1 0 0.1
+    blendFunc add
+  }
+  {
+    map gfx/invis/dark.jpg
+    blendFunc gl_zero gl_one_minus_src_color
+    tcMod rotate -10
+    tcmod stretch sin 0.5 0.05 0 0.05
+    rgbGen wave sin 1 1 0.5 0.1
+  }
+  {
+    map gfx/invis/hteam.tga
+    tcMod rotate 90
+    tcmod stretch sin 0.5 0.05 0 0.05
+    blendFunc add
+  }
+  {
+    map gfx/invis/hteam.tga
     tcMod rotate -90
     tcmod stretch sin 0.5 0.05 0 0.05
     blendFunc add
