@@ -7,6 +7,18 @@
     "We can also be reached on Freenode IRC:\n"
     "#knightsofreason"
   }
+  "Aids / Infection and Biokits"
+  {
+    "The Aids system, as it is called, has been changed in KoRx. Bites from "
+    "Advanced Dretches cause unprotected Humans to become infected. This "
+    "infection causes Humans to take damage every few seconds. The damage "
+    "is multiplied when someone who is infected is poisoned, and comes into "
+    "contact with someone else is infected, the poison spreads too. The biokit "
+    "no longer instantly heals infections, it increases resistance by 75 percent. "
+    "The Helmet increases the resistance by an additional 13 percent, and the "
+    "Battle Suit by 20 percent."
+  
+  }
   "Alien Healing"
   {
     "Alien healing has changed in KoRx. Aliens now heal smoothly instead "
@@ -34,10 +46,9 @@
   }
   "Human Buildables"
   {
-    "Build Tesla Generators at Stage 3. Tesla Generators no longer "
-    "require the Defense Computer to function. Instead, the Defense Computer "
-    "will automatically repair Human buildables. Tesla Generators can fire "
-    "over turrets."
+    "The Defense Computer will automatically repair Human buildables. \n
+    "Tesla Generators can fire over turrets as well. \n"
+    "ForceFields can be lowered by using the Q button. \n"
   }
   "Human Weapons"
   {
@@ -86,8 +97,7 @@
   "Dretch"
   {
     "The dretch bounding box and model have both slightly changed to line up "
-    "more closely.\n Dretches can now damage any human structure while it "
-    "is still building. "
+    "more closely.\n"
   }
   "Squad Marking"
   {
@@ -138,7 +148,6 @@
     "  Lakitu7\n"
     "  kevlarman\n"
     "  Czar\n"
-    "  Spidey\n"
     "  TremFusion Developers\n"
     "  MGDev Developers\n"
     "  f0rqu3(original tremx developer)\n"
