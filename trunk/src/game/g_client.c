@@ -91,7 +91,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
   if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
   {
-    max = ALIEN_MAX_FRAGS;
+    max = ALIEN_MAX_CREDITS;
     strcpy( type, "frag(s)" );
   }
   else if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
@@ -101,8 +101,8 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   }
 
   //This doesn't work so well in ESD or with /give all
-  if( cap && client->ps.persistant[ PERS_CREDIT ] + credit > max 
-      && !g_extremeSuddenDeath.value && !g_cheats.value 
+  if( client->ps.persistant[ PERS_CREDIT ] + credit > max 
+      && !g_extremeSuddenDeath.value && !g_cheats.value
       && g_allowShare.value )
   {
     overflow = client->ps.persistant[ PERS_CREDIT ] + credit - max;
@@ -117,7 +117,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         continue;
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
         continue;
-      if( cl->ps.pm_type == PM_DEAD )
+      if( cl->ps.pm_type == PM_SPECTATOR )
         continue;
 
       overflowed++;
@@ -149,8 +149,6 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( cl->pers.teamSelection != client->pers.teamSelection )
         continue;
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
-        continue;
-      if( cl->ps.pm_type == PM_DEAD )
         continue;
 
       if( cl->ps.persistant[ PERS_CREDIT ] + overflow > max )
