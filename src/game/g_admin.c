@@ -69,6 +69,16 @@ g_admin_cmd_t g_admin_cmds[ ] =
       ""
     },
 
+    {"maplog", G_admin_maplog, "a",
+      "show a list of recently played maps",
+      "",
+    },
+
+    {"rotation", G_admin_listrotation, "a",
+       "display a list of maps that are in the active map rotation",
+       ""
+    },
+
     {"listadmins", G_admin_listadmins, "A",
       "display a list of all server admins and their levels",
       "(^5name|start admin#^7) (^5minimum level to display^7)"
@@ -145,7 +155,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
       " a team",
       "(^5starting log index^7)(^5a|h^7)",
     },
-
+    
     {"revert", G_admin_revert, "E",
       "revert one or more buildlog events, optionally of only one team",
       "(^5number^7)(^5a|h^7)"
