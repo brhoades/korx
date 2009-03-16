@@ -46,7 +46,7 @@
   }
   "Human Buildables"
   {
-    "The Defense Computer will automatically repair Human buildables. 
+    "The Defense Computer will automatically repair Human buildables. "
     "Tesla Generators can fire over turrets as well. "
     "ForceFields can be lowered by using the Q button. "
   }

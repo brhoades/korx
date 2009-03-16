@@ -1211,6 +1211,7 @@ typedef struct
   //invisibility shader
   qhandle_t   invisShader;
   qhandle_t   invisFadeShader;
+  qhandle_t   invisShaderTeam;
 
   // buildable shaders
   qhandle_t   greenBuildShader;

@@ -1089,6 +1089,9 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
     //lazy cloak avoidance for humans
     if( cent->currentState.eFlags & EF_MOVER_STOP && cg.snap->ps.stats[ STAT_TEAM ] != TEAM_HUMANS )
       gun.customShader = cgs.media.invisShader;
+    // lazy teamcloak non-avoidance for humans
+    else if( cent->currentState.eFlags & EF_MOVER_STOP && cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+      gun.customShader = cgs.media.invisShaderTeam;
 
     CG_WeaponAnimation( cent, &gun.oldframe, &gun.frame, &gun.backlerp );
 
@@ -1118,8 +1121,10 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 
       CG_PositionRotatedEntityOnTag( &barrel, &gun, gun.hModel, "tag_barrel" );
 
-      if( cent->currentState.eFlags & EF_MOVER_STOP )
+      if( cent->currentState.eFlags & EF_MOVER_STOP&& cg.snap->ps.stats[ STAT_TEAM ] != TEAM_HUMANS)
         barrel.customShader = cgs.media.invisShader;
+      else if( cent->currentState.eFlags & EF_MOVER_STOP&& cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS)
+        barrel.customShader = cgs.media.invisShaderTeam;
 
       trap_R_AddRefEntityToScene( &barrel );
     }
