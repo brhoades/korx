@@ -5,10 +5,10 @@ ui/assets/tremxbg
   }
 }
 
-ui/assets/builder
+ui/assets/dretch
 {
   {
-    map ui/assets/builder.jpg
+    map ui/assets/level0.jpg
     //blendFunc add
     //rgbGen lightingDiffuse
   }
