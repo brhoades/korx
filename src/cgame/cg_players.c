@@ -2044,7 +2044,7 @@ void CG_Player( centity_t *cent )
   vec3_t        surfNormal = { 0.0f, 0.0f, 1.0f };
   int           team;
   int           ourteam = cg.snap->ps.stats[ STAT_TEAM ];
-  qboolean      self;
+  qboolean      self = qfalse;
 
   // the client number is stored in clientNum.  It can't be derived
   // from the entity number, because a single client may have
