@@ -2997,7 +2997,7 @@ void Cmd_Sell_f( gentity_t *ent )
 
       //add to funds --- Causes issues with overflow and 2000 credits, doing it manually
       //G_AddCreditToClient( ent->client, (short)BG_Weapon( weapon )->price, qfalse );
-      ent->client->ps.persistant[ PERS_CREDIT ] += BG_FindPriceForUpgrade( upgrade );
+      ent->client->ps.persistant[ PERS_CREDIT ] += (short)BG_Weapon( weapon )->price;
     }
 
     //if we have this weapon selected, force a new selection
