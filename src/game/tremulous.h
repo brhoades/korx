@@ -549,7 +549,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_CHARGE_TIME_WARN    2000
 #define LCANNON_CHARGE_AMMO         10       // ammo cost of a full charge shot
 
-#define XAEL_PRICE               100
+#define XAEL_PRICE               1000
 #define XAEL_AMMO                120
 #define XAEL_REPEAT              500
 #define XAEL_K_SCALE             1.0f
