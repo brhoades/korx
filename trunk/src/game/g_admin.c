@@ -62,11 +62,10 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "display commands available to you or help on a specific command",
       "(^5command^7)"
     },
-
-    {"register", G_admin_register, "a",
-      "Registers your name to protect it from being used by others or updates your"      
-      " admin name to your current name.",
-      ""
+    
+    {"listmaps", G_admin_listmaps, "a",
+      "display a list of available maps on the server",
+      "(^5map name^7)"
     },
 
     {"maplog", G_admin_maplog, "a",
@@ -78,6 +77,12 @@ g_admin_cmd_t g_admin_cmds[ ] =
        "display a list of maps that are in the active map rotation",
        ""
     },
+    
+    {"register", G_admin_register, "a",
+      "Registers your name to protect it from being used by others or updates your"      
+      " admin name to your current name.",
+      ""
+    },    
 
     {"listadmins", G_admin_listadmins, "A",
       "display a list of all server admins and their levels",
@@ -295,7 +300,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "[^3#^7]"
     },
   
-    {"allowoverride", G_admin_override, "O",
+    /*{"allowoverride", G_admin_override, "O",
       "override checks for various things",
       "(^5name|slot^7)"
     },
@@ -303,7 +308,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
     {"denyoverride", G_admin_override, "O",
       "deny override",
       "(^5name|slot^7)"
-    },
+    }, */
 
     {"forcespec", G_admin_forcespec, "p",
       "disable joining of teams for a player",
@@ -5625,7 +5630,8 @@ qboolean G_admin_subnetban( gentity_t *ent, int skiparg )
 
 
 qboolean G_admin_override( gentity_t *ent, int skiparg )
-{ //this is all very similar to denybuild, 
+{ 
+  //this is all very similar to denybuild, 
   //it performs an essentially identical function
   int i, j = 0, pids[ MAX_CLIENTS + 1 ], found;
   char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
@@ -5671,8 +5677,9 @@ qboolean G_admin_override( gentity_t *ent, int skiparg )
   for( i = 0; pids[ i ] >= 0; i++ )
   {
     vic = &g_entities[ pids[ i ] ];
-    if ( !vic || !vic->client || (!vic->client->pers.connected && (vic->client->pers.connected != CON_CONNECTED ||
-        vic->client->pers.connected != CON_CONNECTING))) continue;
+    if ( !vic || !vic->client || ( !vic->client->pers.connected && ( vic->client->pers.connected != CON_CONNECTED ||
+        vic->client->pers.connected != CON_CONNECTING ) ) ) 
+        continue;
     if( !admin_higher( ent, vic ) )
     {
       if( targeted )
