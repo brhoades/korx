@@ -3032,7 +3032,7 @@ static void PM_Weapon( void )
   {
     // Charging up
     if( !pm->ps->weaponTime && pm->ps->weaponstate != WEAPON_NEEDS_RESET &&
-        ( pm->cmd.buttons & BUTTON_ATTACK ) )
+        ( pm->cmd.buttons & BUTTON_ATTACK2 ) )
     {
       pm->ps->stats[ STAT_MISC ] += pml.msec;
       if( pm->ps->stats[ STAT_MISC ] >= XAEL_CHARGE_TIME_MAX )
@@ -3200,7 +3200,6 @@ static void PM_Weapon( void )
       break;
 
     case WP_LUCIFER_CANNON:
-    case WP_XAEL:
       attack3 = qfalse;
 
       // Prevent firing of the Lucifer Cannon after an overcharge
@@ -3245,6 +3244,59 @@ static void PM_Weapon( void )
         return;
       }
       else if( !attack2 )
+      {
+        // Idle
+        pm->ps->weaponTime = 0;
+        pm->ps->weaponstate = WEAPON_READY;
+        return;
+      }
+      break;
+
+    case WP_XAEL:
+      attack3 = qfalse;
+
+      // Prevent firing of the Xael after an overcharge
+      if( pm->ps->weaponstate == WEAPON_NEEDS_RESET )
+      {
+        if( attack1 )
+          return;
+        pm->ps->weaponstate = WEAPON_READY;
+      }
+
+      // Can't fire secondary while primary is charging
+      if( attack2 || pm->ps->stats[ STAT_MISC ] > 0 )
+        attack1 = qfalse;
+
+      if( ( attack2 || pm->ps->stats[ STAT_MISC ] == 0 ) && !attack1 )
+      {
+        pm->ps->weaponTime = 0;
+
+        // Charging
+        if( pm->ps->stats[ STAT_MISC ] < LCANNON_CHARGE_TIME_MAX )
+        {
+          pm->ps->weaponstate = WEAPON_READY;
+          return;
+        }
+
+        // Overcharge
+        pm->ps->weaponstate = WEAPON_NEEDS_RESET;
+      }
+
+      if( pm->ps->stats[ STAT_MISC ] > LCANNON_CHARGE_TIME_MIN )
+      {
+        // Fire primary attack
+        attack1 = qfalse;
+        attack2 = qtrue;
+      }
+      else if( pm->ps->stats[ STAT_MISC ] > 0 )
+      {
+        // Not enough charge
+        pm->ps->stats[ STAT_MISC ] = 0;
+        pm->ps->weaponTime = 0;
+        pm->ps->weaponstate = WEAPON_READY;
+        return;
+      }
+      else if( !attack1 )
       {
         // Idle
         pm->ps->weaponTime = 0;
@@ -3422,7 +3474,7 @@ static void PM_Weapon( void )
       pm->ps->ammo -= ( pm->ps->stats[ STAT_MISC ] * LCANNON_CHARGE_AMMO +
                 LCANNON_CHARGE_TIME_MAX - 1 ) / LCANNON_CHARGE_TIME_MAX;
     }// Special case for xael
-    else if( pm->ps->weapon == WP_XAEL && attack1 && !attack2 )
+    else if( pm->ps->weapon == WP_XAEL && !attack1 && attack2 )
     {
       pm->ps->ammo -= ( pm->ps->stats[ STAT_MISC ] * XAEL_CHARGE_AMMO +
                 XAEL_CHARGE_TIME_MAX - 1 ) / XAEL_CHARGE_TIME_MAX;

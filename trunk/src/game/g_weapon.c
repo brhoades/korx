@@ -1816,7 +1816,7 @@ void FireWeapon( gentity_t *ent )
       LCChargeFire( ent, qfalse );
       break;
     case WP_XAEL:
-      XChargeFire( ent, qfalse );
+      XChargeFire( ent, qtrue );
       break;
     case WP_LAS_GUN:
       lasGunFire( ent );
