@@ -550,7 +550,6 @@ static void PM_CheckCharge( void )
   if( pm->ps->stats[ STAT_MISC ] > 0 )
     pm->ps->pm_flags |= PMF_CHARGE;
   else
-
     pm->ps->pm_flags &= ~PMF_CHARGE;
 
 }
