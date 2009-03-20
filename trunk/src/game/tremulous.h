@@ -94,13 +94,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_WALLJUMP_REPEAT      400      // msec before new jump
 #define LEVEL2_WALLJUMP_RANGE       8.0      // how far away the wall can be
 
-#define LEVEL2_BOUNCEBALL_DMG       ADM(40)
-#define LEVEL2_BOUNCEBALL_REPEAT    600
-#define LEVEL2_BOUNCEBALL_SPEED     3000.0f
+#define LEVEL2_BOUNCEBALL_DMG       ADM(20)
+#define LEVEL2_BOUNCEBALL_REPEAT    300
+#define LEVEL2_BOUNCEBALL_SPEED     3300.0f
 #define LEVEL2_BOUNCEBALL_RADIUS    0
 #define LEVEL2_BOUNCEBALL_SPLASH_DMG 0
 #define LEVEL2_BOUNCEBALL_TIME      4000
-#define LEVEL2_BOUNCEBALL_REGEN     3300
+#define LEVEL2_BOUNCEBALL_REGEN     1650
 
 #define LEVEL3_CLAW_DMG             ADM(80)
 #define LEVEL3_CLAW_RANGE           96.0f
