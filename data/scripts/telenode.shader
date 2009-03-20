@@ -26,22 +26,50 @@ models/buildables/telenode/energy
 		tcMod rotate 10
 	}
 }
-
 models/buildables/telenode/rep_cyl
 {
-	cull disable
-	{
-		map models/buildables/telenode/rep_cyl.jpg
-		blendfunc add
-		rgbGen lightingDiffuse
-		tcMod scroll 0.2 0
-	}
-	{
-		map models/buildables/telenode/lines2.tga
-		blendfunc add
-		rgbGen identity
-		tcMod scroll 0 0.2
-	}
+  cull disable
+  {
+    map models/buildables/telenode/telenode_sine.tga
+    tcmod scroll 2 0
+    blendfunc add
+    rgbgen wave triangle 0 0.25 0 0.25
+  }
+  {
+    map models/buildables/telenode/telenode_sine.tga
+    tcmod scroll 1 0
+    blendfunc add
+    rgbgen wave triangle 0 0.5 0 0.25
+  } 
+  {
+    map models/buildables/telenode/telenode_sine.tga
+    tcmod scroll 0.5 0
+    blendfunc add
+    rgbgen wave triangle 0 1 0 0.25
+  } 
+  {
+    map models/buildables/telenode/telenode_sine.tga
+    tcmod scroll -2 0
+    blendfunc add
+    rgbgen wave triangle 0 0.25 0.5 0.25
+  }
+  {
+    map models/buildables/telenode/telenode_sine.tga
+    tcmod scroll -1 0
+    blendfunc add
+    rgbgen wave triangle 0 0.5 0.5 0.25
+  } 
+  {
+    map models/buildables/telenode/telenode_sine.tga
+    tcmod scroll -0.5 0
+    blendfunc add
+    rgbgen wave triangle 0 1 0.5 0.25
+  }
+  {
+    map models/buildables/telenode/telenode_base_glow.tga
+    blendfunc add
+    rgbgen wave sin 0.65 0.25 0 0.5
+  }
 }
 
 models/buildables/telenode/telenode_parts
