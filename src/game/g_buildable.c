@@ -2268,12 +2268,12 @@ qboolean HMGTurret_TrackEnemy( gentity_t *self )
   float   temp, rotAngle, angularSpeed;
 
   if ( self->lev1Grabbed )
-  {
     angularSpeed = MGTURRET_ANGULARSPEED_GRAB;
-  }
-  else
+  else if( G_FindDCC( self ) )
     angularSpeed = MGTURRET_ANGULARSPEED_DCC;
-
+  else
+    angularSpeed = MGTURRET_ANGULARSPEED;
+    
   VectorSubtract( self->enemy->s.pos.trBase, self->s.pos.trBase, dirToTarget );
   VectorNormalize( dirToTarget );
 
