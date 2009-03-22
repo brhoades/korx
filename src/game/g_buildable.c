@@ -1107,6 +1107,10 @@ void AAcidTube_Think( gentity_t *self )
 
       if( !G_Visible( self, enemy, CONTENTS_SOLID ) )
         continue;
+        
+      //Do they have notarget on?
+      if( enemy->flags & FL_NOTARGET )
+        continue;
 
       if( enemy->client && enemy->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
           !enemy->client->pers.paused )
@@ -1148,6 +1152,10 @@ static qboolean AHive_CheckTarget( gentity_t *self, gentity_t *enemy )
   if( enemy->health <= 0 || !enemy->client ||
       enemy->client->ps.stats[ STAT_TEAM ] != TEAM_HUMANS ||
       enemy->client->pers.paused )
+    return qfalse;
+
+  //Do they have notarget on?
+  if( enemy->flags & FL_NOTARGET )
     return qfalse;
 
   // Check if the tip of the hive can see the target
@@ -1505,6 +1513,10 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
 
   if( !client )
     return;
+    
+  //Do they have notarget on? Notarget cancels benefical effects?
+  //if( enemy->flags & FL_NOTARGET )
+  //  return;
 
   if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS && 
       client->poisonImmunityTime < level.time )
@@ -1609,6 +1621,8 @@ qboolean ATrapper_CheckTarget( gentity_t *self, gentity_t *target, int range )
   if( target->health <= 0 ) // is the target still alive?
     return qfalse;
   if( target->client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ) // locked?
+    return qfalse;
+  if( target->flags & FL_NOTARGET ) //Do they have notarget on?
     return qfalse;
 
   VectorSubtract( target->r.currentOrigin, self->r.currentOrigin, distance );
@@ -1997,7 +2011,11 @@ void HMedistat_Think( gentity_t *self )
               player->client->ps.pm_type != PM_DEAD )
           {
             self->enemy = player;
-
+            
+            //Do they have notarget on? Notarget cancels benefecial effects?
+            //if( enemy->flags & FL_NOTARGET )
+            //  return qfalse;
+            
             //start the heal anim
             if( !self->active )
             {
@@ -2240,6 +2258,10 @@ qboolean HMGTurret_CheckTarget( gentity_t *self, gentity_t *target,
       ( target->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) ||
       target->client->pers.paused )
     return qfalse;
+
+  //Do they have notarget on?
+  if( target->flags & FL_NOTARGET )
+    return qfalse;
     
   if( !los_check )
     return qtrue;
@@ -2480,6 +2502,10 @@ void HTeslaGen_Think( gentity_t *self )
     for( i = 0; i < num; i++ )
     {
       self->enemy = &g_entities[ entityList[ i ] ];
+      //Do they have notarget on?
+      if( self->enemy->flags & FL_NOTARGET )
+        continue;
+        
       if( self->enemy->client && self->enemy->health > 0 &&
           self->enemy->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS &&
           !self->enemy->client->pers.paused &&
