@@ -445,6 +445,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_PRICE                 0
 #define RIFLE_SPREAD                200
 #define RIFLE_DMG                   HDM(5)
+#define RIFLE_RECOIL_MIN_Y          0.25
+#define RIFLE_RECOIL_MAX_Y          1.2
+#define RIFLE_RECOIL_MAX_X          0.3
+#define RIFLE_RECOIL_SOFTEN         0.75
 
 #define PAINSAW_PRICE               100
 #define PAINSAW_REPEAT              75
@@ -471,6 +475,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_SPREAD              900
 #define SHOTGUN_DMG                 HDM(7)
 #define SHOTGUN_RANGE               (8192 * 12)
+#define SHOTGUN_PRI_RECOIL_MIN_Y    4
+#define SHOTGUN_PRI_RECOIL_MAX_Y    10
+#define SHOTGUN_PRI_RECOIL_MAX_X    7
+#define SHOTGUN_PRI_RECOIL_SOFTEN   0.65
+#define SHOTGUN_SEC_RECOIL_MIN_Y    8
+#define SHOTGUN_SEC_RECOIL_MAX_Y    20
+#define SHOTGUN_SEC_RECOIL_MAX_X    7
+#define SHOTGUN_SEC_RECOIL_SOFTEN   0.4
+
 
 #define SHOTGUN_NADE_REPEAT         1000
 #define SHOTGUN_NADE_DAMAGE         HDM(40)
@@ -494,6 +507,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_RELOAD              2000
 #define MDRIVER_MAX_HITS            16
 #define MDRIVER_WIDTH               5
+#define MDRIVER_RECOIL_MIN_Y        20.0
+#define MDRIVER_RECOIL_MAX_Y        40.0
+#define MDRIVER_RECOIL_MAX_X        20.0
+#define MDRIVER_RECOIL_SOFTEN       0.5
 
 #define CHAINGUN_PRICE              400
 #define CHAINGUN_BULLETS            300
@@ -501,6 +518,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             1000
 #define CHAINGUN_DMG                HDM(6)
+#define CHAINGUN_PRI_RECOIL_MIN_Y   0.15
+#define CHAINGUN_PRI_RECOIL_MAX_Y   1.5
+#define CHAINGUN_PRI_RECOIL_MAX_X   2
+#define CHAINGUN_PRI_RECOIL_SOFTEN  0.5
+#define CHAINGUN_SEC_RECOIL_MIN_Y   0.25
+#define CHAINGUN_SEC_RECOIL_MAX_Y   1.6
+#define CHAINGUN_SEC_RECOIL_MAX_X   3
+#define CHAINGUN_SEC_RECOIL_SOFTEN  0.55
 
 #define CHAINGUN_REPEAT_2           60
 #define CHAINGUN_SPREAD_2           600
@@ -548,27 +573,43 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_CHARGE_TIME_MIN     100
 #define LCANNON_CHARGE_TIME_WARN    2000
 #define LCANNON_CHARGE_AMMO         10       // ammo cost of a full charge shot
+#define LCANNON_PRI_RECOIL_MIN_Y    10
+#define LCANNON_PRI_RECOIL_MAX_Y    25
+#define LCANNON_PRI_RECOIL_MAX_X    20
+#define LCANNON_PRI_RECOIL_SOFTEN   0.35
+#define LCANNON_SEC_RECOIL_MIN_Y    5
+#define LCANNON_SEC_RECOIL_MAX_Y    10
+#define LCANNON_SEC_RECOIL_MAX_X    10
+#define LCANNON_SEC_RECOIL_SOFTEN   0.25
 
-#define XAEL_PRICE               1000
-#define XAEL_AMMO                120
-#define XAEL_REPEAT              500
-#define XAEL_K_SCALE             1.0f
-#define XAEL_CHARGEREPEAT        1000
-#define XAEL_RELOAD              2000
-#define XAEL_DAMAGE              HDM(330)
-#define XAEL_RADIUS              175
-#define XAEL_SIZE                5        // missile bounding box radius
-#define XAEL_SECONDARY_DAMAGE    HDM(15)
-#define XAEL_SECONDARY_RADIUS    50
-#define XAEL_SECONDARY_SPEED     1000
-#define XAEL_SPEED               350
-#define XAEL_CHARGE_TIME         2000
-#define XAEL_TOTAL_CHARGE        255
-#define XAEL_MIN_CHARGE          50
-#define XAEL_CHARGE_TIME_MAX     3000
-#define XAEL_CHARGE_TIME_MIN     50
-#define XAEL_CHARGE_TIME_WARN    2000
-#define XAEL_CHARGE_AMMO         10
+#define XAEL_PRICE                  1000
+#define XAEL_AMMO                   120
+#define XAEL_REPEAT                 500
+#define XAEL_K_SCALE                1.0f
+#define XAEL_CHARGEREPEAT           1000
+#define XAEL_RELOAD                 2000
+#define XAEL_DAMAGE                 HDM(330)
+#define XAEL_RADIUS                 175
+#define XAEL_SIZE                   5        // missile bounding box radius
+#define XAEL_SECONDARY_DAMAGE       HDM(15)
+#define XAEL_SECONDARY_RADIUS       50
+#define XAEL_SECONDARY_SPEED        1000
+#define XAEL_SPEED                  350
+#define XAEL_CHARGE_TIME            2000
+#define XAEL_TOTAL_CHARGE           255
+#define XAEL_MIN_CHARGE             50
+#define XAEL_CHARGE_TIME_MAX        3000
+#define XAEL_CHARGE_TIME_MIN        50
+#define XAEL_CHARGE_TIME_WARN       2000
+#define XAEL_CHARGE_AMMO            10
+#define XAEL_PRI_RECOIL_MIN_Y       20
+#define XAEL_PRI_RECOIL_MAX_Y       50
+#define XAEL_PRI_RECOIL_MAX_X       30
+#define XAEL_PRI_RECOIL_SOFTEN      0.35
+#define XAEL_SEC_RECOIL_MIN_Y	    10
+#define XAEL_SEC_RECOIL_MAX_Y       20
+#define XAEL_SEC_RECOIL_MAX_X       10
+#define XAEL_SEC_RECOIL_SOFTEN      0.25
 
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               1000
