@@ -3493,22 +3493,6 @@ static void PM_Weapon( void )
 
   }
 
-  //FIXME: predicted angles miss a problem??
-  if( pm->ps->weapon == WP_CHAINGUN )
-  {
-    if( pm->ps->pm_flags & PMF_DUCKED ||
-        BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
-    {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 0.5 ) - 0.125 ) * ( 30 / (float)addTime ) );
-      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 0.5 ) - 0.25 ) * ( 30.0 / (float)addTime ) );
-    }
-    else
-    {
-      pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( ( ( random() * 8 ) - 2 ) * ( 30.0 / (float)addTime ) );
-      pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( ( ( random() * 8 ) - 4 ) * ( 30.0 / (float)addTime ) );
-    }
-  }
-
   pm->ps->weaponTime += addTime;
 }
 
