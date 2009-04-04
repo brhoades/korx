@@ -1,5 +1,6 @@
 gfx/invis/invis
 {
+  deformvertexes bulge 7 7 8
   {
     map gfx/invis/light.jpg
     tcMod rotate 15
@@ -17,6 +18,7 @@ gfx/invis/invis
 }
 gfx/invis/fade
 {
+  deformvertexes bulge 3 3 8
   {
     map models/players/level1/level1upg.jpg
     blendFunc GL_ONE GL_ONE
