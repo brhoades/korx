@@ -1,0 +1,83 @@
+driver damage has been changed from 38 to 45
+surge damage modifier has been changed from 1.1 to 1.2
+surge time modifier has been changed from 0.8 to 0.75
+	non-surge rate of fire = 1 shots/sec
+	original surge rate of fire was 1.25 shots/sec
+	new surge rate of fire is 1.33 shots/sec
+damage w/ surge has been increased from 41.8 to 54
+ammo has been reduced from 5 to 4 (from 7 to 6 with battpack)
+significant recoil has been added
+	20-40 degrees up standing per shot
+	10-20 degrees up crouching/bsuit per shot
+	20 degrees left or right standing per shot
+	10 degrees left or right crouching/bsuit per shot
+price has been increased from 350 to 500
+
+original number of hits to kill without surge
+
+class		hp	hits	total damage
+
+granger		50	2	76
+adv granger	75	2	76
+dretch		25	1	38
+adv dretch	50	2	76
+basi		75	2	76
+adv basi	100	3	114
+mara		150	4	152
+adv mara	175	5	190
+dragoon		200	6	228
+adv dragoon	250	7	266
+tyrant		400	11	418
+adv tyrant	600	16	608
+
+original number of hits to kill with surge
+
+class		hp	hits	total damage	change from w/o surge
+
+granger         50      2	84		0
+adv granger     75      2       84		0
+dretch          25      1       42		0
+adv dretch      50      2       84		0
+basi            75      2       84		0
+adv basi        100     3       126		0
+mara            150     4       168		0
+adv mara        175     5       210		0
+dragoon         200     5       210		-1
+adv dragoon     250     6       252		-1
+tyrant          400     10      240		-1
+adv tyrant      600     15      608		-1
+
+new number of hits to kill without surge
+
+class           hp      hits    total damage	diff. from orig.	diff. from orig. w/ surge
+
+granger         50      2       90		0			0
+adv granger     75      2       90		0			0
+dretch          25      1       45		0			0
+adv dretch      50      2       90		0			0
+basi            75      2       90		0			0
+adv basi        100     3       135		0			0
+mara            150     4       180		0			0
+adv mara        175     4       180		-1			-1
+dragoon         200     5       225		-1			0
+adv dragoon     250     6       270		-1			0
+tyrant          400     9	405		-2			-1
+adv tyrant      600     14      630		-2			-1
+
+new number of hits to kill with surge
+
+class           hp      hits    total damage    diff. from orig.        diff. from orig. w/ surge	diff. from new
+
+granger         50      1       54		-1			-1				-1
+adv granger     75      2       108		0			0				0
+dretch          25      1       54		0			0				0
+adv dretch      50      1       54		-1			-1				-1
+basi            75      2       108		0			0				0
+adv basi        100     2       108		-1			-1				-1
+mara            150     3       162		-1			-1				-1
+adv mara        175     4       216		-1			-1				0
+dragoon         200     4       216		-2			-1				-1
+adv dragoon     250     5       270		-2			-1				-1
+tyrant          400     8       432		-3			-2				-1
+adv tyrant      600     12      648		-4			-3				-2
+

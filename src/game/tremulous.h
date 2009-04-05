@@ -498,15 +498,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_RELOAD               2000
 #define LASGUN_DAMAGE               HDM(9)
 
-#define MDRIVER_PRICE               350
-#define MDRIVER_CLIPSIZE            5
+#define MDRIVER_PRICE               500
+#define MDRIVER_CLIPSIZE            4
 #define MDRIVER_MAXCLIPS            4
-#define MDRIVER_DMG                 HDM(38)
+#define MDRIVER_DMG                 HDM(45)
 #define MDRIVER_REPEAT              1000
 #define MDRIVER_K_SCALE             1.0f
 #define MDRIVER_RELOAD              2000
 #define MDRIVER_MAX_HITS            16
 #define MDRIVER_WIDTH               5
+#define MDRIVER_SURGE_DMG_MOD       1.2f
+#define MDRIVER_SURGE_TIME_MOD      0.75
 #define MDRIVER_RECOIL_MIN_Y        20.0
 #define MDRIVER_RECOIL_MAX_Y        40.0
 #define MDRIVER_RECOIL_MAX_X        20.0
