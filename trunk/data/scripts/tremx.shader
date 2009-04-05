@@ -193,16 +193,42 @@ models/weapons/xael/droid
 models/buildables/forcefield/energy
 {
   cull disable
+  deformVertexes wave 6 sin 0 2 0 8
   {
-    map models/buildables/forcefield/forcefieldenergy_grid.jpg
-    tcMod Scroll .1 0
+    map models/buildables/forcefield/forcefield_energy_1.tga
+    tcMod Scale 1 2
+    tcMod Scroll 0 7
     blendFunc add
   }
   {
-    map models/buildables/forcefield/forcefieldenergy.jpg
-    tcMod Scroll -.01 0
+    map models/buildables/forcefield/forcefield_energy_1.tga
+    tcMod Scale 1 2
+    tcMod Scroll 0 8
     blendFunc add
-    rgbgen wave sin .2 .2 0 .4
+  }
+  {
+    map models/buildables/forcefield/forcefield_energy_2.tga
+    tcMod Scale 1 2
+    tcMod Scroll 0 9
+    blendFunc add
+  }
+  {
+    map models/buildables/forcefield/forcefield_energy_2.tga
+    tcMod Scale 1 2
+    tcMod Scroll 0 10
+    blendFunc add
+  }
+  {
+    map models/buildables/forcefield/forcefield_energy_3.tga
+    tcMod Scale 1 3
+    tcMod Scroll 0 4
+    blendFunc add
+  }
+  {
+    map models/buildables/forcefield/forcefield_energy_3.tga
+    tcmod Scale 1 3
+    tcMod Scroll 0 -4
+    blendFunc add
   }
 }
 
