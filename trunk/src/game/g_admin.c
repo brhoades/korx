@@ -5090,12 +5090,7 @@ qboolean G_admin_detonate( gentity_t *ent, int skiparg )
     return qfalse;
   }
   vic = &g_entities[ pids[ 0 ] ];
-  if( vic->client->pers.teamSelection == TEAM_NONE ||
-      vic->client->pers.classSelection == PCL_NONE || vic->client->ps.pm_flags & PMF_QUEUED ) {
-    ADMP( "^3!detonate: ^7can't detonate: a ghost\n" );
-    return qfalse;
-  }
-  
+
   //make them explode...
   tent = G_TempEntity( vic->s.origin, EV_HUMAN_BUILDABLE_EXPLOSION );
   oldhealth = vic->health;
