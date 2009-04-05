@@ -3382,7 +3382,15 @@ static void PM_Weapon( void )
     addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
     if( BG_InventoryContainsUpgrade( UP_SURGE, pm->ps->stats ) )
     {
-      if ( pm->ps->weapon==WP_MASS_DRIVER )
+      if ( pm->ps->weapon == WP_BLASTER )
+      {
+        addTime *= BLASTER_SURGE_TIME_MOD;
+      }
+      else if ( pm->ps->weapon == WP_LAS_GUN )
+      {
+        addTime *= LASGUN_SURGE_TIME_MOD;
+      }
+      else if ( pm->ps->weapon == WP_MASS_DRIVER )
       {
         addTime *= MDRIVER_SURGE_TIME_MOD;
       }
