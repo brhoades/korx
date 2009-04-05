@@ -611,7 +611,7 @@ void AGeneric_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, i
   self->s.eFlags &= ~EF_FIRING; //prevent any firing effects
 
   if( self->spawned )
-    self->nextthink = level.time + 5000;
+    self->nextthink = level.time + ALIEN_DETONATION_DELAY;
   else
     self->nextthink = level.time; //blast immediately
 

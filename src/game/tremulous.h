@@ -282,6 +282,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_BVALUE_MODIFIER       30.0f
 #define ABVM(h)                      ((int)((float)h*ALIEN_BVALUE_MODIFIER))
 
+#define ALIEN_DETONATION_DELAY      1500
 #define CREEP_BASESIZE              700
 #define CREEP_TIMEOUT               1000
 #define CREEP_MODIFIER              0.5f
@@ -695,7 +696,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define REACTOR_BASESIZE            1000
 #define REPEATER_BASESIZE           500
-#define HUMAN_DETONATION_DELAY      5000
+#define HUMAN_DETONATION_DELAY      1500
 
 #define HSPAWN_BP                   10
 #define HSPAWN_BT                   10000
