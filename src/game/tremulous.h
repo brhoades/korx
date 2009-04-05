@@ -436,6 +436,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BLASTER_SPEED               2000
 #define BLASTER_DMG                 HDM(9)
 #define BLASTER_SIZE                5
+#define BLASTER_SURGE_DMG_MOD       1.0f
+#define BLASTER_SURGE_TIME_MOD      0.625
 
 #define RIFLE_CLIPSIZE              30
 #define RIFLE_MAXCLIPS              6
@@ -496,7 +498,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_REPEAT               200
 #define LASGUN_K_SCALE              1.0f
 #define LASGUN_RELOAD               2000
-#define LASGUN_DAMAGE               HDM(9)
+#define LASGUN_DAMAGE               HDM(8)
+#define LASGUN_SURGE_DMG_MOD        1.25f
+#define LASGUN_SURGE_TIME_MOD       0.8
 
 #define MDRIVER_PRICE               500
 #define MDRIVER_CLIPSIZE            4
@@ -645,8 +649,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REGEN_STAMINA_RATE          25
 
 #define SURGE_PRICE                 200
-#define SURGE_DMG_MOD               1.1f
-#define SURGE_TIME_MOD              0.8f
 
 #define CLOAK_PRICE                 400
 #define CLOAK_TIME                  40000
