@@ -3380,9 +3380,13 @@ static void PM_Weapon( void )
     pm->ps->generic1 = WPM_PRIMARY;
     PM_AddEvent( EV_FIRE_WEAPON );
     addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
-    if( BG_InventoryContainsUpgrade( UP_SURGE, pm->ps->stats ) &&
-        ( pm->ps->weapon==WP_LAS_GUN || pm->ps->weapon==WP_MASS_DRIVER ) )
-      addTime *= SURGE_TIME_MOD;
+    if( BG_InventoryContainsUpgrade( UP_SURGE, pm->ps->stats ) )
+    {
+      if ( pm->ps->weapon==WP_MASS_DRIVER )
+      {
+        addTime *= MDRIVER_SURGE_TIME_MOD;
+      }
+    }
   }
 
   // fire events for autohit weapons

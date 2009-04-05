@@ -586,7 +586,12 @@ void massDriverFire( gentity_t *ent )
     {
       int damage = MDRIVER_DMG;
       if( BG_InventoryContainsUpgrade( UP_SURGE, ent->client->ps.stats ) )
-        damage *= SURGE_DMG_MOD;
+      {
+	if( pm->ps->weapon == WP_MASS_DRIVER )
+        {
+          damage *= MDRIVER_SURGE_DMG_MOD;
+        }
+      }
       G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, 0, MOD_MDRIVER );
     }
   }
