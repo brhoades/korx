@@ -1,0 +1,22 @@
+game/tremulous.h
+	faster granger, 0.8 -> 0.9; still the slowest alien
+	faster adv granger, 1.0 -> 1.1; can now keep up with walking goon
+		(the "granging to the oldies" videos got them in shape)
+	faster dretch/advdretch, 1.3 -> 1.4; was fastest, now faster
+	mara barb does 35 damage (originally 40, then 20, now 35)
+		for comparison, single goon barb has 110 damage
+		3 shots from a mara do 105 total
+	mara barb recharge time altered very, very, very slightly
+		made it a more round number
+data/models/buildables/tesla/tesla_spark.jpg
+	rotated, squished, and darkened
+data/scripts/tesla.shader
+	replaced tesla_bolt.tga with tesla_spark.jpg
+data/scripts/tesla.trail
+	copied from data-1.1.0 for override
+	modified somewhat for appearance
+
+other thoughts:
+
+from looking at the names of the shaders and the like it seems sensible
+that they could be renamed to something more uniform

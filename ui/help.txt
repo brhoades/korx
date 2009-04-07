@@ -4,8 +4,8 @@
     "This mod is under heavy, ongoing development. "
     "Please visit the KnightsofReason.org website at:\n"
     "http://www.knightsofreason.org/\n\n"
-    "We can also be reached on Freenode IRC:\n"
-    "#knightsofreason"
+    "We can also be reached on IRC:\n"
+    "irc.quakenet.org #knightsofreason #korx"
   }
   "Infection and Biokits"
   {
