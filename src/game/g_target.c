@@ -63,7 +63,7 @@ The activator is given this many points.
 */
 void Use_Target_Score( gentity_t *ent, gentity_t *other, gentity_t *activator )
 {
-  AddScore( activator, ent->count );
+  AddKill( activator );
 }
 
 void SP_target_score( gentity_t *ent )

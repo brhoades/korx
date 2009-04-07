@@ -571,7 +571,6 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
 
   bolt = G_Spawn( );
   bolt->classname = "xeal";
-  bolt->pointAgainstWorld = qtrue;
 
   if( damage == XAEL_DAMAGE )
     bolt->nextthink = level.time;
@@ -580,6 +579,7 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
+  bolt->s.eFlags |= EF_BOUNCE|EF_NO_BOUNCE_SOUND;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
   bolt->s.weapon = WP_XAEL;
   bolt->s.generic1 = self->s.generic1; //weaponMode
@@ -605,7 +605,7 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   if( bolt->s.torsoAnim < 0 )
     bolt->s.torsoAnim = 0;
 
-  bolt->s.pos.trType = TR_LINEAR;
+  bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
   VectorScale( dir, speed, bolt->s.pos.trDelta );

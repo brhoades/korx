@@ -485,7 +485,7 @@ static void CG_SetPVars( void )
   trap_Cvar_Set( "p_ammo", va( "%d", ps->ammo ) );
   trap_Cvar_Set( "p_clips", va( "%d", ps->clips ) );
   trap_Cvar_Set( "p_credits", va( "%d", ps->persistant[ PERS_CREDIT ] ) );
-  trap_Cvar_Set( "p_score", va( "%d", ps->persistant[ PERS_SCORE ] ) );
+  trap_Cvar_Set( "p_score", va( "%d", ps->persistant[ PERS_KILLS ] ) );
   trap_Cvar_Set( "p_attacker", va( "%d", CG_LastAttacker( ) ) );
   if ( CG_LastAttacker( ) != -1 )
     trap_Cvar_Set( "p_attackername", cgs.clientinfo[ CG_LastAttacker( ) ].name );

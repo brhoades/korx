@@ -300,7 +300,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ASPAWN_SPLASHDAMAGE         50
 #define ASPAWN_SPLASHRADIUS         50
 #define ASPAWN_CREEPSIZE            120
-#define ASPAWN_VALUE                ABVM(ASPAWN_BP)
+#define ASPAWN_VALUE                ABVM(10)
 
 #define BARRICADE_BP                6
 #define BARRICADE_BT                20000
@@ -363,7 +363,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_CREEPSIZE           30
 #define TRAPPER_RANGE               400
 #define TRAPPER_REPEAT              1000
-#define TRAPPER_VALUE               ABVM(25)
+#define TRAPPER_VALUE               ABVM(0)
 #define LOCKBLOB_SPEED              650.0f
 #define LOCKBLOB_LOCKTIME           5000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
@@ -458,8 +458,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PAINSAW_K_SCALE             1.0f
 #define PAINSAW_DAMAGE              HDM(15)
 #define PAINSAW_RANGE               40.0f
-#define PAINSAW_WIDTH               0.f
-#define PAINSAW_HEIGHT              8.f
+#define PAINSAW_WIDTH               0.0f
+#define PAINSAW_HEIGHT              8.0f
 
 #define GRENADE_PRICE               200
 #define GRENADE_REPEAT              0
@@ -475,7 +475,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_REPEAT              1000
 #define SHOTGUN_K_SCALE             1.0f
 #define SHOTGUN_RELOAD              2000
-#define SHOTGUN_SPREAD              900
+#define SHOTGUN_SPREAD              600
 #define SHOTGUN_DMG                 HDM(7)
 #define SHOTGUN_RANGE               (8192 * 12)
 #define SHOTGUN_PRI_RECOIL_MIN_Y    4
@@ -589,7 +589,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_SEC_RECOIL_MAX_X    10
 #define LCANNON_SEC_RECOIL_SOFTEN   0.25
 
-#define XAEL_PRICE                  1000
+#define XAEL_PRICE                  1100
 #define XAEL_AMMO                   120
 #define XAEL_REPEAT                 500
 #define XAEL_K_SCALE                1.0f
@@ -600,8 +600,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_SIZE                   5        // missile bounding box radius
 #define XAEL_SECONDARY_DAMAGE       HDM(15)
 #define XAEL_SECONDARY_RADIUS       50
-#define XAEL_SECONDARY_SPEED        1000
-#define XAEL_SPEED                  350
+#define XAEL_SECONDARY_SPEED        1500
+#define XAEL_SPEED                  800
 #define XAEL_CHARGE_TIME            2000
 #define XAEL_TOTAL_CHARGE           255
 #define XAEL_MIN_CHARGE             50
@@ -810,7 +810,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HUMAN_DODGE_SIDE_MODIFIER   2.9f
 #define HUMAN_DODGE_UP_MODIFIER     0.5f
 #define HUMAN_DODGE_TIMEOUT         500
-#define HUMAN_LAND_FRICTION         3.f
+#define HUMAN_LAND_FRICTION         3.0f
 
 #define STAMINA_STOP_RESTORE        25
 #define STAMINA_WALK_RESTORE        15

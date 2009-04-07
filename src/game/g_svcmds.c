@@ -152,7 +152,7 @@ static void Svcmd_Status_f( void )
       continue;
 
     G_Printf( "%-4d ", i );
-    G_Printf( "%-5d ", cl->ps.persistant[ PERS_SCORE ] );
+    G_Printf( "%-5d ", cl->ps.persistant[ PERS_KILLS ] );
 
     if( cl->pers.connected == CON_CONNECTING )
       G_Printf( "CNCT " );

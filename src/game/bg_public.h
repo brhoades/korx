@@ -260,7 +260,7 @@ typedef enum
 // cleared on respawn
 typedef enum
 {
-  PERS_SCORE,           // !!! MUST NOT CHANGE, SERVER AND GAME BOTH REFERENCE !!!
+  PERS_KILLS,           // !!! MUST NOT CHANGE, SERVER AND GAME BOTH REFERENCE !!!
   PERS_HITS,            // total points damage inflicted so damage beeps can sound on change
   PERS_SPAWNS,          // how many spawns your team has
   PERS_SPECSTATE,
