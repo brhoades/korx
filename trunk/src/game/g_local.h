@@ -963,7 +963,7 @@ qboolean  G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float dam
                                    gentity_t *ignore, int mod, int team );
 float     G_RewardAttackers( gentity_t *self );
 void      body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int meansOfDeath );
-void      AddScore( gentity_t *ent, int score );
+void      AddKill( gentity_t *ent );
 void      G_LogDestruction( gentity_t *self, gentity_t *actor, int mod );
 
 void      G_InitDamageLocations( void );

@@ -2665,8 +2665,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
     qtrue,                //int       usesEnergy;
-    XAEL_CHARGEREPEAT,    //int       repeatRate1;
-    XAEL_REPEAT,          //int       repeatRate2;
+    XAEL_REPEAT,          //int       repeatRate1;
+    XAEL_CHARGEREPEAT,    //int       repeatRate2;
     0,                    //int       repeatRate3;
     XAEL_RELOAD,          //int       reloadTime;
     XAEL_K_SCALE,         //float     knockbackScale;

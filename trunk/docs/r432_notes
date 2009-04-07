@@ -1,0 +1,42 @@
+game/g_cmds.c	seems good
+	changed display type for teamscore from score/time/ping
+	to kills/deaths/ping
+game/g_team.c	seems good
+	game either saves all your stats (team change for balance, or 
+	disconnect) or gets rid of them (team change)
+	added some comments
+game/tremulous.h
+	made some corrections
+	reduced shotgun spread
+	reset trapper value to 0
+	increased xael price
+	increased xael altfire rate
+game/bg_misc.c
+	fixed xael definitions for rates (they were reversed)
+game/bg_local.h
+	replaced addscore with addkill
+game/g_svcmds.c
+	replaced pers_score with pers_kills
+game/g_combat.c
+	replaced addscore with addkill
+	eliminated score calculation, added single kill per kill
+	change: player and (some) structure kills give you credits
+	change: you only increase kills for killing players
+	change: TKs no longer decrease your kills
+game/g_active.c
+	replaced references to PERS_SCORE with PERS_KILLS
+	might be a hack, might be removable, not sure
+game/g_main.c
+	replaced references to PERS_SCORE with PERS_KILLS
+game/g_target.c
+	replaced addscore with addkill
+	might be a hack, might be removable, not sure
+game/g_missile.c
+	changed xael fire: affected by gravity, bounces
+	(related to speed changes in tremulous.h)
+game/bg_public.h
+	replaced reference to PERS_SCORE with PERS_KILLS
+ui/teamscore.menu
+	now says kills/deaths instead of score/time
+src/cgame/cgmain.c
+	replaced reference to PERS_SCORE with PERS_KILLS

@@ -145,7 +145,7 @@
 
     itemDef
     {
-      text "Score"
+      text "Kills"
       textscale .33
       style WINDOW_STYLE_EMPTY
       rect (LLIST_R-95) (BAR_H+BORDER) 1 BAR_H
@@ -159,7 +159,7 @@
 
     itemDef
     {
-      text "Time"
+      text "Deaths"
       textscale .33
       style WINDOW_STYLE_EMPTY
       rect (LLIST_R-55) (BAR_H+BORDER) 1 BAR_H
@@ -215,7 +215,7 @@
 
     itemDef
     {
-      text "Score"
+      text "Kills"
       textscale .33
       style WINDOW_STYLE_EMPTY
       rect (RLIST_R-95) (BAR_H+BORDER) 1 BAR_H
@@ -229,7 +229,7 @@
 
     itemDef
     {
-      text "Time"
+      text "Deaths"
       textscale .33
       style WINDOW_STYLE_EMPTY
       rect (RLIST_R-55) (BAR_H+BORDER) 1 BAR_H

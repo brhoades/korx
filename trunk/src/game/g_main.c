@@ -925,9 +925,9 @@ int QDECL SortRanks( const void *a, const void *b )
   cb = &level.clients[ *(int *)b ];
 
   // then sort by score
-  if( ca->ps.persistant[ PERS_SCORE ] > cb->ps.persistant[ PERS_SCORE ] )
+  if( ca->ps.persistant[ PERS_KILLS ] > cb->ps.persistant[ PERS_KILLS ] )
     return -1;
-  if( ca->ps.persistant[ PERS_SCORE ] < cb->ps.persistant[ PERS_SCORE ] )
+  if( ca->ps.persistant[ PERS_KILLS ] < cb->ps.persistant[ PERS_KILLS ] )
     return 1;
   return 0;
 }
@@ -2021,7 +2021,7 @@ void ExitLevel( void )
     if( cl->pers.connected != CON_CONNECTED )
       continue;
 
-    cl->ps.persistant[ PERS_SCORE ] = 0;
+    cl->ps.persistant[ PERS_KILLS ] = 0;
   }
 
   // we need to do this here before chaning to CON_CONNECTING
@@ -2266,7 +2266,7 @@ void G_SendGameStat( team_t team )
       " \"%s\" %c %d %d %d",
       cl->pers.netname,
       teamChar,
-      cl->ps.persistant[ PERS_SCORE ],
+      cl->ps.persistant[ PERS_KILLS ],
       ping,
       ( level.time - cl->pers.enterTime ) / 60000 );
 
@@ -2323,7 +2323,7 @@ void LogExit( const char *string )
     ping = cl->ps.ping < 999 ? cl->ps.ping : 999;
 
     G_LogPrintf( "score: %i  ping: %i  client: %i %s\n",
-      cl->ps.persistant[ PERS_SCORE ], ping, level.sortedClients[ i ],
+      cl->ps.persistant[ PERS_KILLS ], ping, level.sortedClients[ i ],
       cl->pers.netname );
 
   }
@@ -2454,8 +2454,8 @@ qboolean ScoreIsTied( void )
   if( level.numPlayingClients < 2 )
     return qfalse;
 
-  a = level.clients[ level.sortedClients[ 0 ] ].ps.persistant[ PERS_SCORE ];
-  b = level.clients[ level.sortedClients[ 1 ] ].ps.persistant[ PERS_SCORE ];
+  a = level.clients[ level.sortedClients[ 0 ] ].ps.persistant[ PERS_KILLS ];
+  b = level.clients[ level.sortedClients[ 1 ] ].ps.persistant[ PERS_KILLS ];
 
   return a == b;
 }

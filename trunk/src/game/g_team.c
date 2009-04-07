@@ -181,30 +181,29 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
   else
   {
     ent->client->ps.persistant[ PERS_CREDIT ] = 0;
-    ent->client->ps.persistant[ PERS_SCORE ] = 0;
+    ent->client->ps.persistant[ PERS_KILLS ] = 0;
+    ent->client->ps.persistant[ PERS_KILLED ] = 0;
     ent->client->pers.savedCredit = 0;
+    ent->client->pers.statscounters.kills = 0;
+    ent->client->pers.statscounters.structskilled = 0;
+    ent->client->pers.statscounters.assists = 0;
+    ent->client->pers.statscounters.repairspoisons = 0;
+    ent->client->pers.statscounters.headshots = 0;
+    ent->client->pers.statscounters.hits = 0;
+    ent->client->pers.statscounters.hitslocational = 0;
+    ent->client->pers.statscounters.deaths = 0;
+    ent->client->pers.statscounters.feeds = 0;
+    ent->client->pers.statscounters.suicides = 0;
+    ent->client->pers.statscounters.teamkills = 0;
+    ent->client->pers.statscounters.dmgdone = 0;
+    ent->client->pers.statscounters.structdmgdone = 0;
+    ent->client->pers.statscounters.ffdmgdone = 0;
+    ent->client->pers.statscounters.structsbuilt = 0;
+    ent->client->pers.statscounters.timealive = 0;
+    ent->client->pers.statscounters.timeinbase = 0;
+    ent->client->pers.statscounters.dretchbasytime = 0;
+    ent->client->pers.statscounters.jetpackusewallwalkusetime = 0;
   }
-
-  ent->client->ps.persistant[ PERS_KILLED ] = 0;
-  ent->client->pers.statscounters.kills = 0;
-  ent->client->pers.statscounters.structskilled = 0;
-  ent->client->pers.statscounters.assists = 0;
-  ent->client->pers.statscounters.repairspoisons = 0;
-  ent->client->pers.statscounters.headshots = 0;
-  ent->client->pers.statscounters.hits = 0;
-  ent->client->pers.statscounters.hitslocational = 0;
-  ent->client->pers.statscounters.deaths = 0;
-  ent->client->pers.statscounters.feeds = 0;
-  ent->client->pers.statscounters.suicides = 0;
-  ent->client->pers.statscounters.teamkills = 0;
-  ent->client->pers.statscounters.dmgdone = 0;
-  ent->client->pers.statscounters.structdmgdone = 0;
-  ent->client->pers.statscounters.ffdmgdone = 0;
-  ent->client->pers.statscounters.structsbuilt = 0;
-  ent->client->pers.statscounters.timealive = 0;
-  ent->client->pers.statscounters.timeinbase = 0;
-  ent->client->pers.statscounters.dretchbasytime = 0;
-  ent->client->pers.statscounters.jetpackusewallwalkusetime = 0;
 
   if( G_admin_permission( ent, ADMF_DBUILDER ) )
   {
@@ -232,16 +231,19 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
   ClientUserinfoChanged( ent->client->ps.clientNum );
   G_CheckDBProtection( );
 
+  // team change from H to A or A to H
   if( oldTeam != TEAM_NONE && newTeam != TEAM_NONE )
     G_LogPrintf(
       "team: %i %i %i: %s" S_COLOR_WHITE " left the %ss and joined the %ss\n",
        ent->s.number, newTeam, oldTeam, ent->client->pers.netname,
        BG_TeamName( oldTeam ), BG_TeamName( newTeam ) );
+  // joining spectators
   else if( newTeam == TEAM_NONE )
     G_LogPrintf( "team: %i %i %i: %s" S_COLOR_WHITE " left the %ss\n",
       ent->s.number, newTeam, oldTeam, ent->client->pers.netname,
       BG_TeamName( oldTeam ) );
   else
+  // joining a team from spectators
     G_LogPrintf( "team: %i %i %i: %s" S_COLOR_WHITE " joined the %ss\n",
       ent->s.number, newTeam, oldTeam, ent->client->pers.netname,
       BG_TeamName( newTeam ) );
