@@ -94,13 +94,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_WALLJUMP_REPEAT      400      // msec before new jump
 #define LEVEL2_WALLJUMP_RANGE       8.0      // how far away the wall can be
 
-#define LEVEL2_BOUNCEBALL_DMG       ADM(20)
+#define LEVEL2_BOUNCEBALL_DMG       ADM(35)
 #define LEVEL2_BOUNCEBALL_REPEAT    300
 #define LEVEL2_BOUNCEBALL_SPEED     3300.0f
 #define LEVEL2_BOUNCEBALL_RADIUS    0
 #define LEVEL2_BOUNCEBALL_SPLASH_DMG 0
 #define LEVEL2_BOUNCEBALL_TIME      4000
-#define LEVEL2_BOUNCEBALL_REGEN     1650
+#define LEVEL2_BOUNCEBALL_REGEN     1600
 
 #define LEVEL3_CLAW_DMG             ADM(80)
 #define LEVEL3_CLAW_RANGE           96.0f
@@ -176,28 +176,28 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_REGEN_TIME            25000 //msec that it takes for an alien to heal all the way
 #define ARMSEC(h)                   ((int)((float)ALIEN_REGEN_TIME/h))
 
-#define ABUILDER_SPEED              0.8f
+#define ABUILDER_SPEED              0.9f
 #define ABUILDER_VALUE              AVM(200)
 #define ABUILDER_HEALTH             AHM(50)
 #define ABUILDER_REGEN              2
 #define ABUILDER_REGEN_MSEC         ARMSEC(ABUILDER_HEALTH)
 #define ABUILDER_COST               0
 
-#define ABUILDER_UPG_SPEED          1.0f
+#define ABUILDER_UPG_SPEED          1.1f
 #define ABUILDER_UPG_VALUE          AVM(250)
 #define ABUILDER_UPG_HEALTH         AHM(75)
 #define ABUILDER_UPG_REGEN          3
 #define ABUILDER_UPG_REGEN_MSEC     ARMSEC(ABUILDER_UPG_HEALTH)
 #define ABUILDER_UPG_COST           0
 
-#define LEVEL0_SPEED                1.3f
+#define LEVEL0_SPEED                1.4f
 #define LEVEL0_VALUE                AVM(175)
 #define LEVEL0_HEALTH               AHM(25)
 #define LEVEL0_REGEN                1
 #define LEVEL0_REGEN_MSEC           ARMSEC(LEVEL0_HEALTH)
 #define LEVEL0_COST                 0
 
-#define LEVEL0_UPG_SPEED            1.3f
+#define LEVEL0_UPG_SPEED            1.4f
 #define LEVEL0_UPG_VALUE            AVM(200)
 #define LEVEL0_UPG_HEALTH           AHM(50)
 #define LEVEL0_UPG_REGEN            2
