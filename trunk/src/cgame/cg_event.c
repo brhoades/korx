@@ -331,7 +331,7 @@ static void CG_Obituary( entityState_t *ent )
         if( rand() % 3 )
           message = "was sliced and diced by";
         else if( rand() % 2 )
-          message = "was filled by";
+          message = "was filleted by";
         else
           message = "was eviscerated by";
         Com_sprintf( className, 64, "'s %s",
