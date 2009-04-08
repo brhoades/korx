@@ -1,11 +1,11 @@
 models/buildables/telenode/telenode_top
 {
 	{
-		map models/buildables/telenode/telenode_top.tga
+		map models/buildables/telenode/telenode_top.jpg
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/buildables/telenode/telenode_top.tga
+		map models/buildables/telenode/telenode_top.jpg
 		blendFunc GL_SRC_ALPHA GL_ONE
 		detail
 		alphaGen lightingSpecular
