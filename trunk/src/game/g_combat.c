@@ -187,7 +187,7 @@ float G_RewardAttackers( gentity_t *self )
     G_AddCreditToClient( player->client, num, qtrue);
 
     // if the kill-ee was a player, up killer's killcount
-    if( self->s.eType == ET_BUILDABLE )
+    if( self->s.eType != ET_BUILDABLE )
     {
       AddKill( player );
       // add to stage counters

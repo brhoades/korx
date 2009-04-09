@@ -140,7 +140,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_TRAMPLE_SPEED           2.0f
 #define LEVEL4_TRAMPLE_CHARGE_MIN      375   // minimum msec to start a charge
 #define LEVEL4_TRAMPLE_CHARGE_MAX      1000  // msec to maximum charge stored
-#define LEVEL4_TRAMPLE_CHARGE_TRIGGER  3000  // msec charge starts on its own
+#define LEVEL4_TRAMPLE_CHARGE_TRIGGER  1000  // msec charge starts on its own
 #define LEVEL4_TRAMPLE_DURATION        3000  // msec trample lasts on full charge
 //#define LEVEL4_TRAMPLE_STOP_PERCENTAGE 20    // removed from the end of trample when it isn't very useful
 #define LEVEL4_TRAMPLE_STOP_PENALTY    1     // charge lost per msec when stopped

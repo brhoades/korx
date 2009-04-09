@@ -2524,7 +2524,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Mass Driver",        //char      *humanName;
     "A portable magnetic accelerator capable of launching "
       "metallic slugs at extremely high velocity. It has a "
-      "large payload, but requires some time for the capacitors"
+      "large payload, but requires some time for the capacitors "
       "to charge between shots.",
     MDRIVER_CLIPSIZE,     //int       maxAmmo;
     MDRIVER_MAXCLIPS,     //int       maxClips;
