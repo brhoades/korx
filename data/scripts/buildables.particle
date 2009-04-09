@@ -4,7 +4,7 @@ humanBuildableDamagedPS
   {
     particle
     {
-      shader sync gfx/sprites/smoke
+      shader sync smoke1 smoke2 smoke3 smoke4 smoke5 smoke6 smoke7 smoke8 smoke9 smoke10 smoke11 smoke12 smoke13 smoke14 smoke15 smoke16 smoke17 smoke18 smoke19 smoke20 smoke21 smoke22 smoke23 smoke24 smoke25
 
       displacement 0 0 8 ~0
 
@@ -18,17 +18,17 @@ humanBuildableDamagedPS
       accelerationMagnitude 50
       acceleration          0 0 1 0
 
-      radius 0 10.0 50.0
-      alpha  0 0.5 0.0
+      radius 0 10.0 100.0
       rotation 0 ~360 -
-      bounce 0.5
+      alpha  0 0.4 0.0
+      bounce 1.0
 
-      lifeTime 1500~50%
+      lifeTime 1000~1000
     }
 
     count infinite
     delay 0
-    period 200 - ~0%
+    period 40 40 40
   }
 
   ejector
