@@ -1,0 +1,9 @@
+src/game/tremulous.h
+	changed LEVEL4_TRAMPLE_CHARGE_TRIGGER from 3000 to 1000
+	effect is that the rant seems to immediately charge
+	when the charge meter is full
+src/game/g_combat.c
+	fixed error in code that only gave kills and stage increases
+	based on structure kills instead of player kills
+src/game/bg_misc.c
+	fixed typo in mdriver description
