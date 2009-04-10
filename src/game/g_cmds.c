@@ -840,8 +840,9 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
       return;
     }
 
-  if( g_chatTeamPrefix.integer  && ent && ent->client )
+  if( ent && ent->client )
   {
+    Com_sprintf( name, sizeof( name ), "test message" );
     switch( ent->client->pers.teamSelection)
     {
       default:
@@ -858,15 +859,16 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
     }
   }
   else
+  {
     prefix = "";
+  }
 
   switch( mode )
   {
     default:
     case SAY_ALL:
       G_LogPrintf( "say: %s^7: %s\n", ent->client->pers.netname, chatText );
-      Com_sprintf( name, sizeof( name ), "%s%s" S_COLOR_WHITE ": ", prefix,
-                   ent->client->pers.netname );
+      Com_sprintf( name, sizeof( name ), "%s%s" S_COLOR_WHITE ": ", prefix, ent->client->pers.netname );
       color = COLOR_GREEN;
       G_DemoCommand( DC_SERVER_COMMAND, va( "chat \"%s^2%s\"", name, chatText ) );
       break;
@@ -979,7 +981,7 @@ static void Cmd_SayArea_f( gentity_t *ent )
     return;
    }
   
-  if (g_chatTeamPrefix.integer)
+  if ( ent && ent->client )
   {
     switch( ent->client->pers.teamSelection)
     {
@@ -997,7 +999,9 @@ static void Cmd_SayArea_f( gentity_t *ent )
     }
   }
   else
+  {
     prefix = "";
+  }
 
   G_LogPrintf( "sayarea: %s%s^7: %s\n", prefix, ent->client->pers.netname, msg );
   Com_sprintf( name, sizeof( name ), EC"<%s%c%c"EC"> ",

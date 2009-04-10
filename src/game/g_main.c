@@ -137,7 +137,6 @@ vmCvar_t  g_voiceChats;
 vmCvar_t  g_shove;
 
 vmCvar_t  g_mapConfigs;
-vmCvar_t  g_chatTeamPrefix;
 vmCvar_t  g_sayAreaRange;
 
 vmCvar_t  g_floodMaxDemerits;
@@ -315,7 +314,6 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_disabledClasses, "g_disabledClasses", "", CVAR_ROM, 0, qfalse  },
   { &g_disabledBuildables, "g_disabledBuildables", "", CVAR_ROM, 0, qfalse  },
 
-  { &g_chatTeamPrefix, "g_chatTeamPrefix", "0", CVAR_ARCHIVE, 0, qfalse  },
   { &g_sayAreaRange, "g_sayAreaRange", "1000.0", CVAR_ARCHIVE, 0, qtrue  },
 
   { &g_floodMaxDemerits, "g_floodMaxDemerits", "5000", CVAR_ARCHIVE, 0, qfalse  },
