@@ -1,14 +1,16 @@
 broken things
 -------------
 
-jetpack is invisible/soundless to anyone who isn't carrying it
-status of teamscore menu (kills/deaths) is uncertain. need to check on things like score resetting to make sure we have what we want from it.
-pulse rifle alternate fire doesn't work
+Jetpack is invisible/soundless to anyone who isn't carrying it.
+Status of teamscore menu (kills/deaths) is uncertain. need to check on things like score resetting to make sure we have what we want from it.
+Pulse rifle alternate fire doesn't work.
+Aliens should be able to get poisioned.
+Rant acid shouldn't hurt teammates except on direct impact.
 
 to-do list
 ----------
 
-none
+[A]/[H]/[S] needs to prefix all chat messages
 
 tentatively fixed (not tested)
 ------------------------------
