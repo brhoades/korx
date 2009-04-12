@@ -1,7 +1,6 @@
 broken things
 -------------
 
-Jetpack is invisible/soundless to anyone who isn't carrying it.
 Status of teamscore menu (kills/deaths) is uncertain. need to check on things like score resetting to make sure we have what we want from it.
 Pulse rifle alternate fire doesn't work.
 Aliens should be able to get poisioned.
@@ -28,3 +27,5 @@ fixed (tested)
 
 remove rant charge delay
 [A]/[H]/[S] needs to prefix all chat messages.
+Jetpack is invisible/soundless to anyone who isn't carrying it.
+
