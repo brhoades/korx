@@ -190,11 +190,14 @@ float G_RewardAttackers( gentity_t *self )
     if( self->s.eType != ET_BUILDABLE )
     {
       AddKill( player );
-      // add to stage counters
-      if( player->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        trap_Cvar_Set( "g_alienCredits", va( "%d", g_alienCredits.integer + stageValue ) );
-      else if( player->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-        trap_Cvar_Set( "g_humanCredits", va( "%d", g_humanCredits.integer + stageValue ) );
+      // add to stage counters (only if we're not in skirmish)
+      if ( !(level.time < SKIRMISH_TIME) )
+      {
+        if( player->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+          trap_Cvar_Set( "g_alienCredits", va( "%d", g_alienCredits.integer + stageValue ) );
+        else if( player->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+          trap_Cvar_Set( "g_humanCredits", va( "%d", g_humanCredits.integer + stageValue ) );
+      }
     }
 
     self->credits[ i ] = 0;

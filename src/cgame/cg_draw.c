@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "cg_local.h"
 #include "../ui/ui_shared.h"
+#include "../game/tremulous.h"
 
 menuDef_t *menuScoreboard = NULL;
 
@@ -1752,41 +1753,47 @@ static void CG_DrawStageReport( rectDef_t *rect, float text_x, float text_y,
   float tx, ty;
 
   if( cg.intermissionStarted )
-    return;
-
-  if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_NONE )
-    return;
-
-  if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
   {
-    int frags = ceil( (float)(cgs.alienNextStageThreshold - cgs.alienCredits) / ALIEN_CREDITS_PER_FRAG );
-    if( frags < 0 )
-      frags = 0;
-
-    if( cgs.alienNextStageThreshold < 0 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d", cgs.alienStage + 1 );
-    else if( frags == 1 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, 1 frag for next stage",
-          cgs.alienStage + 1 );
-    else
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, %d frags for next stage",
-          cgs.alienStage + 1, frags );
+    return;
   }
-  else if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+
+  if ( cg.time < SKIRMISH_TIME )
   {
-    int credits = cgs.humanNextStageThreshold - cgs.humanCredits;
+      Com_sprintf( s, MAX_TOKEN_CHARS, "Skirmish Time: Stage Count Starts in %d Seconds", (SKIRMISH_TIME - cg.time + 1000) / 1000 );
+  }
+  else
+  {
+    if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+    {
+      int frags = ceil( (float)(cgs.alienNextStageThreshold - cgs.alienCredits) / ALIEN_CREDITS_PER_FRAG );
+      if( frags < 0 )
+        frags = 0;
 
-    if( credits < 0 )
-      credits = 0;
+      if( cgs.alienNextStageThreshold < 0 )
+        Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d", cgs.alienStage + 1 );
+      else if( frags == 1 )
+        Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, 1 frag for next stage",
+            cgs.alienStage + 1 );
+      else
+        Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, %d frags for next stage",
+            cgs.alienStage + 1, frags );
+    }
+    else if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+    {
+      int credits = cgs.humanNextStageThreshold - cgs.humanCredits;
 
-    if( cgs.humanNextStageThreshold < 0 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d", cgs.humanStage + 1 );
-    else if( credits == 1 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, 1 credit for next stage",
-          cgs.humanStage + 1 );
-    else
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, %d credits for next stage",
-          cgs.humanStage + 1, credits );
+      if( credits < 0 )
+        credits = 0;
+
+      if( cgs.humanNextStageThreshold < 0 )
+        Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d", cgs.humanStage + 1 );
+      else if( credits == 1 )
+        Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, 1 credit for next stage",
+            cgs.humanStage + 1 );
+      else
+        Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, %d credits for next stage",
+            cgs.humanStage + 1, credits );
+    }
   }
 
   CG_AlignText( rect, s, scale, 0.0f, 0.0f, textalign, textvalign, &tx, &ty );
