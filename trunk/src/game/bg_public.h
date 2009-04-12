@@ -378,14 +378,15 @@ typedef enum
   UP_MEDKIT,
   UP_BATTPACK,
   UP_AMMOPACK,
-  UP_REGEN,
-  UP_SURGE,
-  UP_CLOAK,
   UP_JETPACK,
   UP_BATTLESUIT,
   UP_GRENADE,
 
   UP_AMMO,
+  
+  UP_REGEN,
+  UP_SURGE,
+  UP_CLOAK,
 
   UP_NUM_UPGRADES
 } upgrade_t;
