@@ -847,15 +847,15 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
     {
       default:
       case TEAM_NONE:
-        prefix = "[S] ";
+        prefix = "[^3S^7] ";
         break;
 
       case TEAM_ALIENS:
-        prefix = "[A] ";
+        prefix = "[^1A^7] ";
         break;
 
       case TEAM_HUMANS:
-        prefix = "[H] ";
+        prefix = "[^4H^7] ";
     }
   }
   else
