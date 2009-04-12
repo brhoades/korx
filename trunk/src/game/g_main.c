@@ -2899,7 +2899,10 @@ void CheckCountdown( void )
     }
   }
   else if( timeleft == 0 )
+  {
     trap_SendServerCommand( -1, "cp \"^2<<<<< GO >>>>>^7\"" );
+    level.warmupTime = 0;
+  }
 }
 
 /*
