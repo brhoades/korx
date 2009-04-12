@@ -3025,52 +3025,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     TEAM_HUMANS              //WUTeam_t  team;
   },
   {
-    UP_REGEN,              //int   upgradeNum;
-    REGEN_PRICE,           //int   price;
-    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
-    SLOT_NONE,              //int   slots;
-    "regen",               //char  *upgradeName;
-    "Biokit",               //char  *upgradeHumanName;
-    "An implant that helps its user to regenerate health and "
-     "stamina and makes slightly more immune to spreadable infections.",
-    "icons/iconu_regen",
-    qtrue,                 //qboolean purchasable
-    qfalse,                  //qboolean usable
-    TEAM_HUMANS              //WUTeam_t  team;
-  },
-  {
-    UP_SURGE,            //int   upgradeNum;
-    SURGE_PRICE,         //int   price;
-    ( 1 << S2 )|( 1 << S3 ), //int  stages
-    SLOT_NONE,          //int   slots;
-    "surge",             //char  *upgradeName;
-    "Surge",         //char  *upgradeHumanName;
-    "An external bank of capacitors which increase the efficiency"
-    " of either the Las Gun or the Mass Driver, yeilding a 10 percent"
-    " increase in damage while at the same time increasing the "
-    "firing speed by 20 percent.",
-    "icons/iconu_surge",
-    qtrue,                  //qboolean purchasable
-    qfalse,                 //qboolean usable
-    TEAM_HUMANS              //WUTeam_t  team;
-  },
-  {
-    UP_CLOAK,            //int   upgradeNum;
-    CLOAK_PRICE,         //int   price;
-    ( 1 << S2 )|( 1 << S3 ), //int  stages
-    SLOT_CLOAK,          //int   slots;
-    "cloak",             //char  *upgradeName;
-    "Cloak",         //char  *upgradeHumanName;
-    "An invisibility cloak that can be used to sneak up on aliens "
-     "without being seen. The cloak lasts for 30 seconds once it "
-     " is activated. You can recharge your cloak by buying ammo."
-     " The cloak is now more visible to your allies.",
-    "icons/iconu_cloak",
-    qtrue,                  //qboolean purchasable
-    qtrue,                 //qboolean usable
-    TEAM_HUMANS              //WUTeam_t  team;
-  },
-  {
     UP_JETPACK,             //int   upgradeNum;
     JETPACK_PRICE,          //int   price;
     ( 1 << S2 )|( 1 << S3 ), //int  stages
@@ -3126,6 +3080,52 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     qtrue,                  //qboolean purchasable
     qfalse,                 //qboolean usable
     TEAM_HUMANS             //team_t  team;
+  },
+  {
+    UP_REGEN,              //int   upgradeNum;
+    REGEN_PRICE,           //int   price;
+    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
+    SLOT_NONE,              //int   slots;
+    "regen",               //char  *upgradeName;
+    "Biokit",               //char  *upgradeHumanName;
+    "An implant that helps its user to regenerate health and "
+     "stamina and makes slightly more immune to spreadable infections.",
+    "icons/iconu_regen",
+    qtrue,                 //qboolean purchasable
+    qfalse,                  //qboolean usable
+    TEAM_HUMANS              //WUTeam_t  team;
+  },
+  {
+    UP_SURGE,            //int   upgradeNum;
+    SURGE_PRICE,         //int   price;
+    ( 1 << S2 )|( 1 << S3 ), //int  stages
+    SLOT_NONE,          //int   slots;
+    "surge",             //char  *upgradeName;
+    "Surge",         //char  *upgradeHumanName;
+    "An external bank of capacitors which increase the efficiency"
+    " of either the Las Gun or the Mass Driver, yeilding a 10 percent"
+    " increase in damage while at the same time increasing the "
+    "firing speed by 20 percent.",
+    "icons/iconu_surge",
+    qtrue,                  //qboolean purchasable
+    qfalse,                 //qboolean usable
+    TEAM_HUMANS              //WUTeam_t  team;
+  },
+  {
+    UP_CLOAK,            //int   upgradeNum;
+    CLOAK_PRICE,         //int   price;
+    ( 1 << S2 )|( 1 << S3 ), //int  stages
+    SLOT_CLOAK,          //int   slots;
+    "cloak",             //char  *upgradeName;
+    "Cloak",         //char  *upgradeHumanName;
+    "An invisibility cloak that can be used to sneak up on aliens "
+     "without being seen. The cloak lasts for 30 seconds once it "
+     " is activated. You can recharge your cloak by buying ammo."
+     " The cloak is now more visible to your allies.",
+    "icons/iconu_cloak",
+    qtrue,                  //qboolean purchasable
+    qtrue,                 //qboolean usable
+    TEAM_HUMANS              //WUTeam_t  team;
   }
 };
 
