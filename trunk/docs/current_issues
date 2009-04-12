@@ -5,10 +5,12 @@ Status of teamscore menu (kills/deaths) is uncertain. need to check on things li
 Pulse rifle alternate fire doesn't work.
 Aliens should be able to get poisioned.
 Rant acid shouldn't hurt teammates except on direct impact.
+Need to make !restart restart cg.time (for skirmish time), uncertain if this would affect other things
 
 to-do list
 ----------
 
+revamp stage counting system (i've got a plan for this)
 Add killing spree/feeding spree patch.
 Booster provides antivenom for poisoned aliens(?).
 Revamp teamvote system.
@@ -20,12 +22,10 @@ Change ckit screen color.
 tentatively fixed (not tested)
 ------------------------------
 
-stage counters broken
-
 fixed (tested)
 --------------
 
 remove rant charge delay
 [A]/[H]/[S] needs to prefix all chat messages.
 Jetpack is invisible/soundless to anyone who isn't carrying it.
-
+stage counters broken

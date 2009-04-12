@@ -852,6 +852,26 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DEFAULT_HUMAN_STAGE2_THRESH "4000"
 #define DEFAULT_HUMAN_STAGE3_THRESH "8000"
 #define DEFAULT_HUMAN_MAX_STAGE     "2"
+/*
+  SKIRMISH_TIME
+  defines in milliseconds how far to play into the game before stage counters start
+  before this time players can earn kills, get killed, and earn credits/evos but
+  they will not count towards a new stage
+*/
+#define SKIRMISH_TIME               180000	// 3 minutes
+/*
+  base kills and multipliers
+  the calculation to determine how many kills a team needs to get to the next stage
+  the method is: basekills + (players * multiplier)
+  the amount of players means the maximum amount of players that have been on that team for the running game
+  kills do not get adjusted live for disparity between number of players on each team
+  NOT IMPLEMENTED
+*/
+#define STAGE1_BASE_KILLS           "5"
+#define STAGE1_PLAYER_MULTIPLIER    "3"
+#define STAGE2_BASE_KILLS           "5"
+#define STAGE2_PLAYER_MULTIPLIER    "4"
+
 
 #define DAMAGE_FRACTION_FOR_KILL    0.5f //how much damage players (versus structures) need to
                                          //do to increment the stage kill counters
