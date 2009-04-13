@@ -352,7 +352,7 @@ static cvarTable_t   gameCvarTable[ ] =
 
   { &g_dretchPunt, "g_dretchPunt", "0", CVAR_ARCHIVE, 0, qfalse  },
 
-  { &g_killDamage, "g_killDamage", "500", CVAR_ARCHIVE, 0, qfalse},
+  { &g_killDamage, "g_killDamage", "600", CVAR_ARCHIVE, 0, qfalse},
   { &g_slapKnockback, "g_slapKnockback", "200", CVAR_ARCHIVE, 0, qfalse},
   { &g_slapDamage, "g_slapDamage", "5", CVAR_ARCHIVE, 0, qfalse},
 
