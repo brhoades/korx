@@ -6,7 +6,6 @@ Pulse rifle alternate fire doesn't work.
 Aliens should be able to get poisioned.
 Rant acid shouldn't hurt teammates except on direct impact.
 Need to make !restart restart cg.time (for skirmish time), uncertain if this would affect other things
-Chaingun random recoil appears extremely-unrandom.
 
 to-do list
 ----------
@@ -32,3 +31,4 @@ remove rant charge delay
 [A]/[H]/[S] needs to prefix all chat messages.
 Jetpack is invisible/soundless to anyone who isn't carrying it.
 stage counters broken
+Chaingun random recoil appears extremely-unrandom.
