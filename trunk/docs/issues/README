@@ -1,0 +1,51 @@
+The "current_issues" file tracks Bugs and Wanted Features.
+When fixed, issues can have a fixed status of Untested or Tested.
+Ultimately we want everything to go into Tested.
+
+PROCEDURE FOR INTRODUCING A NEW BUG OR FEATURE
+
+01. Open /docs/tasks/IDs
+02. Go to the bottom of the file
+03. Add the next number
+04. Tab to next column and add a short description
+05. This number is the Task ID you will use when adding the bug/feature to the
+    current_issues file (The Task ID is persistent)
+06. Save File
+07. Open /docs/issues/current_issues
+08. Add the bug/feature to the appropriate section.
+    Include your name, the Task ID, and a short description.
+09. Save file.
+10. Create a new file. If your Task ID is 1234, you will be creating and
+    editing /docs/tasks/1234
+11. This new file is a journal for the given task and you can be as verbose
+    here as you like. For each new journal entry, include your name, a blank
+    line, and as long as a description as you feel necessary.
+    Below is an example of a couple entries:
+
+akane
+
+The machine gun is firing tomatos. Identified the problem in
+/src/game/g_weapon.c - seems to have started when r201 was committed.
+
+aaron
+
+It seems you accidentally changed the primary fire function to
+G_FireTomato. I've set this back to its proper function and tested it.
+Works fine. Commiting for r358.
+
+PROCEDURE FOR SUBMITTING A FIX
+
+01. In the above example, the last line should be the closing journal entry.
+02. Open /docs/issues/current_issues and move the relevant entry to the
+    FIXED section. As the above example cites r358 as the revision the
+    problem should be fixed in, the FIXED section has a column for
+    FIX REVISION, and should be filled in as such.
+
+OTHER THOUGHTS
+
+The current_issues file doesn't need to cover every little change made.
+Rather, its use (and the /docs/tasks/ journal) are for following the progress
+of identified problems or wanted features. It's certainly more than possible
+for a revision to identify and fix a problem or add a new feature without
+having to make a note of it (as the google source changes page does this
+for us).

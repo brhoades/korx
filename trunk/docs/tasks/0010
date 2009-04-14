@@ -1,0 +1,8 @@
+akane
+
+Retroactively added this task. Problem is vaguely stated as "Status of
+teamscore menu is uncertain." What this means is I'm unsure how the game
+handles keeping a record of your kills and deaths for connection dropping and
+team changes. For that matter, I'm not sure how the game handles keeping
+credits/evos. We should figure out exactly how we want to retain these numbers
+and, once we establish that, ensure that the game does it.

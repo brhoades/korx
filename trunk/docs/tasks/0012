@@ -1,0 +1,10 @@
+akane
+
+Retroactively added this task. Problem was stated as "Need to make !restart
+work for skirmish time." To elaborate, as it is, skirmish time stops at 3
+minutes into the game and regular stage counting begins. When a level starts,
+skirmish time works fine. However, if a !restart is performed, I'm thinking
+that the level time is not being reset. So, for example, if you're one minute
+into the game and call a !restart, there should be something around 2 minutes
+instead of 3 of skirmish time. I need further diagnosis on why it behaves this
+way.

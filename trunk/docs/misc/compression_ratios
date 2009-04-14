@@ -1,0 +1,12 @@
+akane
+
+I've added this to show potential benefits of certain separations of 
+data pk3s. This may be out of date.
+
+file		original size		compressed size		size %
+								lower = better
+
+vm pk3		1,750,140 bytes		479,143 bytes		27%
+ui pk3		5,365,852 bytes		1,104,558 bytes		21%
+data pk3	10,872,697 bytes	4,481,438 bytes		41%
+atcs pk3	2,477,752 bytes		2,010,919		81%

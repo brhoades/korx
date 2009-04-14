@@ -1,0 +1,15 @@
+If you feel so inclined, this OPTIONAL section is here to document a particular
+change or set of changes in detail. There is no set structure though I prefer
+to do something like this:
+
+/src/game/tremulous.h
+	changed dretch's bite damage to 5000
+/src/game/bg_pmove.c
+	players now get knocked into the next county when firing the xael
+
+The filename as you can see has a naming scheme of rXXX_notes
+
+Personally, I mainly use this area of the docs if I'm making a bunch of changes
+at once, so that it might be comprehensible to me when I'm adding a message
+for committing it and so that someone could understand in plain words what
+it is that I was trying to do.

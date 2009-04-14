@@ -1,0 +1,6 @@
+akane
+
+Retroactively added this task. Stage counter was only increasing on structure
+kills (as opposed to player kills). This was likely my fault when I changed
+the behavior to this for testing and didn't change it back. So, naturally, the
+fix was to change it back. Fixed was applied in r439.

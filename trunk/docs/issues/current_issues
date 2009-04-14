@@ -1,0 +1,43 @@
+###############################################################################
+BUGS
+____
+NAME	TASK	DESCRIPTION
+akane		Status of teamscore menu (kills/deaths) is uncertain. need to
+		check on things like score resetting to make sure we have what
+		we want from it.
+
+Pulse rifle alternate fire doesn't work. Need 
+to make !restart restart cg.time (for skirmish time), uncertain if this 
+would affect other things Retribution always gives 1 evo/credit Ckit 
+can't switch to blaster / can't heal with build timer
+
+to-do list
+----------
+
+akane		Revamp stage counting system (I've got a plan for this)
+aaron		Add killing spree/feeding spree patch.
+aaron		Revamp teamvote system.
+aaron		Rants should be able to take down a S1 human base in 20 seconds, like a Xael.
+			akane	Nerf ret hp? Give adv rant mega hp? Super recharging badass acid bombs?
+			aaron	All of the above?
+			akane	
+Finish telenode textures.
+Change ckit screen color.
+
+tentatively fixed (not tested)
+------------------------------
+
+Aliens can now poison each other.
+Booster now provides antivenin for poisoned aliens.
+
+FIXED, TESTED
+______________
+NAME	TASK	FIX REVISION	DESCRIPTION
+___________________________________________
+aaron	0001			Remove rant charge delay.
+akane	0002			[A]/[H]/[S] needs to prefix all chat messages.
+aaron	0003			Friendly buildable fire (g_friendlyBuildableFire) can now be disabled.
+akane	0004			Jetpack is invisible/soundless to anyone who isn't carrying it.
+akane	0005			Stage counters broken.
+akane	0006			Chaingun random recoil appears extremely-unrandom.
+akane	0007			Rant acid now won't hurt aliens except on impact.
