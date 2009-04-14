@@ -1,0 +1,7 @@
+akane
+
+Retroactively added this task. The problem was that the chaingun's
+pseudorandomness for the yaw recoil appeared to move in the fashion of a
+bouncing sine wave. I seeded the pseudorandom generator with level.time and
+everything seems to work fine now. This fix applies to all weapons with
+recoil. Applied in r459.

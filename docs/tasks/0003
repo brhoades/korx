@@ -1,0 +1,5 @@
+akane
+
+Retroactively added this task. Submitted as "FIXED, TESTED" by aaron with a
+description of "fixed g_friendlyBuildableFire, so that when it's disabled it's
+ACTUALLY disabled." in r463.

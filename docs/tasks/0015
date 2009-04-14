@@ -1,0 +1,63 @@
+akane
+
+Retroactively added this task. Feature I requested, "Revamp stage counting
+system (I've got a plan for this). As it is, I never completely took it upon
+myself to understand how the "kills until next stage" is generated. However,
+I have noticed some fairly obvious things. First, the amount of kills to the
+next stage gets changed based upon how many players are on a team. Second,
+this number can be dynamically altered if one team has more players (more
+kills required, goes up) or fewer players (less kills required, goes down).
+While this sounds reasonable at first, I have played games where this behavior
+became nothing more than a hindrance to my team. Say you're s2 and the other
+team is s3 yet they have fewer players. You can get kills here and there, but
+it seems to take FOREVER for your counter to go down due to the disparity
+(increasing kills for you) and that you might be having a hard time getting
+kills as it is. My revised system will remove the dynamic changing "kills 
+needed" and replace it with a static number of kills. This way, you can be
+absolutely certain how many kills will get your team to the next stage.
+Earlier, I added a feature called "Skirmish Time" where no kills are counted
+towards the next stage until 3 minutes. This works hand in hand with my
+revised stage system. More on this in a moment. The way that this system will
+work is by performing a calculation at the beginning of each stage based on
+the maximum number of people that have been on a given team at any one time.
+So the calculation will be performed when skirmish time stops and when you
+reach s2. This combined with skirmish time gives you some time to fill
+each team before stage counting starts and lets you get some credits or evos
+without worrying about feeding the opposing team to a higher stage. I'm
+reasoning here that it will reduce (at least initial) camping. Now the other
+concern is that there is no dynamic score changing. So if your team had 10
+players for most of S1 but now 9 people left your team and it's just you,
+and you then reach s2, the s2 calculation will be based upon those 10 players.
+You will need to get the number of kills that 10 players would need. Some
+might think that this is unusually harsh, but I feel that it encourages
+players to stay on a team and finish the game. It also eliminates the
+possibility of a bunch of people leaving and rejoining a team right before
+the next stage (to have the effect of reducing the required kills for the
+next stage after that). One idea I had for a method to calculate the kills
+for the next stage is this: players^2/2 + 5 (rounded up). So a team with one
+player needs 8 kills to advanced to the next stage and a team with 10 players
+needs 55 to get to the next stage. I've included a table below to show the kill
+requirements per stage.
+###############################################################################
+Players		Kills Required		Avg. Kills/Player Required
+1		6			6
+2		7			3.5
+3		10			3.3
+4		13			3.25
+5		18			3.6
+6		23			3.83
+7		30			4.29
+8		37			4.63
+9		46			5.11
+10		55			5.5
+11		66			6.0
+12		77			6.4
+###############################################################################
+The result is that teams with fewer players still have a floor of kills
+they need to get and teams with more players (starting 5 and going up)
+will need more and more kills per player to get to the next stage.
+The logic of this is that teams with fewer players will need some kills but
+not a large amount and teams with more players will need a lot of kills.
+The rationale behind this is that if there are more players on each team,
+there will be more opportunities to kill. This document has gone from from
+merely being an explanation to a relative thesis.

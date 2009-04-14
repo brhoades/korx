@@ -1,0 +1,7 @@
+akane
+
+Retroactively added this task. The problem encountered was that the rant's
+charge meter stayed on full for a little while before the charge was forced.
+In r439, the LEVEL4_TRAMPLE_CHARGE_TRIGGER definition was lowered from 3000
+to 1000. The effect is that the rant now seems to charge immediately once
+the meter reaches full.

@@ -1,0 +1,14 @@
+akane
+
+Retroactively added this task. The problem was that team chat prefixes were not
+being shown. Team chat prefixes are defined as [A] [H] or [S] before a
+player's name in chat. The cause for the problem was a cvar controlling
+whether these were displayed and that cvar defaulting to false. Instead of
+having it default to true, I simply removed all instances of the cvar's code
+and made the default behavior to show the prefixes. This was done in r444.
+
+akane
+
+A further modification was done by aaron in r456 to set colors for the
+prefixes. I have not tested it personally, but the task will remain in the
+"FIXED, TESTED" section.

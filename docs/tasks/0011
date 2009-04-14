@@ -1,0 +1,9 @@
+akane
+
+Retroactively added this task. Problem was stated as "Pulse rifle alternate
+fire doesn't work." by aaron. I checked on this and it seems to work fine
+other than that the granger is merely slowed while anything up to the size of
+a marauder can be stuck. Anything dragoon or larger gets slowed with a certain
+number of shots. Perhaps 4 shots is required, though I can't remember. I'm
+requesting that further testing be done to determine the exact nature of the
+problem.

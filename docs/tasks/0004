@@ -1,0 +1,9 @@
+akane
+
+Retroactively added this task. The original problem was that the jetpack was
+invisible and soundless to anyone except the person who had it. Upon
+exhaustive analysis, it was determined that the problem originated in
+Trepidus-r147 and was carried into KoRx at import. aaron corrected the problem
+in r451. I haven't looked at how this was done but have confirmed that it
+works. wire suggests is a problem with the netcode, specifically modelindex
+and modelindex2.
