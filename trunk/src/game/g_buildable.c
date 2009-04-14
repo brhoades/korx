@@ -1518,14 +1518,17 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
   //if( enemy->flags & FL_NOTARGET )
   //  return;
 
-  if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS && 
-      client->poisonImmunityTime < level.time )
+  if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS 
+      && client->poisonImmunityTime < level.time )
   {
     //Poison them!
     client->ps.stats[ STAT_STATE ] |= SS_POISONED;
     client->lastPoisonTime = level.time;
     client->lastPoisonClient = self;
   }
+  else if( client && client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS
+           && client->ps.stats[ STAT_STATE ] & SS_POISONED )
+    client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
 
   if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
     return;
