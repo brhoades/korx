@@ -829,12 +829,15 @@ void ClientTimerActions( gentity_t *ent, int msec )
     {
       int damage = ALIEN_POISON_DMG;
 
-      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
-        damage -= BSUIT_POISON_PROTECTION;
-      if( BG_InventoryContainsUpgrade( UP_HELMET, client->ps.stats ) )
-        damage -= HELMET_POISON_PROTECTION;
-      if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, client->ps.stats ) )
-        damage -= LIGHTARMOUR_POISON_PROTECTION;
+      if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+      {
+        if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
+          damage -= BSUIT_POISON_PROTECTION;
+        if( BG_InventoryContainsUpgrade( UP_HELMET, client->ps.stats ) )
+          damage -= HELMET_POISON_PROTECTION;
+        if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, client->ps.stats ) )
+          damage -= LIGHTARMOUR_POISON_PROTECTION;
+      }
 
       if( client->lastPoisonClient->s.eType == ET_BUILDABLE )
         G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL,
