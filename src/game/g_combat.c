@@ -1490,8 +1490,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     //if boosted poison every attack
     if( attacker->client && attacker->client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
     {
-      if( targ->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
-          mod != MOD_LEVEL2_ZAP && mod != MOD_POISON &&
+      if( mod != MOD_LEVEL2_ZAP && mod != MOD_POISON &&
           mod != MOD_LEVEL1_PCLOUD &&
           targ->client->poisonImmunityTime < level.time )
       {

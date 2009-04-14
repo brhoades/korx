@@ -3,7 +3,6 @@ broken things
 
 Status of teamscore menu (kills/deaths) is uncertain. need to check on things like score resetting to make sure we have what we want from it.
 Pulse rifle alternate fire doesn't work.
-Aliens should be able to get poisioned.
 Rant acid shouldn't hurt teammates except on direct impact.
 Need to make !restart restart cg.time (for skirmish time), uncertain if this would affect other things
 Retribution always gives 1 evo/credit
@@ -25,14 +24,14 @@ Change ckit screen color.
 tentatively fixed (not tested)
 ------------------------------
 
-it's not slang
+Aliens can now poison each other.
 
 fixed (tested)
 --------------
 
-remove rant charge delay
+Remove rant charge delay.
 [A]/[H]/[S] needs to prefix all chat messages.
 Friendly buildable fire (g_friendlyBuildableFire) can now be disabled.
 Jetpack is invisible/soundless to anyone who isn't carrying it.
-stage counters broken
-Chaingun random recoil appears extremely-unrandom.
+Stage counters broken.
+Chaingun random recoil appears extremely-unrandom..
