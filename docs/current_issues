@@ -3,7 +3,6 @@ broken things
 
 Status of teamscore menu (kills/deaths) is uncertain. need to check on things like score resetting to make sure we have what we want from it.
 Pulse rifle alternate fire doesn't work.
-Rant acid shouldn't hurt teammates except on direct impact.
 Need to make !restart restart cg.time (for skirmish time), uncertain if this would affect other things
 Retribution always gives 1 evo/credit
 Ckit can't switch to blaster / can't heal with build timer
@@ -13,7 +12,6 @@ to-do list
 
 revamp stage counting system (i've got a plan for this)
 Add killing spree/feeding spree patch.
-Booster provides antivenom for poisoned aliens(?).
 Revamp teamvote system.
 Rants should be able to take down a S1 human base in 20 seconds, like a Xael.
 	Nerf ret hp? Give adv rant mega hp? Super recharging badass acid bombs?
@@ -25,6 +23,7 @@ tentatively fixed (not tested)
 ------------------------------
 
 Aliens can now poison each other.
+Booster now provides antivenin for poisoned aliens.
 
 fixed (tested)
 --------------
@@ -35,3 +34,4 @@ Friendly buildable fire (g_friendlyBuildableFire) can now be disabled.
 Jetpack is invisible/soundless to anyone who isn't carrying it.
 Stage counters broken.
 Chaingun random recoil appears extremely-unrandom..
+Rant acid now won't hurt aliens except on impact.
