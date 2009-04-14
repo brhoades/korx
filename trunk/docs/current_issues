@@ -6,6 +6,8 @@ Pulse rifle alternate fire doesn't work.
 Aliens should be able to get poisioned.
 Rant acid shouldn't hurt teammates except on direct impact.
 Need to make !restart restart cg.time (for skirmish time), uncertain if this would affect other things
+Retribution always gives 1 evo/credit
+Ckit can't switch to blaster / can't heal with build timer
 
 to-do list
 ----------
@@ -16,6 +18,7 @@ Booster provides antivenom for poisoned aliens(?).
 Revamp teamvote system.
 Rants should be able to take down a S1 human base in 20 seconds, like a Xael.
 	Nerf ret hp? Give adv rant mega hp? Super recharging badass acid bombs?
+	All of the above?
 Finish telenode textures.
 Change ckit screen color.
 
@@ -29,6 +32,7 @@ fixed (tested)
 
 remove rant charge delay
 [A]/[H]/[S] needs to prefix all chat messages.
+Friendly buildable fire (g_friendlyBuildableFire) can now be disabled.
 Jetpack is invisible/soundless to anyone who isn't carrying it.
 stage counters broken
 Chaingun random recoil appears extremely-unrandom.

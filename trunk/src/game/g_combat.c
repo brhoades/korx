@@ -1315,7 +1315,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         return;
       // if dretchpunt is enabled and this is a dretch, do dretchpunt instead of damage
       if( g_dretchPunt.integer &&
-        ( targ->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL0||
+        ( targ->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL0 ||
           targ->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL0_UPG ) )
       {
         vec3_t dir, push;
@@ -1376,9 +1376,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     {
       if( targ->buildableTeam == attacker->client->pers.teamSelection )
       {
-        if( ( mod == MOD_LEVEL4_TRAMPLE || mod == MOD_LEVEL3_POUNCE ||
-              mod == MOD_LEVEL4_CRUSH ) && (
-             !g_friendlyFireMovementAttacks.integer  ||
+        if( ( mod == MOD_LEVEL4_TRAMPLE || mod == MOD_LEVEL3_POUNCE
+              || mod == MOD_LEVEL4_CRUSH ) && (
+             !g_friendlyFireMovementAttacks.integer || 
             !g_friendlyBuildableFire.integer ) )
         {
           if( mod == MOD_LEVEL2_BOUNCEBALL  ||
@@ -1420,6 +1420,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
         level.humanBaseAttackTimer = level.time + DC_ATTACK_PERIOD;
         G_BroadcastEvent( EV_DCC_ATTACK, 0 );
       }
+      
     }
 
     // check for godmode
@@ -1427,6 +1428,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       return;
 
     if( targ->s.eType == ET_BUILDABLE && g_cheats.integer && g_devmapNoStructDmg.integer )
+      return;
+      
+    if( targ->s.eType == ET_BUILDABLE && !g_friendlyBuildableFire.integer 
+        && targ->buildableTeam == attacker->client->pers.teamSelection )
       return;
   }
 
