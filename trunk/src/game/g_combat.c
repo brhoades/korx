@@ -1424,14 +1424,20 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     }
 
     // check for godmode
-    if( targ->flags & FL_GODMODE  && !g_devmapNoGod.integer )
+    if( targ->flags & FL_GODMODE && !g_devmapNoGod.integer )
       return;
 
-    if( targ->s.eType == ET_BUILDABLE && g_cheats.integer && g_devmapNoStructDmg.integer )
+    if( targ->s.eType == ET_BUILDABLE && g_cheats.integer 
+        && g_devmapNoStructDmg.integer )
       return;
       
-    if( targ->s.eType == ET_BUILDABLE && !g_friendlyBuildableFire.integer 
+    if( targ->s.eType == ET_BUILDABLE && attacker->client
+        && !g_friendlyBuildableFire.integer 
         && targ->buildableTeam == attacker->client->pers.teamSelection )
+      return;
+      
+    if( targ->client && attacker->client
+        && mod == MOD_LEVEL4_EBLOBSPLASH && OnSameTeam( targ, attacker ) )
       return;
   }
 
