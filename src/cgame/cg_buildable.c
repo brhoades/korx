@@ -1282,7 +1282,7 @@ void CG_Buildable( centity_t *cent )
 
     if( team == TEAM_HUMANS )
     {
-      ent.customShader = cgs.media.humanSpawningShader;
+      ent.customShader = cgs.media.humanBuildShader;
       prebuildSound = cgs.media.humanBuildablePrebuild;
     }
     else if( team == TEAM_ALIENS )

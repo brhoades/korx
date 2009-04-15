@@ -1031,11 +1031,6 @@ void cancelBuildFire( gentity_t *ent )
       if(traceEnt->s.eType == ET_BUILDABLE && traceEnt->spawned && 
         ( traceEnt->buildableTeam == ent->client->ps.stats[ STAT_TEAM ] ))
       {
-        if( ent->client->ps.stats[ STAT_MISC ] > 0 )
-        {
-          G_AddEvent( ent, EV_BUILD_DELAY, ent->client->ps.clientNum );
-          return;
-        }
 
         bHealth = BG_FindHealthForBuildable( traceEnt->s.modelindex );
 
@@ -1052,12 +1047,6 @@ void cancelBuildFire( gentity_t *ent )
       //heal ANY player
       else if( traceEnt->client && traceEnt->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
       {
-        if( ent->client->ps.stats[ STAT_MISC ] > 0 )
-        {
-          G_AddEvent( ent, EV_BUILD_DELAY, ent->client->ps.clientNum );
-          return;
-        }
-
         hHealth = traceEnt->client->ps.stats[ STAT_MAX_HEALTH ];
 
         traceEnt->health += HBUILD_HEALRATE/2;

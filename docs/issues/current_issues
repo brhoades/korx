@@ -7,7 +7,6 @@ akane	0010	Status of teamscore menu is uncertain.
 aaron	0011	Pulse rifle alternate fire doesn't work.
 akane	0012	Need to make !restart work for skirmish time.
 aaron	0013	Retribution always gives 1 evo/credit
-aaron	0014	Can't switch to blaster, can't heal with build timer
 
 FEATURES
 ___________________________
@@ -22,17 +21,19 @@ aaron	0020	Change ckit screen color.
 akane	0021	Implement /callvote extend
 
 FIXED, NEED TESTING
-___________________________
+NAME = Person who declared TASK fixed, not original submitter.
+______________________________________________________________
 NAME	TASK	FIX REVISION	DESCRIPTION
-___________________________
+______________________________________________________________
 aaron	0008	r465		Aliens can now poison each other.
 aaron	0009	r466		Booster now provides antivenin for poisoned
 				aliens.
 
 FIXED, TESTED
-______________
+NAME = Person who declared TASK fixed, not original submitter.
+_______________________________________________________________
 NAME	TASK	FIX REVISION	DESCRIPTION
-___________________________________________
+_______________________________________________________________
 aaron	0001	r439		Remove rant charge delay.
 akane	0002	r444		[A]/[H]/[S] needs to prefix all chat messages.
 		r456
@@ -45,3 +46,5 @@ akane	0006	r459		Chaingun random recoil appears extremely
 				unrandom.
 akane	0007	r464		Rant acid now won't hurt aliens except on
 				impact.
+akane   0014    r470		Can't switch to blaster, can't heal with build
+				timer
