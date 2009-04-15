@@ -1,0 +1,6 @@
+akane
+
+New feature request. Make the humanbuild shader. Set up this shader last
+revision but left it blank. This is a replacement for the default behavior of
+using the telenode's rep_cyl for any structures being built. Assigning this
+task to myself.
