@@ -1218,6 +1218,7 @@ typedef struct
   qhandle_t   greenBuildShader;
   qhandle_t   redBuildShader;
   qhandle_t   humanSpawningShader;
+  qhandle_t   humanBuildShader;
 
   // disconnect
   qhandle_t   disconnectPS;

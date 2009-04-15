@@ -7,3 +7,34 @@ with healing. I believe I have observed this myself, in part. I *think* that
 I could switch to the blaster, though I had to hit the key to switch a couple
 times. I believe that i observed the heal does not work at all while building.
 Might need more testing to make sure.
+
+akane
+
+Problem confirmed as originally stated. Looking into it.
+
+akane
+
+Eliminated section of code in g_weapon.c that checks to see if the player has
+a structure building and denies healing if they are. Did the same thing for
+players. Moving on to blaster switching.
+
+akane
+
+Eventually found the offending section. It was labeled "If we have a charge
+don't dissipate it" Well wow, the meaning of that is clear. Next time,
+hopefully the author picks something like "If we're building, don't switch
+weapons." Though it's possible there is some other meaning in that, I'm
+doubtful. Everything seems to work fine. 
+
+akane
+
+Also noting that while fixing this, I doubled the speed at which the ckit
+heals and halved the HP gained from healing. The effect is that the healing
+rate is exactly the same as it was before, but it has more "firings" per
+second now. Also added a separate (currently blank) shader definition for
+human structures being built (no longer uses the telenode rep_cyl shader)
+
+akane
+
+I have tested this fix and give it a status of FIXED, TESTED. Planning to
+submit for r470.
