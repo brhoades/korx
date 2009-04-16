@@ -265,14 +265,6 @@ void ScoreboardMessage( gentity_t *ent )
         upgrade = UP_BATTLESUIT;
       else if( BG_InventoryContainsUpgrade( UP_JETPACK, cl->ps.stats ) )
         upgrade = UP_JETPACK;
-      else if( BG_InventoryContainsUpgrade( UP_BATTPACK, cl->ps.stats ) )
-        upgrade = UP_BATTPACK;
-      else if( BG_InventoryContainsUpgrade( UP_AMMOPACK, cl->ps.stats ) )
-        upgrade = UP_AMMOPACK;
-      else if( BG_InventoryContainsUpgrade( UP_REGEN, cl->ps.stats ) )
-        upgrade = UP_REGEN;
-      else if( BG_InventoryContainsUpgrade( UP_SURGE, cl->ps.stats ) )
-        upgrade = UP_SURGE;
       else if( BG_InventoryContainsUpgrade( UP_CLOAK, cl->ps.stats ) )
         upgrade = UP_CLOAK;
       else if( BG_InventoryContainsUpgrade( UP_HELMET, cl->ps.stats ) )
