@@ -1007,7 +1007,8 @@ Called when an alien barricade dies
 ================
 */
 void ABarricade_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod )
-{
+{    
+  int anim;
   buildHistory_t *new;
   new = BG_Alloc( sizeof( buildHistory_t ) );
   new->ID = ( ++level.lastBuildID > 1000 ) ? ( level.lastBuildID = 1 ) : level.lastBuildID;
@@ -1025,8 +1026,10 @@ void ABarricade_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker,
   new->next = NULL;
   G_LogBuild( new );
 
+  anim = self->s.torsoAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
   AGeneric_Die( self, inflictor, attacker, damage, mod );
-  ABarricade_Shrink( self, qtrue );
+  if( anim != BANIM_DESTROYED )
+    ABarricade_Shrink( self, qtrue );
 }
 
 /*
@@ -2079,6 +2082,7 @@ void HForceField_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker
 {
 //FIXME: Wire: buildlog needs this but it is buggy
   buildHistory_t *new;
+  int anim;
   new = BG_Alloc( sizeof( buildHistory_t ) );
   new->ID = ( ++level.lastBuildID > 1000 ) ? ( level.lastBuildID = 1 ) : level.lastBuildID;
   new->ent = ( attacker && attacker->client ) ? attacker : NULL;
@@ -2118,7 +2122,9 @@ void HForceField_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker
   if( attacker && attacker->client )
     G_LogDestruction( self, attacker, mod );
 
-  HForceField_Shrink( self, qtrue );
+  anim = self->s.torsoAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
+  if( anim != BANIM_DESTROYED )
+    HForceField_Shrink( self, qtrue );
 }
 
 /*
@@ -3809,7 +3815,8 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
      }
   }
 
-  if( builder->client ) {
+  if( builder->client ) 
+  {
     G_TeamCommand( builder->client->pers.teamSelection,
       va( "print \"%s is ^2being built^7 by %s^7\n\"",
         BG_FindHumanNameForBuildable( built->s.modelindex ), 
