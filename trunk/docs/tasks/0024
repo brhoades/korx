@@ -1,0 +1,6 @@
+aaron
+
+Bug Fix:
+If you are standing on a force field when it finishes building, the model will still display the idle animation. When you move off, the bbox will go up along with it, as it usually does. Something in the build functions needs to be modified just for Forcefields/Barricades.
+
+

@@ -1,0 +1,9 @@
+aaron
+
+Bug Fix:
+I've noticed in KoRx (classic, we'll call it) that barricades and forcefields around each other will tend to trigger their shrinking functions. Oddly enough, at the top of the barricade/forcefield touch function is:
+
+  if( !client || client->pers.teamSelection != TEAM_ALIENS/TEAM_HUMANS )
+    return;
+    
+So someone needs to look into this.
