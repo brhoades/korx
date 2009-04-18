@@ -1393,6 +1393,7 @@ extern  vmCvar_t  g_voteMinTime;
 
 extern  vmCvar_t  g_extendvote;
 extern  vmCvar_t  g_extendvotetime;
+extern  vmCvar_t  g_extendvotepercent;
 
 extern  vmCvar_t  g_specmetimeout;
 

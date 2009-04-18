@@ -195,6 +195,7 @@ vmCvar_t  g_mapvoteMaxTime;
 
 vmCvar_t  g_extendvote;
 vmCvar_t  g_extendvotetime;
+vmCvar_t  g_extendvotepercent;
 
 vmCvar_t  g_specmetimeout;
 
@@ -284,6 +285,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_mapvoteMaxTime, "g_mapvoteMaxTime", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_extendvote, "g_extendvote", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_extendvotetime, "g_extendvotetime", "5", CVAR_ARCHIVE, 0, qfalse },
+  { &g_extendvotepercent, "g_extendvotepercent", "65", CVAR_ARCHIVE, 0, qfalse },
   { &g_specmetimeout, "g_specmetimeout", "1", 0, 0, qfalse },
   { &g_designateVotes, "g_designateVotes", "1", CVAR_ARCHIVE, 0, qfalse },
   { &g_listEntity, "g_listEntity", "0", 0, 0, qfalse },

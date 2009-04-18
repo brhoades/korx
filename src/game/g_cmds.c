@@ -1650,13 +1650,13 @@ void Cmd_CallVote_f( gentity_t *ent )
     } 
     else if( level.suddenDeath ) 
     {
-    trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Sudden Death has already begun\n\"") );
-    return;
+      trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Sudden Death has already begun\n\"") );
+      return;
     }
     else if( G_TimeTilSuddenDeath() <= g_suddenDeathVoteDelay.integer * 1000 )
     {
-    trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Sudden Death is already immenent\n\"") );
-    return;
+      trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Sudden Death is already immenent\n\"") );
+      return;
     }
     else 
     {
@@ -1674,12 +1674,12 @@ void Cmd_CallVote_f( gentity_t *ent )
     !Q_stricmp( arg1, "extremesuddendeath" ) ||
     !Q_stricmp( arg1, "esd" ) )
   {
-    if( g_extremeSuddenDeathVoteMinTime.integer * 60000 < (level.time - level.startTime) )
-    {
-      trap_SendServerCommand( ent - g_entities,
-        "print \"callvote: It is too early to call an Extreme Sudden Death Vote\n\"" );
-      return;
-    }
+    //if( g_extremeSuddenDeathVoteMinTime.integer * 60000 < (level.time - level.startTime) )
+    //{
+    //  trap_SendServerCommand( ent - g_entities,
+    //    "print \"callvote: It is too early to call an Extreme Sudden Death Vote\n\"" );
+    //  return;
+    //}
     if( level.extremeSuddenDeath )
     {
       trap_SendServerCommand( ent - g_entities,
@@ -1747,9 +1747,10 @@ void Cmd_CallVote_f( gentity_t *ent )
     {
       //The calculations go on in g_main.c
       Com_sprintf( level.voteString, sizeof( level.voteString ),
-        "set g_extendvote 1", clientNum );
+        "set g_extendvote 1" );
       Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-        "Extend game time by %i minutes", g_extendvotetime.value );
+        "Extend game time by %i minutes", g_extendvotetime.integer );
+      level.votePassThreshold = g_extendvotepercent.value;
     }
   }
   else
