@@ -29,7 +29,6 @@ NAME	TASK	FIX REVISION	DESCRIPTION
 ______________________________________________________________
 aaron	  0008	r465		Aliens can now poison each other.
 aaron	  0009	r466		Booster now provides antivenin for poisoned aliens.
-aaron   0021  r475    Implemented /callvote extend
 
 FIXED, TESTED
 NAME = Person who declared TASK fixed, not original submitter.
@@ -46,3 +45,5 @@ akane	  0006	r459		Chaingun random recoil appears extremely unrandom.
 akane	  0007	r464		Rant acid now won't hurt aliens except on impact.
 akane   0014  r470		Can't switch to blaster, can't heal with build timer
 fox_one	0020	r474    Change ckit screen color.
+aaron   0021  r475    Implemented /callvote extend
+              r476
