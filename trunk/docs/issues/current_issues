@@ -28,8 +28,8 @@ NAME = Person who declared TASK fixed, not original submitter.
 ______________________________________________________________
 NAME	TASK	FIX REVISION	DESCRIPTION
 ______________________________________________________________
-aaron	  0008	r465		Aliens can now poison each other.
-aaron	  0009	r466		Booster now provides antivenin for poisoned
+aaron	0008	r465		Aliens can now poison each other.
+aaron	0009	r466		Booster now provides antivenin for poisoned
 				aliens.
 
 FIXED, TESTED
