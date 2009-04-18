@@ -193,6 +193,9 @@ vmCvar_t  g_devmapNoStructDmg;
 vmCvar_t  g_voteMinTime;
 vmCvar_t  g_mapvoteMaxTime;
 
+vmCvar_t  g_extendvote;
+vmCvar_t  g_extendvotetime;
+
 vmCvar_t  g_specmetimeout;
 
 vmCvar_t  g_decolourLogfiles;
@@ -278,8 +281,10 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_voteLimit, "g_voteLimit", "5", CVAR_ARCHIVE, 0, qfalse },
   { &g_mapVotesPercent, "g_mapVotesPercent", "50", CVAR_ARCHIVE, 0, qfalse },
   { &g_voteMinTime, "g_voteMinTime", "0", CVAR_ARCHIVE, 0, qfalse },
-  { &g_specmetimeout, "g_specmetimeout", "1", 0, 0, qfalse },
   { &g_mapvoteMaxTime, "g_mapvoteMaxTime", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_extendvote, "g_extendvote", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_extendvotetime, "g_extendvotetime", "5", CVAR_ARCHIVE, 0, qfalse },
+  { &g_specmetimeout, "g_specmetimeout", "1", 0, 0, qfalse },
   { &g_designateVotes, "g_designateVotes", "1", CVAR_ARCHIVE, 0, qfalse },
   { &g_listEntity, "g_listEntity", "0", 0, 0, qfalse },
   { &g_minCommandPeriod, "g_minCommandPeriod", "500", 0, 0, qfalse},
@@ -794,6 +799,9 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   
   //reset nextmap
   trap_Cvar_Set( "g_nextMap", "0" );
+  
+  //reset extendvote, just in case
+    trap_Cvar_Set( "g_extendvote", "0" );
   level.suddenDeath = qfalse;
   level.extremeSuddenDeath = qfalse;
   level.suddenDeathVote = qfalse;
@@ -1280,6 +1288,27 @@ void G_CalculateBuildPoints( void )
     level.humanBuildPointQueue--;
     level.humanNextQueueTime += g_alienBuildQueueTime.integer;
   }
+  
+  //Extend votes
+ if( g_extendvote.integer )
+ {
+    if( !g_suddenDeath.integer && g_suddenDeathTime.integer )
+    {
+      g_suddenDeathTime.integer += g_extendvotetime.integer;				
+      AP( va( "print \"^7Sudden Death is now at %d\n\"", g_suddenDeathTime.integer ) );
+    }
+    
+    if( !g_extremeSuddenDeath.integer && g_extremeSuddenDeathTime.integer )
+    {
+      g_extremeSuddenDeathTime.integer += g_extendvotetime.integer;
+      AP( va( "print \"^7Extreme Sudden Death is now at %d\n\"", g_extremeSuddenDeathTime.integer ) );
+    }
+    
+    g_timelimit.integer += g_extendvotetime.integer;
+    AP( va( "print \"^7The Time Limit is now at %d\n\"", g_timelimit.integer ) );
+
+    trap_Cvar_Set( "g_extendvote", "0" );
+ }
 
   //check to see if suddendeath has been turned off
   if( level.suddenDeath && ! g_suddenDeath.integer )
