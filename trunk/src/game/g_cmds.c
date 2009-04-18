@@ -1739,11 +1739,24 @@ void Cmd_CallVote_f( gentity_t *ent )
    	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
       "Un-Forcespec player \'%s^7\'", name );
   }
+  else if( !Q_stricmp( arg1, "extend" ) )
+  {
+    if( g_extendvotetime.value <= 0 )
+      trap_SendServerCommand( ent-g_entities, "print \"Extend votes are disabled\n\"" );    
+    else
+    {
+      //The calculations go on in g_main.c
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "set g_extendvote 1", clientNum );
+      Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
+        "Extend game time by %i minutes", g_extendvotetime.value );
+    }
+  }
   else
   {
     trap_SendServerCommand( ent-g_entities, "print \"Invalid vote string\n\"" );
     trap_SendServerCommand( ent-g_entities, "print \"Valid vote commands are: "
-      "map, map_restart, draw, nextmap, kick, mute, unmute, poll, sudden_death, and extreme_sudden_death\n" );
+      "map, map_restart, draw, nextmap, kick, mute, unmute, poll, sudden_death, extreme_sudden_death, and extend\n" );
     return;
   }
   

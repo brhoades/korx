@@ -1391,6 +1391,9 @@ extern  vmCvar_t  g_devmapNoStructDmg;
 extern  vmCvar_t  g_mapvoteMaxTime;
 extern  vmCvar_t  g_voteMinTime;
 
+extern  vmCvar_t  g_extendvote;
+extern  vmCvar_t  g_extendvotetime;
+
 extern  vmCvar_t  g_specmetimeout;
 
 extern  vmCvar_t  g_decolourLogfiles;
