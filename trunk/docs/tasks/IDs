@@ -2,8 +2,10 @@ Submitter	ID	Short Description
 _________________________________________
 aaron		0001	Remove rant charge delay.
 aaron		0002	[A]/[H]/[S] needs to prefix all chat messages.
-aaron		0003	Friendly buildable fire	(g_friendlyBuildableFire) can now be disabled.
-akane		0004	Jetpack is invisible/soundless to anyone who isn't carrying it.
+aaron		0003	Friendly buildable fire	(g_friendlyBuildableFire) can
+			now be disabled.
+akane		0004	Jetpack is invisible/soundless to anyone who isn't
+			carrying it.
 akane		0005	Stage counters broken.
 akane		0006	Changun random recoil appears extremely unrandom.
 aaron		0007	Rant acid now won't hurt aliens except on impact.
@@ -22,6 +24,9 @@ aaron		0019	Finish telenode textures.
 aaron		0020	Change ckit screen color.
 akane		0021	Implement /callvote extend
 akane		0022	Make the "humanbuild" shader
-aaron   0023  Barricades and Forcefields stay shrunk when around each other sometimes.
-aaron 	0024  Barricade's and Forcefield's model and bbox need special conditions in the build functions.
-aaron		0025  Human fire should pass through the forcefield, like the tesla.
+aaron		0023	Barricades and Forcefields stay shrunk when around
+			each other sometimes.
+aaron		0024	Barricade's and Forcefield's model and bbox need
+			special conditions in the build functions.
+aaron		0025	Human fire should pass through the forcefield, like
+			the tesla.
