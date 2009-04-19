@@ -30,3 +30,5 @@ aaron		0024	Barricade's and Forcefield's model and bbox need
 			special conditions in the build functions.
 aaron		0025	Human fire should pass through the forcefield, like
 			the tesla.
+aaron   0026  Add jetpack fuel
+aaron   0027  Fix !allowoverride

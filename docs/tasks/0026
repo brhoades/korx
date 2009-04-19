@@ -1,0 +1,11 @@
+aaron
+
+New feature request:
+The jetpack shuold have a fuel limit. For the time being, the fuel
+limit should probably only be drained by strafing or rising. It should
+be rechargable at the arm only. A charge of 50 or so should suffice,
+as anything too high allows people to get up nice and high and idle
+forever, and only dodge when they have to.
+
+Later, a gauge like the one on the luci charge can be added to indicate
+charge left.

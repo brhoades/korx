@@ -1,0 +1,7 @@
+aaron
+
+Bug:
+Allow override causes the game to crash if you use it on one person.
+It's currently commented out in the g_admin.c file, but everything
+needed to enable it is still there.
+
