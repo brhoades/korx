@@ -17,10 +17,6 @@ aspectBias ASPECT_NONE
     shadowColor 0.1 0.1 0.1 0.25      // shadow color
   }
                  
-
-
-
-
   menuDef
   {
     name main
@@ -31,7 +27,7 @@ aspectBias ASPECT_NONE
     style WINDOW_STYLE_FILLED
     backcolor 0 0 0 1
 
-    //onOpen { uiScript stopRefresh ; playlooped "ui/assets/beef_rock_8-12-04.ogg" }	
+    onOpen { uiScript stopRefresh ; playlooped "sound/Granger_Foley_v1.ogg" }	
     onESC { open quit_popmenu }
     
     #define logo_height 300
