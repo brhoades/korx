@@ -10,6 +10,7 @@ aaron	0013	Retribution always gives 1 evo/credit.
 aaron	0023 	Barricades/Forcefields activate each other.
 aaron	0024	Barricades/Forcefields show wrong animation upon building
 		sometimes.
+aaron 0027  Fix !allowoverride
 
 FEATURES
 ___________________________
@@ -22,6 +23,7 @@ aaron  	0018	Rants should be able to kill base quicker.
 aaron  	0019	Finish telenode textures.
 akane	0022	Make the "humanbuild shader"
 aaron	0025	Human fire should pass through the forcefield.
+aaron 0026  Add human jetpack fuel
 
 FIXED, NEED TESTING
 NAME = Person who declared TASK fixed, not original submitter.
