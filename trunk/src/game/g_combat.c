@@ -328,10 +328,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
     if( attacker == self || OnSameTeam( self, attacker ) )
     {
-/*      AddScore( attacker, -1 ); */
+    //AddScore( attacker, -1 );
       if( g_retribution.integer) 
       {
-        if(attacker!=self)
+        if( attacker != self )
          {
           int max = ALIEN_MAX_FRAGS, tk_value = 0;
           char *type = "evos";
@@ -376,18 +376,18 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
         if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
         {
           G_AddCreditToClient( attacker->client, -ALIEN_TK_SUICIDE_PENALTY, qtrue );
-/*          AddScore( attacker, -ALIEN_TK_SUICIDE_PENALTY ); */
+        //AddScore( attacker, -ALIEN_TK_SUICIDE_PENALTY );
         }
         else if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
         {
           G_AddCreditToClient( attacker->client, -HUMAN_TK_SUICIDE_PENALTY, qtrue );
-/*          AddScore( attacker, -HUMAN_TK_SUICIDE_PENALTY ); */
+          //AddScore( attacker, -HUMAN_TK_SUICIDE_PENALTY ); */
         }
       }
     }
     else
     {
-/*      AddScore( attacker, 1 ); */
+   //AddScore( attacker, 1 ); 
 
       attacker->client->lastKillTime = level.time;
       attacker->client->pers.statscounters.kills++;
