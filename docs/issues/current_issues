@@ -4,13 +4,11 @@ ___________________________
 NAME	TASK	DESCRIPTION
 ___________________________
 akane	0010	Status of teamscore menu is uncertain.
-aaron	0011	Pulse rifle alternate fire doesn't work.
 akane	0012	Need to make !restart work for skirmish time.
-aaron	0013	Retribution always gives 1 evo/credit.
+aaron	0013	Retribution always gives 1 evo/credit (might be wrong).
 aaron	0023 	Barricades/Forcefields activate each other.
 aaron	0024	Barricades/Forcefields show wrong animation upon building
 		sometimes.
-aaron 0027  Fix !allowoverride
 
 FEATURES
 ___________________________
@@ -33,6 +31,9 @@ ______________________________________________________________
 aaron	0008	r465		Aliens can now poison each other.
 aaron	0009	r466		Booster now provides antivenin for poisoned
 				aliens.
+aaron	0011	rN/A    Pulse rifle alternate fire doesn't work (pretty
+                    sure it has always worked, but needs testing)
+aaron 0027  r481    Fixed !allowoverride
 
 FIXED, TESTED
 NAME = Person who declared TASK fixed, not original submitter.
