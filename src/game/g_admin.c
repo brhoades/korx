@@ -5675,7 +5675,7 @@ qboolean G_admin_override( gentity_t *ent, int skiparg )
   {
     if( !Q_stricmp( cmd, "allowoverride" ) )
     {
-      ADMP( "^3!override: ^7player can already override\n" );
+      ADMP( "^3!allowoverride: ^7player can already override\n" );
       return qtrue;
     }
     vic->client->pers.denyBuild = qfalse;
