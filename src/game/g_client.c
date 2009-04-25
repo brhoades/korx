@@ -117,7 +117,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         continue;
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
         continue;
-      if( cl->ps.pm_type == PM_SPECTATOR )
+      if( cl->sess.spectatorState != SPECTATOR_NOT )
         continue;
 
       overflowed++;
