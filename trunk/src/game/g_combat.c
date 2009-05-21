@@ -321,9 +321,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   {
     attacker->client->lastkilled_client = self->s.number;
 
-    if( ( g_devmapKillerHP.integer && g_cheats.integer ) || g_KillerHP.integer )
+    if( ( ( g_devmapKillerHP.integer && g_cheats.integer ) || g_KillerHP.integer ) && attacker != self && !OnSameTeam( self, attacker ) )
     {
-      trap_SendServerCommand( self-g_entities, va( "print \"Your killer, %s^7, had %3i HP.\n\"", killerName, attacker->health ) );
+      trap_SendServerCommand( self-g_entities, va( "print \"Your killer, %s^7, had ^2%3i ^7HP.\n\"", killerName, attacker->health ) );
     }
 
     if( attacker == self || OnSameTeam( self, attacker ) )
