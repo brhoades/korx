@@ -1173,6 +1173,7 @@ typedef struct
 
 	int           lastCelOutlineCheckTime;   // holds the last time that r_celoutline was checked for
   centity_t     *locationHead;
+  int           extremesuddendeath; // holds the integer value of g_extremeSuddenDeath
 } cg_t;
 
 
