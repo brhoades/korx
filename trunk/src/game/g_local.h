@@ -517,6 +517,8 @@ struct gclient_s
   int                 lastCrushTime;        // Tyrant crush
   int                 lastspecmeTime;
   int                 blobs;
+  
+  int                 tkcredits[ MAX_CLIENTS ];
 };
 
 
