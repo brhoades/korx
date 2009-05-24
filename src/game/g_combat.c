@@ -219,6 +219,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   int       i;
   char      *killerName, *obit;
   float     totalDamage = 0.0f;
+  qboolean  tk = qfalse;
 
   if( self->client->ps.pm_type == PM_DEAD )
     return;
@@ -248,6 +249,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
           level.humanStatsCounters.teamkills++;
         }
       }
+      if( attacker != self && attacker->client->ps.stats[ STAT_TEAM ] == self->client->ps.stats[ STAT_TEAM ] )
+        tk = qtrue;
     }
     else
       killerName = "<non-client>";
@@ -297,13 +300,29 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   {
     goto finish_dying;
   }
-  // broadcast the death event to everyone
-  ent = G_TempEntity( self->r.currentOrigin, EV_OBITUARY );
-  ent->s.eventParm = meansOfDeath;
-  ent->s.otherEntityNum = self->s.number;
-  ent->s.otherEntityNum2 = killer;
-  ent->r.svFlags = SVF_BROADCAST; // send to everyone
-
+  if( !tk || meansOfDeath == MOD_TELEFRAG )
+  {
+    // broadcast the death event to everyone
+    ent = G_TempEntity( self->r.currentOrigin, EV_OBITUARY );
+    ent->s.eventParm = meansOfDeath;
+    ent->s.otherEntityNum = self->s.number;
+    ent->s.otherEntityNum2 = killer;
+    ent->r.svFlags = SVF_BROADCAST; // send to everyone
+  }
+  else 
+  {
+    // tjw: obviously this is a hack and belongs in the client, but
+    //      this works as a temporary fix.
+ 
+    trap_SendServerCommand( -1,
+      va( "print \"%s^7 was killed by ^1TEAMMATE^7 %s^7 (Did %d damage to %d max)\n\"",
+      self->client->pers.netname, attacker->client->pers.netname, self->client->tkcredits[ attacker->s.number ], self->client->ps.stats[ STAT_MAX_HEALTH ] ) );
+    trap_SendServerCommand( attacker - g_entities,
+      va( "cp \"You killed ^1TEAMMATE^7 %s\"", self->client->pers.netname ) );
+	  
+    G_LogPrintf("%s^7 was killed by ^1TEAMMATE^7 %s^7 (Did %d damage to %d max)\n",
+      self->client->pers.netname, attacker->client->pers.netname, self->client->tkcredits[ attacker->s.number ], self->client->ps.stats[ STAT_MAX_HEALTH ] );
+  }
   self->enemy = attacker;
 
   self->client->ps.persistant[ PERS_KILLED ]++;
@@ -1521,7 +1540,16 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       takeNoOverkill = 0;
   }
 
-  // do the damage
+  takeNoOverkill = take;
+  if( takeNoOverkill > targ->health ) 
+  {
+    if( targ->health > 0 )
+      takeNoOverkill = targ->health;
+    else
+      takeNoOverkill = 0;
+  }
+  
+  //do the damage
   if( take )
   {
     if( attacker->client )
@@ -1605,6 +1633,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     // add to the attackers "account" on the target
     if( attacker->client && attacker != targ && !OnSameTeam( targ, attacker ) )
       targ->credits[ attacker->client->ps.clientNum ] += take;
+    else if( attacker != targ && OnSameTeam( targ, attacker ) )
+      targ->client->tkcredits[ attacker->client->ps.clientNum ] += takeNoOverkill;
 
     if( targ->health <= 0 )
     {
