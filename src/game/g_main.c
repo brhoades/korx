@@ -236,7 +236,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_suddenDeathMode, "g_suddenDeathMode", "2", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
   { &g_suddenDeathVotePercent, "g_suddenDeathVotePercent", "75", CVAR_ARCHIVE, 0, qfalse },
   { &g_suddenDeathVoteDelay, "g_suddenDeathVoteDelay", "0", CVAR_ARCHIVE, 0, qfalse },
-  { &g_extremeSuddenDeath, "g_extremeSuddenDeath", "0", 0, 0, qfalse },
+  { &g_extremeSuddenDeath, "g_extremeSuddenDeath", "0", CVAR_SERVERINFO, 0, qfalse },
   { &g_extremeSuddenDeathTime, "g_extremeSuddenDeathTime", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
   { &g_extremeSuddenDeathVotePercent, "g_extremeSuddenDeathVotePercent", "75", CVAR_ARCHIVE, 0, qfalse },
   { &g_extremeSuddenDeathVoteMinTime, "g_extremeSuddenDeathVoteMinTime", "0", CVAR_ARCHIVE, 0, qfalse },
