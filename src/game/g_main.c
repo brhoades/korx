@@ -324,7 +324,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_sayAreaRange, "g_sayAreaRange", "1000.0", CVAR_ARCHIVE, 0, qtrue  },
 
   { &g_floodMaxDemerits, "g_floodMaxDemerits", "5000", CVAR_ARCHIVE, 0, qfalse  },
-  { &g_floodMinTime, "g_floodMinTime", "2000", CVAR_ARCHIVE, 0, qfalse  },
+  { &g_floodMinTime, "g_floodMinTime", "1000", CVAR_ARCHIVE, 0, qfalse  },
 
   { &g_markDeconstruct, "g_markDeconstruct", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse  },
   { &g_deconDead, "g_deconDead", "0", CVAR_ARCHIVE, 0, qtrue  },
