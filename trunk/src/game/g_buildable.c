@@ -2086,6 +2086,7 @@ void HForceField_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker
   new = BG_Alloc( sizeof( buildHistory_t ) );
   new->ID = ( ++level.lastBuildID > 1000 ) ? ( level.lastBuildID = 1 ) : level.lastBuildID;
   new->ent = ( attacker && attacker->client ) ? attacker : NULL;
+  
   if( new->ent )
     new->name[ 0 ] = 0;
   else
@@ -2100,8 +2101,14 @@ void HForceField_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker
   G_LogBuild( new );
 
   G_RewardAttackers( self );
-  G_SetBuildableAnim( self, BANIM_DESTROY1, qtrue );
-  G_SetIdleBuildableAnim( self, BANIM_DESTROYED );
+  
+  anim = self->s.torsoAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
+  //if ( self->spawned && self->health > 0 && anim != BANIM_DESTROYED )
+  if( anim != BANIM_DESTROYED )
+  {
+    G_SetBuildableAnim( self, BANIM_DESTROY1, qtrue );
+    G_SetIdleBuildableAnim( self, BANIM_DESTROYED );
+  }
 
   self->die = nullDieFunction;
   self->powered = qfalse; //free up power
