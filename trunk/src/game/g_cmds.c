@@ -2893,7 +2893,12 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     if( upgrade == UP_AMMO )
+    {
       G_GiveClientMaxAmmo( ent, energyOnly );
+      ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT; //To please some players
+    }
+    else if( upgrade == UP_FUEL )
+      ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT;
     else
     {
       if( upgrade == UP_BATTLESUIT )
@@ -2932,6 +2937,9 @@ void Cmd_Buy_f( gentity_t *ent )
       ent->client->ps.eFlags &= ~EF_MOVER_STOP;
       ent->client->ps.stats[ STAT_CLOAK ] = 100;
     }
+    if( upgrade == UP_JETPACK )
+      ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT;
+      
     //subtract from funds
     G_AddCreditToClient( ent->client, -(short)BG_Upgrade( upgrade )->price, qfalse );
   }
@@ -3434,6 +3442,10 @@ void Cmd_Reload_f( gentity_t *ent )
   // don't reload when full
   if( ps->ammo >= ammo )
     return;
+  
+  if( BG_InventoryContainsUpgrade( UP_JETPACK, ps->stats )
+      && ps->stats[ STAT_JPACKFUEL ] < JETPACK_FUEL_AMOUNT )
+    ps->stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT;
 
   // the animation, ammo refilling etc. is handled by PM_Weapon
   if( ent->client->ps.weaponstate != WEAPON_RELOADING )

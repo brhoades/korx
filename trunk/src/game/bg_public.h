@@ -225,7 +225,8 @@ typedef enum
   STAT_BUILDABLE, // which ghost model to display for building
   STAT_FALLDIST,  // the distance the player fell
   STAT_VIEWLOCK,  // direction to lock the view in
-  STAT_CLOAK  // when invis started
+  STAT_CLOAK,     // when invis started
+  STAT_JPACKFUEL  // jetpack fuel counter
 } statIndex_t;
 
 #define SCA_WALLCLIMBER         0x00000001
@@ -388,7 +389,8 @@ typedef enum
   UP_SURGE,
   UP_CLOAK,
 
-  UP_NUM_UPGRADES
+  UP_NUM_UPGRADES,
+  UP_FUEL
 } upgrade_t;
 
 // bitmasks for upgrade slots

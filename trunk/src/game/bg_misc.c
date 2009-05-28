@@ -3126,7 +3126,20 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     qtrue,                  //qboolean purchasable
     qtrue,                 //qboolean usable
     TEAM_HUMANS              //WUTeam_t  team;
-  }
+  },
+  {
+    UP_FUEL,                //int   upgradeNum;
+    0,                      //int   price;
+    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
+    SLOT_NONE,              //int   slots;
+    "fuel",                 //char  *upgradeName;
+    "Jetpack Fuel",           //char  *humanName;
+    "Fuel for the jetpack. This is a highly combustable, concentrated hydrogen mixture.",
+    0,
+    qtrue,                  //qboolean purchasable
+    qfalse,                 //qboolean usable
+    TEAM_HUMANS             //team_t  team;
+  },
 };
 
 int   bg_numUpgrades = sizeof( bg_upgrades ) / sizeof( bg_upgrades[ 0 ] );
