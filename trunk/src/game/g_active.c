@@ -1763,7 +1763,7 @@ void ClientThink_real( gentity_t *ent )
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
     
     //flicker jetpack power when low
-    if( client->ps.stats[ STAT_JPACKFUEL ] <= 10 && level.time % 3 )
+    if( client->ps.stats[ STAT_JPACKFUEL ] <= 10 && level.time/1000 % 3 )
         client->ps.pm_type = PM_NORMAL;
   }
 
