@@ -3130,7 +3130,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_FUEL,                //int   upgradeNum;
     0,                      //int   price;
-    ( 1 << S1 )|( 1 << S2 )|( 1 << S3 ), //int  stages
+    ( 1 << S2 )|( 1 << S3 ), //int  stages
     SLOT_NONE,              //int   slots;
     "fuel",                 //char  *upgradeName;
     "Jetpack Fuel",           //char  *humanName;
