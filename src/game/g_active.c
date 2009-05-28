@@ -912,9 +912,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
         client->ps.stats[ STAT_STATE ] |= SS_HEALING_ACTIVE;
       else
         client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_ACTIVE;
-
- 
     }
+    
+    // Take away some jetpack fuel every second, with the jetpack active.
+    if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) 
+        && client->ps.pm_type == PM_JETPACK && ent->client->ps.stats[ STAT_JPACKFUEL ] > 0 )
+      ent->client->ps.stats[ STAT_JPACKFUEL ]--;
        
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
     {
@@ -1754,6 +1757,14 @@ void ClientThink_real( gentity_t *ent )
     //switch jetpack off if no reactor or underwater
     if( ( !level.reactorPresent || ent->waterlevel >= 3 ) && !client->pers.override )
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
+    
+    //switch jetpack off if no fuel left
+    if( client->ps.stats[ STAT_JPACKFUEL ] <= 0 )
+      BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
+    
+    //flicker jetpack power when low
+    if( client->ps.stats[ STAT_JPACKFUEL ] <= 10 && level.time % 3 )
+        client->ps.pm_type = PM_NORMAL;
   }
 
   // set up for pmove
