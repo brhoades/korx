@@ -1487,6 +1487,25 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
         colinfo[ numItems ] = 1;
       }
     }
+    else if( i == UP_JETPACK )
+    {
+//      if( cg.snap->ps.stats[ STAT_CLOAK ] + CLOAK_TIME > cg.snap->serverTime )
+      if( cg.snap->ps.stats[ STAT_JPACKFUEL ] > 0 )
+      {
+        if( cg.snap->ps.stats[ STAT_JPACKFUEL ] == JETPACK_FUEL_AMOUNT )
+        {
+          colinfo[ numItems ] = 0;
+        }
+        else
+        {
+          colinfo[ numItems ] = 2;
+        }
+      }
+      else
+      {
+        colinfo[ numItems ] = 1;
+      }
+    }
 
     if( i == cg.weaponSelect - 32 )
       selectedItem = numItems;
