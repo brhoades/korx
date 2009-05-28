@@ -915,8 +915,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
     }
     
     // Take away some jetpack fuel every second, with the jetpack active.
-    if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) 
-        && client->ps.pm_type == PM_JETPACK && ent->client->ps.stats[ STAT_JPACKFUEL ] > 0 )
+    if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats ) 
+        && BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPACKFUEL ] > 0 )
       ent->client->ps.stats[ STAT_JPACKFUEL ]--;
        
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
