@@ -473,7 +473,7 @@ void Cmd_Notarget_f( gentity_t *ent )
   }
   else
   {
-    msg = "Godmode has been disabled.\n";
+    msg = "Notarget has been disabled.\n";
   }
 
   trap_SendServerCommand( ent - g_entities, va( "print \"%s\"", msg ) );
@@ -502,7 +502,7 @@ void Cmd_Noclip_f( gentity_t *ent )
   } 
   else
   {
-    msg = "Godmode has been disabled.\n";
+    msg = "Noclip has been disabled.\n";
   }
 
   trap_SendServerCommand( ent - g_entities, va( "print \"%s\"", msg ) );
@@ -534,11 +534,11 @@ void Cmd_Kill_f( gentity_t *ent )
 {
   if( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING )
   {
-    trap_SendServerCommand( ent-g_entities, "print \"Leave the hovel first (use your destroy key)\n\"" );
+    trap_SendServerCommand( ent-g_entities, "print \"Leave the hovel first\n\"" );
     return;
   }
 
-  if( g_cheats.integer )
+  if( g_cheats.integer || ent->client->pers.override )
   {
     ent->flags &= ~FL_GODMODE;
     ent->client->ps.stats[ STAT_HEALTH ] = ent->health = 0;
@@ -4550,7 +4550,7 @@ void ClientCommand( int clientNum )
   if( !( cmds[ i ].cmdFlags & CMD_INTERMISSION ) && level.intermissiontime )
     return;
 
-  if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer )
+  if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer && !ent->client->pers.override )
   {
     G_TriggerMenu( clientNum, MN_CMD_CHEAT );
     return;
