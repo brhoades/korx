@@ -1059,7 +1059,7 @@ void ABarricade_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
   gclient_t *client = other->client;
   int client_z, min_z;
 
-  if( !client || client->pers.teamSelection != TEAM_ALIENS )
+  if( !client || client->pers.teamSelection != TEAM_ALIENS || other->s.eType == ET_BUILDABLE )
     return;
 
   // Client must be high enough to pass over. Note that STEPSIZE (18) is
