@@ -33,7 +33,9 @@
   {
     "Aliens will no longer be as frustrated by camping Human players because "
     "the Adv. Dragoon is now available at Stage 2. The Adv. "
-    "Dragoon snipe attack has splash damage.\n\n"
+    "Dragoon snipe attack has splash damage. Jetpacks now require fuel to float, "
+    "so aliens do not have to worry about camping jettards, they have to come down "
+    "sometime."
   }
   "Barricades"
   {
@@ -114,6 +116,23 @@
     "charge does not instantly release when full but can be held for two "
     "seconds. The Tyrant's healing aura has been removed, find a booster, basilisk, "
     "Advanced Tyrant, or return to base to heal faster."
+  }
+  "Boosters"
+  {
+    "Boosters, as in most recent tremulous servers, provide a 2X healing aura for "
+    "aliens. But unique to KoRx, they now poison humans who touch them and provide "
+    "antivenin to any poisoned aliens." 
+  }
+  "Jetpacks"
+  {
+    "Jetpacks were initially designed, as the developers of KoRx believe, to combat "
+    "the wall crawling ability of aliens. This way, humans could get any high bases "
+    "aliens built that were traditionally out of reach. However, in most tremulous "
+    "servers now, jetpacks are used as portable camp stations, so humans can snipe "
+    "out of reach of aliens. Exclusively in KoRx, now the Jetpack requires fuel to run. The "
+    "default fuel amount is 180 seconds. It can be obtained by buying ammuniton or reloading "
+    "at the armoury."
+  
   }
   "^3Credits^7"
   {
