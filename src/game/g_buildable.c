@@ -1028,7 +1028,7 @@ void ABarricade_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker,
 
   anim = self->s.torsoAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
   AGeneric_Die( self, inflictor, attacker, damage, mod );
-  if( anim != BANIM_DESTROYED )
+  if( anim != BANIM_DESTROYED && anim != BANIM_DESTROY1 )
     ABarricade_Shrink( self, qtrue );
 }
 
@@ -2103,7 +2103,6 @@ void HForceField_Die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker
   G_RewardAttackers( self );
   
   anim = self->s.torsoAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
-  //if ( self->spawned && self->health > 0 && anim != BANIM_DESTROYED )
   if( anim != BANIM_DESTROYED )
   {
     G_SetBuildableAnim( self, BANIM_DESTROY1, qtrue );
