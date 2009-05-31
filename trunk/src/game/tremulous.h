@@ -589,7 +589,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_SEC_RECOIL_MAX_X    10
 #define LCANNON_SEC_RECOIL_SOFTEN   0.25
 
-#define XAEL_PRICE                  1000
+#define XAEL_PRICE                  800
 #define XAEL_AMMO                   120
 #define XAEL_REPEAT                 500
 #define XAEL_K_SCALE                1.0f
@@ -605,9 +605,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_CHARGE_TIME            2000
 #define XAEL_TOTAL_CHARGE           255
 #define XAEL_MIN_CHARGE             50
-#define XAEL_CHARGE_TIME_MAX        3000
+#define XAEL_CHARGE_TIME_MAX        2000
 #define XAEL_CHARGE_TIME_MIN        50
-#define XAEL_CHARGE_TIME_WARN       2000
+#define XAEL_CHARGE_TIME_WARN       1500
 #define XAEL_CHARGE_AMMO            10
 #define XAEL_PRI_RECOIL_MIN_Y       20
 #define XAEL_PRI_RECOIL_MAX_Y       50
