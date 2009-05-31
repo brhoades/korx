@@ -184,7 +184,6 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
        va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
        overflowtotal, type, overflowed, 
        ( overflowed == 1 ) ? "person" : "people" ) );
-       
     }
 
   }
