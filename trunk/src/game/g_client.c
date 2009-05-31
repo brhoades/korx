@@ -136,6 +136,8 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         overflow = 0;
       }
 
+      if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+        overflowamt = round( overflowamt / ALIEN_CREDITS_PER_FRAG );
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
       cl->pers.netname, overflowamt, type ) );
@@ -166,16 +168,24 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         overflowed++;
       }
 
+      if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+        overflowamt = round( overflowamt / ALIEN_CREDITS_PER_FRAG );
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
       cl->pers.netname, overflowamt, type ) );
       overflowamt = 0;
     }
+    
     if( overflowed > 0 )
-     trap_SendServerCommand( client - level.clients,
+    {
+      if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+        overflowamt = round( overflowamt / ALIEN_CREDITS_PER_FRAG );
+      trap_SendServerCommand( client - level.clients,
        va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
        overflowtotal, type, overflowed, 
        ( overflowed == 1 ) ? "person" : "people" ) );
+       
+    }
 
   }
   else if( client->ps.persistant[ PERS_CREDIT ] + credit > max )
