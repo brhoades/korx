@@ -124,7 +124,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_DMG       ADM(110)
 #define LEVEL3_BOUNCEBALL_REPEAT    1200
 #define LEVEL3_BOUNCEBALL_SPEED     1000.0f
-#define LEVEL3_BOUNCEBALL_RADIUS    75
+#define LEVEL3_BOUNCEBALL_RADIUS    1       // overpowered, so nerfed from 75->1
 #define LEVEL3_BOUNCEBALL_SPLASH_DMG LEVEL3_BOUNCEBALL_DMG
 #define LEVEL3_BOUNCEBALL_REGEN     10000    // msec until new barb
 
@@ -154,7 +154,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_EBLOB_REPEAT         2000
 #define LEVEL4_EBLOB_SPEED          500.0f
 #define LEVEL4_EBLOB_RANGE          200.0f
-#define LEVEL4_EBLOB_DMG            ADM(200)
+#define LEVEL4_EBLOB_DMG            ADM(150)  // nerfed from 200->150
 #define LEVEL4_EBLOB_REGEN          10000
 /*
  * ALIEN classes
