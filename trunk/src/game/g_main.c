@@ -1259,7 +1259,7 @@ int G_TimeTilExtremeSuddenDeath( void )
   return ( level.extremeSuddenDeathTime - ( level.time - level.startTime ) );
 }
 
-#define PLAYER_COUNT_MOD 5.0f
+#define PLAYER_COUNT_MOD 6.0f
 
 /*
 ============
@@ -1550,9 +1550,13 @@ void G_CalculateBuildPoints( void )
 
     if( alienPlayerCountMod < 0.1f )
       alienPlayerCountMod = 0.1f;
+    else if( alienPlayerCountMod > 1.5f )
+      alienPlayerCountMod = 1.5f;
 
     if( humanPlayerCountMod < 0.1f )
       humanPlayerCountMod = 0.1f;
+    else if( humanPlayerCountMod > 1.5f )
+      humanPlayerCountMod = 1.5f;
 
     if( g_alienStage.integer == S1 && g_alienMaxStage.integer > S1 )
       alienNextStageThreshold = (int)( ceil( (float)g_alienStage2Threshold.integer * alienPlayerCountMod ) );
