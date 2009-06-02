@@ -192,7 +192,7 @@
     "[kor][[kor]\n"
     "[rk][[rk]\n"
     "[mg][[mg]\n"
-    "\n"
+    "[soh][[soh]\n"
     "\n"
     "More KoR:\n"
     "[kor1][[kor1]\n"
