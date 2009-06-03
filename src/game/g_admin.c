@@ -5482,8 +5482,11 @@ qboolean G_admin_listrotation( gentity_t *ent, int skiparg )
           ADMBP( va( "  ^%iN^7  %-20s ^%i%s\n", 1, g_nextMap.string, 1, "next map vote" ) );
         if ( G_GetCurrentMap( i ) == j )
         {
+          if( mapRotations.rotations[ i ].maps[ j ].name != g_currentMap.string )
+            status = "map vote";
+          else
+            status = "current slot";
           statusColor = 3;
-          status = "current slot";
         }
         else if ( !G_MapExists( mapRotations.rotations[ i ].maps[ j ].name ) )
         {
