@@ -339,19 +339,36 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_TRAMPLE:
-        message = "should have gotten out of the way of";
+        if( rand() % 2 )
+          message = "should have gotten out of the way of";
+        else
+          message = "was tenderized by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
         break;
       case MOD_LEVEL4_CRUSH:
-        message = "was crushed under";
-        message2 = "'s weight";
+        if( rand() % 2 )
+        {
+          message = "was crushed under";
+          message2 = "'s weight";
+        }
+        else
+          message = "was made into a pancake by";
         break;
       case MOD_LEVEL4_EBLOB:
-        message = "got the acid of";
-        Com_sprintf( className, 64, "'s %s in his eyes",
-            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
+        if( rand() % 2 )
+        {
+          message = "got the acid of";
+          Com_sprintf( className, 64, "'s %s in his eyes",
+              BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
+        }
+        else
+        {
+          message = "got first-degree acid burns from";
+          Com_sprintf( className, 64, "'s %s",
+              BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
+        }
         message2 = className;
         break;
       case MOD_LEVEL4_EBLOBSPLASH:
@@ -365,7 +382,10 @@ static void CG_Obituary( entityState_t *ent )
         message2 = "'s poison";
         break;
       case MOD_SLOWBLOB:
-        message = "shouldn't have provoked";
+        if( rand() % 2 )
+          message = "shouldn't have provoked";
+        else
+          message = "got spat on by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
@@ -375,9 +395,12 @@ static void CG_Obituary( entityState_t *ent )
             BG_ClassConfig( PCL_ALIEN_LEVEL1 )->humanName );
         message2 = className;
         break;
-
+        
       case MOD_INFECTION:
-        message = "got infected by";
+        if( rand() % 2 )
+          message = "got infected by";
+        else
+          message = "god AIDs from";
         break;
       case MOD_TELEFRAG:
         message = "tried to invade";
