@@ -137,7 +137,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       }
 
       if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        overflowamt = round( overflowamt / ALIEN_CREDITS_PER_FRAG );
+        overflowamt = floor( overflowamt / ALIEN_CREDITS_PER_FRAG );
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
       cl->pers.netname, overflowamt, type ) );
