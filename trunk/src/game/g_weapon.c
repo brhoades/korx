@@ -38,9 +38,9 @@ addRecoil
 
 void addRecoil( float recoilMinY, float recoilMaxY, float recoilMaxX, float recoilSoften )
 {
-  pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( random() * ((recoilMaxY * recoilSoften) - (recoilMinY * recoilSoften)) + (recoilMinY * recoilSoften) );
+  /*pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( random() * ((recoilMaxY * recoilSoften) - (recoilMinY * recoilSoften)) + (recoilMinY * recoilSoften) );
   srand( level.time );
-  pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( (random() - 0.5) * 2 * recoilMaxX * recoilSoften );
+  pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( (random() - 0.5) * 2 * recoilMaxX * recoilSoften );*/
 }
 
 /*
