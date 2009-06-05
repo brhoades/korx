@@ -1430,7 +1430,7 @@ void G_CalculateBuildPoints( void )
       if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
         level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 2000;
       else if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 9;
+        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 2000;
     }
     if( level.extremeSuddenDeathWarning < TW_PASSED )
     {
