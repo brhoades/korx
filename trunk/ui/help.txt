@@ -75,7 +75,8 @@
   {
     "The Adv. Marauder now has a simpler, area-effect electric shock attack "
     "that does not need to be aimed. Use this to attack large groups of Humans "
-    "or Human bases. Additionally it can also launch three barbs.\n\n"
+    "or Human bases. The shock attack also drains human's cloaks and energy weapons. "
+    "Additionally it can also launch three barbs at a rapid rate.\n\n"
   }
   "Mark Deconstruction"
   {
