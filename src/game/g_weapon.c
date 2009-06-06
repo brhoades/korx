@@ -1463,9 +1463,19 @@ void G_UpdateZaps( gentity_t *ent )
 
   ent->zapDmg += ( (float)( level.time - level.previousTime ) / 1000.0f )
                      * LEVEL2_AREAZAP_DMG;
-  //fry them cloaks!
-  ent->client->cloakReady = qfalse;
-  ent->client->ps.stats[ STAT_CLOAK ] = 0;
+                     
+  if( ent->client && ent->client->ps.stats[ STAT_HEALTH ] > 0 )
+  {
+    //fry them cloaks!
+    if( BG_InventoryContainsUpgrade( UP_CLOAK, ent->client->ps.stats )
+        && ent->client->ps.stats[ STAT_CLOAK ] > 1 )
+      ent->client->ps.stats[ STAT_CLOAK ]--;
+    
+    //drain that ammo!
+    if( BG_Weapon( ent->client->ps.weapon )->usesEnergy && ent->client->ps.ammo >= 0 )
+      ent->client->ps.ammo--;
+  }
+  
   damage = (int)ent->zapDmg;
   // wait until we've accumulated enough damage for bsuit to take at
   // least 1 HP
