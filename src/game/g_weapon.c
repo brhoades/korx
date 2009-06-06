@@ -1349,8 +1349,8 @@ void poisonCloud( gentity_t *ent )
       if( tr.entityNum == ENTITYNUM_WORLD )
         continue;
         
-      if( humanPlayer->client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_BSUIT
-          || BG_InventoryContainsUpgrade( UP_HELMET, humanPlayer->client->ps.stats ) )
+      if( humanPlayer->client->ps.stats[ STAT_CLASS ] != PCL_HUMAN_BSUIT
+          && !BG_InventoryContainsUpgrade( UP_HELMET, humanPlayer->client->ps.stats ) )
 
       humanPlayer->client->ps.eFlags |= EF_POISONCLOUDED;
       humanPlayer->client->lastPoisonCloudedTime = level.time;
