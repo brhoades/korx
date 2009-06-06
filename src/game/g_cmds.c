@@ -2240,6 +2240,7 @@ void Cmd_Class_f( gentity_t *ent )
   vec3_t    range = { AS_OVER_RT3, AS_OVER_RT3, AS_OVER_RT3 };
   vec3_t    mins, maxs;
   int       num;
+  qboolean foundhuman = qfalse, foundovermind = qfalse;
   gentity_t *other;
 
   clientNum = ent->client - level.clients;
@@ -2340,10 +2341,16 @@ void Cmd_Class_f( gentity_t *ent )
         if( (( other->client && other->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS ) ||
             ( other->s.eType == ET_BUILDABLE && other->buildableTeam == TEAM_HUMANS ) ) &&
             !ent->client->pers.override )
-        {
-          G_TriggerMenu( clientNum, MN_A_TOOCLOSE );
-          return;
-        }
+          foundhuman = qtrue;
+        
+        if( other->s.modelindex == BA_A_OVERMIND && other->health > 0 && level.overmindPresent )
+          foundovermind = qtrue;
+      }
+      
+      if( foundhuman && !foundovermind )
+      {
+        G_TriggerMenu( clientNum, MN_A_TOOCLOSE );
+        return;
       }
 
       if( !level.overmindPresent &&
