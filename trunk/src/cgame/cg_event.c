@@ -400,7 +400,7 @@ static void CG_Obituary( entityState_t *ent )
         if( rand() % 2 )
           message = "got infected by";
         else
-          message = "god AIDs from";
+          message = "got AIDs from";
         break;
       case MOD_TELEFRAG:
         message = "tried to invade";
