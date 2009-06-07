@@ -5681,8 +5681,7 @@ qboolean G_admin_override( gentity_t *ent, int skiparg )
       ADMP( "^3!allowoverride: ^7player can already override\n" );
       return qtrue;
     }
-    vic->client->pers.denyBuild = qfalse;
-    vic->client->ps.stats[ STAT_BUILDABLE ] = BA_NONE;
+    vic->client->pers.override = qfalse;
     CPx( pids[ 0 ], "cp \"^1You've lost your ability to override\"" );
     AP( va(
       "print \"^3!denyoverride: ^7^7%s^7 has been denied override by ^7%s\n\"",
