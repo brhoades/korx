@@ -2902,7 +2902,8 @@ void Cmd_Buy_f( gentity_t *ent )
     if( upgrade == UP_AMMO )
     {
       G_GiveClientMaxAmmo( ent, energyOnly );
-      ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT; //To please some players
+      if( !energyOnly )
+        ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT; //To please some players
     }
     else if( upgrade == UP_FUEL )
       ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT;
