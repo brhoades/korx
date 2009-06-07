@@ -1567,7 +1567,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
             mod == MOD_LEVEL1_PCLOUD      ||
             mod == MOD_LEVEL2_ZAP )
           G_AddEvent( attacker, EV_ALIENRANGED_HIT, targ->s.number );
-        else
+        else if( mod != MOD_POISON )
           G_AddEvent( attacker, EV_ALIEN_HIT, targ->s.number );
       }
       if( targ->buildableTeam == attacker->client->pers.teamSelection || OnSameTeam( targ, attacker ) ) 
