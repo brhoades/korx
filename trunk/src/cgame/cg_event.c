@@ -365,7 +365,7 @@ static void CG_Obituary( entityState_t *ent )
         }
         else
         {
-          message = "got first-degree acid burns from";
+          message = "got third-degree acid burns from";
           Com_sprintf( className, 64, "'s %s",
               BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         }
