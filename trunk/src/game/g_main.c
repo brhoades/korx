@@ -1551,12 +1551,12 @@ void G_CalculateBuildPoints( void )
     if( alienPlayerCountMod < 0.1f )
       alienPlayerCountMod = 0.1f;
     else if( alienPlayerCountMod > 2.0f )
-      alienPlayerCountMod = 1.5f;
+      alienPlayerCountMod = 2.0f;
 
     if( humanPlayerCountMod < 0.1f )
       humanPlayerCountMod = 0.1f;
     else if( humanPlayerCountMod > 2.0f )
-      humanPlayerCountMod = 1.5f;
+      humanPlayerCountMod = 2.0f;
 
     if( g_alienStage.integer == S1 && g_alienMaxStage.integer > S1 )
       alienNextStageThreshold = (int)( ceil( (float)g_alienStage2Threshold.integer * alienPlayerCountMod ) );
