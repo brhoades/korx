@@ -250,7 +250,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_SPEED                1.2f
 #define LEVEL4_VALUE                AVM(800)
 #define LEVEL4_HEALTH               AHM(400)
-#define LEVEL4_REGEN                10
+#define LEVEL4_REGEN                9
 #define LEVEL4_REGEN_MSEC           ARMSEC(LEVEL4_HEALTH)
 #define LEVEL4_COST                 2
 #define LEVEL4_REGEN_RANGE          200.0f
@@ -258,9 +258,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_UPG_SPEED            1.2f
 #define LEVEL4_UPG_VALUE            AVM(1000)
 #define LEVEL4_UPG_HEALTH           AHM(600)
-#define LEVEL4_UPG_REGEN            15
+#define LEVEL4_UPG_REGEN            11
 #define LEVEL4_UPG_REGEN_MSEC       ARMSEC(LEVEL4_UPG_HEALTH)
-#define LEVEL4_UPG_COST             4
+#define LEVEL4_UPG_COST             5
 #define LEVEL4_UPG_REGEN_MOD        1.5f
 
 /*
@@ -288,7 +288,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CREEP_MODIFIER              0.5f
 #define CREEP_ARMOUR_MODIFIER       0.75f
 #define CREEP_SCALEDOWN_TIME        3000
-#define CREEP_REGEN_MOD             2.0f
+#define CREEP_REGEN_MOD             1.5f
 
 #define PCLOUD_MODIFIER             0.5f
 #define PCLOUD_ARMOUR_MODIFIER      0.75f
