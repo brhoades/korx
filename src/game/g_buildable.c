@@ -2491,9 +2491,10 @@ Think function for Tesla Generator
 void HTeslaGen_Think( gentity_t *self )
 {
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
+  self->dcc = G_FindDCC( self );
 
   //if not powered don't do anything and check again for power next think
-  if( !( self->powered = G_FindPower( self ) ) )
+  if( !( self->powered = G_FindPower( self ) ) || !self->dcc )
   {
     self->s.eFlags &= ~EF_FIRING;
     self->nextthink = level.time + POWER_REFRESH_TIME;
