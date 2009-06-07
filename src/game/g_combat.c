@@ -1234,7 +1234,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           mod == MOD_LEVEL3_POUNCE      ||
           mod == MOD_LEVEL1_PCLOUD )
         G_AddEvent( attacker, EV_ALIENRANGED_HIT, targ->s.number );
-      else
+      else if( mod != MOD_POISON )
         G_AddEvent( attacker, EV_ALIEN_HIT, targ->s.number );
     }
     return;
@@ -1368,7 +1368,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
             G_AddEvent( attacker, EV_ALIENRANGED_TEAMHIT, targ->s.number );
-          else
+          else if( mod  != MOD_POISON )
             G_AddEvent( attacker, EV_ALIEN_TEAMHIT, targ->s.number );
           return;
         }
@@ -1385,7 +1385,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
             G_AddEvent( attacker, EV_ALIENRANGED_MISS, 0 );
-          else
+          else if( mod != MOD_POISON )
             G_AddEvent( attacker, EV_ALIEN_MISS, 0 );
         }
       }
@@ -1427,7 +1427,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
             G_AddEvent( attacker, EV_ALIENRANGED_HIT, targ->s.number );
-          else
+          else if( mod != MOD_POISON )
             G_AddEvent( attacker, EV_ALIEN_HIT, targ->s.number );
       }
 
