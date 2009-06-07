@@ -503,7 +503,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_SURGE_DMG_MOD        1.25f
 #define LASGUN_SURGE_TIME_MOD       0.8
 
-#define MDRIVER_PRICE               500
+#define MDRIVER_PRICE               350
 #define MDRIVER_CLIPSIZE            4
 #define MDRIVER_MAXCLIPS            4
 #define MDRIVER_DMG                 HDM(45)
@@ -567,7 +567,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_K_SCALE             1.0f
 #define LCANNON_REPEAT              500
 #define LCANNON_RELOAD              0
-#define LCANNON_DAMAGE              HDM(200)
+#define LCANNON_DAMAGE              HDM(250)
 #define LCANNON_RADIUS              150      // primary splash damage radius
 #define LCANNON_SIZE                5        // missile bounding box radius
 #define LCANNON_SECONDARY_DAMAGE    HDM(27)
@@ -576,9 +576,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_SECONDARY_RELOAD    2000
 #define LCANNON_SECONDARY_REPEAT    1000
 #define LCANNON_SPEED               425
-#define LCANNON_CHARGE_TIME_MAX     2500
+#define LCANNON_CHARGE_TIME_MAX     2250
 #define LCANNON_CHARGE_TIME_MIN     100
-#define LCANNON_CHARGE_TIME_WARN    2000
+#define LCANNON_CHARGE_TIME_WARN    1500
 #define LCANNON_CHARGE_AMMO         10       // ammo cost of a full charge shot
 #define LCANNON_PRI_RECOIL_MIN_Y    10
 #define LCANNON_PRI_RECOIL_MAX_Y    25
@@ -595,7 +595,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_K_SCALE                1.0f
 #define XAEL_CHARGEREPEAT           1000
 #define XAEL_RELOAD                 2000
-#define XAEL_DAMAGE                 HDM(330)
+#define XAEL_DAMAGE                 HDM(350)
 #define XAEL_RADIUS                 175
 #define XAEL_SIZE                   5        // missile bounding box radius
 #define XAEL_SECONDARY_DAMAGE       HDM(15)
@@ -605,9 +605,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_CHARGE_TIME            2000
 #define XAEL_TOTAL_CHARGE           255
 #define XAEL_MIN_CHARGE             50
-#define XAEL_CHARGE_TIME_MAX        2500
+#define XAEL_CHARGE_TIME_MAX        2250
 #define XAEL_CHARGE_TIME_MIN        50
-#define XAEL_CHARGE_TIME_WARN       2000
+#define XAEL_CHARGE_TIME_WARN       1500
 #define XAEL_CHARGE_AMMO            10
 #define XAEL_PRI_RECOIL_MIN_Y       20
 #define XAEL_PRI_RECOIL_MAX_Y       50

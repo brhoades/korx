@@ -120,7 +120,7 @@
   }
   "Boosters"
   {
-    "Boosters, as in most recent tremulous servers, provide a 2X healing aura for "
+    "Boosters, as in most recent tremulous servers, provide a 1.5X healing aura for "
     "aliens. But unique to KoRx, they now poison humans who touch them and provide "
     "antivenin to any poisoned aliens." 
   }
