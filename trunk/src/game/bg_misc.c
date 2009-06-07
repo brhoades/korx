@@ -3139,7 +3139,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     qtrue,                  //qboolean purchasable
     qfalse,                 //qboolean usable
     TEAM_HUMANS             //team_t  team;
-  },
+  }
 };
 
 int   bg_numUpgrades = sizeof( bg_upgrades ) / sizeof( bg_upgrades[ 0 ] );
