@@ -1430,7 +1430,7 @@ void G_CalculateBuildPoints( void )
       if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
         level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 2000;
       else if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 2800; //Frags are 400 each, 9*400 = 2800
+        level.clients[ i ].ps.persistant[ PERS_CREDIT ] = 3200; //Frags are 400 each, 10*400 = 3200, extra for adv. rant
     }
     if( level.extremeSuddenDeathWarning < TW_PASSED )
     {
