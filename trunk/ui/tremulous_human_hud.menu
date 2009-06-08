@@ -374,6 +374,30 @@
       background "ui/assets/neutral/charge_bg_h.tga"
     }
 
+    itemDef
+    {
+      name "jpcharge"
+      rect 292 400 56 8
+      aspectBias ALIGN_CENTER
+      visible MENU_TRUE
+      decoration
+      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.5
+      ownerdraw CG_PLAYER_JPCHARGE_BAR
+      background "ui/assets/neutral/charge_cap_h.tga"
+    }
+
+    itemDef
+    {
+      name "chargebg"
+      rect 288 396 64 16
+      aspectBias ALIGN_RIGHT
+      visible MENU_TRUE
+      decoration
+      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.25
+      ownerdraw CG_PLAYER_JPCHARGE_BAR_BG
+      background "ui/assets/neutral/charge_bg_h.tga"
+    }
+
     //SELECTED
     itemDef
     {

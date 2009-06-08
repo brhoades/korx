@@ -2715,6 +2715,11 @@ void Cmd_ToggleItem_f( gentity_t *ent )
   upgrade = BG_UpgradeByName( s )->number;
   weapon = BG_WeaponByName( s )->number;
 
+  if (upgrade == UP_JETPACK)
+  {
+    ent->client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
+  }
+
   if( weapon != WP_NONE )
   {
     if( !BG_PlayerCanChangeWeapon( &ent->client->ps ) )
@@ -2903,10 +2908,10 @@ void Cmd_Buy_f( gentity_t *ent )
     {
       G_GiveClientMaxAmmo( ent, energyOnly );
       if( !energyOnly )
-        ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT; //To please some players
+        ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY; //To please some players
     }
-    else if( upgrade == UP_FUEL )
-      ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT;
+    else if( upgrade == UP_JPCHARGE )
+      ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
     else
     {
       if( upgrade == UP_BATTLESUIT )
@@ -2946,7 +2951,7 @@ void Cmd_Buy_f( gentity_t *ent )
       ent->client->ps.stats[ STAT_CLOAK ] = 100;
     }
     if( upgrade == UP_JETPACK )
-      ent->client->ps.stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT;
+      ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
       
     //subtract from funds
     G_AddCreditToClient( ent->client, -(short)BG_Upgrade( upgrade )->price, qfalse );
@@ -3452,8 +3457,8 @@ void Cmd_Reload_f( gentity_t *ent )
     return;
   
   if( BG_InventoryContainsUpgrade( UP_JETPACK, ps->stats )
-      && ps->stats[ STAT_JPACKFUEL ] < JETPACK_FUEL_AMOUNT )
-    ps->stats[ STAT_JPACKFUEL ] = JETPACK_FUEL_AMOUNT;
+      && ps->stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY )
+    ps->stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
 
   // the animation, ammo refilling etc. is handled by PM_Weapon
   if( ent->client->ps.weaponstate != WEAPON_RELOADING )

@@ -1196,6 +1196,7 @@ static void CG_DrawPlayerHealthCross( rectDef_t *rect, vec4_t ref_color )
   trap_R_SetColor( NULL );
 }
 
+// Callers: SELF -> CG_DrawPlayerChargeBar
 static float CG_ChargeProgress( void )
 {
   float progress;
@@ -1251,7 +1252,29 @@ static float CG_ChargeProgress( void )
   return progress;
 }
 
+static float CG_JPChargeProgress( void )
+{
+  float progress;
+  int min = 0, max = 0;
+
+  if ( BG_InventoryContainsUpgrade( UP_JETPACK, cg.snap->ps.stats ) )
+  {
+    min = 0;
+    max = JETPACK_CHARGE_CAPACITY;
+  }
+  if( max - min <= 0.f )
+    return 0.f;
+  progress = ( (float)cg.predictedPlayerState.stats[ STAT_JPCHARGE ] - min ) /
+             ( max - min );
+  if( progress > 1.f )
+    return 1.f;
+  if( progress < 0.f )
+    return 0.f;
+  return progress;
+}
+
 #define CHARGE_BAR_FADE_RATE 0.002f
+
 
 static void CG_DrawPlayerChargeBarBG( rectDef_t *rect, vec4_t ref_color,
                                       qhandle_t shader )
@@ -1275,6 +1298,7 @@ static void CG_DrawPlayerChargeBarBG( rectDef_t *rect, vec4_t ref_color,
 // FIXME: This should come from the element info
 #define CHARGE_BAR_CAP_SIZE 3
 
+// caller: SELF -> CG_OwnerDraw
 static void CG_DrawPlayerChargeBar( rectDef_t *rect, vec4_t ref_color,
                                     qhandle_t shader )
 {
@@ -1364,6 +1388,103 @@ static void CG_DrawPlayerChargeBar( rectDef_t *rect, vec4_t ref_color,
                            cap_size, 0, 0, 1, 1, shader );
     trap_R_DrawStretchPic( x, y - height - cap_size, width, height,
                            0, 1, 1, 1, shader );
+    trap_R_SetColor( NULL );
+  }
+}
+
+// FIXME: This should come from the element info
+#define CHARGE_BAR_CAP_SIZE 3
+
+#define CHARGE_BAR_FADE_RATE 0.002f
+
+static void CG_DrawPlayerJPChargeBarBG( rectDef_t *rect, vec4_t ref_color,
+                                      qhandle_t shader )
+{
+  vec4_t color;
+
+  if( !cg_drawChargeBar.integer || cg.JPchargeMeterAlpha <= 0.f )
+    return;
+
+  color[ 0 ] = ref_color[ 0 ];
+  color[ 1 ] = ref_color[ 1 ];
+  color[ 2 ] = ref_color[ 2 ];
+  color[ 3 ] = ref_color[ 3 ] * cg.JPchargeMeterAlpha;
+
+  // Draw meter background
+  trap_R_SetColor( color );
+  CG_DrawPic( rect->x, rect->y, rect->w, rect->h, shader );
+  trap_R_SetColor( NULL );
+}
+
+
+static void CG_DrawPlayerJPChargeBar( rectDef_t *rect, vec4_t ref_color, qhandle_t shader )
+{
+  vec4_t color;
+  float x, y, width, height, cap_size, progress;
+  
+  if( !cg_drawChargeBar.integer )
+    return;
+  
+  // Get progress proportion and pump fade
+  progress = CG_JPChargeProgress();
+  if( progress <= 0.f )
+  {
+    cg.JPchargeMeterAlpha -= CHARGE_BAR_FADE_RATE * cg.frametime;
+    if( cg.JPchargeMeterAlpha <= 0.f )
+    {
+      cg.JPchargeMeterAlpha = 0.f;
+      return;
+    }
+  }
+  else
+  {
+    cg.JPchargeMeterValue = progress;
+    cg.JPchargeMeterAlpha += CHARGE_BAR_FADE_RATE * cg.frametime;
+    if( cg.JPchargeMeterAlpha > 1.f )
+      cg.JPchargeMeterAlpha = 1.f;
+  }
+
+  color[ 0 ] = ref_color[ 0 ];
+  color[ 1 ] = ref_color[ 1 ];
+  color[ 2 ] = ref_color[ 2 ];
+  color[ 3 ] = ref_color[ 3 ] * cg.JPchargeMeterAlpha;
+
+  // flash red if jetpack is failing
+
+  if( cg.predictedPlayerState.stats[ STAT_JPCHARGE ] <= JETPACK_FAILURE && ( cg.time & 512 ) )
+  {
+    color[ 0 ] = 1.f;
+    color[ 1 ] = 0.f;
+    color[ 2 ] = 0.f;
+  }
+
+  // flash white if getting a charge from the RC
+  else if (
+       cg.predictedPlayerState.stats[ STAT_JPRCCHARGE ] &&
+       ( cg.time & 256 )
+     )
+  {
+    color[ 0 ] = 1.f;
+    color[ 1 ] = 1.f;
+    color[ 2 ] = 1.f;
+  }
+  x = rect->x;
+  y = rect->y;
+  
+  // Horizontal charge bar
+  if( rect->w >= rect->h )
+  {
+    width = ( rect->w - CHARGE_BAR_CAP_SIZE * 2 ) * cg.JPchargeMeterValue;
+    height = rect->h;
+    CG_AdjustFrom640( &x, &y, &width, &height );
+    cap_size = CHARGE_BAR_CAP_SIZE * cgs.screenXScale;
+  
+    // Draw the meter
+    trap_R_SetColor( color );
+    trap_R_DrawStretchPic( x, y, cap_size, height, 0, 0, 1, 1, shader );
+    trap_R_DrawStretchPic( x + width + cap_size, y, cap_size, height,
+                           1, 0, 0, 1, shader );
+    trap_R_DrawStretchPic( x + cap_size, y, width, height, 1, 0, 1, 1, shader );
     trap_R_SetColor( NULL );
   }
 }
@@ -2806,6 +2927,9 @@ static void CG_DrawSquadMarkers( vec4_t color )
 CG_OwnerDraw
 
 Draw an owner drawn item
+
+Declaration: /src/cgame/cg_local.h
+Callers: 
 ===============
 */
 void CG_OwnerDraw( float x, float y, float w, float h, float text_x,
@@ -2869,6 +2993,12 @@ void CG_OwnerDraw( float x, float y, float w, float h, float text_x,
       break;
     case CG_PLAYER_CHARGE_BAR:
       CG_DrawPlayerChargeBar( &rect, foreColor, shader );
+      break;
+    case CG_PLAYER_JPCHARGE_BAR:
+      CG_DrawPlayerJPChargeBar( &rect, foreColor, shader );
+      break;
+    case CG_PLAYER_JPCHARGE_BAR_BG:
+      CG_DrawPlayerJPChargeBarBG( &rect, foreColor, shader);
       break;
     case CG_PLAYER_CLIPS_RING:
       CG_DrawPlayerClipsRing( &rect, backColor, foreColor, shader );

@@ -913,12 +913,58 @@ void ClientTimerActions( gentity_t *ent, int msec )
       else
         client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_ACTIVE;
     }
-    
+/*    
     // Take away some jetpack fuel every second, with the jetpack active.
-    if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats ) 
-        && BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPACKFUEL ] > 0 )
-      ent->client->ps.stats[ STAT_JPACKFUEL ]--;
-       
+    if(
+        ent->client->ps.stats[ STAT_HEALTH ] > 0
+          &&
+        BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats )
+          &&
+        BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats )
+          &&
+        ent->client->ps.stats[ STAT_JPCHARGE ] > 0
+      )
+    {
+      ent->client->ps.stats[ STAT_JPCHARGE ]--;
+    }
+*/
+    if(
+        ent->client->ps.stats[ STAT_HEALTH ] > 0
+          &&
+        BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats )
+      )
+    { 
+      if (BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] > 0)
+      {
+        ent->client->ps.stats[ STAT_JPCHARGE ]--;
+      }
+      else if (!BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY)
+      {
+        if (ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_STD_CHARGE_RATE > JETPACK_CHARGE_CAPACITY)
+        {
+          ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
+          ent->client->ps.stats[ STAT_JPRCCHARGE ] = qfalse;
+        }
+        else
+        {
+          ent->client->ps.stats[ STAT_JPCHARGE ] += JETPACK_STD_CHARGE_RATE;
+        }
+        if (level.reactorPresent && ent->client->ps.stats[ STAT_JPRCDELAY ] < level.time)
+        {
+          if (ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_RC_CHARGE_RATE > JETPACK_CHARGE_CAPACITY)
+          {
+            ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
+            ent->client->ps.stats[ STAT_JPRCCHARGE ] = qfalse;
+          }
+          else
+          {
+            ent->client->ps.stats[ STAT_JPCHARGE ] += JETPACK_RC_CHARGE_RATE;
+            ent->client->ps.stats[ STAT_JPRCCHARGE ] = qtrue;
+          }
+        }
+      }
+    }
+
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
     {
       ent->client->pers.statscounters.timealive++;
@@ -1755,15 +1801,21 @@ void ClientThink_real( gentity_t *ent )
     }
 
     //switch jetpack off if no reactor or underwater
-    if( ( !level.reactorPresent || ent->waterlevel >= 3 ) && !client->pers.override )
+    if( ( ent->waterlevel >= 3 ) && !client->pers.override )
+    {
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
+      client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
+    }
     
     //switch jetpack off if no fuel left
-    if( client->ps.stats[ STAT_JPACKFUEL ] <= 0 )
+    if( client->ps.stats[ STAT_JPCHARGE ] <= 0 )
+    {
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
+      client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
+    }
     
     //flicker jetpack power when low
-    if( client->ps.stats[ STAT_JPACKFUEL ] <= 10 && level.time/1000 % 3 )
+    if( client->ps.stats[ STAT_JPCHARGE ] <= JETPACK_FAILURE && level.time/1000 % 3 )
         client->ps.pm_type = PM_NORMAL;
   }
 
