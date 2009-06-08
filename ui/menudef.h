@@ -197,4 +197,6 @@
 
 #define UI_CREDITS                        83
 #define UI_SCREEN                         84
+#define CG_PLAYER_JPCHARGE_BAR            85
+#define CG_PLAYER_JPCHARGE_BAR_BG         86
 #endif

@@ -226,7 +226,9 @@ typedef enum
   STAT_FALLDIST,  // the distance the player fell
   STAT_VIEWLOCK,  // direction to lock the view in
   STAT_CLOAK,     // when invis started
-  STAT_JPACKFUEL  // jetpack fuel counter
+  STAT_JPCHARGE,   // jetpack fuel counter
+  STAT_JPRCDELAY,  // jetpack RC charge delay
+  STAT_JPRCCHARGE   // getting a charge from the rc
 } statIndex_t;
 
 #define SCA_WALLCLIMBER         0x00000001
@@ -390,7 +392,7 @@ typedef enum
   UP_CLOAK,
 
   UP_NUM_UPGRADES,
-  UP_FUEL
+  UP_JPCHARGE
 } upgrade_t;
 
 // bitmasks for upgrade slots

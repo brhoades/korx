@@ -3128,13 +3128,13 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     TEAM_HUMANS              //WUTeam_t  team;
   },
   {
-    UP_FUEL,                //int   upgradeNum;
+    UP_JPCHARGE,                //int   upgradeNum;
     0,                      //int   price;
     ( 1 << S2 )|( 1 << S3 ), //int  stages
     SLOT_NONE,              //int   slots;
-    "fuel",                 //char  *upgradeName;
-    "Jetpack Fuel",           //char  *humanName;
-    "Fuel for the jetpack. This is a highly combustable, concentrated hydrogen mixture.",
+    "jpcharge",                 //char  *upgradeName;
+    "Jetpack Charge",           //char  *humanName;
+    "Rapid capacitor charge for jetpack.",
     0,
     qtrue,                  //qboolean purchasable
     qfalse,                 //qboolean usable
