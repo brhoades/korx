@@ -2686,7 +2686,8 @@ static void UI_LoadHumanArmouryConsBuys( void )
         ) &&
         (
           BG_Upgrade( i )->number == UP_AMMO ||
-          BG_Upgrade( i )->number == UP_MEDKIT
+          BG_Upgrade( i )->number == UP_MEDKIT ||
+          BG_Upgrade( i )->number == UP_GRENADE
         )
       )
     {
@@ -2707,29 +2708,6 @@ static void UI_LoadHumanArmouryConsBuys( void )
       uiInfo.humanArmouryConsBuyList[ j ].cmd = String_Alloc( buffer );
       uiInfo.humanArmouryConsBuyList[ j ].type = INFOTYPE_UPGRADE;
       uiInfo.humanArmouryConsBuyList[ j ].v.upgrade = i;
-
-      j++;
-
-      uiInfo.humanArmouryConsBuyCount++;
-    }
-  }
-  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-  {
-    if( BG_Weapon( i )->team == TEAM_HUMANS && BG_Weapon( i )->purchasable && BG_WeaponAllowedInStage( i, stage ) && BG_WeaponIsAllowed( i ) && i != uiInfo.weapon && BG_Weapon( i )->number == WP_GRENADE )
-    {
-      char buffer[ MAX_STRING_CHARS ] = "";
-      int price = BG_Weapon( i )->price;
-      if( uiInfo.weapon != WP_NONE && uiInfo.weapon != WP_BLASTER )
-      {
-        Com_sprintf( buffer, sizeof( buffer ), "cmd sell %s;", BG_Weapon( uiInfo.weapon )->name );
-        price -= BG_Weapon( uiInfo.weapon )->price;
-      }
-      uiInfo.humanArmouryConsBuyList[ j ].text = String_Alloc( price <= uiInfo.credits ?
-        BG_Weapon( i )->humanName : va( "^1%s", BG_Weapon( i )->humanName ) );
-      Com_sprintf( buffer, sizeof( buffer ), "%scmd buy %s\n", buffer, BG_Weapon( i )->name );
-      uiInfo.humanArmouryConsBuyList[ j ].cmd = String_Alloc( buffer );
-      uiInfo.humanArmouryConsBuyList[ j ].type = INFOTYPE_WEAPON;
-      uiInfo.humanArmouryConsBuyList[ j ].v.weapon = i;
 
       j++;
 
