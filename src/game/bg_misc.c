@@ -2992,7 +2992,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "Medkit",               //char  *humanName;
     "",
     "icons/iconu_atoxin",
-    qfalse,                 //qboolean purchasable
+    qtrue,                 //qboolean purchasable
     qtrue,                  //qboolean usable
     TEAM_HUMANS             //team_t  team;
   },

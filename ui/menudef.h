@@ -87,6 +87,10 @@
 #define FEEDER_HELP_LIST                  21    // help topics
 
 #define FEEDER_RESOLUTIONS                22    // display resolutions
+#define FEEDER_TREMHUMANARMOURYBUY_ARM    23	// armor buy
+#define FEEDER_TREMHUMANARMOURYBUY_PACK   24    // backpack buy
+#define FEEDER_TREMHUMANARMOURYBUY_UP     25    // upgrade buy
+#define FEEDER_TREMHUMANARMOURYBUY_CONS   26    // consumables buy
 
 // display flags
 #define UI_SHOW_FAVORITESERVERS           0x00000001

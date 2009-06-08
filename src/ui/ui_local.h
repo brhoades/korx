@@ -236,6 +236,22 @@ typedef struct
   int         humanArmouryBuyCount;
   int         humanArmouryBuyIndex;
 
+  menuItem_t  humanArmouryArmBuyList[ 32 ];
+  int         humanArmouryArmBuyCount;
+  int         humanArmouryArmBuyIndex;
+
+  menuItem_t  humanArmouryPackBuyList[ 32 ];
+  int         humanArmouryPackBuyCount;
+  int         humanArmouryPackBuyIndex;
+
+  menuItem_t  humanArmouryUpBuyList[ 32 ];
+  int         humanArmouryUpBuyCount;
+  int         humanArmouryUpBuyIndex;
+
+  menuItem_t  humanArmouryConsBuyList[ 32 ];
+  int         humanArmouryConsBuyCount;
+  int         humanArmouryConsBuyIndex;
+
   menuItem_t  humanArmourySellList[ 32 ];
   int         humanArmourySellCount;
   int         humanArmourySellIndex;
