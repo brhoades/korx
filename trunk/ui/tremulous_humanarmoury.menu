@@ -32,6 +32,10 @@
     onOpen
     {
       uiScript LoadHumanArmouryBuys;
+      uiScript LoadHumanArmouryArmBuys;
+      uiScript LoadHumanArmouryPackBuys;
+      uiScript LoadHumanArmouryUpBuys;
+      uiScript LoadHumanArmouryConsBuys;
       uiScript LoadHumanArmourySells;
       setFocus list
     }
