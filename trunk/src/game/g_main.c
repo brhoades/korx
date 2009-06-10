@@ -803,7 +803,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   trap_Cvar_Set( "g_nextMap", "0" );
   
   //reset extendvote, just in case
-    trap_Cvar_Set( "g_extendvote", "0" );
+  trap_Cvar_Set( "g_extendvote", "0" );
   level.suddenDeath = qfalse;
   level.extremeSuddenDeath = qfalse;
   level.suddenDeathVote = qfalse;
