@@ -32,10 +32,10 @@
     onOpen
     {
       uiScript LoadHumanArmouryBuys;
-      uiScript LoadHumanArmouryArmBuys;
-      uiScript LoadHumanArmouryPackBuys;
-      uiScript LoadHumanArmouryUpBuys;
-      uiScript LoadHumanArmouryConsBuys;
+      //uiScript LoadHumanArmouryArmBuys;
+      //uiScript LoadHumanArmouryPackBuys;
+      //uiScript LoadHumanArmouryUpBuys;
+      //uiScript LoadHumanArmouryConsBuys;
       uiScript LoadHumanArmourySells;
       setFocus list
     }
@@ -229,102 +229,43 @@
       }
     }
 
-    itemDef
-    {
-      name "what_the_hell_is_pc_load_letter"
-      text "Load"
-      rect 10 185 210 20
-      type ITEM_TYPE_TEXT
-      textstyle ITEM_TEXTSTYLE_NORMAL
-      style WINDOW_STYLE_EMPTY
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .33
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      decoration
-    }
+//    itemDef
+//    {
+//      name "what_the_hell_is_pc_load_letter"
+//      text "Load"
+//      rect 10 185 210 20
+//      type ITEM_TYPE_TEXT
+//      textstyle ITEM_TEXTSTYLE_NORMAL
+//      style WINDOW_STYLE_EMPTY
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .33
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      decoration
+//    }
 
-    itemDef
-    {
-      name "load_l1"
-      text "Loadout 1"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 10 210 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
-
-    itemDef
-    {
-      name "load_l2"
-      text "Loadout 2"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 120 210 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
-
-    itemDef
-    {
-      name "load_l3"
-      text "Loadout 3"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 10 235 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
-
-    itemDef
-    {
-      name "load_l4"
-      text "Loadout 4"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 120 235 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
+//    repeats 4 times with ascending numbers
+//    itemDef
+//    {
+//      name "load_l1"
+//      text "Loadout 1"
+//      type ITEM_TYPE_BUTTON
+//      style WINDOW_STYLE_EMPTY
+//      rect 10 210 100 20
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .4
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      action
+//      {
+//        play "sound/misc/menu4.wav";
+//        close tremulous_humanarmoury
+//      }
+//    }
 
     itemDef
     {
@@ -370,102 +311,43 @@
       }
     }
 
-    itemDef
-    {
-      name "save_label"
-      text "Save"
-      rect 340 5 100 20
-      type ITEM_TYPE_TEXT
-      textstyle ITEM_TEXTSTYLE_NORMAL
-      style WINDOW_STYLE_EMPTY
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .33
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      decoration
-    }
+//    itemDef
+//    {
+//      name "save_label"
+//      text "Save"
+//      rect 340 5 100 20
+//      type ITEM_TYPE_TEXT
+//      textstyle ITEM_TEXTSTYLE_NORMAL
+//      style WINDOW_STYLE_EMPTY
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .33
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      decoration
+//    }
 
-    itemDef
-    {
-      name "save_l1"
-      text "Loadout 1"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 340 30 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
-
-    itemDef
-    {
-      name "save_l2"
-      text "Loadout 2"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 340 55 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
-
-    itemDef
-    {
-      name "save_l3"
-      text "Loadout 3"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 340 80 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
-
-    itemDef
-    {
-      name "load_l4"
-      text "Loadout 4"
-      type ITEM_TYPE_BUTTON
-      style WINDOW_STYLE_EMPTY
-      rect 340 105 100 20
-      textalign ALIGN_CENTER
-      textvalign VALIGN_CENTER
-      textscale .4
-      forecolor 1 1 1 1
-      backcolor .5 0 0 .25
-      visible MENU_TRUE
-      action
-      {
-        play "sound/misc/menu4.wav";
-        close tremulous_humanarmoury
-      }
-    }
+//repeats four times with ascending numbers
+//    itemDef
+//    {
+//      name "save_l1"
+//      text "Loadout 1"
+//      type ITEM_TYPE_BUTTON
+//      style WINDOW_STYLE_EMPTY
+//      rect 340 30 100 20
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .4
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      action
+//      {
+//        play "sound/misc/menu4.wav";
+//        close tremulous_humanarmoury
+//      }
+//    }
 
     itemDef
     {

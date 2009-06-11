@@ -928,39 +928,24 @@ void ClientTimerActions( gentity_t *ent, int msec )
       ent->client->ps.stats[ STAT_JPCHARGE ]--;
     }
 */
-    if(
-        ent->client->ps.stats[ STAT_HEALTH ] > 0
-          &&
-        BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats )
-      )
+    if( ent->client->ps.stats[ STAT_HEALTH ] > 0 
+        && BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats ) )
     { 
-      if (BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] > 0)
-      {
+      if( BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] > 0 )
         ent->client->ps.stats[ STAT_JPCHARGE ]--;
-      }
-      else if (!BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY)
+      else if( !BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY )
       {
-        if (ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_STD_CHARGE_RATE > JETPACK_CHARGE_CAPACITY)
-        {
+        if( ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_STD_CHARGE_RATE > JETPACK_CHARGE_CAPACITY )
           ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
-          ent->client->ps.stats[ STAT_JPRCCHARGE ] = qfalse;
-        }
         else
-        {
           ent->client->ps.stats[ STAT_JPCHARGE ] += JETPACK_STD_CHARGE_RATE;
-        }
-        if (level.reactorPresent && ent->client->ps.stats[ STAT_JPRCDELAY ] < level.time)
+        
+        if( ent->client->ps.stats[ STAT_JPRCDELAY ] < level.time && level.reactorPresent )
         {
-          if (ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_RC_CHARGE_RATE > JETPACK_CHARGE_CAPACITY)
-          {
+          if( ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_RC_CHARGE_RATE > JETPACK_CHARGE_CAPACITY )
             ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
-            ent->client->ps.stats[ STAT_JPRCCHARGE ] = qfalse;
-          }
           else
-          {
             ent->client->ps.stats[ STAT_JPCHARGE ] += JETPACK_RC_CHARGE_RATE;
-            ent->client->ps.stats[ STAT_JPRCCHARGE ] = qtrue;
-          }
         }
       }
     }
@@ -1807,16 +1792,13 @@ void ClientThink_real( gentity_t *ent )
       client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
     }
     
-    //switch jetpack off if no fuel left
+    //switch jetpack off if there is no fuel left
     if( client->ps.stats[ STAT_JPCHARGE ] <= 0 )
     {
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
       client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
     }
-    
-    //flicker jetpack power when low
-    if( client->ps.stats[ STAT_JPCHARGE ] <= JETPACK_FAILURE && level.time/1000 % 3 )
-        client->ps.pm_type = PM_NORMAL;
+
   }
 
   // set up for pmove
