@@ -33,7 +33,7 @@
   {
     "Aliens will no longer be as frustrated by camping Human players because "
     "the Adv. Dragoon is now available at Stage 2. The Adv. "
-    "Dragoon snipe attack has splash damage. Jetpacks now require fuel to float, "
+    "Dragoon snipe attack has splash damage. Jetpacks now require power to float, "
     "so aliens do not have to worry about camping jettards, they have to come down "
     "sometime."
   }
@@ -130,9 +130,9 @@
     "the wall crawling ability of aliens. This way, humans could get any high bases "
     "aliens built that were traditionally out of reach. However, in most tremulous "
     "servers now, jetpacks are used as portable camp stations, so humans can snipe "
-    "out of reach of aliens. Exclusively in KoRx, now the Jetpack requires fuel to run. The "
-    "default fuel amount is 180 seconds. It can be obtained by buying ammuniton or reloading "
-    "at the armoury."
+    "out of reach of aliens. Exclusively in KoRx, now the Jetpack requires battery power to 
+    "run. The default pwer amount is 180 seconds. It can be obtained at the arm "
+    "but also recharges over time, quicker with the RC than without it."
   
   }
   "Cloak"
