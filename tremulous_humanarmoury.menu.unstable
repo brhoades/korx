@@ -1,0 +1,420 @@
+#include "ui/menudef.h"
+{
+  #define W         550
+  #define H         250
+  #define BORDER    10
+  #define LIST_W    140
+  #define LIST_H    (H-(2*BORDER))
+  #define LIST_LX   BORDER
+  #define LIST_LY   BORDER
+  #define LIST_RX   (W-(BORDER+LIST_W))
+  #define LIST_RY   BORDER
+  #define BUTT_H    25
+  #define BUTT_Y    (H-(BORDER+BUTT_H))
+  #define INFO_W    (W-((4*BORDER)+(2*LIST_W)))
+  #define INFO_H    (H-((3*BORDER)+BUTT_H))
+  #define INFO_X    ((2*BORDER)+LIST_W)
+  #define INFO_Y    BORDER
+  #define INFO_TOFF 6
+  #define BUTT_X    INFO_X
+  #define BUTT_W    (INFO_W/3)
+
+  menuDef
+  {
+    name "tremulous_humanarmoury"
+    visible MENU_FALSE
+    fullscreen MENU_FALSE
+    outOfBoundsClick
+    rect (320-(W/2)) (240-(H/2)) W H
+    focusColor 1 .75 0 1
+    style WINDOW_STYLE_FILLED
+    popup
+    onOpen
+    {
+      uiScript LoadHumanArmouryBuys;
+      //uiScript LoadHumanArmouryArmBuys;
+      //uiScript LoadHumanArmouryPackBuys;
+      //uiScript LoadHumanArmouryUpBuys;
+      //uiScript LoadHumanArmouryConsBuys;
+      uiScript LoadHumanArmourySells;
+      setFocus list
+    }
+
+    itemDef
+    {
+      name "armoury_window"
+      rect 0 0 560 265
+      style WINDOW_STYLE_FILLED
+      backcolor 0 0 0 0.75
+      visible MENU_TRUE
+      decoration
+      border WINDOW_BORDER_ROUNDED
+      borderSize 1.0
+      borderColor 0.5 0.5 0.5 1
+    }
+
+    itemDef
+    {
+      name "arm_label"
+      text "Armour"
+      rect 10 5 100 20
+      type ITEM_TYPE_TEXT
+      textstyle ITEM_TEXTSTYLE_NORMAL
+      style WINDOW_STYLE_EMPTY
+      textalign ALIGN_CENTER
+      textvalign VALIGN_CENTER
+      textscale .33
+      forecolor 1 1 1 1
+      backcolor .5 0 0 .25
+      visible MENU_TRUE
+      decoration
+    }
+
+    itemDef
+    {
+      name "arm_buylist"
+      rect 10 25 100 65
+      type ITEM_TYPE_LISTBOX
+      style WINDOW_STYLE_FILLED
+      elementwidth 100
+      elementheight 20
+      textscale .33
+      elementtype LISTBOX_TEXT
+      feeder FEEDER_TREMHUMANARMOURYBUY_ARM
+      border WINDOW_BORDER_ROUNDED
+      bordercolor   0.5 0.5 0.5 0.5
+      forecolor     1   1   1   1
+      backcolor     0 0 0 0.5
+      outlinecolor  0.1 0.1 0.1 0.5
+      visible MENU_TRUE
+      noscrollbar
+      action
+      {
+        play "sound/misc/menu1.wav";
+        uiScript BuyFromArmoury_Arm;
+        reset selllist;
+        reset arm_buylist;
+      }
+    }
+
+    itemDef
+    {
+      name "pack_label"
+      text "Backpacks"
+      rect 10 95 100 20
+      type ITEM_TYPE_TEXT
+      textstyle ITEM_TEXTSTYLE_NORMAL
+      style WINDOW_STYLE_EMPTY
+      textalign ALIGN_CENTER
+      textvalign VALIGN_CENTER
+      textscale .33
+      forecolor 1 1 1 1
+      backcolor .5 0 0 .25
+      visible MENU_TRUE
+      decoration
+    }
+
+    itemDef
+    {
+      name "pack_buylist"
+      rect 10 115 100 65
+      type ITEM_TYPE_LISTBOX
+      style WINDOW_STYLE_FILLED
+      elementwidth 100
+      elementheight 20
+      textscale .33
+      elementtype LISTBOX_TEXT
+      feeder FEEDER_TREMHUMANARMOURYBUY_PACK
+      border WINDOW_BORDER_ROUNDED
+      bordercolor   0.5 0.5 0.5 0.5
+      forecolor     1   1   1   1
+      backcolor     0 0 0 0.5
+      outlinecolor  0.1 0.1 0.1 0.5
+      visible MENU_TRUE
+      noscrollbar
+      action
+      {
+        play "sound/misc/menu1.wav";
+        uiScript BuyFromArmoury_Pack;
+        reset selllist;
+        reset pack_buylist;
+      }
+    }
+
+    itemDef
+    {
+      name "up_label"
+      text "Upgrades"
+      rect 120 5 100 20
+      type ITEM_TYPE_TEXT
+      textstyle ITEM_TEXTSTYLE_NORMAL
+      style WINDOW_STYLE_EMPTY
+      textalign ALIGN_CENTER
+      textvalign VALIGN_CENTER
+      textscale .33
+      forecolor 1 1 1 1
+      backcolor .5 0 0 .25
+      visible MENU_TRUE
+      decoration
+    }
+
+    itemDef
+    {
+      name "up_buylist"
+      rect 120 25 100 65
+      type ITEM_TYPE_LISTBOX
+      style WINDOW_STYLE_FILLED
+      elementwidth 100
+      elementheight 20
+      textscale .33
+      elementtype LISTBOX_TEXT
+      feeder FEEDER_TREMHUMANARMOURYBUY_UP
+      border WINDOW_BORDER_ROUNDED
+      bordercolor   0.5 0.5 0.5 0.5
+      forecolor     1   1   1   1
+      backcolor     0 0 0 0.5
+      outlinecolor  0.1 0.1 0.1 0.5
+      visible MENU_TRUE
+      noscrollbar
+      action
+      {
+        play "sound/misc/menu1.wav";
+        uiScript BuyFromArmoury_Up;
+        reset selllist;
+        reset up_buylist;
+      }
+    }
+
+    itemDef
+    {
+      name "cons_label"
+      text "Consumables"
+      rect 120 95 100 20
+      type ITEM_TYPE_TEXT
+      textstyle ITEM_TEXTSTYLE_NORMAL
+      style WINDOW_STYLE_EMPTY
+      textalign ALIGN_CENTER
+      textvalign VALIGN_CENTER
+      textscale .33
+      forecolor 1 1 1 1
+      backcolor .5 0 0 .25
+      visible MENU_TRUE
+      decoration
+    }
+
+    itemDef
+    {
+      name "cons_buylist"
+      rect 120 115 100 65
+      type ITEM_TYPE_LISTBOX
+      style WINDOW_STYLE_FILLED
+      elementwidth 100
+      elementheight 20
+      textscale .33
+      elementtype LISTBOX_TEXT
+      feeder FEEDER_TREMHUMANARMOURYBUY_CONS
+      border WINDOW_BORDER_ROUNDED
+      bordercolor   0.5 0.5 0.5 0.5
+      forecolor     1   1   1   1
+      backcolor     0 0 0 0.5
+      outlinecolor  0.1 0.1 0.1 0.5
+      visible MENU_TRUE
+      noscrollbar
+      action
+      {
+        play "sound/misc/menu1.wav";
+        uiScript BuyFromArmoury_Cons;
+        reset selllist;
+        reset cons_buylist;
+      }
+    }
+
+//    itemDef
+//    {
+//      name "what_the_hell_is_pc_load_letter"
+//      text "Load"
+//      rect 10 185 210 20
+//      type ITEM_TYPE_TEXT
+//      textstyle ITEM_TEXTSTYLE_NORMAL
+//      style WINDOW_STYLE_EMPTY
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .33
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      decoration
+//    }
+
+//    repeats 4 times with ascending numbers
+//    itemDef
+//    {
+//      name "load_l1"
+//      text "Loadout 1"
+//      type ITEM_TYPE_BUTTON
+//      style WINDOW_STYLE_EMPTY
+//      rect 10 210 100 20
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .4
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      action
+//      {
+//        play "sound/misc/menu4.wav";
+//        close tremulous_humanarmoury
+//      }
+//    }
+
+    itemDef
+    {
+      name "buy_label"
+      text "Weapons"
+      rect 230 5 100 20
+      type ITEM_TYPE_TEXT
+      textstyle ITEM_TEXTSTYLE_NORMAL
+      style WINDOW_STYLE_EMPTY
+      textalign ALIGN_CENTER
+      textvalign VALIGN_CENTER
+      textscale .33
+      forecolor 1 1 1 1
+      backcolor .5 0 0 .25
+      visible MENU_TRUE
+      decoration
+    }
+
+    itemDef
+    {
+      name "buylist"
+      rect 230 25 100 230
+      type ITEM_TYPE_LISTBOX
+      style WINDOW_STYLE_FILLED
+      elementwidth 100
+      elementheight 20
+      textscale .33
+      elementtype LISTBOX_TEXT
+      feeder FEEDER_TREMHUMANARMOURYBUY
+      border WINDOW_BORDER_ROUNDED
+      bordercolor   0.5 0.5 0.5 0.5
+      forecolor     1   1   1   1
+      backcolor     0 0 0 0.5
+      outlinecolor  0.1 0.1 0.1 0.5
+      visible MENU_TRUE
+      noscrollbar
+      action
+      {
+        play "sound/misc/menu1.wav";
+        uiScript BuyFromArmoury;
+        reset selllist;
+        reset buylist;
+      }
+    }
+
+//    itemDef
+//    {
+//      name "save_label"
+//      text "Save"
+//      rect 340 5 100 20
+//      type ITEM_TYPE_TEXT
+//      textstyle ITEM_TEXTSTYLE_NORMAL
+//      style WINDOW_STYLE_EMPTY
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .33
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      decoration
+//    }
+
+//repeats four times with ascending numbers
+//    itemDef
+//    {
+//      name "save_l1"
+//      text "Loadout 1"
+//      type ITEM_TYPE_BUTTON
+//      style WINDOW_STYLE_EMPTY
+//      rect 340 30 100 20
+//      textalign ALIGN_CENTER
+//      textvalign VALIGN_CENTER
+//      textscale .4
+//      forecolor 1 1 1 1
+//      backcolor .5 0 0 .25
+//      visible MENU_TRUE
+//      action
+//      {
+//        play "sound/misc/menu4.wav";
+//        close tremulous_humanarmoury
+//      }
+//    }
+
+    itemDef
+    {
+      name "selllist_label"
+      text "Inventory"
+      rect 450 5 100 20
+      type ITEM_TYPE_TEXT
+      textstyle ITEM_TEXTSTYLE_NORMAL
+      style WINDOW_STYLE_EMPTY
+      textalign ALIGN_CENTER
+      textvalign VALIGN_CENTER
+      textscale .33
+      forecolor 1 1 1 1
+      backcolor .5 0 0 .25
+      visible MENU_TRUE
+      decoration
+    }
+
+    itemDef
+    {
+      name "selllist"
+      rect 450 25 100 190
+      type ITEM_TYPE_LISTBOX
+      style WINDOW_STYLE_FILLED
+      elementwidth 100
+      elementheight 20
+      textscale .33
+      elementtype LISTBOX_TEXT
+      feeder FEEDER_TREMHUMANARMOURYSELL
+      border WINDOW_BORDER_ROUNDED
+      bordercolor   0.5 0.5 0.5 0.5
+      forecolor     1   1   1   1
+      backcolor     0 0 0 0.5
+      outlinecolor  0.1 0.1 0.1 0.5
+      visible MENU_TRUE
+      noscrollbar
+      action
+      {
+        play "sound/misc/menu1.wav";
+        uiScript SellToArmoury;
+        reset selllist;
+        reset buylist;
+        reset arm_buylist;
+        reset pack_buylist;
+        reset up_buylist;
+        reset cons_buylist;
+      }
+    }
+
+    itemDef
+    {
+      name "Close"
+      text "Close"
+      type ITEM_TYPE_BUTTON
+      style WINDOW_STYLE_EMPTY
+      rect 450 220 100 20
+      textalign ALIGN_CENTER
+      textvalign VALIGN_CENTER
+      textscale .4
+      forecolor 1 1 1 1
+      backcolor .5 0 0 .25
+      visible MENU_TRUE
+      action
+      {
+        play "sound/misc/menu4.wav";
+        close tremulous_humanarmoury
+      }
+    }
+  }
+}
