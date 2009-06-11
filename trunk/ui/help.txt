@@ -130,7 +130,7 @@
     "the wall crawling ability of aliens. This way, humans could get any high bases "
     "aliens built that were traditionally out of reach. However, in most tremulous "
     "servers now, jetpacks are used as portable camp stations, so humans can snipe "
-    "out of reach of aliens. Exclusively in KoRx, now the Jetpack requires battery power to 
+    "out of reach of aliens. Exclusively in KoRx, now the Jetpack requires battery power to "
     "run. The default pwer amount is 180 seconds. It can be obtained at the arm "
     "but also recharges over time, quicker with the RC than without it."
   
