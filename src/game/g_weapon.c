@@ -1778,8 +1778,8 @@ void FireWeapon2( gentity_t *ent )
       else
       {
         addRecoil(SHOTGUN_SEC_RECOIL_MIN_Y,SHOTGUN_SEC_RECOIL_MAX_Y,SHOTGUN_SEC_RECOIL_MAX_X,1);
-      }
-      break; */
+      }*/
+      break;
 
     case WP_LUCIFER_CANNON:
       LCChargeFire( ent, qtrue );
