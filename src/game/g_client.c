@@ -102,8 +102,8 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
   //This doesn't work so well in ESD or with /give all
   if( client->ps.persistant[ PERS_CREDIT ] + credit > max 
-      && !g_extremeSuddenDeath.value && !g_cheats.value
-      && g_allowShare.value )
+      && !g_extremeSuddenDeath.integer && !g_cheats.integer
+      && g_allowShare.integer&& cap )
   {
     overflow = client->ps.persistant[ PERS_CREDIT ] + credit - max;
     client->ps.persistant[ PERS_CREDIT ] = max;
@@ -136,12 +136,10 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         overflow = 0;
       }
 
-      if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        overflowamt = floor( overflowamt/ALIEN_CREDITS_PER_FRAG );
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
-      cl->pers.netname, overflowamt, type ) );
-
+      cl->pers.netname, 
+      ( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS ) ? (int)floor( overflowamt/ALIEN_CREDITS_PER_FRAG ) : overflowamt, type ) );
       overflowamt = 0;
     }
     // give anything else to dead players
@@ -168,31 +166,28 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         overflowed++;
       }
 
-      if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        overflowamt = floor( overflowamt/ALIEN_CREDITS_PER_FRAG );
       trap_SendServerCommand( i,
       va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
-      cl->pers.netname, overflowamt, type ) );
+      cl->pers.netname,
+      ( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS ) ? (int)floor( overflowamt/ALIEN_CREDITS_PER_FRAG ) : overflowamt, type ) );
       overflowamt = 0;
     }
     
     if( overflowed > 0 )
     {
-      if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        overflowed = floor( overflowed / ALIEN_CREDITS_PER_FRAG );
       trap_SendServerCommand( client - level.clients,
        va( "print \"^7You overflowed ^2%i^7 %s to ^2%i ^7%s\n\"",
-       overflowtotal, type, overflowed, 
+       overflowtotal, type, ( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS ) ? (int)floor( overflowed/ALIEN_CREDITS_PER_FRAG ) : overflowed, 
        ( overflowed == 1 ) ? "person" : "people" ) );
     }
 
   }
-  else if( client->ps.persistant[ PERS_CREDIT ] + credit > max )
+  else if( client->ps.persistant[ PERS_CREDIT ] + credit > max && cap )
   {
     if( client->ps.persistant[ PERS_CREDIT ] < max )
       client->ps.persistant[ PERS_CREDIT ] = max;
   }
-  else if( client->ps.persistant[ PERS_CREDIT ] + credit <= max )
+  else if( client->ps.persistant[ PERS_CREDIT ] + credit <= max || !cap )
     client->ps.persistant[ PERS_CREDIT ] += credit;
 
   if( client->ps.persistant[ PERS_CREDIT ] < 0 )

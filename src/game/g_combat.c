@@ -1222,7 +1222,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( targ->use && ( targ->moverState == MOVER_POS1 ||
                        targ->moverState == ROTATOR_POS1 ) )
       targ->use( targ, inflictor, attacker );
-    if( attacker->client->pers.teamSelection == TEAM_ALIENS && !(mod == MOD_LEVEL2_ZAP))
+    if( attacker->client->pers.teamSelection == TEAM_ALIENS && !(mod == MOD_LEVEL2_ZAP) )
     {
       if( mod == MOD_LEVEL2_BOUNCEBALL  ||
           mod == MOD_LEVEL3_BOUNCEBALL  ||
@@ -1368,7 +1368,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
             G_AddEvent( attacker, EV_ALIENRANGED_TEAMHIT, targ->s.number );
-          else if( mod  != MOD_POISON )
+          else if( mod != MOD_POISON )
             G_AddEvent( attacker, EV_ALIEN_TEAMHIT, targ->s.number );
           return;
         }
@@ -1510,7 +1510,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( attacker->client && attacker->client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
     {
       if( mod != MOD_LEVEL2_ZAP && mod != MOD_POISON &&
-          mod != MOD_LEVEL1_PCLOUD &&
+          mod != MOD_LEVEL1_PCLOUD && mod != MOD_INFECTION &&
           targ->client->poisonImmunityTime < level.time )
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
@@ -1595,7 +1595,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           level.humanStatsCounters.structdmgdone+=takeNoOverkill;
         }
             
-        if( targ->health > 0 && ( targ->health - take ) <=0 )
+        if( targ->health > 0 && ( targ->health - take ) <= 0 )
         {
           attacker->client->pers.statscounters.structskilled++;
           if( attacker->client->pers.teamSelection == TEAM_ALIENS ) 
