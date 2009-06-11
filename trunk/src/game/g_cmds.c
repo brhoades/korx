@@ -3027,8 +3027,8 @@ void Cmd_Sell_f( gentity_t *ent )
       ent->client->ps.stats[ STAT_WEAPON ] = WP_NONE;
 
       //add to funds --- Causes issues with overflow and 2000 credits, doing it manually
-      //G_AddCreditToClient( ent->client, (short)BG_Weapon( weapon )->price, qfalse );
-      ent->client->ps.persistant[ PERS_CREDIT ] += (short)BG_Weapon( weapon )->price;
+      G_AddCreditToClient( ent->client, (short)BG_Weapon( weapon )->price, qfalse );
+      //ent->client->ps.persistant[ PERS_CREDIT ] += (short)BG_Weapon( weapon )->price;
     }
 
     //if we have this weapon selected, force a new selection
