@@ -227,8 +227,7 @@ typedef enum
   STAT_VIEWLOCK,  // direction to lock the view in
   STAT_CLOAK,     // when invis started
   STAT_JPCHARGE,   // jetpack fuel counter
-  STAT_JPRCDELAY,  // jetpack RC charge delay
-  STAT_JPRCCHARGE   // getting a charge from the rc
+  STAT_JPRCDELAY  // jetpack RC charge delay
 } statIndex_t;
 
 #define SCA_WALLCLIMBER         0x00000001

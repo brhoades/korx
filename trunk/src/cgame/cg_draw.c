@@ -1458,16 +1458,6 @@ static void CG_DrawPlayerJPChargeBar( rectDef_t *rect, vec4_t ref_color, qhandle
     color[ 2 ] = 0.f;
   }
 
-  // flash white if getting a charge from the RC
-  else if (
-       cg.predictedPlayerState.stats[ STAT_JPRCCHARGE ] &&
-       ( cg.time & 256 )
-     )
-  {
-    color[ 0 ] = 1.f;
-    color[ 1 ] = 1.f;
-    color[ 2 ] = 1.f;
-  }
   x = rect->x;
   y = rect->y;
   

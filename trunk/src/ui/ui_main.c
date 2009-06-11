@@ -2425,7 +2425,7 @@ UI_LoadHumanArmouryBuys
 */
 static void UI_LoadHumanArmouryBuys( void )
 {
-  int i, i2, j = 0;
+  int i, j = 0;
   stage_t stage = UI_GetCurrentStage( );
   int slots = 0;
 
