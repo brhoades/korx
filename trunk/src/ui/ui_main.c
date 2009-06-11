@@ -2059,7 +2059,7 @@ static void UI_OwnerDraw( float x, float y, float w, float h,
       break;
 
     case UI_HBUYINFOPANE:
-      UI_DrawInfoPane( &uiInfo.humanArmouryArmBuyList[ uiInfo.humanArmouryBuyIndex ],
+      UI_DrawInfoPane( &uiInfo.humanArmouryBuyList[ uiInfo.humanArmouryBuyIndex ],
                        &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
       break;
 
@@ -2425,7 +2425,7 @@ UI_LoadHumanArmouryBuys
 */
 static void UI_LoadHumanArmouryBuys( void )
 {
-  int i, j = 0;
+  int i, i2, j = 0;
   stage_t stage = UI_GetCurrentStage( );
   int slots = 0;
 
@@ -2441,7 +2441,11 @@ static void UI_LoadHumanArmouryBuys( void )
 
   for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
   {
-    if( BG_Weapon( i )->team == TEAM_HUMANS && BG_Weapon( i )->purchasable && BG_WeaponAllowedInStage( i, stage ) && BG_WeaponIsAllowed( i ) && i != uiInfo.weapon )
+    if( BG_Weapon( i )->team == TEAM_HUMANS &&
+        BG_Weapon( i )->purchasable &&
+        BG_WeaponAllowedInStage( i, stage ) &&
+        BG_WeaponIsAllowed( i ) &&
+        i != uiInfo.weapon )
     {
       char buffer[ MAX_STRING_CHARS ] = "";
       int price = BG_Weapon( i )->price;
@@ -2462,45 +2466,14 @@ static void UI_LoadHumanArmouryBuys( void )
       uiInfo.humanArmouryBuyCount++;
     }
   }
-}
-
-/*
-===============
-UI_LoadHumanArmouryArmBuys
-===============
-*/
-static void UI_LoadHumanArmouryArmBuys( void )
-{
-  int i, i2, j = 0;
-  stage_t stage = UI_GetCurrentStage( );
-  int slots = 0;
-
-  UI_ParseCarriageList( );
 
   for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
   {
-    if( uiInfo.upgrades & ( 1 << i ) )
-      slots |= BG_Upgrade( i )->slots;
-  }
-
-  uiInfo.humanArmouryArmBuyCount = 0;
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if(
-        (
-          BG_Upgrade( i )->team == TEAM_HUMANS &&
-          BG_Upgrade( i )->purchasable &&
-          BG_UpgradeAllowedInStage( i, stage ) &&
-          BG_UpgradeIsAllowed( i ) &&
-          !( uiInfo.upgrades & ( 1 << i ) )
-        ) &&
-        (
-          BG_Upgrade( i )->number == UP_LIGHTARMOUR ||
-          BG_Upgrade( i )->number == UP_HELMET ||
-          BG_Upgrade( i )->number == UP_BATTLESUIT
-        )
-      )
+    if( BG_Upgrade( i )->team == TEAM_HUMANS &&
+        BG_Upgrade( i )->purchasable &&
+        BG_UpgradeAllowedInStage( i, stage ) &&
+        BG_UpgradeIsAllowed( i ) &&
+        !( uiInfo.upgrades & ( 1 << i ) ) )
     {
       char buffer[ MAX_STRING_CHARS ] = "";
       int price = BG_Upgrade( i )->price;
@@ -2513,205 +2486,16 @@ static void UI_LoadHumanArmouryArmBuys( void )
           price -= BG_Upgrade( i2 )->price;
         }
       }
-      uiInfo.humanArmouryArmBuyList[ j ].text = String_Alloc( price <= uiInfo.credits ?
-      BG_Upgrade( i )->humanName : va( "^1%s", BG_Upgrade( i )->humanName ) );
+      uiInfo.humanArmouryBuyList[ j ].text = String_Alloc( price <= uiInfo.credits ?
+        BG_Upgrade( i )->humanName : va( "^1%s", BG_Upgrade( i )->humanName ) );
       Com_sprintf( buffer, sizeof( buffer ), "%scmd buy %s\n", buffer, BG_Upgrade( i )->name );
-      uiInfo.humanArmouryArmBuyList[ j ].cmd = String_Alloc( buffer );
-      uiInfo.humanArmouryArmBuyList[ j ].type = INFOTYPE_UPGRADE;
-      uiInfo.humanArmouryArmBuyList[ j ].v.upgrade = i;
+      uiInfo.humanArmouryBuyList[ j ].cmd = String_Alloc( buffer );
+      uiInfo.humanArmouryBuyList[ j ].type = INFOTYPE_UPGRADE;
+      uiInfo.humanArmouryBuyList[ j ].v.upgrade = i;
 
       j++;
 
-      uiInfo.humanArmouryArmBuyCount++;
-    }
-  }
-}
-
-/*
-===============
-UI_LoadHumanArmouryPackBuys
-===============
-*/
-static void UI_LoadHumanArmouryPackBuys( void )
-{
-  int i, i2, j = 0;
-  stage_t stage = UI_GetCurrentStage( );
-  int slots = 0;
-
-  UI_ParseCarriageList( );
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( uiInfo.upgrades & ( 1 << i ) )
-      slots |= BG_Upgrade( i )->slots;
-  }
-
-  uiInfo.humanArmouryPackBuyCount = 0;
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if(
-        (
-          BG_Upgrade( i )->team == TEAM_HUMANS &&
-          BG_Upgrade( i )->purchasable &&
-          BG_UpgradeAllowedInStage( i, stage ) &&
-          BG_UpgradeIsAllowed( i ) &&
-          !( uiInfo.upgrades & ( 1 << i ) )
-        ) &&
-        (
-          BG_Upgrade( i )->number == UP_BATTPACK ||
-          BG_Upgrade( i )->number == UP_AMMOPACK ||
-          BG_Upgrade( i )->number == UP_JETPACK
-        )
-      )
-    {
-      char buffer[ MAX_STRING_CHARS ] = "";
-      int price = BG_Upgrade( i )->price;
-      for( i2 = UP_NONE + 1; i2 < UP_NUM_UPGRADES; i2++ )
-      {
-        if( ( uiInfo.upgrades & ( 1 << i2 ) ) &&
-            ( BG_Upgrade( i2 )->slots & BG_Upgrade( i )->slots ) )
-        {
-          Com_sprintf( buffer, sizeof( buffer ), "%scmd sell %s;", buffer, BG_Upgrade( i2 )->name );
-          price -= BG_Upgrade( i2 )->price;
-        }
-      }
-      uiInfo.humanArmouryPackBuyList[ j ].text = String_Alloc( price <= uiInfo.credits ?
-      BG_Upgrade( i )->humanName : va( "^1%s", BG_Upgrade( i )->humanName ) );
-      Com_sprintf( buffer, sizeof( buffer ), "%scmd buy %s\n", buffer, BG_Upgrade( i )->name );
-      uiInfo.humanArmouryPackBuyList[ j ].cmd = String_Alloc( buffer );
-      uiInfo.humanArmouryPackBuyList[ j ].type = INFOTYPE_UPGRADE;
-      uiInfo.humanArmouryPackBuyList[ j ].v.upgrade = i;
-
-      j++;
-
-      uiInfo.humanArmouryPackBuyCount++;
-    }
-  }
-}
-
-/*
-===============
-UI_LoadHumanArmouryUpBuys
-===============
-*/
-static void UI_LoadHumanArmouryUpBuys( void )
-{
-  int i, i2, j = 0;
-  stage_t stage = UI_GetCurrentStage( );
-  int slots = 0;
-
-  UI_ParseCarriageList( );
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( uiInfo.upgrades & ( 1 << i ) )
-      slots |= BG_Upgrade( i )->slots;
-  }
-
-  uiInfo.humanArmouryUpBuyCount = 0;
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if(
-        (
-          BG_Upgrade( i )->team == TEAM_HUMANS &&
-          BG_Upgrade( i )->purchasable &&
-          BG_UpgradeAllowedInStage( i, stage ) &&
-          BG_UpgradeIsAllowed( i ) &&
-          !( uiInfo.upgrades & ( 1 << i ) )
-        ) &&
-        (
-          BG_Upgrade( i )->number == UP_SURGE ||
-          BG_Upgrade( i )->number == UP_REGEN ||
-          BG_Upgrade( i )->number == UP_CLOAK
-        )
-      )
-    {
-      char buffer[ MAX_STRING_CHARS ] = "";
-      int price = BG_Upgrade( i )->price;
-      for( i2 = UP_NONE + 1; i2 < UP_NUM_UPGRADES; i2++ )
-      {
-        if( ( uiInfo.upgrades & ( 1 << i2 ) ) &&
-            ( BG_Upgrade( i2 )->slots & BG_Upgrade( i )->slots ) )
-        {
-          Com_sprintf( buffer, sizeof( buffer ), "%scmd sell %s;", buffer, BG_Upgrade( i2 )->name );
-          price -= BG_Upgrade( i2 )->price;
-        }
-      }
-      uiInfo.humanArmouryUpBuyList[ j ].text = String_Alloc( price <= uiInfo.credits ?
-      BG_Upgrade( i )->humanName : va( "^1%s", BG_Upgrade( i )->humanName ) );
-      Com_sprintf( buffer, sizeof( buffer ), "%scmd buy %s\n", buffer, BG_Upgrade( i )->name );
-      uiInfo.humanArmouryUpBuyList[ j ].cmd = String_Alloc( buffer );
-      uiInfo.humanArmouryUpBuyList[ j ].type = INFOTYPE_UPGRADE;
-      uiInfo.humanArmouryUpBuyList[ j ].v.upgrade = i;
-
-      j++;
-
-      uiInfo.humanArmouryUpBuyCount++;
-    }
-  }
-}
-
-/*
-===============
-UI_LoadHumanArmouryConsBuys
-===============
-*/
-static void UI_LoadHumanArmouryConsBuys( void )
-{
-  int i, i2, j = 0;
-  stage_t stage = UI_GetCurrentStage( );
-  int slots = 0;
-
-  UI_ParseCarriageList( );
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( uiInfo.upgrades & ( 1 << i ) )
-      slots |= BG_Upgrade( i )->slots;
-  }
-
-  uiInfo.humanArmouryConsBuyCount = 0;
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if(
-        (
-          BG_Upgrade( i )->team == TEAM_HUMANS &&
-          BG_Upgrade( i )->purchasable &&
-          BG_UpgradeAllowedInStage( i, stage ) &&
-          BG_UpgradeIsAllowed( i ) &&
-          !( uiInfo.upgrades & ( 1 << i ) )
-        ) &&
-        (
-          BG_Upgrade( i )->number == UP_AMMO ||
-          BG_Upgrade( i )->number == UP_MEDKIT ||
-          BG_Upgrade( i )->number == UP_GRENADE
-        )
-      )
-    {
-      char buffer[ MAX_STRING_CHARS ] = "";
-      int price = BG_Upgrade( i )->price;
-      for( i2 = UP_NONE + 1; i2 < UP_NUM_UPGRADES; i2++ )
-      {
-        if( ( uiInfo.upgrades & ( 1 << i2 ) ) &&
-            ( BG_Upgrade( i2 )->slots & BG_Upgrade( i )->slots ) )
-        {
-          Com_sprintf( buffer, sizeof( buffer ), "%scmd sell %s;", buffer, BG_Upgrade( i2 )->name );
-          price -= BG_Upgrade( i2 )->price;
-        }
-      }
-      uiInfo.humanArmouryConsBuyList[ j ].text = String_Alloc( price <= uiInfo.credits ?
-      BG_Upgrade( i )->humanName : va( "^1%s", BG_Upgrade( i )->humanName ) );
-      Com_sprintf( buffer, sizeof( buffer ), "%scmd buy %s\n", buffer, BG_Upgrade( i )->name );
-      uiInfo.humanArmouryConsBuyList[ j ].cmd = String_Alloc( buffer );
-      uiInfo.humanArmouryConsBuyList[ j ].type = INFOTYPE_UPGRADE;
-      uiInfo.humanArmouryConsBuyList[ j ].v.upgrade = i;
-
-      j++;
-
-      uiInfo.humanArmouryConsBuyCount++;
+      uiInfo.humanArmouryBuyCount++;
     }
   }
 }
@@ -2773,10 +2557,6 @@ static void UI_ArmouryRefreshCb( void *data )
   if( uiInfo.weapon != oldWeapon || uiInfo.upgrades != oldUpgrades )
   {
     UI_LoadHumanArmouryBuys( );
-    UI_LoadHumanArmouryArmBuys( );
-    UI_LoadHumanArmouryPackBuys( );
-    UI_LoadHumanArmouryUpBuys( );
-    UI_LoadHumanArmouryConsBuys( );
     UI_LoadHumanArmourySells( );
     UI_RemoveCaptureFunc( );
   }
@@ -3323,41 +3103,12 @@ static void UI_RunMenuScript( char **args )
         trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
     }
     else if( Q_stricmp( name, "LoadHumanArmouryBuys" ) == 0 )
-    {
       UI_LoadHumanArmouryBuys( );
-      UI_LoadHumanArmouryArmBuys( );
-      UI_LoadHumanArmouryPackBuys( );
-      UI_LoadHumanArmouryUpBuys( );
-    }
     else if( Q_stricmp( name, "BuyFromArmoury" ) == 0 )
     {
       if( ( cmd = uiInfo.humanArmouryBuyList[ uiInfo.humanArmouryBuyIndex ].cmd ) )
         trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
 
-      UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
-    }
-    else if( Q_stricmp( name, "BuyFromArmoury_Arm" ) == 0 )
-    {
-      if( ( cmd = uiInfo.humanArmouryArmBuyList[ uiInfo.humanArmouryArmBuyIndex ].cmd ) )
-        trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
-      UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
-    }
-    else if( Q_stricmp( name, "BuyFromArmoury_Pack" ) == 0 )
-    {
-      if( ( cmd = uiInfo.humanArmouryPackBuyList[ uiInfo.humanArmouryPackBuyIndex ].cmd ) )
-        trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
-      UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
-    }
-    else if( Q_stricmp( name, "BuyFromArmoury_Up" ) == 0 )
-    {
-      if( ( cmd = uiInfo.humanArmouryUpBuyList[ uiInfo.humanArmouryUpBuyIndex ].cmd ) )
-        trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
-      UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
-    }
-    else if( Q_stricmp( name, "BuyFromArmoury_Cons" ) == 0 )
-    {
-      if( ( cmd = uiInfo.humanArmouryConsBuyList[ uiInfo.humanArmouryConsBuyIndex ].cmd ) )
-        trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
       UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
     }
     else if( Q_stricmp( name, "LoadHumanArmourySells" ) == 0 )
@@ -3835,14 +3586,6 @@ static int UI_FeederCount( float feederID )
     return uiInfo.alienClassCount;
   else if( feederID == FEEDER_TREMHUMANARMOURYBUY )
     return uiInfo.humanArmouryBuyCount;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_ARM )
-    return uiInfo.humanArmouryArmBuyCount;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_PACK )
-    return uiInfo.humanArmouryPackBuyCount;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_UP )
-    return uiInfo.humanArmouryUpBuyCount;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_CONS )
-    return uiInfo.humanArmouryConsBuyCount;
   else if( feederID == FEEDER_TREMHUMANARMOURYSELL )
     return uiInfo.humanArmourySellCount;
   else if( feederID == FEEDER_TREMALIENUPGRADE )
@@ -4054,28 +3797,6 @@ static const char *UI_FeederItemText( float feederID, int index, int column, qha
     if( index >= 0 && index < uiInfo.humanArmouryBuyCount )
       return uiInfo.humanArmouryBuyList[ index ].text;
   }
-/* akane start */
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_ARM )
-  {
-    if( index >= 0 && index < uiInfo.humanArmouryArmBuyCount )
-      return uiInfo.humanArmouryArmBuyList[ index ].text;
-  }
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_PACK )
-  {
-    if( index >= 0 && index < uiInfo.humanArmouryPackBuyCount )
-      return uiInfo.humanArmouryPackBuyList[ index ].text;
-  }
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_UP )
-  {
-    if( index >= 0 && index < uiInfo.humanArmouryUpBuyCount )
-      return uiInfo.humanArmouryUpBuyList[ index ].text;
-  }
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_CONS )
-  {
-    if( index >= 0 && index < uiInfo.humanArmouryConsBuyCount )
-      return uiInfo.humanArmouryConsBuyList[ index ].text;
-  }
-/* akane stop */
   else if( feederID == FEEDER_TREMHUMANARMOURYSELL )
   {
     if( index >= 0 && index < uiInfo.humanArmourySellCount )
@@ -4252,14 +3973,6 @@ static void UI_FeederSelection( float feederID, int index )
     uiInfo.alienClassIndex = index;
   else if( feederID == FEEDER_TREMHUMANARMOURYBUY )
     uiInfo.humanArmouryBuyIndex = index;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_ARM )
-    uiInfo.humanArmouryArmBuyIndex = index;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_PACK )
-    uiInfo.humanArmouryPackBuyIndex = index;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_UP )
-    uiInfo.humanArmouryUpBuyIndex = index;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY_CONS )
-    uiInfo.humanArmouryConsBuyIndex = index;
   else if( feederID == FEEDER_TREMHUMANARMOURYSELL )
     uiInfo.humanArmourySellIndex = index;
   else if( feederID == FEEDER_TREMALIENUPGRADE )
