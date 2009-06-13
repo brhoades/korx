@@ -1061,8 +1061,9 @@ void cancelBuildFire( gentity_t *ent )
       }
     }
   }
-  else if( ent->client->ps.weapon == WP_ABUILD ||
-      ent->client->ps.weapon == WP_ABUILD2 )
+  else if( ent->client->ps.weapon == WP_ABUILD 
+           || ent->client->ps.weapon == WP_ABUILD2
+           || ent->client->ps.weapon == WP_ABUILD3 )
     meleeAttack( ent, ABUILDER_CLAW_RANGE, ABUILDER_CLAW_WIDTH,
                  ABUILDER_CLAW_WIDTH, ABUILDER_CLAW_DMG, MOD_ABUILDER_CLAW );
 }
@@ -1731,6 +1732,7 @@ void FireWeapon3( gentity_t *ent )
 
     case WP_ABUILD:
     case WP_ABUILD2:
+    case WP_ABUILD3:
       slowBlobFire( ent );
       break;
 
@@ -1807,6 +1809,7 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_ABUILD:
     case WP_ABUILD2:
+    case WP_ABUILD3:
     case WP_HBUILD:
       cancelBuildFire( ent );
       break;
@@ -1948,6 +1951,7 @@ void FireWeapon( gentity_t *ent )
 
     case WP_ABUILD:
     case WP_ABUILD2:
+    case WP_ABUILD3:
       buildFire( ent, MN_A_BUILD );
       break;
     case WP_HBUILD:

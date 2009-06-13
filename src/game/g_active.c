@@ -693,7 +693,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
       client->ps.stats[ STAT_STAMINA ] = -MAX_STAMINA;
 
     // Update build timer
-    if( weapon == WP_ABUILD || weapon == WP_ABUILD2 ||
+    if( weapon == WP_ABUILD || weapon == WP_ABUILD2 || weapon == WP_ABUILD3 ||
         BG_InventoryContainsWeapon( WP_HBUILD, client->ps.stats ) )
     {
         if( client->ps.stats[ STAT_MISC ] > 0 )
@@ -747,6 +747,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
     {
       case WP_ABUILD:
       case WP_ABUILD2:
+      case WP_ABUILD3:
       case WP_HBUILD:
       
         // Set validity bit on buildable

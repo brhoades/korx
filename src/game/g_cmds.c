@@ -2505,6 +2505,7 @@ void Cmd_Destroy_f( gentity_t *ent )
         ( traceEnt->buildableTeam == ent->client->pers.teamSelection ) &&
         ( ent->client->ps.weapon == WP_ABUILD ||
           ent->client->ps.weapon == WP_ABUILD2 ||
+          ent->client->ps.weapon == WP_ABUILD3 ||
           ent->client->ps.weapon == WP_HBUILD ) )
     {
       // Always let the builder prevent the explosion 

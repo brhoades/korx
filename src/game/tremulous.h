@@ -47,6 +47,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_BLOB_SPEED_MOD     0.5f
 #define ABUILDER_BLOB_TIME          5000
 
+#define ABGRANGER_BUILD_REPEAT       500
+#define ABGRANGER_CLAW_DMG           ADM(40)
+#define ABGRANGER_CLAW_RANGE         64.0f
+#define ABGRANGER_CLAW_WIDTH         4.0f
+#define ABGRANGER_CLAW_REPEAT        1000
+#define ABGRANGER_CLAW_K_SCALE       1.0f
+#define ABGRANGER_BLOB_DMG           ADM(8)
+#define ABGRANGER_BLOB_REPEAT        1000
+#define ABGRANGER_BLOB_SPEED         800.0f
+#define ABGRANGER_BLOB_SPEED_MOD     0.5f
+#define ABGRANGER_BLOB_TIME          5000
+
 #define LEVEL0_BITE_DMG             ADM(48)
 #define LEVEL0_BITE_RANGE           64.0f
 #define LEVEL0_BITE_WIDTH           6.0f
@@ -189,6 +201,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_UPG_REGEN          3
 #define ABUILDER_UPG_REGEN_MSEC     ARMSEC(ABUILDER_UPG_HEALTH)
 #define ABUILDER_UPG_COST           0
+
+#define ABGRANGER_SPEED             1.3f
+#define ABGRANGER_VALUE             AVM(300)
+#define ABGRANGER_HEALTH            AHM(100)
+#define ABGRANGER_REGEN             4
+#define ABGRANGER_REGEN_MSEC        ARMSEC(ABUILDER_UPG_HEALTH)
+#define ABGRANGER_COST              1
 
 #define LEVEL0_SPEED                1.4f
 #define LEVEL0_VALUE                AVM(175)

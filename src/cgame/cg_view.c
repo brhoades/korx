@@ -468,6 +468,7 @@ void CG_OffsetShoulderView( void )
   {
     case PCL_ALIEN_BUILDER0:
     case PCL_ALIEN_BUILDER0_UPG:
+    case PCL_ALIEN_BGRANGER:
       classFwdOffset = -8;
       classRightOffset = 15;
       classUpOffset = 13;

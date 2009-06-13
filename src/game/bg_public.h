@@ -355,6 +355,7 @@ typedef enum
   WP_ABUILD,
   WP_ABUILD2,
   WP_HBUILD,
+  WP_ABUILD3,
 
   WP_NUM_WEAPONS
 } weapon_t;
@@ -847,6 +848,9 @@ typedef enum
   //human class
   PCL_HUMAN,
   PCL_HUMAN_BSUIT,
+  
+  //BATTLE GRANGER (caps because it's that cool)
+  PCL_ALIEN_BGRANGER,
 
   PCL_NUM_CLASSES
 } class_t;

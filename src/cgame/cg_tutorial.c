@@ -253,7 +253,8 @@ static void CG_AlienBuilderText( char *text, playerState_t *ps )
       va( "Press %s to launch a projectile\n",
         CG_KeyNameForCommand( "+button2" ) ) );
 
-  if(  ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0_UPG )
+  if(  ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0_UPG
+        || ps->stats[ STAT_CLASS ] == PCL_ALIEN_BGRANGER )
   {
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s to walk on walls\n",
@@ -687,6 +688,7 @@ const char *CG_TutorialText( void )
       {
         case PCL_ALIEN_BUILDER0:
         case PCL_ALIEN_BUILDER0_UPG:
+        case PCL_ALIEN_BGRANGER:
           CG_AlienBuilderText( text, ps );
           break;
 
