@@ -12,3 +12,13 @@ and double the attack strength. It currently costs one evo.
 PLEASE keep the order in the constant definitions (PCL_ALIEN_BGRANGER for example) 
 moving these causes more issues than it's worth. A hard menu hack would be best 
 to display the grangers together. Once again, a job for akane.
+
+I've also made it so the battle granger couldn't be relied on as a defensive S3 builder. 
+On top of costing 1 evo, it can only build boosters, overminds, hovels, and eggs. 
+Its hitbox is actually 1.2x the original model size, so there's a .05 descrepancy (/me too lazy to fix). 
+It still needs a unique icon, which  I'll be adding sometime unless Fox makes one 
+(which I can bet he will).
+
+Also, the granger is 1.3 units fast, whatever that means. For comparision, a dretch is 1.4 or so.
+
+~Aaron
