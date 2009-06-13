@@ -1,0 +1,14 @@
+This is the primary battle granger commit. At this point, I've tested everything,
+and from what I can tell it's up to par. Fox's texture is added, along with 
+upgraded attacks and descriptions. I still need to add a stronger spit attack 
+(as in more different), but I can expect akane to do something with it, as 
+weapons aren't my forte.
+
+Granger sounds were duplicated and added to sounds. I added an extra shader 
+in aliens.script for the bgranger, though I doubt it's used. The battle granger
+is 1.25x the size of a regular granger, with 25% more HP (if my math is right),
+and double the attack strength. It currently costs one evo.
+
+PLEASE keep the order in the constant definitions (PCL_ALIEN_BGRANGER for example) 
+moving these causes more issues than it's worth. A hard menu hack would be best 
+to display the grangers together. Once again, a job for akane.

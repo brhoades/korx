@@ -56,7 +56,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ASPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 ),    //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 )|( 1 << WP_ABUILD3 ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     ASPAWN_BT,             //int       buildTime;
@@ -95,7 +95,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     OVERMIND_SPLASHRADIUS, //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 ),    //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 )|( 1 << WP_ABUILD3 ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     OVERMIND_ATTACK_REPEAT,//int       nextthink;
     OVERMIND_BT,           //int       buildTime;
@@ -252,7 +252,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BOOSTER_SPLASHRADIUS,  //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD2 ),   //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD2 )|( 1 << WP_ABUILD3 ), //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     BOOSTER_BT,            //int       buildTime;
@@ -329,7 +329,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HOVEL_SPLASHRADIUS,    //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD2 ),   //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD2 )|( 1 << WP_ABUILD3 ), //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     150,                   //int       nextthink;
     HOVEL_BT,              //int       buildTime;
@@ -1239,7 +1239,7 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     195.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
-    { PCL_ALIEN_BUILDER0_UPG, PCL_ALIEN_LEVEL1, PCL_NONE },       //int     children[ 3 ];
+    { PCL_ALIEN_BUILDER0_UPG, PCL_ALIEN_LEVEL1, PCL_ALIEN_BGRANGER },//int     children[ 3 ];
     ABUILDER_COST,                                  //int     cost;
     ABUILDER_VALUE                                  //int     value;
   },
@@ -1268,7 +1268,7 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     270.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL1, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
+    { PCL_ALIEN_LEVEL1, PCL_ALIEN_BGRANGER, PCL_NONE },//int     children[ 3 ];
     ABUILDER_UPG_COST,                              //int     cost;
     ABUILDER_UPG_VALUE                              //int     value;
   },
@@ -1641,6 +1641,35 @@ static const classAttributes_t bg_classList[ ] =
     0,                                              //int     cost;
     ALIEN_CREDITS_PER_FRAG                          //int     value;
   },
+  {
+    PCL_ALIEN_BGRANGER,                             //int     classnum;
+    "bgranger",                                     //char    *classname;
+    "A granger that has specialized in the desolation of human teams. "
+      "Its increased HP, unique camouflage, and stronger attacks make it a foe to fear. "
+      "Its sticky blobs provide the perfect way to leave any human prone.",
+    ( 1 << S3 ),                                    //int  stages
+    ABGRANGER_HEALTH,                           //int     health;
+    0.0f,                                           //float   fallDamage;
+    ABGRANGER_REGEN,                            //int     regenRate;
+    ABGRANGER_REGEN_MSEC,                       //int     regenRateMsec;
+    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
+    WP_ABUILD3,                                     //weapon_t  startWeapon
+    105.0f,                                         //float   buildDist;
+    110,                                            //int     fov;
+    0.001f,                                         //float   bob;
+    2.0f,                                           //float   bobCycle;
+    100,                                            //int     steptime;
+    ABGRANGER_SPEED,                            //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    100.0f,                                         //float   stopSpeed;
+    270.0f,                                         //float   jumpMagnitude;
+    1.0f,                                           //float   knockbackScale;
+    { PCL_ALIEN_LEVEL1, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
+    ABGRANGER_COST,                             //int     cost;
+    ABGRANGER_VALUE                             //int     value;
+  }
 };
 
 int   bg_numClasses = sizeof( bg_classList ) / sizeof( bg_classList[ 0 ] );
@@ -2880,6 +2909,31 @@ static const weaponAttributes_t bg_weapons[ ] =
     qtrue,                //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_HUMANS           //team_t  team;
+  },
+  {
+    WP_ABUILD3,           //int       weaponNum;
+    0,                    //int       price;
+    ( 1 << S3 ),          //int  stages
+    SLOT_WEAPON,          //int       slots;
+    "abgranger",          //char      *weaponName;
+    "Alien battle granger",//char      *humanName;
+    "",
+    0,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    qtrue,                //int       infiniteAmmo;
+    qfalse,               //int       usesEnergy;
+    ABGRANGER_BUILD_REPEAT,//int       repeatRate1;
+    ABGRANGER_CLAW_REPEAT,//int       repeatRate2;
+    ABGRANGER_BLOB_REPEAT,//int       repeatRate3;
+    0,                    //int       reloadTime;
+    ABGRANGER_CLAW_K_SCALE,//float     knockbackScale;
+    qtrue,                //qboolean  hasAltMode;
+    qtrue,                //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qtrue,                //qboolean  purchasable;
+    qfalse,               //qboolean  longRanged;
+    TEAM_ALIENS           //team_t  team;
   }
 };
 
@@ -3128,12 +3182,12 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     TEAM_HUMANS              //WUTeam_t  team;
   },
   {
-    UP_JPCHARGE,                //int   upgradeNum;
+    UP_JPCHARGE,            //int   upgradeNum;
     0,                      //int   price;
-    ( 1 << S2 )|( 1 << S3 ), //int  stages
+    ( 1 << S2 )|( 1 << S3 ),//int  stages
     SLOT_NONE,              //int   slots;
-    "jpcharge",                 //char  *upgradeName;
-    "Jetpack Charge",           //char  *humanName;
+    "jpcharge",             //char  *upgradeName;
+    "Jetpack Charge",       //char  *humanName;
     "Rapid capacitor charge for jetpack.",
     0,
     qtrue,                  //qboolean purchasable
