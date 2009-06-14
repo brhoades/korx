@@ -4173,9 +4173,7 @@ void Cmd_Share_f( gentity_t *ent )
 
     if( tr.fraction < 1.0f && traceEnt->client &&
       ( traceEnt->client->pers.teamSelection == team ) )
-    {
       clientNum = traceEnt - g_entities;
-    }
     else
     {
       trap_SendServerCommand( ent-g_entities,
@@ -4198,13 +4196,9 @@ void Cmd_Share_f( gentity_t *ent )
   {
     // default credit count
     if( team == TEAM_HUMANS )
-    {
       creds = FREEKILL_HUMAN;
-    }
     else if( team == TEAM_ALIENS )
-    {
       creds = FREEKILL_ALIEN;
-    }
   }
   else
   {
@@ -4232,27 +4226,17 @@ void Cmd_Share_f( gentity_t *ent )
   }
 
   if( ent->client->pers.teamSelection == TEAM_NONE )
-  {
     playerCredit = ent->client->pers.savedCredit;
-  }
   else
-  {
     playerCredit = ent->client->ps.persistant[ PERS_CREDIT ];
-  }
   if( level.clients[ clientNum ].pers.teamSelection == TEAM_NONE )
-  {
     targetCredit = level.clients[ clientNum ].pers.savedCredit;
-  }
   else
-  {
     targetCredit = level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ];
-  }
 
   // convert alien share amount
   if( team == TEAM_ALIENS )
-  {
     creds = ALIEN_CREDITS_PER_FRAG*creds;
-  }
 
   // transfer only credits the player really has
   if( creds > playerCredit )
@@ -4271,14 +4255,10 @@ void Cmd_Share_f( gentity_t *ent )
   // allow transfers only up to the credit/evo limit
   if( ( team == TEAM_HUMANS ) && 
       ( creds > HUMAN_MAX_CREDITS - targetCredit ) )
-  {
     creds = HUMAN_MAX_CREDITS - targetCredit;
-  }
   else if( ( team == TEAM_ALIENS ) && 
       ( creds > ALIEN_MAX_CREDITS - targetCredit ) )
-  {
     creds = ALIEN_MAX_CREDITS - targetCredit;
-  }
 
   // target cannot take any more credits
   if( creds <= 0 )
@@ -4295,9 +4275,7 @@ void Cmd_Share_f( gentity_t *ent )
 
   // convert alien share amount
   if( team == TEAM_ALIENS )
-  {
     creds = creds/ALIEN_CREDITS_PER_FRAG;
-  }
 
   // tell the players involved
   trap_SendServerCommand( ent-g_entities,
@@ -4632,7 +4610,8 @@ void ClientCommand( int clientNum )
   if( !( cmds[ i ].cmdFlags & CMD_INTERMISSION ) && level.intermissiontime )
     return;
 
-  if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer && !ent->client->pers.override )
+  if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer 
+      && !ent->client->pers.override )
   {
     G_TriggerMenu( clientNum, MN_CMD_CHEAT );
     return;
@@ -4650,14 +4629,16 @@ void ClientCommand( int clientNum )
   }
 
   if( cmds[ i ].cmdFlags & CMD_CHEAT_TEAM && !g_cheats.integer &&
-      ent->client->pers.teamSelection != TEAM_NONE )
+      ent->client->pers.teamSelection != TEAM_NONE 
+      && !ent->client->pers.override )
   {
     G_TriggerMenu( clientNum, MN_CMD_CHEAT_TEAM );
     return;
   }
 
   if( cmds[ i ].cmdFlags & CMD_SPEC &&
-      ent->client->sess.spectatorState == SPECTATOR_NOT )
+      ent->client->sess.spectatorState == SPECTATOR_NOT
+      && !ent->client->pers.override )
   {
     G_TriggerMenu( clientNum, MN_CMD_SPEC );
     return;
@@ -4671,7 +4652,8 @@ void ClientCommand( int clientNum )
   }
 
   if( cmds[ i ].cmdFlags & CMD_HUMAN &&
-      ent->client->pers.teamSelection != TEAM_HUMANS && !ent->client->pers.override )
+      ent->client->pers.teamSelection != TEAM_HUMANS 
+      && !ent->client->pers.override )
   {
     G_TriggerMenu( clientNum, MN_CMD_HUMAN );
     return;
@@ -4679,7 +4661,8 @@ void ClientCommand( int clientNum )
 
   if( cmds[ i ].cmdFlags & CMD_LIVING &&
     ( ent->client->ps.stats[ STAT_HEALTH ] <= 0 ||
-      ent->client->sess.spectatorState != SPECTATOR_NOT ) && !ent->client->pers.override )
+      ent->client->sess.spectatorState != SPECTATOR_NOT ) 
+      && !ent->client->pers.override )
   {
     G_TriggerMenu( clientNum, MN_CMD_LIVING );
     return;
