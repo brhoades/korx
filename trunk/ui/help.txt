@@ -137,8 +137,7 @@
   }
   "Cloak"
   {
-    "If you are going to get anything out of this section, please note that cloaks no longer "
-    "work with helmets, at all. There is an allied cloak system. Just because you can see "
+    "There is an allied cloak system. Just because you can see "
     "your allies when they are cloaked, doesn't mean they are visible to the opposite team. "
     "You can also use the cloak with anything you want, it might show though, you've been warned. "
   }
