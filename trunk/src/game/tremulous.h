@@ -470,7 +470,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_RECOIL_MIN_Y          0.25
 #define RIFLE_RECOIL_MAX_Y          1.2
 #define RIFLE_RECOIL_MAX_X          0.3
-#define RIFLE_RECOIL_SOFTEN         0.75
+#define RIFLE_RECOIL_SOFTEN         0.85
 
 #define PAINSAW_PRICE               100
 #define PAINSAW_REPEAT              75
@@ -500,11 +500,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_PRI_RECOIL_MIN_Y    4
 #define SHOTGUN_PRI_RECOIL_MAX_Y    10
 #define SHOTGUN_PRI_RECOIL_MAX_X    7
-#define SHOTGUN_PRI_RECOIL_SOFTEN   0.65
+#define SHOTGUN_PRI_RECOIL_SOFTEN   0.85
 #define SHOTGUN_SEC_RECOIL_MIN_Y    8
 #define SHOTGUN_SEC_RECOIL_MAX_Y    20
 #define SHOTGUN_SEC_RECOIL_MAX_X    7
-#define SHOTGUN_SEC_RECOIL_SOFTEN   0.4
+#define SHOTGUN_SEC_RECOIL_SOFTEN   0.6
 
 
 #define SHOTGUN_NADE_REPEAT         1000
@@ -525,7 +525,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_PRICE               350
 #define MDRIVER_CLIPSIZE            4
 #define MDRIVER_MAXCLIPS            4
-#define MDRIVER_DMG                 HDM(45)
+#define MDRIVER_DMG                 HDM(40)
 #define MDRIVER_REPEAT              1000
 #define MDRIVER_K_SCALE             1.0f
 #define MDRIVER_RELOAD              2000
@@ -536,7 +536,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_RECOIL_MIN_Y        20.0
 #define MDRIVER_RECOIL_MAX_Y        40.0
 #define MDRIVER_RECOIL_MAX_X        20.0
-#define MDRIVER_RECOIL_SOFTEN       0.5
+#define MDRIVER_RECOIL_SOFTEN       0.70
 
 #define CHAINGUN_PRICE              400
 #define CHAINGUN_BULLETS            300
@@ -547,11 +547,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_PRI_RECOIL_MIN_Y   0.15
 #define CHAINGUN_PRI_RECOIL_MAX_Y   1.5
 #define CHAINGUN_PRI_RECOIL_MAX_X   2
-#define CHAINGUN_PRI_RECOIL_SOFTEN  0.5
+#define CHAINGUN_PRI_RECOIL_SOFTEN  0.75
 #define CHAINGUN_SEC_RECOIL_MIN_Y   0.25
 #define CHAINGUN_SEC_RECOIL_MAX_Y   1.6
 #define CHAINGUN_SEC_RECOIL_MAX_X   3
-#define CHAINGUN_SEC_RECOIL_SOFTEN  0.55
+#define CHAINGUN_SEC_RECOIL_SOFTEN  0.85
 
 #define CHAINGUN_REPEAT_2           60
 #define CHAINGUN_SPREAD_2           600
@@ -586,7 +586,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_K_SCALE             1.0f
 #define LCANNON_REPEAT              500
 #define LCANNON_RELOAD              0
-#define LCANNON_DAMAGE              HDM(250)
+#define LCANNON_DAMAGE              HDM(200)
 #define LCANNON_RADIUS              150      // primary splash damage radius
 #define LCANNON_SIZE                5        // missile bounding box radius
 #define LCANNON_SECONDARY_DAMAGE    HDM(27)
@@ -614,7 +614,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_K_SCALE                1.0f
 #define XAEL_CHARGEREPEAT           1000
 #define XAEL_RELOAD                 2000
-#define XAEL_DAMAGE                 HDM(350)
+#define XAEL_DAMAGE                 HDM(330)
 #define XAEL_RADIUS                 175
 #define XAEL_SIZE                   5        // missile bounding box radius
 #define XAEL_SECONDARY_DAMAGE       HDM(15)
