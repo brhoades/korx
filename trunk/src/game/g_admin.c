@@ -4024,7 +4024,6 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
   qboolean targeted = qfalse;
   //targeted is set to ensure we don't get spam when pausing everybody
   gentity_t *vic;
-  AP( va( "print \"skiparg:%d G_SayArgc:%d\n\"", skiparg, G_SayArgc()) );
   G_SayArgv( skiparg, command, sizeof( command ) );
   cmd = command;
   if( cmd && *cmd == '!' )
@@ -4043,7 +4042,7 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
     }
       if( Q_stricmp( cmd, "unpause" ) )
         {
-          AP( va( "print \"^3!pause: ^7%s^7 has paused the game \n\"",
+          AP( va( "print \"^3!pause: ^7%s^7 has paused the game\n\"",
           ( ent ) ? ent->client->pers.netname : "console" ) );
           level.paused = qfalse;
         }
@@ -4055,10 +4054,10 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
         }
       pids[ j ] = -1;
   }
-  else if( G_SayArgc() == 2 + skiparg )
+  else if( G_SayArgc() == ( 2 + skiparg ) )
   {
     G_SayArgv( 1 + skiparg, name, sizeof( name ) );
-    if( (found = G_ClientNumbersFromString( name, pids, MAX_CLIENTS)) != 1 )
+    if( ( found = G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) ) != 1 )
     {
       G_MatchOnePlayer( pids, found, err, sizeof( err ) );
       ADMP( va( "^3!%s: ^7%s\n", cmd, err ) );
@@ -4079,8 +4078,8 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
     if( !admin_higher( ent, vic ) )
     {
       if( targeted )
-	ADMP( va( "^3!%s: ^7sorry, but your intended victim has a higher admin"
-		    " level than you\n", cmd ) );
+        ADMP( va( "^3!%s: ^7sorry, but your intended victim has a higher admin"
+          " level than you\n", cmd ) );
       continue;
     }
     if( vic->client->pers.paused )
@@ -4102,17 +4101,17 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
     {
       if( !Q_stricmp( cmd, "unpause" ) )
       {
-	if( targeted )
-	  ADMP( "^3!unpause: ^7player is already unpaused\n" );
-	continue;
+        if( targeted )
+          ADMP( "^3!unpause: ^7player is already unpaused\n" );
+        continue;
       }
       vic->client->pers.paused = qtrue;
       CPx( pids[ i ], va( "cp \"^1You've been paused by ^7%s\"", 
 	  ( ent ) ? ent->client->pers.netname : "console" ) );
       if( targeted )
-	AP( va( "print \"^3!pause: ^7%s^7 paused by %s\n\"", 
-	    vic->client->pers.netname,
-            ( ent ) ? ent->client->pers.netname : "console" ) );
+        AP( va( "print \"^3!pause: ^7%s^7 paused by %s\n\"", 
+          vic->client->pers.netname,
+          ( ent ) ? ent->client->pers.netname : "console" ) );
     }
     ClientUserinfoChanged( pids[ i ] );
   }
