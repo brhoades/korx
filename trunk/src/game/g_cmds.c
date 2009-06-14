@@ -1502,26 +1502,32 @@ void Cmd_CallVote_f( gentity_t *ent )
   {
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
-      trap_SendServerCommand( ent-g_entities,
-        "print \"callvote: admin is immune from vote kick\n\"" );
-      G_AdminsPrintf( "%s\n", message );
-      return;
+      //trap_SendServerCommand( ent-g_entities,
+      //  "print \"callvote: admin is immune from vote kick\n\"" );
+      //G_AdminsPrintf( "%s\n", message );
+      //return;
+			Com_sprintf( level.voteString, sizeof( level.voteString ),
+				"m %d a kick vote against you passed. it was called by %s", clientNum,
+				ent->client->pers.netname );
     }
-
-    // use ip in case this player disconnects before the vote ends
-    if( reason[0] != '\0' )
-      Com_sprintf( level.voteString, sizeof( level.voteString ),
-        "!ban %s \"%s\" vote kick: %s", level.clients[ clientNum ].pers.ip,
-        g_adminTempBan.string, reason );
     else
-      Com_sprintf( level.voteString, sizeof( level.voteString ),
-        "!ban %s \"%s\" vote kick: no reason", level.clients[ clientNum ].pers.ip,
-        g_adminTempBan.string );
+    {
+      // use ip in case this player disconnects before the vote ends
+      if( reason[0] != '\0' )
+        Com_sprintf( level.voteString, sizeof( level.voteString ),
+          "!ban %s \"%s\" vote kick: %s", level.clients[ clientNum ].pers.ip,
+          g_adminTempBan.string, reason );
+      else
+        Com_sprintf( level.voteString, sizeof( level.voteString ),
+          "!ban %s \"%s\" vote kick: no reason", level.clients[ clientNum ].pers.ip,
+          g_adminTempBan.string );
+    }
     Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
       "Kick player \'%s\'", name );
   }
   else if( !Q_stricmp( arg1, "mute" ) )
   {
+    
     if( level.clients[ clientNum ].pers.muted )
     {
       trap_SendServerCommand( ent-g_entities,
@@ -1531,13 +1537,19 @@ void Cmd_CallVote_f( gentity_t *ent )
 
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
-      trap_SendServerCommand( ent-g_entities,
-        "print \"callvote: admin is immune from vote mute\n\"" );
-      G_AdminsPrintf("%s\n",message);
-      return;
+      // trap_SendServerCommand( ent-g_entities,
+      // "print \"callvote: admin is immune from vote mute\n\"" );
+      // G_AdminsPrintf("%s\n",message);
+      // return;
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "m %d a mute vote against you passed. it was called by %s", clientNum,
+      ent->client->pers.netname );
     }
-    Com_sprintf( level.voteString, sizeof( level.voteString ),
-      "!mute %i", clientNum );
+    else
+    {
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "!mute %i", clientNum );
+    }
     Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
       "Mute player \'%s\'", name );
   }
@@ -1717,14 +1729,20 @@ void Cmd_CallVote_f( gentity_t *ent )
     }
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
-      trap_SendServerCommand( ent-g_entities,
-        "print \"callvote: admin is immune from forcespec\n\"" );
-      return;
+      //trap_SendServerCommand( ent-g_entities,
+      //  "print \"callvote: admin is immune from forcespec\n\"" );
+      //return;
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "m %d a forcespec vote against you passed. it was called by %s", clientNum,
+      ent->client->pers.netname );
     }
-    Com_sprintf( level.voteString, sizeof( level.voteString ),
-      "!forcespec %i", clientNum );
+    else
+    {
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "!forcespec %i", clientNum );
+    }
    	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-      "Forcespec player \'%s^7\'", name );
+      "Force player \'%s^7\' to the spectators", name );
   }
   else if( !Q_stricmp( arg1, "unforcespec" ) )
   {
@@ -1734,10 +1752,60 @@ void Cmd_CallVote_f( gentity_t *ent )
         "print \"callvote: player is not currently forced to be on the spectator team\n\"" );
       return;
     }
+    if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
+    {
+      //trap_SendServerCommand( ent-g_entities,
+      //  "print \"callvote: admin is immune from forcespec\n\"" );
+      //return;
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "m %d a denybuild vote against you passed. it was called by %s", clientNum,
+      ent->client->pers.netname );
+    }
+    else
+    {
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "!denybuild %i", clientNum );
+   	}
+    Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
+      "Allow player \'%s^7\' to join teams", name );
+  }
+  else if( !Q_stricmp( arg1, "denybuild" ) )
+  {
+    if( level.clients[ clientNum ].pers.denyBuild )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: player is already denybuilded not allowed to build\n\"" );
+      return;
+    }
+    if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
+    {
+      //trap_SendServerCommand( ent-g_entities,
+      //  "print \"callvote: admin is immune from forcespec\n\"" );
+      //return;
+      Com_sprintf( level.voteString, sizeof( level.voteString ),
+        "m %d a denybuild vote against you passed. it was called by %s", clientNum,
+      ent->client->pers.netname );
+    }
+    else
+    {
     Com_sprintf( level.voteString, sizeof( level.voteString ),
-      "!unforcespec %i", clientNum );
+      "!denybuild %i", clientNum );
+    }
    	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
-      "Un-Forcespec player \'%s^7\'", name );
+      "Deny player \'%s^7\' building rights", name );
+  }
+  else if( !Q_stricmp( arg1, "allowbuild" ) )
+  {
+    if( !level.clients[ clientNum ].pers.denyBuild )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"callvote: player can already build\n\"" );
+      return;
+    }
+    Com_sprintf( level.voteString, sizeof( level.voteString ),
+      "!allowbuild %i", clientNum );
+   	Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
+      "Grant player \'%s^7\' building rights", name );
   }
   else if( !Q_stricmp( arg1, "extend" ) )
   {
