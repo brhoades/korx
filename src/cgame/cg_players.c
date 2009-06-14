@@ -2317,11 +2317,12 @@ void CG_Player( centity_t *cent )
       head.customSkin = ci->headSkin;
 
     //invis
-    if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) && ( team != ourteam || self ) )
+    // !( held & ( 1 << UP_HELMET ) ) removed
+    if( es->eFlags & EF_MOVER_STOP && ( team != ourteam || self ) )
     {
       head.customShader = cgs.media.invisShader;
     }
-    else if( es->eFlags & EF_MOVER_STOP && !( held & ( 1 << UP_HELMET ) ) && team == ourteam )
+    else if( es->eFlags & EF_MOVER_STOP && team == ourteam )
     {
       head.customShader = cgs.media.invisShaderTeamH;
     }
