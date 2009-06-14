@@ -2,10 +2,19 @@
   "^3Welcome to KoRx!^7"
   {
     "This mod is under heavy, ongoing development. "
-    "Please visit the KnightsofReason.org website at:\n"
+    "Please visit the KnightsofReason.net website at:\n"
     "http://www.knightsofreason.net/\n\n"
     "We can also be reached on IRC:\n"
     "irc.quakenet.org #knightsofreason #korx"
+  }
+  "Sprinting"
+  {
+    "A change from MGdev, the sprinting system has had a major change. "
+    "This leaves the default bind incompatiable with the original X bind. "
+    "So please rebind your x keys (or whatever they are now) to: \n"
+    "  +button6\n"
+    "Like so:\n"
+    "  /bind x +button6"
   }
   "Infection and Biokits"
   {
@@ -17,7 +26,6 @@
     "no longer instantly heals infections, it increases resistance by 75 percent. "
     "The Helmet increases the resistance by an additional 13 percent, and the "
     "Battle Suit by 20 percent."
-  
   }
   "Alien Healing"
   {
