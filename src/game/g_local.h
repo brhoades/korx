@@ -405,7 +405,7 @@ typedef struct
   qboolean            useUnlagged;  
   qboolean            firstConnect;        // This is the first map since connect
   statsCounters_t     statscounters;
-  double              aidresistance;
+  float               aidresistance;
 } clientPersistant_t;
 
 #define MAX_UNLAGGED_MARKERS 10
