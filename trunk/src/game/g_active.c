@@ -1035,7 +1035,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
               target->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
               G_Visible( ent, target, CONTENTS_SOLID ) && ent != target 
               && target->health > 0 
-              && rand( ) % 100 > target->client->pers.aidresistance * 100 )
+              && rand( ) % 100 > ( target->client->pers.aidresistance * 100 ) )
           {
             target->client->infected = qtrue;
             target->client->infectionTime = level.time;
