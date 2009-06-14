@@ -2581,7 +2581,7 @@ static void UI_LoadAlienUpgrades( void )
 
   uiInfo.alienUpgradeCount = 0;
 
-  for( i = PCL_NONE + 1; i < PCL_NUM_CLASSES; i++ )
+  for( i = PCL_NONE + 1; i < (PCL_NUM_CLASSES-1); i++ )
   {
     if( BG_ClassCanEvolveFromTo( class, i, credits, stage, 0 , 0) >= 0 )
     {
@@ -2590,6 +2590,20 @@ static void UI_LoadAlienUpgrades( void )
         String_Alloc( va( "cmd class %s\n", BG_Class( i )->name ) );
       uiInfo.alienUpgradeList[ j ].type = INFOTYPE_CLASS;
       uiInfo.alienUpgradeList[ j ].v.pclass = i;
+
+      j++;
+
+      uiInfo.alienUpgradeCount++;
+    }
+    //UI Hax to move bgranger by the adv. granger
+    if( BG_ClassCanEvolveFromTo( class, PCL_ALIEN_BGRANGER, credits, stage, 0 , 0 ) >= 0
+        && i == PCL_ALIEN_BUILDER0_UPG )
+    {
+      uiInfo.alienUpgradeList[ j ].text = String_Alloc( BG_ClassConfig( PCL_ALIEN_BGRANGER )->humanName );
+      uiInfo.alienUpgradeList[ j ].cmd =
+        String_Alloc( va( "cmd class %s\n", BG_Class( PCL_ALIEN_BGRANGER )->name ) );
+      uiInfo.alienUpgradeList[ j ].type = INFOTYPE_CLASS;
+      uiInfo.alienUpgradeList[ j ].v.pclass = PCL_ALIEN_BGRANGER;
 
       j++;
 
