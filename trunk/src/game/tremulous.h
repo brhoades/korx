@@ -733,7 +733,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HSPAWN_BP                   10
 #define HSPAWN_BT                   10000
 #define HSPAWN_HEALTH               HBHM(310)
-#define HSPAWN_DCC_REGEN            2
+#define HSPAWN_DCC_REGEN            4
 #define HSPAWN_SPLASHDAMAGE         50
 #define HSPAWN_SPLASHRADIUS         100
 #define HSPAWN_VALUE                HBVM(HSPAWN_BP)
@@ -741,7 +741,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MEDISTAT_BP                 8
 #define MEDISTAT_BT                 10000
 #define MEDISTAT_HEALTH             HBHM(190)
-#define MEDISTAT_DCC_REGEN          2
+#define MEDISTAT_DCC_REGEN          4
 #define MEDISTAT_SPLASHDAMAGE       50
 #define MEDISTAT_SPLASHRADIUS       100
 #define MEDISTAT_VALUE              HBVM(MEDISTAT_BP)
@@ -749,7 +749,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_BP                 8
 #define MGTURRET_BT                 10000
 #define MGTURRET_HEALTH             HBHM(190)
-#define MGTURRET_DCC_REGEN          8
+#define MGTURRET_DCC_REGEN          10
 #define MGTURRET_SPLASHDAMAGE       100
 #define MGTURRET_SPLASHRADIUS       100
 #define MGTURRET_ANGULARSPEED       8
@@ -770,7 +770,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TESLAGEN_BP                 10
 #define TESLAGEN_BT                 15000
 #define TESLAGEN_HEALTH             HBHM(220)
-#define TESLAGEN_DCC_REGEN          8
+#define TESLAGEN_DCC_REGEN          12
 #define TESLAGEN_SPLASHDAMAGE       50
 #define TESLAGEN_SPLASHRADIUS       100
 #define TESLAGEN_REPEAT             250
@@ -786,14 +786,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DC_SPLASHDAMAGE             50
 #define DC_SPLASHRADIUS             100
 #define DC_ATTACK_PERIOD            10000 // how often to spam "under attack"
-#define DC_HEALRATE                 3
+#define DC_HEALRATE                 6
 #define DC_RANGE                    10000
 #define DC_VALUE                    HBVM(DC_BP)
 
 #define ARMOURY_BP                  10
 #define ARMOURY_BT                  10000
 #define ARMOURY_HEALTH              HBHM(280)
-#define ARMOURY_DCC_REGEN           2
+#define ARMOURY_DCC_REGEN           4
 #define ARMOURY_SPLASHDAMAGE        50
 #define ARMOURY_SPLASHRADIUS        100
 #define ARMOURY_VALUE               HBVM(ARMOURY_BP)
@@ -801,7 +801,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REACTOR_BP                  0
 #define REACTOR_BT                  20000
 #define REACTOR_HEALTH              HBHM(930)
-#define REACTOR_DCC_REGEN           4
+#define REACTOR_DCC_REGEN           8
 #define REACTOR_SPLASHDAMAGE        200
 #define REACTOR_SPLASHRADIUS        300
 #define REACTOR_ATTACK_RANGE        100.0f
@@ -815,7 +815,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REPEATER_BP                 0
 #define REPEATER_BT                 10000
 #define REPEATER_HEALTH             HBHM(250)
-#define REPEATER_DCC_REGEN          2
+#define REPEATER_DCC_REGEN          4
 #define REPEATER_SPLASHDAMAGE       50
 #define REPEATER_SPLASHRADIUS       100
 #define REPEATER_INACTIVE_TIME      90000
@@ -827,7 +827,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FORCEFIELD_SPLASHDAMAGE       50
 #define FORCEFIELD_SPLASHRADIUS       100
 #define FORCEFIELD_VALUE              HBVM(0)
-#define FORCEFIELD_DCC_REGEN          8
+#define FORCEFIELD_DCC_REGEN          20
 #define FORCEFIELD_SHRINKPROP         0.1f
 #define FORCEFIELD_SHRINKTIMEOUT      500
 
