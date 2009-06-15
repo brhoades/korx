@@ -139,10 +139,18 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       }
 
       if( team == TEAM_ALIENS )
+      {
         overflowamt = (int)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-      trap_SendServerCommand( i,
-      va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
-      cl->pers.netname, overflowamt, type ) );
+        trap_SendServerCommand( i,
+        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        cl->pers.netname, overflowamt, type ) );
+      }
+      else
+      {
+        trap_SendServerCommand( i,
+        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        cl->pers.netname, overflowamt, type ) );
+      }
       overflowamt = 0;
     }
     // give anything else to dead players
@@ -172,21 +180,38 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       }
 
       if( team == TEAM_ALIENS )
+      {
         overflowamt = (int)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-      trap_SendServerCommand( i,
-      va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
-      cl->pers.netname, overflowamt, type ) );
-      overflowamt = 0;
+        trap_SendServerCommand( i,
+        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        cl->pers.netname, overflowamt, type ) );
+      }
+      else
+      {
+        trap_SendServerCommand( i,
+        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        cl->pers.netname, overflowamt, type ) );
+      }
     }
     
     if( overflowed > 0 )
     {
       if( client->pers.teamSelection == TEAM_ALIENS )
+      {
         overflowtotal = (int)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
       trap_SendServerCommand( client - level.clients,
        va( "print \"^7You overflowed ^2%i^7 %s to ^2%d ^7%s\n\"",
        overflowtotal, type, overflowed,
        ( overflowed == 1 ) ? "person" : "people" ) );
+      }
+      else
+      {
+        overflowtotal = (int)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
+        trap_SendServerCommand( client - level.clients,
+          va( "print \"^7You overflowed ^2~%i^7 %s to ^2%d ^7%s\n\"",
+          overflowtotal, type, overflowed,
+          ( overflowed == 1 ) ? "person" : "people" ) );
+      }
     }
 
   }
