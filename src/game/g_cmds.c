@@ -2699,7 +2699,7 @@ void Cmd_Destroy_f( gentity_t *ent )
   
         if( deconstruct )
         {
-          //Buildlog hack so regular decon works
+          //Buildlog hack so regular decon works (and is revertable)
           G_Damage( traceEnt, NULL, ent, NULL, NULL, traceEnt->health, 0, MOD_DECONSTRUCT );      
           G_FreeEntity( traceEnt );
         }
