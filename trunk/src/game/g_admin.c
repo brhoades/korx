@@ -4343,7 +4343,7 @@ qboolean G_admin_buildlog( gentity_t *ent, int skiparg )
       case BF_BUILT:
         action = "^2built^7 a";
         break;
-      case BF_DECONNED:
+      case BF_DECONNED:                           //FIXME: This really shouldn't be this way! Find the proper way to mark the 'teamkill' as a decon
       case BF_TEAMKILLED:                         //Nasty hack to get buildlog to look right (no mark decon)
         action = "^3DECONSTRUCTED^7 a";
         break;
