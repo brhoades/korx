@@ -1932,7 +1932,7 @@ void ClientDisconnect( int clientNum )
       Q_strncpyz( ptr->name, ent->client->pers.netname, MAX_NETNAME );
     }
   }
-
+  
   G_admin_namelog_update( ent->client, qtrue );
   G_LeaveTeam( ent );
   G_Vote( ent, qfalse );

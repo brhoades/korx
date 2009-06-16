@@ -4344,14 +4344,15 @@ qboolean G_admin_buildlog( gentity_t *ent, int skiparg )
         action = "^2built^7 a";
         break;
       case BF_DECONNED:
+      case BF_TEAMKILLED:                         //Nasty hack to get buildlog to look right (no mark decon)
         action = "^3DECONSTRUCTED^7 a";
         break;
       case BF_DESTROYED:
         action = "destroyed a";
         break;
-      case BF_TEAMKILLED:
-        action = "^1TEAMKILLED^7 a";
-        break;
+      //case BF_TEAMKILLED:                       //^^^
+      //  action = "^1TEAMKILLED^7 a";
+      //  break;
       default:
         action = "\0"; // erm
         break;

@@ -1350,7 +1350,7 @@ void G_CalculateBuildPoints( void )
   }
 
   //start suddendeath
-  if( g_suddenDeath.integer && !level.suddenDeath)
+  if( g_suddenDeath.integer && !level.suddenDeath )
   {
     level.suddenDeath = qtrue;
     //warn about sudden death
@@ -1374,9 +1374,9 @@ void G_CalculateBuildPoints( void )
           int t = BG_FindTeamForBuildable( ent->s.modelindex );
 
           if( t == BIT_HUMANS )
-        localHTP += BG_FindBuildPointsForBuildable( ent->s.modelindex );
+            localHTP += BG_FindBuildPointsForBuildable( ent->s.modelindex );
           else if( t == BIT_ALIENS )
-        localATP += BG_FindBuildPointsForBuildable( ent->s.modelindex );
+            localATP += BG_FindBuildPointsForBuildable( ent->s.modelindex );
         }
       }
     }

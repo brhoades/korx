@@ -2695,9 +2695,14 @@ void Cmd_Destroy_f( gentity_t *ent )
       }
       else
       {
-        G_LogDestruction( traceEnt, ent, MOD_DECONSTRUCT );
+        //G_LogDestruction( traceEnt, ent, MOD_DECONSTRUCT );
+  
         if( deconstruct )
+        {
+          //Buildlog hack so regular decon works
+          G_Damage( traceEnt, NULL, ent, NULL, NULL, traceEnt->health, 0, MOD_DECONSTRUCT );      
           G_FreeEntity( traceEnt );
+        }
 
         if( !g_cheats.integer )
           ent->client->ps.stats[ STAT_MISC ] +=
