@@ -595,9 +595,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_SECONDARY_RELOAD    2000
 #define LCANNON_SECONDARY_REPEAT    1000
 #define LCANNON_SPEED               425
-#define LCANNON_CHARGE_TIME_MAX     2250
+#define LCANNON_CHARGE_TIME_MAX     2000
 #define LCANNON_CHARGE_TIME_MIN     100
-#define LCANNON_CHARGE_TIME_WARN    1500
+#define LCANNON_CHARGE_TIME_WARN    1250
 #define LCANNON_CHARGE_AMMO         10       // ammo cost of a full charge shot
 #define LCANNON_PRI_RECOIL_MIN_Y    10
 #define LCANNON_PRI_RECOIL_MAX_Y    25
@@ -624,9 +624,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_CHARGE_TIME            2000
 #define XAEL_TOTAL_CHARGE           255
 #define XAEL_MIN_CHARGE             50
-#define XAEL_CHARGE_TIME_MAX        2250
+#define XAEL_CHARGE_TIME_MAX        2000
 #define XAEL_CHARGE_TIME_MIN        50
-#define XAEL_CHARGE_TIME_WARN       1500
+#define XAEL_CHARGE_TIME_WARN       1250
 #define XAEL_CHARGE_AMMO            10
 #define XAEL_PRI_RECOIL_MIN_Y       20
 #define XAEL_PRI_RECOIL_MAX_Y       50
