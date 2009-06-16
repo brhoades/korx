@@ -2695,14 +2695,29 @@ void Cmd_Destroy_f( gentity_t *ent )
       }
       else
       {
-        //G_LogDestruction( traceEnt, ent, MOD_DECONSTRUCT );
+        buildHistory_t *new;
+
+        new = BG_Alloc( sizeof( buildHistory_t ) );
+        new->ID = ( ++level.lastBuildID > 1000 ) 
+            ? ( level.lastBuildID = 1 ) : level.lastBuildID;
+        new->ent = ent;
+        new->name[ 0 ] = 0;
+        new->buildable = traceEnt->s.modelindex;
+        VectorCopy( traceEnt->s.pos.trBase, new->origin );
+        VectorCopy( traceEnt->s.angles, new->angles );
+        VectorCopy( traceEnt->s.origin2, new->origin2 );
+        VectorCopy( traceEnt->s.angles2, new->angles2 );
+        new->fate = BF_DECONNED;
+        new->next = NULL;
+        new->marked = NULL;
+        G_LogBuild( new );
+        G_LogDestruction( traceEnt, ent, MOD_DECONSTRUCT );
   
-        if( deconstruct )
-        {
-          //Buildlog hack so regular decon works (and is revertable)
-          G_Damage( traceEnt, NULL, ent, NULL, NULL, traceEnt->health, 0, MOD_DECONSTRUCT );      
-          G_FreeEntity( traceEnt );
-        }
+
+				if( !deconstruct )
+					G_Damage( traceEnt, ent, ent, forward, tr.endpos, 10000, 0, MOD_SUICIDE );
+				else
+					G_FreeEntity( traceEnt );
 
         if( !g_cheats.integer )
           ent->client->ps.stats[ STAT_MISC ] +=
