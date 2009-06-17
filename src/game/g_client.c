@@ -82,23 +82,24 @@ void SP_info_human_intermission( gentity_t *ent )
 void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 {
   int       i;
-  int       overflow = 0, max = 0, overflowamt = 0, overflowed = 0, overflowtotal = 0;
-  char      type[8];
+  int       overflow = 0, max = 0, overflowed = 0, overflowtotal = 0;
   gclient_t *cl;
   
   if( !client )
     return;
 
-  if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+  /*if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
   {
     max = ALIEN_MAX_CREDITS;
-    strcpy( type, "frag(s)" );
+    //strcpy( type, "frag(s)" );
+    type = "frag(s)";
   }
   else if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
   {
     max = HUMAN_MAX_CREDITS;
-    strcpy( type, "credit(s)" );
-  }
+    //strcpy( type, "credit(s)" );
+    type = "credit(s)";
+  }*/
 
   //This doesn't work so well in ESD or with /give all
   if( client->ps.persistant[ PERS_CREDIT ] + credit > max 
@@ -112,7 +113,9 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
     // give precedence to live players
     for( i = level.numConnectedClients - 1; overflow > 0 && i >= 0; i-- )
     {
-      team_t    team;
+      team_t    team = TEAM_NONE;
+      char      *type = "";
+      int       overflowamt = 0;
       cl = &level.clients[ level.sortedClients[ i ] ];
       if( cl->pers.teamSelection != client->pers.teamSelection )
         continue;
@@ -141,22 +144,32 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( team == TEAM_ALIENS )
       {
         overflowamt = (int)( overflowamt/ALIEN_CREDITS_PER_FRAG );
+        if( overflowamt != 1 )
+          type = "frags";
+        else
+          type = "frag";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
       }
       else
       {
+        if( overflowamt != 1 )
+          type = "credits";
+        else
+          type = "credit";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
       }
-      overflowamt = 0;
     }
     // give anything else to dead players
     for( i = 0; overflow > 0 && i < level.numConnectedClients; i++ )
     {
-      team_t    team;
+      team_t    team = TEAM_NONE;
+      char      *type = "";
+      int       overflowamt = 0;
+      
       cl = &level.clients[ level.sortedClients[ i ] ];
       if( cl->pers.teamSelection != client->pers.teamSelection )
         continue;
@@ -182,12 +195,20 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( team == TEAM_ALIENS )
       {
         overflowamt = (int)( overflowamt/ALIEN_CREDITS_PER_FRAG );
+        if( overflowamt != 1 )
+          type = "frags";
+        else
+          type = "frag";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
       }
       else
       {
+        if( overflowamt != 1 )
+          type = "credits";
+        else
+          type = "credit";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
@@ -196,17 +217,26 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
     
     if( overflowed > 0 )
     {
+      char      *type = "";
+      
       if( client->pers.teamSelection == TEAM_ALIENS )
       {
         overflowtotal = (int)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
-      trap_SendServerCommand( client - level.clients,
-       va( "print \"^7You overflowed ^2%i^7 %s to ^2%d ^7%s\n\"",
-       overflowtotal, type, overflowed,
-       ( overflowed == 1 ) ? "person" : "people" ) );
+        if( overflowtotal != 1 )
+          type = "frags";
+        else
+          type = "frag";
+        trap_SendServerCommand( client - level.clients,
+         va( "print \"^7You overflowed ^2~%i^7 %s to ^2%d ^7%s\n\"",
+         overflowtotal, type, overflowed,
+         ( overflowed == 1 ) ? "person" : "people" ) );
       }
       else
       {
-        overflowtotal = (int)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
+        if( overflowtotal != 1 )
+          type = "credits";
+        else
+          type = "credit";
         trap_SendServerCommand( client - level.clients,
           va( "print \"^7You overflowed ^2~%i^7 %s to ^2%d ^7%s\n\"",
           overflowtotal, type, overflowed,
