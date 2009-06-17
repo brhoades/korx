@@ -189,7 +189,7 @@ float G_RewardAttackers( gentity_t *self )
     // if the kill-ee was a player, up killer's killcount
     if( self->s.eType != ET_BUILDABLE )
     {
-      AddKill( player );
+      //AddKill( player );  Aaron:This gives kills for assists too, moved to player_die
       // add to stage counters (only if we're not in skirmish)
       if ( !(level.time < SKIRMISH_TIME) )
       {
@@ -245,9 +245,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
           level.alienStatsCounters.teamkills++;
         else if( attacker->client->pers.teamSelection == TEAM_HUMANS )
           level.humanStatsCounters.teamkills++;
-      }
-      if( attacker != self && attacker->client->ps.stats[ STAT_TEAM ] == self->client->ps.stats[ STAT_TEAM ] )
+          
         tk = qtrue;
+      }
     }
     else
       killerName = "<non-client>";
@@ -405,6 +405,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     else
     {
       //AddScore( attacker, 1 ); 
+      AddKill( attacker );
 
       attacker->client->lastKillTime = level.time;
       attacker->client->pers.statscounters.kills++;
