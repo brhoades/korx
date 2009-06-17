@@ -186,13 +186,7 @@ float G_RewardAttackers( gentity_t *self )
       continue;
       
     // give credits for kill (of building or player)
-    if( !g_tkmap.integer && team == TEAM_HUMANS )
-      G_AddCreditToClient( player->client, num, qtrue );
-    else
-    {
-      num *= (short)(HUMAN_MAX_CREDITS/ALIEN_MAX_CREDITS); //Bring it down to scale
-      G_AddCreditToClient( player->client, num, qtrue );
-    }
+    G_AddCreditToClient( player->client, num, qtrue );
 
     if( self->s.eType != ET_BUILDABLE )
     {
