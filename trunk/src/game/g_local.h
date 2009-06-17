@@ -1405,6 +1405,7 @@ extern  vmCvar_t  g_banNotice;
 
 extern  vmCvar_t  g_msg;
 extern  vmCvar_t  g_msgTime;
+extern  vmCvar_t  g_tkmap;
 
 void      trap_Print( const char *fmt );
 void      trap_Error( const char *fmt );

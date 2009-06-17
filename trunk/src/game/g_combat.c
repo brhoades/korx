@@ -180,13 +180,12 @@ float G_RewardAttackers( gentity_t *self )
       stageValue *= totalDamage / maxHealth;
 
     if( !player->client || !self->credits[ i ] ||
-        player->client->ps.stats[ STAT_TEAM ] == team )
+        ( player->client->ps.stats[ STAT_TEAM ] == team && !g_tkmap.integer ) )
       continue;
 
     // give credits for kill (of building or player)
-    G_AddCreditToClient( player->client, num, qtrue);
+    G_AddCreditToClient( player->client, num, qtrue );
 
-    // if the kill-ee was a player, up killer's killcount
     if( self->s.eType != ET_BUILDABLE )
     {
       //AddKill( player );  Aaron:This gives kills for assists too, moved to player_die
@@ -297,7 +296,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   {
     goto finish_dying;
   }
-  if( !tk || meansOfDeath == MOD_TELEFRAG )
+  if( !tk || g_tkmap.integer || meansOfDeath == MOD_TELEFRAG )
   {
     // broadcast the death event to everyone
     ent = G_TempEntity( self->r.currentOrigin, EV_OBITUARY );
@@ -342,7 +341,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
       trap_SendServerCommand( self-g_entities, va( "print \"Your killer, %s^7, had ^2%3i ^7HP.\n\"", killerName, attacker->health ) );
     }
 
-    if( attacker == self || OnSameTeam( self, attacker ) )
+    if( ( attacker == self || OnSameTeam( self, attacker ) ) && !g_tkmap.integer )
     {
     //AddScore( attacker, -1 );
       if( g_retribution.integer != 0 && attacker != self ) 
@@ -433,7 +432,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   // give credits for killing this player
   totalDamage = G_RewardAttackers( self );
   //FIXME: WIRE: This is broken with the new balance
-  if( !OnSameTeam( self, attacker ) && totalDamage >= ( self->client->ps.stats[ STAT_MAX_HEALTH ] * DAMAGE_FRACTION_FOR_KILL ) )
+  if( ( !OnSameTeam( self, attacker ) || g_tkmap.integer ) 
+      && totalDamage >= ( self->client->ps.stats[ STAT_MAX_HEALTH ] * DAMAGE_FRACTION_FOR_KILL ) )
   {
     if( self->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS ) 
     {
