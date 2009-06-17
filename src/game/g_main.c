@@ -2696,13 +2696,9 @@ void CheckVote( void )
     level.voteExecuteTime = 0;
 
     if( !Q_stricmp( level.voteString, "map_restart" ) )
-    {
       G_admin_maplog_result( "r" );
-    }
     else if( !Q_stricmpn( level.voteString, "map", 3 ) )
-    {
       G_admin_maplog_result( "m" );
-    }
 
 
     if( !Q_stricmp( level.voteString, "suddendeath" ) )
@@ -2807,41 +2803,62 @@ CheckTeamVote
 */
 void CheckTeamVote( team_t team )
 {
-  int cs_offset;
+  int cs_offset, voteYesPercent, nays, yays;
+  int votePassThreshold=50; //for now
 
-  if ( team == TEAM_HUMANS )
+  if( team == TEAM_HUMANS )
     cs_offset = 0;
-  else if ( team == TEAM_ALIENS )
+  else if( team == TEAM_ALIENS )
     cs_offset = 1;
   else
     return;
 
   if( !level.teamVoteTime[ cs_offset ] )
     return;
+    
+  yays = level.teamVoteYes[ cs_offset ];
+  nays = level.teamVoteNo[ cs_offset ];
+
+  if( yays + nays > 0 )
+    voteYesPercent = (int)( 100 * ( yays )/( yays + nays ) );
+  else
+    voteYesPercent = 0; 
 
   if( level.time - level.teamVoteTime[ cs_offset ] >= VOTE_TIME )
   {
-    G_TeamCommand( team, "print \"Team vote failed\n\"" );
-  }
-  else
-  {
-    if( level.teamVoteYes[ cs_offset ] > level.numteamVotingClients[ cs_offset ] / 2 )
+    if( voteYesPercent > votePassThreshold )
     {
-      // execute the command, then remove the vote
-      G_TeamCommand( team, "print \"Team vote passed\n\"" );
-      trap_SendConsoleCommand( EXEC_APPEND, va( "%s\n", level.teamVoteString[ cs_offset ] ) );
-    }
-    else if( level.teamVoteNo[ cs_offset ] >= level.numteamVotingClients[ cs_offset ] / 2 )
-    {
-      // same behavior as a timeout
-      G_TeamCommand( team, "print \"Team vote failed\n\"" );
+      G_TeamCommand( team, va( "print \"^2Team Vote Passed^7 (^2Y^7:%i, ^1N^7:%i, %i percent)\n\"",
+                      yays, nays, voteYesPercent ) );
     }
     else
     {
-      // still waiting for a majority
+      G_TeamCommand( team, va( "print \"^1Team Vote Failed^7 (^2Y^7:%i, ^1N^7:%i, %i percent)\n\"",
+                      yays, nays, voteYesPercent ) );
+    }
+  }
+  else if( yays + nays > 0 )
+  {
+    if( yays > level.numteamVotingClients[ cs_offset ] / 2 )
+    {
+      // execute the command, then remove the vote
+      G_TeamCommand( team, va( "print \"^2Team Vote Passed^7 (^2Y^7:%i, ^1N^7:%i, %i percent)\n\"",
+                      yays, nays, voteYesPercent ) );
+      trap_SendConsoleCommand( EXEC_APPEND, va( "%s\n", level.teamVoteString[ cs_offset ] ) );
+    }
+    else if( nays >= level.numteamVotingClients[ cs_offset ] / 2 )
+    {
+      G_TeamCommand( team, va( "print \"^1Team Vote Failed^7 (^2Y^7:%i, ^1N^7:%i, %i percent)\n\"",
+                      yays, nays, voteYesPercent ) );
+    }
+    else
+    {
+      //Still waiting for a majority
       return;
     }
   }
+  else
+    return; //Still waiting for a vote
 
   level.teamVoteTime[ cs_offset ] = 0;
   trap_SetConfigstring( CS_TEAMVOTE_TIME + cs_offset, "" );

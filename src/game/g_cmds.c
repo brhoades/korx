@@ -1334,6 +1334,12 @@ void Cmd_CallVote_f( gentity_t *ent )
       return;
     }
 
+  if( level.teamVoteTime[ 0 ] || level.teamVoteTime[ 1 ] )
+  {
+    trap_SendServerCommand( ent-g_entities, "print \"A team vote is currently in progress\n\"" );
+    return;
+  }
+
   if( g_voteMinTime.integer
     && ent->client->pers.firstConnect 
     && level.time - ent->client->pers.enterTime < g_voteMinTime.integer * 1000
@@ -1853,46 +1859,15 @@ void Cmd_CallVote_f( gentity_t *ent )
 
   level.voteTime = level.time;
   level.voteNo = 0;
+  level.voteYes = 0;
 
   for( i = 0 ; i < level.maxclients ; i++ )
     level.clients[i].ps.eFlags &= ~EF_VOTED;
-  level.voteYes = 0;
 
   trap_SetConfigstring( CS_VOTE_TIME, va( "%i", level.voteTime ) );
   trap_SetConfigstring( CS_VOTE_STRING, level.voteDisplayString );
   trap_SetConfigstring( CS_VOTE_YES, "0" );
   trap_SetConfigstring( CS_VOTE_NO, "0" );
-}
-
-/*
-==================
-Cmd_Vote_f
-==================
-*/
-void Cmd_Vote_f( gentity_t *ent )
-{
-  char msg[ 64 ];
-
-  if( !level.voteTime )
-  {
-    trap_SendServerCommand( ent-g_entities, "print \"No vote in progress\n\"" );
-    return;
-  }
-
-  if( ent->client->ps.eFlags & EF_VOTED )
-  {
-    trap_SendServerCommand( ent-g_entities, "print \"Vote already cast\n\"" );
-    return;
-  }
-
-  trap_SendServerCommand( ent-g_entities, "print \"Vote cast\n\"" );
-
-  trap_Argv( 1, msg, sizeof( msg ) );
-  ent->client->pers.vote = ( tolower( msg[ 0 ] ) == 'y' || msg[ 0 ] == '1' );
-  G_Vote( ent, qtrue );
-
-  // a majority will be determined in CheckVote, which will also account
-  // for players entering or leaving
 }
 
 /*
@@ -1923,6 +1898,12 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
   if( level.teamVoteTime[ cs_offset ] )
   {
     trap_SendServerCommand( ent-g_entities, "print \"A team vote is already in progress\n\"" );
+    return;
+  }
+
+  if( level.voteTime )
+  {
+    trap_SendServerCommand( ent-g_entities, "print \"A regular vote is currently in progress\n\"" );
     return;
   }
 
@@ -1994,9 +1975,7 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
     // make sure this player is on the same team
     if( clientNum != -1 && level.clients[ clientNum ].pers.teamSelection !=
       team )
-    {
       clientNum = -1;
-    }
 
     if( clientNum != -1 )
     {
@@ -2142,14 +2121,17 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
   G_TeamCommand( team, va( "print \"%s " S_COLOR_WHITE "called a team vote\n\"",
     ent->client->pers.netname ) );
 
+  G_TeamCommand( team, va( "cp \"%s " S_COLOR_WHITE "has called a team vote\n ^2F1^7 (Yes) - ^1F2 ^7(No)\"",
+    ent->client->pers.netname ) );
+
   G_Printf( "'%s' called a teamvote for '%s'\n", ent->client->pers.netname, 
     level.teamVoteString[ cs_offset ] ) ;
 
-  // start the voting, the caller autoamtically votes yes
+  // start the voting, the caller automatically votes yes (lies)
   level.teamVoteTime[ cs_offset ] = level.time;
-  level.teamVoteYes[ cs_offset ] = 1;
+  level.teamVoteYes[ cs_offset ] = 0;
   level.teamVoteNo[ cs_offset ] = 0;
-  ent->client->pers.teamVote = qtrue;
+  //ent->client->pers.teamVote = qtrue;
 
   for( i = 0; i < level.maxclients; i++ )
   {
@@ -2157,13 +2139,13 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
       level.clients[ i ].ps.eFlags &= ~EF_TEAMVOTED;
   }
 
-  ent->client->ps.eFlags |= EF_TEAMVOTED;
+  //ent->client->ps.eFlags |= EF_TEAMVOTED;
 
   trap_SetConfigstring( CS_TEAMVOTE_TIME + cs_offset,
     va( "%i", level.teamVoteTime[ cs_offset ] ) );
   trap_SetConfigstring( CS_TEAMVOTE_STRING + cs_offset,
     level.teamVoteDisplayString[ cs_offset ] );
-  trap_SetConfigstring( CS_TEAMVOTE_YES + cs_offset, "1" );
+  trap_SetConfigstring( CS_TEAMVOTE_YES + cs_offset, "0" );
   trap_SetConfigstring( CS_TEAMVOTE_NO + cs_offset, "0" );
 }
 
@@ -2203,6 +2185,53 @@ void Cmd_TeamVote_f( gentity_t *ent )
   // for players entering or leaving
 }
 
+/*
+==================
+Cmd_Vote_f
+==================
+*/
+void Cmd_Vote_f( gentity_t *ent )
+{
+  char msg[ 64 ];
+
+  if( !level.voteTime )
+  {
+    if( ent->client->pers.teamSelection != TEAM_NONE )
+    {
+      // If there is a teamvote going on but no global vote, forward this vote on as a teamvote
+      // (ugly hack for 1.1 cgames + noobs who can't figure out how to use any command that isn't bound by default)
+      int     cs_offset = 0;
+      if( ent->client->pers.teamSelection == TEAM_ALIENS )
+        cs_offset = 1;
+    
+      if( level.teamVoteTime[ cs_offset ] )
+      {
+         if( !(ent->client->ps.eFlags & EF_TEAMVOTED ) )
+         {
+           Cmd_TeamVote_f( ent ); 
+	         return;
+         }
+       }
+     }
+    trap_SendServerCommand( ent-g_entities, "print \"No vote in progress\n\"" );
+    return;
+  }
+
+  if( ent->client->ps.eFlags & EF_VOTED )
+  {
+    trap_SendServerCommand( ent-g_entities, "print \"Vote already cast\n\"" );
+    return;
+  }
+
+  trap_SendServerCommand( ent-g_entities, "print \"Vote cast\n\"" );
+
+  trap_Argv( 1, msg, sizeof( msg ) );
+  ent->client->pers.vote = ( tolower( msg[ 0 ] ) == 'y' || msg[ 0 ] == '1' );
+  G_Vote( ent, qtrue );
+
+  // a majority will be determined in CheckVote, which will also account
+  // for players entering or leaving
+}
 
 /*
 =================
