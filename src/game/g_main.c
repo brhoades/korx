@@ -206,6 +206,8 @@ vmCvar_t  g_banNotice;
 vmCvar_t  g_msg;
 vmCvar_t  g_msgTime;
 
+vmCvar_t  g_tkmap;
+
 static cvarTable_t   gameCvarTable[ ] =
 {
   // don't override the cheat state set by the system
@@ -392,7 +394,8 @@ static cvarTable_t   gameCvarTable[ ] =
 
   { &g_banNotice, "g_banNotice", "", CVAR_ARCHIVE, 0, qfalse  },
 
-  { &g_tag, "g_tag", "main", CVAR_INIT, 0, qfalse }
+  { &g_tag, "g_tag", "main", CVAR_INIT, 0, qfalse },
+  { &g_tkmap, "g_tkmap", "", CVAR_ARCHIVE, 0, qfalse }
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
@@ -804,6 +807,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   
   //reset extendvote, just in case
   trap_Cvar_Set( "g_extendvote", "0" );
+  trap_Cvar_Set( "g_tkmap", "0" );
   level.suddenDeath = qfalse;
   level.extremeSuddenDeath = qfalse;
   level.suddenDeathVote = qfalse;
