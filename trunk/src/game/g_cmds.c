@@ -1841,7 +1841,7 @@ void Cmd_CallVote_f( gentity_t *ent )
   }
   
   if ( reason[0] != '\0' )
-    Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " Reason: '%s^7'", reason ) );
+    Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " ^7Reason: '%s^7'", reason ) );
   
 
   trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE
@@ -1853,7 +1853,7 @@ void Cmd_CallVote_f( gentity_t *ent )
   
   G_LogPrintf("Vote: %s^7 called a vote: %s^7\n", ent->client->pers.netname, level.voteDisplayString );
   
-  Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " Called by: '%s^7'", ent->client->pers.netname ) );
+  Q_strcat( level.voteDisplayString, sizeof( level.voteDisplayString ), va( " ^7Called by: '%s^7'", ent->client->pers.netname ) );
 
   ent->client->pers.voteCount++;
 
