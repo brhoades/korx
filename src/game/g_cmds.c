@@ -1840,6 +1840,10 @@ void Cmd_CallVote_f( gentity_t *ent )
 
   trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE
          " called a vote: %s\n\"", ent->client->pers.netname, level.voteDisplayString ) );
+         
+  //For players who are blind:
+  trap_SendServerCommand( -1, va( "cp \"%s" S_COLOR_WHITE
+         " has called a vote\n ^2F1 ^7(Yes) - ^1F2 ^7(No)\"", ent->client->pers.netname ) );
   
   G_LogPrintf("Vote: %s^7 called a vote: %s^7\n", ent->client->pers.netname, level.voteDisplayString );
   
