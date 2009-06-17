@@ -186,7 +186,7 @@ float G_RewardAttackers( gentity_t *self )
       continue;
       
     // give credits for kill (of building or player)
-    if( !g_tkmap.integer && team == PTE_HUMANS )
+    if( !g_tkmap.integer && team == TEAM_HUMANS )
       G_AddCreditToClient( player->client, num, qtrue );
     else
     {
