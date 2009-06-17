@@ -180,7 +180,7 @@ float G_RewardAttackers( gentity_t *self )
       stageValue *= totalDamage / maxHealth;
 
     if( !player->client || !self->credits[ i ] ||
-        ( player->client->ps.stats[ STAT_TEAM ] == team && !g_tkmap.integer ) )
+        player->client->ps.stats[ STAT_TEAM ] == team )
       continue;
 
     // give credits for kill (of building or player)
