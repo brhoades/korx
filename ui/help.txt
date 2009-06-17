@@ -5,12 +5,12 @@
     "Please visit the KnightsofReason.net website at:\n"
     "http://www.knightsofreason.net/\n\n"
     "We can also be reached on IRC:\n"
-    "irc.quakenet.org #knightsofreason #korx"
+    "irc.quakenet.org - #knightsofreason or #korx"
   }
   "Sprinting"
   {
     "A change from MGdev, the sprinting system has had a major change. "
-    "This leaves the default bind incompatiable with the original X bind. "
+    "This leaves the default bind incompatiable with the original X bind.\n\n"
     "So please rebind your x keys (or whatever they are now) to: \n"
     "  +button6\n"
     "Like so:\n"
@@ -42,7 +42,7 @@
     "Aliens will no longer be as frustrated by camping Human players because "
     "the Adv. Dragoon is now available at Stage 2. The Adv. "
     "Dragoon snipe attack has splash damage. Jetpacks now require power to float, "
-    "so aliens do not have to worry about camping jettards, they have to come down "
+    "so aliens do not have to worry (as much) about camping jettards, they have to come down "
     "sometime."
   }
   "Barricades"
@@ -216,6 +216,7 @@
   {
     "[granger][[granger]\n"
     "[advgranger][[advgranger]\n"
+    "[bgranger][[bgranger]\n"
     "[dretch][[dretch]\n"
     "[advdretch][[advdretch]\n"
     "[basilisk][[basilisk]\n"
