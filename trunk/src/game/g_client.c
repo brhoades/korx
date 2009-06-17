@@ -88,18 +88,18 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   if( !client )
     return;
 
-  /*if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+  if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
   {
     max = ALIEN_MAX_CREDITS;
     //strcpy( type, "frag(s)" );
-    type = "frag(s)";
+    //type = "frag(s)";
   }
   else if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
   {
     max = HUMAN_MAX_CREDITS;
     //strcpy( type, "credit(s)" );
-    type = "credit(s)";
-  }*/
+    //type = "credit(s)";
+  }
 
   //This doesn't work so well in ESD or with /give all
   if( client->ps.persistant[ PERS_CREDIT ] + credit > max 
@@ -126,7 +126,6 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       team = cl->pers.teamSelection;
       overflowed++;
-      overflowamt = 0;
 
       if( cl->ps.persistant[ PERS_CREDIT ] + overflow > max )
       {
@@ -149,7 +148,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         else
           type = "frag";
         trap_SendServerCommand( i,
-        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
       }
       else
@@ -159,7 +158,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         else
           type = "credit";
         trap_SendServerCommand( i,
-        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
       }
     }
@@ -200,7 +199,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         else
           type = "frag";
         trap_SendServerCommand( i,
-        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
       }
       else
@@ -210,7 +209,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         else
           type = "credit";
         trap_SendServerCommand( i,
-        va( "print \"%s^7 overflowed ^2%i ^7~%s to you!\n\"",
+        va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
         cl->pers.netname, overflowamt, type ) );
       }
     }
@@ -238,12 +237,11 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         else
           type = "credit";
         trap_SendServerCommand( client - level.clients,
-          va( "print \"^7You overflowed ^2~%i^7 %s to ^2%d ^7%s\n\"",
+          va( "print \"^7You overflowed ^2%i^7 %s to ^2%d ^7%s\n\"",
           overflowtotal, type, overflowed,
           ( overflowed == 1 ) ? "person" : "people" ) );
       }
     }
-
   }
   else if( client->ps.persistant[ PERS_CREDIT ] + credit > max && cap )
   {
