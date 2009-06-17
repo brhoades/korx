@@ -345,47 +345,45 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     if( attacker == self || OnSameTeam( self, attacker ) )
     {
     //AddScore( attacker, -1 );
-      if( g_retribution.integer ) 
+      if( g_retribution.integer != 0 && attacker != self ) 
       {
-        if( attacker != self )
-         {
-          int max = ALIEN_MAX_FRAGS, tk_value = 0;
-          char *type = "evos";
+        int max = 0, tk_value = 0;
+        char *type = "evos";
 
-          if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS ) 
-          {
-            tk_value = BG_ClassCanEvolveFromTo( PCL_ALIEN_LEVEL0,
-              self->client->ps.stats[ STAT_CLASS ], ALIEN_MAX_FRAGS, 0 , g_alienStage.integer, 0 );
-          }
-          else
-          {
-            tk_value = BG_GetValueOfEquipment( &self->client->ps );
-            max = HUMAN_MAX_CREDITS;
-            type = "credits";
-          }
+        if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS ) 
+        {
+          max = ALIEN_MAX_FRAGS,
+          tk_value = BG_ClassCanEvolveFromTo( PCL_ALIEN_LEVEL0,
+            self->client->ps.stats[ STAT_CLASS ], ALIEN_MAX_FRAGS, 0 , g_alienStage.integer, 0 );
+        }
+        else
+        {
+          tk_value = BG_GetValueOfEquipment( &self->client->ps );
+          max = HUMAN_MAX_CREDITS;
+          type = "credits";
+        }
 
-          if( attacker->client->ps.persistant[ PERS_CREDIT ] < tk_value )
-            tk_value = attacker->client->ps.persistant[ PERS_CREDIT ];
-          if( self->client->ps.persistant[ PERS_CREDIT ] + tk_value > max )
-            tk_value = max-self->client->ps.persistant[ PERS_CREDIT ];
+        if( attacker->client->ps.persistant[ PERS_CREDIT ] < tk_value )
+          tk_value = attacker->client->ps.persistant[ PERS_CREDIT ];
+        if( self->client->ps.persistant[ PERS_CREDIT ] + tk_value > max )
+          tk_value = max-self->client->ps.persistant[ PERS_CREDIT ];
 
-          if( tk_value > 0 ) 
-          {
-            // adjust using the retribution cvar (in percent)
-            if( g_retribution.integer != 1 )
-              tk_value = tk_value*g_retribution.integer/100;
+        if( tk_value > 0 ) 
+        {
+          // adjust using the retribution cvar (in percent)
+          if( g_retribution.integer != 1 )
+            tk_value = tk_value*g_retribution.integer/100;
 
-            G_AddCreditToClient( self->client, tk_value, qtrue );
-            G_AddCreditToClient( attacker->client, -tk_value, qtrue );
+          G_AddCreditToClient( self->client, tk_value, qtrue );
+          G_AddCreditToClient( attacker->client, -tk_value, qtrue );
 
-            trap_SendServerCommand( self->client->ps.clientNum,
-              va( "print \"Received ^3%d %s ^7from %s ^7in retribution.\n\"",
-            tk_value, type, attacker->client->pers.netname ) );
-            trap_SendServerCommand( attacker->client->ps.clientNum,
-              va( "print \"Transfered ^3%d %s ^7to %s ^7in retribution.\n\"",
-            tk_value, type, self->client->pers.netname ) );
-          }
-	      }
+          trap_SendServerCommand( self->client->ps.clientNum,
+            va( "print \"Received ^3%d %s ^7from %s ^7in retribution.\n\"",
+          tk_value, type, attacker->client->pers.netname ) );
+          trap_SendServerCommand( attacker->client->ps.clientNum,
+            va( "print \"Transfered ^3%d %s ^7to %s ^7in retribution.\n\"",
+          tk_value, type, self->client->pers.netname ) );
+        }
       }
       else
       {
