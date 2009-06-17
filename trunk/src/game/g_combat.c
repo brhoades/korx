@@ -240,14 +240,11 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
       if( attacker != self && attacker->client->ps.stats[ STAT_TEAM ]  == self->client->ps.stats[ STAT_TEAM ] ) 
       {
         attacker->client->pers.statscounters.teamkills++;
+        
         if( attacker->client->pers.teamSelection == TEAM_ALIENS ) 
-        {
           level.alienStatsCounters.teamkills++;
-        }
         else if( attacker->client->pers.teamSelection == TEAM_HUMANS )
-        {
           level.humanStatsCounters.teamkills++;
-        }
       }
       if( attacker != self && attacker->client->ps.stats[ STAT_TEAM ] == self->client->ps.stats[ STAT_TEAM ] )
         tk = qtrue;
@@ -348,7 +345,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     if( attacker == self || OnSameTeam( self, attacker ) )
     {
     //AddScore( attacker, -1 );
-      if( g_retribution.integer) 
+      if( g_retribution.integer ) 
       {
         if( attacker != self )
          {
@@ -358,7 +355,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
           if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS ) 
           {
             tk_value = BG_ClassCanEvolveFromTo( PCL_ALIEN_LEVEL0,
-              self->client->ps.stats[ STAT_CLASS ], ALIEN_MAX_FRAGS, 0 , g_alienStage.integer, 0);
+              self->client->ps.stats[ STAT_CLASS ], ALIEN_MAX_FRAGS, 0 , g_alienStage.integer, 0 );
           }
           else
           {
@@ -369,13 +366,14 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
           if( attacker->client->ps.persistant[ PERS_CREDIT ] < tk_value )
             tk_value = attacker->client->ps.persistant[ PERS_CREDIT ];
-          if( self->client->ps.persistant[ PERS_CREDIT ]+tk_value > max )
+          if( self->client->ps.persistant[ PERS_CREDIT ] + tk_value > max )
             tk_value = max-self->client->ps.persistant[ PERS_CREDIT ];
 
           if( tk_value > 0 ) 
           {
             // adjust using the retribution cvar (in percent)
-            tk_value = tk_value*g_retribution.integer/100;
+            if( g_retribution.integer != 1 )
+              tk_value = tk_value*g_retribution.integer/100;
 
             G_AddCreditToClient( self->client, tk_value, qtrue );
             G_AddCreditToClient( attacker->client, -tk_value, qtrue );
@@ -400,13 +398,13 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
         else if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
         {
           G_AddCreditToClient( attacker->client, -HUMAN_TK_SUICIDE_PENALTY, qtrue );
-          //AddScore( attacker, -HUMAN_TK_SUICIDE_PENALTY ); */
+          //AddScore( attacker, -HUMAN_TK_SUICIDE_PENALTY );
         }
       }
     }
     else
     {
-   //AddScore( attacker, 1 ); 
+      //AddScore( attacker, 1 ); 
 
       attacker->client->lastKillTime = level.time;
       attacker->client->pers.statscounters.kills++;
