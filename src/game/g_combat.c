@@ -1310,9 +1310,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   if( ( mod == MOD_LEVEL4_TRAMPLE || mod == MOD_LEVEL3_POUNCE ||
         mod == MOD_LEVEL4_CRUSH ) &&
       targ->s.eType == ET_BUILDABLE && targ->buildableTeam == TEAM_ALIENS )
-  {
     return;
-  }
 
   // check for completely getting out of the damage
   if( !( dflags & DAMAGE_NO_PROTECTION ) )
@@ -1457,6 +1455,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( targ->client && attacker->client
         && mod == MOD_LEVEL4_EBLOBSPLASH && OnSameTeam( targ, attacker ) )
       return;
+    
+    if( targ->s.eType == ET_BUILDABLE && attacker->client && 
+        ( mod == MOD_LEVEL4_EBLOB || mod == MOD_LEVEL4_EBLOBSPLASH ) )
+        damage = (int)( damage * LEVEL4_EBLOB_BUILDABLE );
   }
 
   // add to the attacker's hit counter
