@@ -179,12 +179,20 @@ float G_RewardAttackers( gentity_t *self )
     if( totalDamage < maxHealth )
       stageValue *= totalDamage / maxHealth;
 
-    if( !player->client || !self->credits[ i ] ||
-        player->client->ps.stats[ STAT_TEAM ] == team )
+    if( !player->client || !self->credits[ i ] )
       continue;
-
+      
+    if( player->client->ps.stats[ STAT_TEAM ] == team && !g_tkmap.integer )
+      continue;
+      
     // give credits for kill (of building or player)
-    G_AddCreditToClient( player->client, num, qtrue );
+    if( !g_tkmap.integer && team == PTE_HUMANS )
+      G_AddCreditToClient( player->client, num, qtrue );
+    else
+    {
+      num *= (short)(HUMAN_MAX_CREDITS/ALIEN_MAX_CREDITS); //Bring it down to scale
+      G_AddCreditToClient( player->client, num, qtrue );
+    }
 
     if( self->s.eType != ET_BUILDABLE )
     {
@@ -415,6 +423,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
          level.humanStatsCounters.kills++;
       }
     }
+    
     if( attacker == self )
     {
       attacker->client->pers.statscounters.suicides++;
@@ -1630,9 +1639,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     targ->nextRegenTime = level.time + ALIEN_REGEN_DAMAGE_TIME;
 
     // add to the attackers "account" on the target
-    if( attacker->client && attacker != targ && !OnSameTeam( targ, attacker ) )
+    if( attacker->client && attacker != targ && ( !OnSameTeam( targ, attacker ) || g_tkmap.integer ) )
       targ->credits[ attacker->client->ps.clientNum ] += take;
-    else if( attacker != targ && OnSameTeam( targ, attacker ) )
+    else if( attacker != targ && OnSameTeam( targ, attacker ) && !g_tkmap.integer )
       targ->client->tkcredits[ attacker->client->ps.clientNum ] += takeNoOverkill;
 
     if( targ->health <= 0 )
