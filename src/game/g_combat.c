@@ -1233,9 +1233,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           mod == MOD_LEVEL4_CRUSH       ||
           mod == MOD_LEVEL3_POUNCE      ||
           mod == MOD_LEVEL1_PCLOUD )
-        G_AddEvent( attacker, EV_ALIENRANGED_HIT, targ->s.number );
+        G_AddEvent( attacker, EV_ALIENRANGED_HIT, 0 );
       else if( mod != MOD_POISON && mod != MOD_INFECTION )
-        G_AddEvent( attacker, EV_ALIEN_HIT, targ->s.number );
+        G_AddEvent( attacker, EV_ALIEN_HIT, 0 );
     }
     return;
   }
@@ -1365,9 +1365,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL3_POUNCE      ||
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
-            G_AddEvent( attacker, EV_ALIENRANGED_TEAMHIT, targ->s.number );
+            G_AddEvent( attacker, EV_ALIENRANGED_TEAMHIT, 0 );
           else if( mod != MOD_POISON )
-            G_AddEvent( attacker, EV_ALIEN_TEAMHIT, targ->s.number );
+            G_AddEvent( attacker, EV_ALIEN_TEAMHIT, 0 );
           return;
         }
         else
@@ -1424,9 +1424,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL3_POUNCE      ||
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
-            G_AddEvent( attacker, EV_ALIENRANGED_HIT, targ->s.number );
+            G_AddEvent( attacker, EV_ALIENRANGED_HIT, 0 );
           else if( mod != MOD_POISON && mod != MOD_INFECTION )
-            G_AddEvent( attacker, EV_ALIEN_HIT, targ->s.number );
+            G_AddEvent( attacker, EV_ALIEN_HIT, 0 );
       }
 
       // base is under attack warning if DCC'd
@@ -1568,9 +1568,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
             mod == MOD_LEVEL3_POUNCE      ||
             mod == MOD_LEVEL1_PCLOUD      ||
             mod == MOD_LEVEL2_ZAP )
-          G_AddEvent( attacker, EV_ALIENRANGED_HIT, targ->s.number );
+          G_AddEvent( attacker, EV_ALIENRANGED_HIT, 0 );
         else if( mod != MOD_POISON )
-          G_AddEvent( attacker, EV_ALIEN_HIT, targ->s.number );
+          G_AddEvent( attacker, EV_ALIEN_HIT, 0 );
       }
       if( targ->buildableTeam == attacker->client->pers.teamSelection || OnSameTeam( targ, attacker ) ) 
       {

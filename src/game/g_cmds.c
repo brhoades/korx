@@ -3456,7 +3456,10 @@ void Cmd_Build_f( gentity_t *ent )
 
       // more serious errors just pop a menu
       case IBE_NOALIENBP:
-        G_TriggerMenu( ent->client->ps.clientNum, MN_A_NOBP );
+        if( g_suddenDeath.integer )
+          ent->client->ps.stats[ STAT_BUILDABLE ] = ( buildable | SB_VALID_TOGGLEBIT );
+        else
+          G_TriggerMenu( ent->client->ps.clientNum, MN_A_NOBP );
         break;
 
       case IBE_ONEOVERMIND:
@@ -3472,7 +3475,10 @@ void Cmd_Build_f( gentity_t *ent )
         break;
 
       case IBE_NOHUMANBP:
-        G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOBP);
+        if( g_suddenDeath.integer )
+          ent->client->ps.stats[ STAT_BUILDABLE ] = ( buildable | SB_VALID_TOGGLEBIT );
+        else
+          G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOBP);
         break;
 
       case IBE_NODCC:
