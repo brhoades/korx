@@ -1813,24 +1813,24 @@ effect for visual information about a hit
 */
 void CG_HandleAlienFeedback( centity_t *cent, alienFeedback_t feedbackType )
 {
-        entityState_t     *es;
+  entityState_t     *es;
 
-        es = &cent->currentState;
+  es = &cent->currentState;
 
-        // show the alien feedback, if the entity matches this player
-        if(es->number == cg.predictedPlayerState.clientNum) 
-        {
-          switch (es->weapon)
-          {
-            case WP_ALEVEL0:
-            case WP_ALEVEL0_UPG:
-              break;
-            default:
-              cg.feedbackAnimation = 1;
-              cg.feedbackAnimationType = feedbackType;
-              break;
-          }
-        }
+  // show the alien feedback, if the entity matches this player
+  if( es->number == cg.predictedPlayerState.clientNum ) 
+  {
+    switch( es->weapon )
+    {
+      case WP_ALEVEL0:
+      case WP_ALEVEL0_UPG:
+        break;
+      default:
+        cg.feedbackAnimation = 1;
+        cg.feedbackAnimationType = feedbackType;
+        break;
+    }
+  }
 }
 
 /*

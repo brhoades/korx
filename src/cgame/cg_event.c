@@ -800,28 +800,28 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
       break;
 
     case EV_ALIEN_HIT:
-        CG_HandleAlienFeedback( cent, AFEEDBACK_HIT );
-        break;
+      CG_HandleAlienFeedback( cent, AFEEDBACK_HIT );
+      break;
   	 
     case EV_ALIEN_MISS:
-        CG_HandleAlienFeedback( cent, AFEEDBACK_MISS );
-        break;
+      CG_HandleAlienFeedback( cent, AFEEDBACK_MISS );
+      break;
   	 
     case EV_ALIEN_TEAMHIT:
-        CG_HandleAlienFeedback( cent, AFEEDBACK_TEAMHIT );
-        break;
+      CG_HandleAlienFeedback( cent, AFEEDBACK_TEAMHIT );
+      break;
 
     case EV_ALIENRANGED_HIT:
-        CG_HandleAlienFeedback( cent, AFEEDBACK_RANGED_HIT );
-        break;
+      CG_HandleAlienFeedback( cent, AFEEDBACK_RANGED_HIT );
+      break;
   	 
     case EV_ALIENRANGED_MISS:
-        CG_HandleAlienFeedback( cent, AFEEDBACK_RANGED_MISS );
-        break;
+      CG_HandleAlienFeedback( cent, AFEEDBACK_RANGED_MISS );
+      break;
   	 
     case EV_ALIENRANGED_TEAMHIT:
-        CG_HandleAlienFeedback( cent, AFEEDBACK_RANGED_TEAMHIT );
-        break;
+      CG_HandleAlienFeedback( cent, AFEEDBACK_RANGED_TEAMHIT );
+      break;
     //=================================================================
 
     //
