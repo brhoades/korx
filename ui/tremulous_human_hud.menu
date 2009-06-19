@@ -390,7 +390,7 @@
     {
       name "chargebg"
       rect 288 396 64 16
-      aspectBias ALIGN_RIGHT
+      aspectBias ALIGN_CENTER
       visible MENU_TRUE
       decoration
       forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.25
