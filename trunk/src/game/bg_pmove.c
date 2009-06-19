@@ -3362,6 +3362,8 @@ static void PM_Weapon( void )
       pm->ps->generic1 = WPM_SECONDARY;
       PM_AddEvent( EV_FIRE_WEAPON2 );
       addTime = BG_Weapon( pm->ps->weapon )->repeatRate2;
+      if( pm->ps->weapon == WP_LUCIFER_CANNON )
+        addTime *= LCANNON_SURGE_PRIM_TIME_MOD;
     }
     else
     {
@@ -3378,18 +3380,14 @@ static void PM_Weapon( void )
     addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
     if( BG_InventoryContainsUpgrade( UP_SURGE, pm->ps->stats ) )
     {
-      if ( pm->ps->weapon == WP_BLASTER )
-      {
+      if( pm->ps->weapon == WP_BLASTER )
         addTime *= BLASTER_SURGE_TIME_MOD;
-      }
-      else if ( pm->ps->weapon == WP_LAS_GUN )
-      {
+      else if( pm->ps->weapon == WP_LAS_GUN )
         addTime *= LASGUN_SURGE_TIME_MOD;
-      }
-      else if ( pm->ps->weapon == WP_MASS_DRIVER )
-      {
+      else if( pm->ps->weapon == WP_MASS_DRIVER )
         addTime *= MDRIVER_SURGE_TIME_MOD;
-      }
+      else if( pm->ps->weapon == WP_XAEL )
+        addTime *= XAEL_SURGE_SEC_TIME_MOD;
     }
   }
 

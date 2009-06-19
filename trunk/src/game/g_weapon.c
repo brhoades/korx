@@ -582,15 +582,9 @@ void massDriverFire( gentity_t *ent )
     if( traceEnt->takedamage )
     {
       int damage = MDRIVER_DMG;
+      
       if( BG_InventoryContainsUpgrade( UP_SURGE, ent->client->ps.stats ) )
-      {
-        if ( pm->ps->weapon == WP_BLASTER )
-          damage *= BLASTER_SURGE_DMG_MOD;
-        else if ( pm->ps->weapon == WP_LAS_GUN )
-          damage *= LASGUN_SURGE_DMG_MOD;
-        else if ( pm->ps->weapon == WP_MASS_DRIVER )
-          damage *= MDRIVER_SURGE_DMG_MOD;
-      }
+        damage *= MDRIVER_SURGE_DMG_MOD;
       G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, 0, MOD_MDRIVER );
     }
   }
@@ -808,7 +802,14 @@ void lasGunFire( gentity_t *ent )
   }
 
   if( traceEnt->takedamage )
-    G_Damage( traceEnt, ent, ent, forward, tr.endpos, LASGUN_DAMAGE, 0, MOD_LASGUN );
+  {
+    int damage=LASGUN_DAMAGE;
+      
+    if( BG_InventoryContainsUpgrade( UP_SURGE, ent->client->ps.stats ) )
+      damage *= LASGUN_SURGE_DMG_MOD;
+    
+    G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, 0, MOD_LASGUN );
+  }
 }
 
 /*
@@ -869,7 +870,12 @@ void LCChargeFire( gentity_t *ent, qboolean secondary )
 
   if( secondary && ent->client->ps.stats[ STAT_MISC ] <= 0 )
   {
-    m = fire_luciferCannon( ent, muzzle, forward, LCANNON_SECONDARY_DAMAGE, LCANNON_SECONDARY_RADIUS, LCANNON_SECONDARY_SPEED );
+    int damage = LCANNON_SECONDARY_DAMAGE;
+    
+    if( BG_InventoryContainsUpgrade( UP_SURGE, ent->client->ps.stats ) )
+      damage *= LCANNON_SURGE_DMG_MOD;
+    
+    m = fire_luciferCannon( ent, muzzle, forward, damage, LCANNON_SECONDARY_RADIUS, LCANNON_SECONDARY_SPEED );
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( LCANNON_SEC_RECOIL_MIN_Y, LCANNON_SEC_RECOIL_MAX_Y, LCANNON_SEC_RECOIL_MAX_X, LCANNON_SEC_RECOIL_SOFTEN );
     else
@@ -878,7 +884,12 @@ void LCChargeFire( gentity_t *ent, qboolean secondary )
   }
   else
   {
-    m = fire_luciferCannon( ent, muzzle, forward, ent->client->ps.stats[ STAT_MISC ] * LCANNON_DAMAGE / LCANNON_CHARGE_TIME_MAX, LCANNON_RADIUS, LCANNON_SPEED );
+    int damage = ent->client->ps.stats[ STAT_MISC ] * LCANNON_DAMAGE / LCANNON_CHARGE_TIME_MAX;
+    
+    if( BG_InventoryContainsUpgrade( UP_SURGE, ent->client->ps.stats ) )
+      damage *= LCANNON_SURGE_DMG_MOD;
+      
+    m = fire_luciferCannon( ent, muzzle, forward, damage, LCANNON_RADIUS, LCANNON_SPEED );
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( LCANNON_PRI_RECOIL_MIN_Y, LCANNON_PRI_RECOIL_MAX_Y, LCANNON_PRI_RECOIL_MAX_X, LCANNON_PRI_RECOIL_SOFTEN );
     else
@@ -908,7 +919,12 @@ void XChargeFire( gentity_t *ent, qboolean secondary )
 
   if( secondary && ent->client->ps.stats[ STAT_MISC ] <= 0 )
   {
-    m = fire_xael( ent, muzzle, forward, XAEL_SECONDARY_DAMAGE, XAEL_SECONDARY_RADIUS, XAEL_SECONDARY_SPEED );
+    int damage = XAEL_SECONDARY_DAMAGE;
+    
+    if( BG_InventoryContainsUpgrade( UP_SURGE, ent->client->ps.stats ) )
+      damage *= XAEL_SURGE_DMG_MOD;
+      
+    m = fire_xael( ent, muzzle, forward, damage, XAEL_SECONDARY_RADIUS, XAEL_SECONDARY_SPEED );
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( XAEL_SEC_RECOIL_MIN_Y, XAEL_SEC_RECOIL_MAX_Y, XAEL_SEC_RECOIL_MAX_X, XAEL_SEC_RECOIL_SOFTEN );
     else
@@ -917,7 +933,12 @@ void XChargeFire( gentity_t *ent, qboolean secondary )
   }
   else
   {
-    m = fire_xael( ent, muzzle, forward, ent->client->ps.stats[ STAT_MISC ] * XAEL_DAMAGE / XAEL_CHARGE_TIME_MAX, XAEL_RADIUS, XAEL_SPEED );
+    int damage = ent->client->ps.stats[ STAT_MISC ] * XAEL_DAMAGE / XAEL_CHARGE_TIME_MAX;
+    
+    if( BG_InventoryContainsUpgrade( UP_SURGE, ent->client->ps.stats ) )
+      damage *= XAEL_SURGE_DMG_MOD;
+      
+    m = fire_xael( ent, muzzle, forward, damage, XAEL_RADIUS, XAEL_SPEED );
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( XAEL_PRI_RECOIL_MIN_Y, XAEL_PRI_RECOIL_MAX_Y, XAEL_PRI_RECOIL_MAX_X, XAEL_PRI_RECOIL_SOFTEN );
     else

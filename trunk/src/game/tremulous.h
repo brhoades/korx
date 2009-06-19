@@ -588,10 +588,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_K_SCALE             1.0f
 #define LCANNON_REPEAT              500
 #define LCANNON_RELOAD              0
-#define LCANNON_DAMAGE              HDM(200)
+#define LCANNON_DAMAGE              HDM(250)
 #define LCANNON_RADIUS              150      // primary splash damage radius
 #define LCANNON_SIZE                5        // missile bounding box radius
-#define LCANNON_SECONDARY_DAMAGE    HDM(27)
+#define LCANNON_SECONDARY_DAMAGE    HDM(20)
 #define LCANNON_SECONDARY_RADIUS    75       // secondary splash damage radius
 #define LCANNON_SECONDARY_SPEED     1700
 #define LCANNON_SECONDARY_RELOAD    2000
@@ -604,22 +604,25 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_PRI_RECOIL_MIN_Y    10
 #define LCANNON_PRI_RECOIL_MAX_Y    25
 #define LCANNON_PRI_RECOIL_MAX_X    20
-#define LCANNON_PRI_RECOIL_SOFTEN   0.35
+#define LCANNON_PRI_RECOIL_SOFTEN   0.35f
 #define LCANNON_SEC_RECOIL_MIN_Y    5
 #define LCANNON_SEC_RECOIL_MAX_Y    10
 #define LCANNON_SEC_RECOIL_MAX_X    10
-#define LCANNON_SEC_RECOIL_SOFTEN   0.25
+#define LCANNON_SEC_RECOIL_SOFTEN   0.25f
+#define LCANNON_SURGE_DMG_MOD       1.2f
+#define LCANNON_SURGE_PRIM_TIME_MOD 0.75f
 
-#define XAEL_PRICE                  800
+
+#define XAEL_PRICE                  600
 #define XAEL_AMMO                   120
 #define XAEL_REPEAT                 500
 #define XAEL_K_SCALE                1.0f
 #define XAEL_CHARGEREPEAT           1000
 #define XAEL_RELOAD                 2000
-#define XAEL_DAMAGE                 HDM(330)
+#define XAEL_DAMAGE                 HDM(250)
 #define XAEL_RADIUS                 175
 #define XAEL_SIZE                   5        // missile bounding box radius
-#define XAEL_SECONDARY_DAMAGE       HDM(15)
+#define XAEL_SECONDARY_DAMAGE       HDM(20)
 #define XAEL_SECONDARY_RADIUS       50
 #define XAEL_SECONDARY_SPEED        1350
 #define XAEL_SPEED                  800
@@ -638,6 +641,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_SEC_RECOIL_MAX_Y       20
 #define XAEL_SEC_RECOIL_MAX_X       10
 #define XAEL_SEC_RECOIL_SOFTEN      0.25
+#define XAEL_SURGE_DMG_MOD          1.2f
+#define XAEL_SURGE_SEC_TIME_MOD     0.75f
 
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               500

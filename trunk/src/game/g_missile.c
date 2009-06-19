@@ -457,6 +457,9 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -BLASTER_SIZE;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = BLASTER_SIZE;
 
+  if( BG_InventoryContainsUpgrade( UP_SURGE, self->client->ps.stats ) )
+    bolt->damage *= BLASTER_SURGE_DMG_MOD;
+
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
@@ -573,10 +576,7 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   bolt = G_Spawn( );
   bolt->classname = "xeal";
 
-  if( damage == XAEL_DAMAGE )
-    bolt->nextthink = level.time;
-  else
-    bolt->nextthink = level.time + thinkTime;
+  bolt->nextthink = level.time + thinkTime;
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
@@ -593,7 +593,7 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   bolt->splashMethodOfDeath = MOD_XAEL;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-
+    
   // Give the missile a small bounding box
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] =
     -XAEL_SIZE;
