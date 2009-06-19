@@ -2606,7 +2606,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     SLOT_WEAPON,          //int       slots;
     "prifle",             //char      *weaponName;
     "Pulse Rifle",        //char      *humanName;
-    "An energy weapon that fires rapid pulses of concentrated energy.",
+    "An energy weapon that fires rapid pulses of concentrated energy. "
+      "Secodary fire slows large aliens, and traps small ones.",
     PRIFLE_CLIPS,         //int       maxAmmo;
     PRIFLE_MAXCLIPS,      //int       maxClips;
     qfalse,               //int       infiniteAmmo;
@@ -2688,8 +2689,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     "xael",               //char      *weaponName;
     "Xael",               //char      *weaponHumanName;
     "An initial prototype of a second generation Lucifer Cannon. "
-      "Similar damage to the lucifer cannon. Note that this weapon's shots are very bouncy."
-      "Has a higher splash damage. Highly charged shots "
+      "Similar damage to the lucifer cannon, but please note "
+      "that this weapon's shots are very bouncy."
+      "Has a higher splash damage with its highly charged shots "
       "have been reported to be slightly unstable. Surge increases damage by about 20 percent."
       "USE AT YOUR OWN RISK.",
     XAEL_AMMO,            //int       maxAmmo;
