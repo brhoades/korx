@@ -2661,7 +2661,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Lucifer Cannon",     //char      *humanName;
     "Blaster technology scaled up to deliver devastating power. "
       "Primary fire must be charged before firing. It has a quick "
-      "secondary attack that does not require charging.",
+      "secondary attack that does not require charging. Surge increases damage"
+      "by about 20 percent.",
     LCANNON_AMMO,         //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
@@ -2687,8 +2688,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     "xael",               //char      *weaponName;
     "Xael",               //char      *weaponHumanName;
     "An initial prototype of a second generation Lucifer Cannon. "
-      "Damage has been increased as has splash. Highly charged shots "
-      "have been reported to be slightly unstable. "
+      "Similar damage to the lucifer cannon. Note that this weapon's shots are very bouncy."
+      "Has a higher splash damage. Highly charged shots "
+      "have been reported to be slightly unstable. Surge increases damage by about 20 percent."
       "USE AT YOUR OWN RISK.",
     XAEL_AMMO,            //int       maxAmmo;
     0,                    //int       maxClips;
@@ -3157,7 +3159,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "surge",             //char  *upgradeName;
     "Surge",         //char  *upgradeHumanName;
     "An external bank of capacitors which increase the efficiency"
-    " of either the Las Gun or the Mass Driver, yeilding a 10 percent"
+    " of the Las Gun, Mass Driver, Luci, or Xael yeilding a 10 percent"
     " increase in damage while at the same time increasing the "
     "firing speed by 20 percent.",
     "icons/iconu_surge",
