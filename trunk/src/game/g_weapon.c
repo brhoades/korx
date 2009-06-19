@@ -36,10 +36,11 @@ addRecoil
 ===============
 */
 
-void addRecoil( float recoilMinY, float recoilMaxY, float recoilMaxX, float recoilSoften )
+void addRecoil( float recoilMinY, float recoilMaxY, float recoilMaxX, float recoilPercentageSoften )
 {
-  pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( random() * ((recoilMaxY * recoilSoften) - (recoilMinY * recoilSoften)) + (recoilMinY * recoilSoften) );
+  float recoilSoften = abs(100 * recoilPercentageSoften - 1) / 100;
   srand( level.time );
+  pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( random() * ((recoilMaxY * recoilSoften) - (recoilMinY * recoilSoften)) + (recoilMinY * recoilSoften) );
   pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( (random() - 0.5) * 2 * recoilMaxX * recoilSoften );
 }
 
@@ -872,7 +873,7 @@ void LCChargeFire( gentity_t *ent, qboolean secondary )
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( LCANNON_SEC_RECOIL_MIN_Y, LCANNON_SEC_RECOIL_MAX_Y, LCANNON_SEC_RECOIL_MAX_X, LCANNON_SEC_RECOIL_SOFTEN );
     else
-      addRecoil( LCANNON_SEC_RECOIL_MIN_Y, LCANNON_SEC_RECOIL_MAX_Y, LCANNON_SEC_RECOIL_MAX_X, 1 );
+      addRecoil( LCANNON_SEC_RECOIL_MIN_Y, LCANNON_SEC_RECOIL_MAX_Y, LCANNON_SEC_RECOIL_MAX_X, 0 );
       */
   }
   else
@@ -881,7 +882,7 @@ void LCChargeFire( gentity_t *ent, qboolean secondary )
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( LCANNON_PRI_RECOIL_MIN_Y, LCANNON_PRI_RECOIL_MAX_Y, LCANNON_PRI_RECOIL_MAX_X, LCANNON_PRI_RECOIL_SOFTEN );
     else
-      addRecoil( LCANNON_PRI_RECOIL_MIN_Y, LCANNON_PRI_RECOIL_MAX_Y, LCANNON_PRI_RECOIL_MAX_X, 1 );
+      addRecoil( LCANNON_PRI_RECOIL_MIN_Y, LCANNON_PRI_RECOIL_MAX_Y, LCANNON_PRI_RECOIL_MAX_X, 0 );
     */
   }
 
@@ -911,7 +912,7 @@ void XChargeFire( gentity_t *ent, qboolean secondary )
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( XAEL_SEC_RECOIL_MIN_Y, XAEL_SEC_RECOIL_MAX_Y, XAEL_SEC_RECOIL_MAX_X, XAEL_SEC_RECOIL_SOFTEN );
     else
-      addRecoil( XAEL_SEC_RECOIL_MIN_Y, XAEL_SEC_RECOIL_MAX_Y, XAEL_SEC_RECOIL_MAX_X, 1 );
+      addRecoil( XAEL_SEC_RECOIL_MIN_Y, XAEL_SEC_RECOIL_MAX_Y, XAEL_SEC_RECOIL_MAX_X, 0 );
     */
   }
   else
@@ -920,7 +921,7 @@ void XChargeFire( gentity_t *ent, qboolean secondary )
     /*if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
       addRecoil( XAEL_PRI_RECOIL_MIN_Y, XAEL_PRI_RECOIL_MAX_Y, XAEL_PRI_RECOIL_MAX_X, XAEL_PRI_RECOIL_SOFTEN );
     else
-      addRecoil( XAEL_PRI_RECOIL_MIN_Y, XAEL_PRI_RECOIL_MAX_Y, XAEL_PRI_RECOIL_MAX_X, 1 );
+      addRecoil( XAEL_PRI_RECOIL_MIN_Y, XAEL_PRI_RECOIL_MAX_Y, XAEL_PRI_RECOIL_MAX_X, 0 );
     */
   }
   ent->client->ps.stats[ STAT_MISC ] = 0;
@@ -1762,7 +1763,7 @@ void FireWeapon2( gentity_t *ent )
       if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
         addRecoil( SHOTGUN_SEC_RECOIL_MIN_Y, SHOTGUN_SEC_RECOIL_MAX_Y, SHOTGUN_SEC_RECOIL_MAX_X, SHOTGUN_SEC_RECOIL_SOFTEN );
       else
-        addRecoil( SHOTGUN_SEC_RECOIL_MIN_Y, SHOTGUN_SEC_RECOIL_MAX_Y, SHOTGUN_SEC_RECOIL_MAX_X, 1 );
+        addRecoil( SHOTGUN_SEC_RECOIL_MIN_Y, SHOTGUN_SEC_RECOIL_MAX_Y, SHOTGUN_SEC_RECOIL_MAX_X, 0 );
       break;
 
     case WP_LUCIFER_CANNON:
@@ -1778,7 +1779,7 @@ void FireWeapon2( gentity_t *ent )
       if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
         addRecoil( CHAINGUN_SEC_RECOIL_MIN_Y, CHAINGUN_SEC_RECOIL_MAX_Y, CHAINGUN_SEC_RECOIL_MAX_X, CHAINGUN_SEC_RECOIL_SOFTEN );
       else
-        addRecoil( CHAINGUN_SEC_RECOIL_MIN_Y, CHAINGUN_SEC_RECOIL_MAX_Y, CHAINGUN_SEC_RECOIL_MAX_X, 1 );
+        addRecoil( CHAINGUN_SEC_RECOIL_MIN_Y, CHAINGUN_SEC_RECOIL_MAX_Y, CHAINGUN_SEC_RECOIL_MAX_X, 0 );
       break;
 
     case WP_PULSE_RIFLE:
@@ -1853,21 +1854,21 @@ void FireWeapon( gentity_t *ent )
       if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
         addRecoil( RIFLE_RECOIL_MIN_Y, RIFLE_RECOIL_MAX_Y, RIFLE_RECOIL_MAX_X, RIFLE_RECOIL_SOFTEN );
       else
-        addRecoil( RIFLE_RECOIL_MIN_Y, RIFLE_RECOIL_MAX_Y, RIFLE_RECOIL_MAX_X, 1 );
+        addRecoil( RIFLE_RECOIL_MIN_Y, RIFLE_RECOIL_MAX_Y, RIFLE_RECOIL_MAX_X, 0 );
       break;
     case WP_SHOTGUN:
       shotgunFire( ent );
       if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
         addRecoil( SHOTGUN_PRI_RECOIL_MIN_Y, SHOTGUN_PRI_RECOIL_MAX_Y, SHOTGUN_PRI_RECOIL_MAX_X, SHOTGUN_PRI_RECOIL_SOFTEN );
       else
-        addRecoil( SHOTGUN_PRI_RECOIL_MIN_Y, SHOTGUN_PRI_RECOIL_MAX_Y, SHOTGUN_PRI_RECOIL_MAX_X, 1 );
+        addRecoil( SHOTGUN_PRI_RECOIL_MIN_Y, SHOTGUN_PRI_RECOIL_MAX_Y, SHOTGUN_PRI_RECOIL_MAX_X, 0 );
       break;
     case WP_CHAINGUN:
       bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
       if( pm->ps->pm_flags & PMF_DUCKED || BG_InventoryContainsUpgrade( UP_BATTLESUIT, pm->ps->stats ) )
         addRecoil( CHAINGUN_PRI_RECOIL_MIN_Y, CHAINGUN_PRI_RECOIL_MAX_Y, CHAINGUN_PRI_RECOIL_MAX_X, CHAINGUN_PRI_RECOIL_SOFTEN );
       else
-        addRecoil( CHAINGUN_PRI_RECOIL_MIN_Y, CHAINGUN_PRI_RECOIL_MAX_Y, CHAINGUN_PRI_RECOIL_MAX_X, 1 );
+        addRecoil( CHAINGUN_PRI_RECOIL_MIN_Y, CHAINGUN_PRI_RECOIL_MAX_Y, CHAINGUN_PRI_RECOIL_MAX_X, 0 );
       break;
     case WP_FLAMER:
       flamerFire( ent );
@@ -1883,7 +1884,7 @@ void FireWeapon( gentity_t *ent )
       }
       else
       {
-        addRecoil( MDRIVER_RECOIL_MIN_Y, MDRIVER_RECOIL_MAX_Y, MDRIVER_RECOIL_MAX_X, 1 );
+        addRecoil( MDRIVER_RECOIL_MIN_Y, MDRIVER_RECOIL_MAX_Y, MDRIVER_RECOIL_MAX_X, 0 );
       }*/
       break;
     case WP_LUCIFER_CANNON:
