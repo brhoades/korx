@@ -566,9 +566,8 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   gentity_t *bolt;
   float charge;
 
-  //int thinkTime = (int) ( 5000 * ( 1.0f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
-  //More blananced with bounciness
-  int thinkTime = 3000;
+  int thinkTime = (int) ( 5000 * ( 1.5f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
+
   VectorNormalize( dir );
 
   bolt = G_Spawn( );
