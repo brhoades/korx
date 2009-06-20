@@ -1963,14 +1963,15 @@ void SP_func_button( gentity_t *ent )
   distance = abs_movedir[ 0 ] * size[ 0 ] + abs_movedir[ 1 ] * size[ 1 ] + abs_movedir[ 2 ] * size[ 2 ] - lip;
   VectorMA( ent->pos1, distance, ent->movedir, ent->pos2 );
 
+  // shootable/touchable button
   if( ent->health )
   {
-    // shootable button
     ent->takedamage = qtrue;
+    ent->touch = Touch_Button;
   }
+  // touchable button only
   else
   {
-    // touchable button
     ent->touch = Touch_Button;
   }
 
