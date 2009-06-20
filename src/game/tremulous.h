@@ -525,7 +525,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_SURGE_TIME_MOD       0.8
 
 #define MDRIVER_PRICE               350
-#define MDRIVER_CLIPSIZE            4
+#define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            4
 #define MDRIVER_DMG                 HDM(40)
 #define MDRIVER_REPEAT              1000

@@ -2558,7 +2558,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     MDRIVER_CLIPSIZE,     //int       maxAmmo;
     MDRIVER_MAXCLIPS,     //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qtrue,                //int       usesEnergy;
+    qfalse,                //int       usesEnergy;
     MDRIVER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
