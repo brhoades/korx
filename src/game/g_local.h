@@ -405,7 +405,7 @@ typedef struct
   qboolean            useUnlagged;  
   qboolean            firstConnect;        // This is the first map since connect
   statsCounters_t     statscounters;
-  float               aidresistance;
+  int                 aidresistance;
 } clientPersistant_t;
 
 #define MAX_UNLAGGED_MARKERS 10
@@ -773,6 +773,7 @@ typedef struct
   int               lastMsgTime;
   statsCounters_level alienStatsCounters;
   statsCounters_level humanStatsCounters;
+  qboolean          playerWin;
 } level_locals_t;
 
 #define CMD_CHEAT         0x0001

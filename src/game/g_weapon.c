@@ -1133,7 +1133,7 @@ qboolean CheckVenomAttack( gentity_t *ent )
   int       damage = LEVEL0_BITE_DMG;
 
   if( ent->client->ps.weaponTime )
-	return qfalse;
+    return qfalse;
 
   // Calculate muzzle point
   AngleVectors( ent->client->ps.viewangles, forward, right, up );
@@ -1194,7 +1194,7 @@ qboolean CheckVenomAttack2( gentity_t *ent )
   int       damage = LEVEL0_BITE_DMG;
 
   if( ent->client->ps.weaponTime )
-	return qfalse;
+    return qfalse;
 
   // Calculate muzzle point
   AngleVectors( ent->client->ps.viewangles, forward, right, up );
@@ -1231,7 +1231,8 @@ qboolean CheckVenomAttack2( gentity_t *ent )
       return qfalse;
     if( traceEnt->client->ps.stats[ STAT_HEALTH ] <= 0 )
       return qfalse;
-    if( !traceEnt->client->infected && ( rand( ) % 100 ) > ( traceEnt->client->pers.aidresistance * 100 ) )
+    srand( level.time );
+    if( !traceEnt->client->infected && ( rand( ) % 100 ) > traceEnt->client->pers.aidresistance )
     {
       traceEnt->client->infected = qtrue;
       traceEnt->client->infectionTime = level.time;
