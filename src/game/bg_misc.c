@@ -2607,7 +2607,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "prifle",             //char      *weaponName;
     "Pulse Rifle",        //char      *humanName;
     "An energy weapon that fires rapid pulses of concentrated energy. "
-      "Secodary fire slows large aliens, and traps small ones.",
+      "Secondary fire slows large aliens, and traps small ones.",
     PRIFLE_CLIPS,         //int       maxAmmo;
     PRIFLE_MAXCLIPS,      //int       maxClips;
     qfalse,               //int       infiniteAmmo;
