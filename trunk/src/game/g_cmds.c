@@ -2877,30 +2877,65 @@ void Cmd_Buy_f( gentity_t *ent )
   char      s[ MAX_TOKEN_CHARS ];
   weapon_t  weapon;
   upgrade_t upgrade;
-  qboolean  energyOnly;
+  qboolean armAvailable = qfalse;
+  qboolean powerAvailable = qfalse;
+  qboolean energyWeapon;
 
   trap_Argv( 1, s, sizeof( s ) );
 
   weapon = BG_WeaponByName( s )->number;
   upgrade = BG_UpgradeByName( s )->number;
 
-  // Only give energy from reactors or repeaters
-  if( G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) || ent->client->pers.override )
-    energyOnly = qfalse;
-  else if( upgrade == UP_AMMO &&
-           BG_Weapon( ent->client->ps.stats[ STAT_WEAPON ] )->usesEnergy &&
-           ( G_BuildableRange( ent->client->ps.origin, 100, BA_H_REACTOR ) ||
-             G_BuildableRange( ent->client->ps.origin, 100, BA_H_REPEATER ) ) )
-    energyOnly = qtrue;
-  else
+  if( G_BuildableRange(ent->client->ps.origin,100,BA_H_ARMOURY) || ent->client->pers.override )
   {
-    if( upgrade == UP_AMMO &&
-        BG_Weapon( ent->client->ps.weapon )->usesEnergy )
-      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOENERGYAMMOHERE );
+    armAvailable = qtrue;
+  }
+  if( G_BuildableRange(ent->client->ps.origin,100,BA_H_REACTOR) || G_BuildableRange(ent->client->ps.origin,100,BA_H_REPEATER) )
+  {
+    powerAvailable = qtrue;
+  }
+
+
+// AMMO START
+  if( upgrade == UP_AMMO )
+  {
+    energyWeapon = BG_Weapon(ent->client->ps.weapon)->usesEnergy;
+    if( energyWeapon && (armAvailable || powerAvailable) )
+    {
+      G_GiveClientMaxAmmo(ent,qtrue);
+    }
+    else if( !energyWeapon && armAvailable)
+    {
+      G_GiveClientMaxAmmo(ent,qfalse);
+    }
     else
-      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
+    {
+      if( !energyWeapon )
+      {
+        G_TriggerMenu(ent->client->ps.clientNum,MN_H_NOARMOURYHERE);
+      }
+      else
+      {
+        G_TriggerMenu(ent->client->ps.clientNum,MN_H_NOENERGYAMMOHERE);
+      }
+    }
+    if ( armAvailable || powerAvailable )
+    {
+      if( BG_InventoryContainsUpgrade(UP_JETPACK,ent->client->ps.stats) )
+      {
+        ent->client->ps.stats[STAT_JPCHARGE] = JETPACK_CHARGE_CAPACITY;
+      }
+      if( BG_InventoryContainsUpgrade(UP_CLOAK,ent->client->ps.stats) )
+      {
+        ent->client->cloakReady = qtrue;
+        ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+        BG_DeactivateUpgrade( UP_CLOAK, ent->client->ps.stats );
+        ent->client->ps.stats[ STAT_CLOAK ] = 100;
+      }
+    }
     return;
   }
+// AMMO STOP
 
   if( weapon != WP_NONE )
   {
@@ -3026,12 +3061,6 @@ void Cmd_Buy_f( gentity_t *ent )
       return;
     }
 
-    if( upgrade == UP_AMMO )
-    {
-      G_GiveClientMaxAmmo( ent, energyOnly );
-      if( !energyOnly )
-        ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY; //To please some players
-    }
     else if( upgrade == UP_JPCHARGE )
       ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
     else

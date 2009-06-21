@@ -90,14 +90,6 @@ void G_GiveClientMaxAmmo( gentity_t *ent, qboolean buyingEnergyAmmo )
   int i, maxAmmo, maxClips;
   qboolean restoredAmmo = qfalse, restoredEnergy = qfalse;
 
-  if( BG_InventoryContainsUpgrade( UP_CLOAK, ent->client->ps.stats ) )
-  {
-    ent->client->cloakReady = qtrue;
-    ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-    BG_DeactivateUpgrade( UP_CLOAK, ent->client->ps.stats );
-    ent->client->ps.stats[ STAT_CLOAK ] = 100;
-  }
-
   for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
   {
     qboolean energyWeapon;
