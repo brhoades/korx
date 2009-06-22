@@ -3184,19 +3184,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     qtrue,                  //qboolean purchasable
     qtrue,                 //qboolean usable
     TEAM_HUMANS              //WUTeam_t  team;
-  },
-  {
-    UP_JPCHARGE,            //int   upgradeNum;
-    0,                      //int   price;
-    ( 1 << S2 )|( 1 << S3 ),//int  stages
-    SLOT_NONE,              //int   slots;
-    "jpcharge",             //char  *upgradeName;
-    "Jetpack Charge",       //char  *humanName;
-    "Rapid capacitor charge for jetpack.",
-    0,
-    qtrue,                  //qboolean purchasable
-    qfalse,                 //qboolean usable
-    TEAM_HUMANS             //team_t  team;
   }
 };
 
