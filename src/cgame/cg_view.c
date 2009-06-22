@@ -937,8 +937,6 @@ Fixed fov at intermissions, otherwise account for fov variable and zooms.
 
 static int CG_CalcFov( void )
 {
-  entityState_t *es;
-
   float     x;
   float     phase;
   float     v;
@@ -1027,7 +1025,7 @@ static int CG_CalcFov( void )
         // BUTTON_ATTACK2 isn't held so unzoom next time
         if( !( cmd.buttons & BUTTON_ATTACK2 ) )
         {
-          trap_S_StartSound( NULL, es->number, CHAN_WEAPON, cgs.media.weaponZoomOut );
+          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_WEAPON, cgs.media.weaponZoomOut );
           cg.zoomed   = qfalse;
           cg.zoomTime = MIN( cg.time, 
               cg.time + cg.time - cg.zoomTime - ZOOM_TIME );
@@ -1045,7 +1043,7 @@ static int CG_CalcFov( void )
         // BUTTON_ATTACK2 is held so zoom next time
         if( cmd.buttons & BUTTON_ATTACK2 )
         {
-          trap_S_StartSound( NULL, es->number, CHAN_WEAPON, cgs.media.weaponZoomIn );
+          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_WEAPON, cgs.media.weaponZoomIn );
           cg.zoomed   = qtrue;
           cg.zoomTime = MIN( cg.time, 
               cg.time + cg.time - cg.zoomTime - ZOOM_TIME );
