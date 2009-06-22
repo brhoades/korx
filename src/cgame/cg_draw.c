@@ -1457,7 +1457,7 @@ static void CG_DrawPlayerJPChargeBar( rectDef_t *rect, vec4_t ref_color, qhandle
   color[ 2 ] = ref_color[ 2 ];
   color[ 3 ] = ref_color[ 3 ] * cg.JPchargeMeterAlpha;
 
-  // flash red if jetpack is failing
+  // flash red if jetpack is about to fail
 
   if( cg.predictedPlayerState.stats[ STAT_JPCHARGE ] <= JETPACK_FAILURE && ( cg.time & 512 ) )
   {
@@ -1465,6 +1465,16 @@ static void CG_DrawPlayerJPChargeBar( rectDef_t *rect, vec4_t ref_color, qhandle
     color[ 1 ] = 0.f;
     color[ 2 ] = 0.f;
   }
+
+  // flash white if we're recharging
+
+  else if( !BG_UpgradeIsActive( UP_JETPACK, cg.predictedPlayerState.stats ) && cg.predictedPlayerState.stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY && ( cg.time & 512 ) )
+  {
+      color[ 0 ] = 1.0f;
+      color[ 1 ] = 1.0f;
+      color[ 2 ] = 1.0f;
+  }
+
 
   x = rect->x;
   y = rect->y;

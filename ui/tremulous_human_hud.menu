@@ -388,7 +388,7 @@
 
     itemDef
     {
-      name "chargebg"
+      name "jpchargebg"
       rect 288 396 64 16
       aspectBias ALIGN_CENTER
       visible MENU_TRUE
