@@ -1231,6 +1231,8 @@ typedef struct
   // sounds
   sfxHandle_t tracerSound;
   sfxHandle_t weaponEmptyClick;
+  sfxHandle_t weaponZoomIn;
+  sfxHandle_t weaponZoomOut;
   sfxHandle_t selectSound;
   sfxHandle_t footsteps[ FOOTSTEP_TOTAL ][ 4 ];
   sfxHandle_t talkSound;

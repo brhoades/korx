@@ -914,21 +914,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
       else
         client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_ACTIVE;
     }
-/*    
-    // Take away some jetpack fuel every second, with the jetpack active.
-    if(
-        ent->client->ps.stats[ STAT_HEALTH ] > 0
-          &&
-        BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats )
-          &&
-        BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats )
-          &&
-        ent->client->ps.stats[ STAT_JPCHARGE ] > 0
-      )
-    {
-      ent->client->ps.stats[ STAT_JPCHARGE ]--;
-    }
-*/
+
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 
         && BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats ) )
     { 

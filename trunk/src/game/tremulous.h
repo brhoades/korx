@@ -685,8 +685,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_SINK_SPEED          192.0f //down movement speed
 #define JETPACK_DISABLE_TIME        1000   //time to disable the jetpack when player damaged
 #define JETPACK_DISABLE_CHANCE      0.3f
-#define JETPACK_CHARGE_CAPACITY     180     // JPU (Jetpack Power Units) (Consumption Rate = 1 JPU/s)
-#define JETPACK_STD_CHARGE_RATE     0.5f   // x JPU/s (Onboard Recharge)
+#define JETPACK_CHARGE_CAPACITY     90     // JPU (Jetpack Power Units) (Consumption Rate = 1 JPU/s)
+#define JETPACK_STD_CHARGE_RATE     1.0   // x JPU/s (Onboard Recharge)
 #define JETPACK_RC_CHARGE_RATE      2.0   // x JPU/s (Reactor Charge Bonus) (RC Up = RC Charge Bonus + Onboard Charge Rate)
 #define JETPACK_RC_CHARGE_DELAY     10000 // Milliseconds from when jetpack was last deactivated before RC starts giving extra charge
 #define JETPACK_FAILURE             10     // Jetpack encounters intermittent failure when its charge is equal to or less than this

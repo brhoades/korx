@@ -720,6 +720,8 @@ static void CG_RegisterSounds( void )
   cgs.media.selectSound           = trap_S_RegisterSound( "sound/weapons/change.wav", qfalse );
   cgs.media.turretSpinupSound     = trap_S_RegisterSound( "sound/buildables/mgturret/spinup.wav", qfalse );
   cgs.media.weaponEmptyClick      = trap_S_RegisterSound( "sound/weapons/click.wav", qfalse );
+  cgs.media.weaponZoomIn          = trap_S_RegisterSound( "sound/weapons/zoom_in.wav", qfalse );
+  cgs.media.weaponZoomOut         = trap_S_RegisterSound( "sound/weapons/zoom_out.wav", qfalse );
 
   cgs.media.talkSound             = trap_S_RegisterSound( "sound/misc/talk.wav", qfalse );
   cgs.media.alienTalkSound        = trap_S_RegisterSound( "sound/misc/alien_talk.wav", qfalse );

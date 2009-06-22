@@ -3631,10 +3631,6 @@ void Cmd_Reload_f( gentity_t *ent )
   if( ps->ammo >= ammo )
     return;
   
-  if( BG_InventoryContainsUpgrade( UP_JETPACK, ps->stats )
-      && ps->stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY )
-    ps->stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
-
   // the animation, ammo refilling etc. is handled by PM_Weapon
   if( ent->client->ps.weaponstate != WEAPON_RELOADING )
     ent->client->ps.pm_flags |= PMF_WEAPON_RELOAD;
