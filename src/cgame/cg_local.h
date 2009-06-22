@@ -1570,8 +1570,6 @@ extern  vmCvar_t    cg_painBlendZoom;
 
 extern  vmCvar_t    cg_stickySpec;
 extern  vmCvar_t    cg_alwaysSprint;
-extern  vmCvar_t    cg_unlagged;
-
 extern  vmCvar_t    cg_debugVoices;
 
 extern  vmCvar_t    ui_currentClass;

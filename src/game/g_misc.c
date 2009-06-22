@@ -86,7 +86,6 @@ void TeleportPlayer( gentity_t *player, vec3_t origin, vec3_t angles )
 
   // toggle the teleport bit so the client knows to not lerp
   player->client->ps.eFlags ^= EF_TELEPORT_BIT;
-  G_UnlaggedClear( player );
 
   // set angles
   G_SetClientViewAngle( player, angles );
