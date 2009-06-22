@@ -201,8 +201,6 @@ vmCvar_t  cg_debugVoices;
 
 vmCvar_t  cg_stickySpec;
 vmCvar_t  cg_alwaysSprint;
-vmCvar_t  cg_unlagged;
-
 vmCvar_t  ui_currentClass;
 vmCvar_t  ui_carriage;
 vmCvar_t  ui_stage;
@@ -305,7 +303,6 @@ static cvarTable_t cvarTable[ ] =
   { &cg_flySpeed, "cg_flySpeed", "500", CVAR_ARCHIVE|CVAR_USERINFO },
   { &cg_stickySpec, "cg_stickySpec", "1", CVAR_ARCHIVE|CVAR_USERINFO },
   { &cg_alwaysSprint, "cg_alwaysSprint", "0", CVAR_ARCHIVE|CVAR_USERINFO },
-  { &cg_unlagged, "cg_unlagged", "1", CVAR_ARCHIVE|CVAR_USERINFO },
   { &cg_depthSortParticles, "cg_depthSortParticles", "1", CVAR_ARCHIVE },
   { &cg_bounceParticles, "cg_bounceParticles", "0", CVAR_ARCHIVE },
   { &cg_consoleLatency, "cg_consoleLatency", "3000", CVAR_ARCHIVE },

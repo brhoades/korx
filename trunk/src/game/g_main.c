@@ -116,8 +116,6 @@ vmCvar_t  g_alienStage3Threshold;
 
 vmCvar_t  g_teamImbalanceWarnings;
 
-vmCvar_t  g_unlagged;
-
 vmCvar_t  g_disabledEquipment;
 vmCvar_t  g_disabledClasses;
 vmCvar_t  g_disabledBuildables;
@@ -316,8 +314,6 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_alienStage2Threshold, "g_alienStage2Threshold", DEFAULT_ALIEN_STAGE2_THRESH, 0, 0, qfalse  },
   { &g_alienStage3Threshold, "g_alienStage3Threshold", DEFAULT_ALIEN_STAGE3_THRESH, 0, 0, qfalse  },
   { &g_teamImbalanceWarnings, "g_teamImbalanceWarnings", "30", CVAR_ARCHIVE, 0, qfalse  },
-
-  { &g_unlagged, "g_unlagged", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse  },
 
   { &g_disabledEquipment, "g_disabledEquipment", "", CVAR_ROM, 0, qfalse  },
   { &g_disabledClasses, "g_disabledClasses", "", CVAR_ROM, 0, qfalse  },
@@ -3254,8 +3250,6 @@ void G_RunFrame( int levelTime )
   }
 
   // save position information for all active clients
-  G_UnlaggedStore( );
-
   end = trap_Milliseconds();
 
   G_CountSpawns( );
