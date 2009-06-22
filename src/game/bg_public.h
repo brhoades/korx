@@ -392,7 +392,6 @@ typedef enum
   UP_CLOAK,
 
   UP_NUM_UPGRADES,
-  UP_JPCHARGE
 } upgrade_t;
 
 // bitmasks for upgrade slots
