@@ -4657,13 +4657,15 @@ void UI_DrawConnectScreen( qboolean overlay )
         char downloadName[MAX_INFO_VALUE];
         int prompt = trap_Cvar_VariableValue( "cl_downloadPrompt" );
   
-        if( prompt & DLP_SHOW )
+        //FIXME: Aaron: This is causing issues on TF clients. Requires you to /disconnect and /reconnect to download anything.
+        //FIXME: Aaron: Commenting this whole thing out causes an error.
+        /*if( prompt & DLP_SHOW )
         {
           Com_Printf( "Opening download prompt...\n" );
           trap_Key_SetCatcher( KEYCATCH_UI );
           Menus_ActivateByName( "download_popmenu" );
           trap_Cvar_Set( "cl_downloadPrompt", "0" );
-        }
+        }*/
 
         trap_Cvar_VariableStringBuffer( "cl_downloadName", downloadName, sizeof( downloadName ) );
 
