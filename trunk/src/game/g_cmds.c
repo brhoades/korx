@@ -2889,53 +2889,39 @@ void Cmd_Buy_f( gentity_t *ent )
   override = ent->client->pers.override;
 
   // only humans can buy
-  if (ent->client->pers.teamSelection != TEAM_HUMANS && !override)
+  if( ent->client->pers.teamSelection != TEAM_HUMANS && !override )
   {
-    trap_SendServerCommand(ent-g_entities,va("print \"Only humans can buy weapons or items.\n\""));
+    trap_SendServerCommand( ent-g_entities, va( "print \"Only humans can buy weapons or items.\n\"" ) );
     return;
   }
 
   // determine if there is a nearby arm
-  if( G_BuildableRange(ent->client->ps.origin,100,BA_H_ARMOURY) || override )
-  {
+  if( G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) || override )
     armAvailable = qtrue;
-  }
   // determine if there is a nearby reactor or repeater
-  if( G_BuildableRange(ent->client->ps.origin,100,BA_H_REACTOR) || G_BuildableRange(ent->client->ps.origin,100,BA_H_REPEATER) )
-  {
+  if( G_BuildableRange( ent->client->ps.origin, 100, BA_H_REACTOR ) || G_BuildableRange( ent->client->ps.origin, 100, BA_H_REPEATER) )
     powerAvailable = qtrue;
-  }
 
   // buying ammo (also buys jetpack charge and cloak charge automatically)
   if( upgrade == UP_AMMO )
   {
-    energyWeapon = BG_Weapon(ent->client->ps.weapon)->usesEnergy;
-    if( energyWeapon && (armAvailable || powerAvailable) )
-    {
-      G_GiveClientMaxAmmo(ent,qtrue);
-    }
-    else if( !energyWeapon && armAvailable)
-    {
-      G_GiveClientMaxAmmo(ent,qfalse);
-    }
+    energyWeapon = BG_Weapon( ent->client->ps.weapon )->usesEnergy;
+    if( energyWeapon && ( armAvailable || powerAvailable ) )
+      G_GiveClientMaxAmmo( ent, qtrue );
+    else if( !energyWeapon && armAvailable )
+      G_GiveClientMaxAmmo( ent, qfalse );
     else
     {
       if( !energyWeapon )
-      {
-        G_TriggerMenu(ent->client->ps.clientNum,MN_H_NOARMOURYHERE);
-      }
+        G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
       else
-      {
-        G_TriggerMenu(ent->client->ps.clientNum,MN_H_NOENERGYAMMOHERE);
-      }
+        G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOENERGYAMMOHERE );
     }
-    if ( armAvailable || powerAvailable )
+    if( armAvailable || powerAvailable )
     {
-      if( BG_InventoryContainsUpgrade(UP_JETPACK,ent->client->ps.stats) )
-      {
-        ent->client->ps.stats[STAT_JPCHARGE] = JETPACK_CHARGE_CAPACITY;
-      }
-      if( BG_InventoryContainsUpgrade(UP_CLOAK,ent->client->ps.stats) )
+      if( BG_InventoryContainsUpgrade( UP_JETPACK,ent->client->ps.stats ) )
+        ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
+      if( BG_InventoryContainsUpgrade( UP_CLOAK, ent->client->ps.stats ) )
       {
         ent->client->cloakReady = qtrue;
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
@@ -2949,56 +2935,56 @@ void Cmd_Buy_f( gentity_t *ent )
   if( weapon != WP_NONE )
   {
     // check if we're trying to buy what we already have
-    if( BG_InventoryContainsWeapon(weapon,ent->client->ps.stats) )
+    if( BG_InventoryContainsWeapon( weapon, ent->client->ps.stats ) )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_ITEMHELD );
       return;
     }
 
     // don't allow humans to buy aliens
-    if( BG_Weapon(weapon)->team != TEAM_HUMANS && !override )
+    if( BG_Weapon( weapon )->team != TEAM_HUMANS && !override )
     {
       trap_SendServerCommand(ent-g_entities,"print \"You can't buy alien items\n\"");
       return;
     }
 
     // determine if it can be bought
-    if( !BG_Weapon(weapon)->purchasable && !override )
+    if( !BG_Weapon( weapon )->purchasable && !override )
     {
       trap_SendServerCommand( ent-g_entities, "print \"You can't buy this item\n\"" );
       return;
     }
 
     // determine if buying it is allowed at this stage
-    if( !BG_WeaponAllowedInStage(weapon,g_humanStage.integer) && !override )
+    if( !BG_WeaponAllowedInStage( weapon, g_humanStage.integer ) && !override )
     {
       trap_SendServerCommand( ent-g_entities, "print \"You can't buy this item yet\n\"" );
       return;
     }
 
     // determine if buying it is allowed    
-    if( !BG_WeaponIsAllowed(weapon) && !override )
+    if( !BG_WeaponIsAllowed( weapon ) && !override )
     {
       trap_SendServerCommand( ent-g_entities, "print \"Purchasing of this item has been disabled\n\"" );
       return;
     }
 
     // determine if it costs more than we have
-    if( BG_Weapon(weapon)->price > (short)ent->client->ps.persistant[PERS_CREDIT] && !override )
+    if( BG_Weapon( weapon )->price > (short)ent->client->ps.persistant[ PERS_CREDIT ] && !override )
     {
-      G_TriggerMenu(ent->client->ps.clientNum,MN_H_NOFUNDS);
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOFUNDS );
       return;
     }
 
     // determine if we have room to carry it
-    if( BG_Weapon(weapon)->slots & BG_CalculateSlotsForInventory(ent->client->ps.stats) && !override )
+    if( BG_Weapon( weapon )->slots & BG_CalculateSlotsForInventory( ent->client->ps.stats ) && !override )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOSLOTS );
       return;
     }
 
     // can't buy something new while building (or charging xael/luci)
-    if( !BG_PlayerCanChangeWeapon(&ent->client->ps) && !override )
+    if( !BG_PlayerCanChangeWeapon( &ent->client->ps ) && !override )
     {
       return;
     }
@@ -3007,77 +2993,76 @@ void Cmd_Buy_f( gentity_t *ent )
     ent->client->ps.ammo = BG_Weapon( weapon )->maxAmmo;
     ent->client->ps.clips = BG_Weapon( weapon )->maxClips;
 
-    if( BG_Weapon(weapon)->usesEnergy )
+    if( BG_Weapon( weapon )->usesEnergy )
     {
-      if( BG_InventoryContainsUpgrade(UP_BATTPACK,ent->client->ps.stats) || BG_InventoryContainsUpgrade(UP_BATTLESUIT,ent->client->ps.stats) )
+      if( BG_InventoryContainsUpgrade( UP_BATTPACK, ent->client->ps.stats ) || BG_InventoryContainsUpgrade( UP_BATTLESUIT, ent->client->ps.stats ) )
       {
         ent->client->ps.ammo *= BATTPACK_MODIFIER;
       }
     }
-    else if( !BG_Weapon(weapon)->usesEnergy )
+    else if( !BG_Weapon( weapon )->usesEnergy )
     {
-      if( BG_InventoryContainsUpgrade(UP_AMMOPACK,ent->client->ps.stats) || BG_InventoryContainsUpgrade(UP_BATTLESUIT,ent->client->ps.stats) )
+      if( BG_InventoryContainsUpgrade( UP_AMMOPACK, ent->client->ps.stats ) || BG_InventoryContainsUpgrade( UP_BATTLESUIT, ent->client->ps.stats ) )
       {
-        ent->client->ps.clips = (int)(1 + (float)(ent->client->ps.clips) * AMMOPACK_MODIFIER);
+        ent->client->ps.clips = (int)(1 + (float)(ent->client->ps.clips) * AMMOPACK_MODIFIER );
       }
     }
 
     // finished with all the checks: change weapon, reset STAT_MISC, subtract cost of item from credits
-    G_ForceWeaponChange(ent,weapon);
+    G_ForceWeaponChange( ent, weapon );
     ent->client->ps.stats[STAT_MISC] = 0;
-    G_AddCreditToClient(ent->client,-(short)BG_Weapon( weapon )->price,qfalse);
+    G_AddCreditToClient( ent->client,-(short)BG_Weapon( weapon )->price, qfalse);
   }
-
   else if( upgrade != UP_NONE )
   {
     // check if we're trying to buy what we already have
-    if( BG_InventoryContainsUpgrade(upgrade,ent->client->ps.stats) && !override )
+    if( BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) && !override )
     {
-      G_TriggerMenu(ent->client->ps.clientNum,MN_H_ITEMHELD);
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_ITEMHELD );
       return;
     }
 
     // determine if it costs more than we have
-    if( BG_Upgrade(upgrade)->price > (short)ent->client->ps.persistant[PERS_CREDIT] && !override )
+    if( BG_Upgrade( upgrade )->price > (short)ent->client->ps.persistant[ PERS_CREDIT ] && !override )
     {
-      G_TriggerMenu(ent->client->ps.clientNum,MN_H_NOFUNDS);
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOFUNDS );
       return;
     }
 
     // determine if we have room to carry it
-    if( BG_Upgrade(upgrade)->slots & BG_CalculateSlotsForInventory(ent->client->ps.stats) && !override )
+    if( BG_Upgrade( upgrade )->slots & BG_CalculateSlotsForInventory( ent->client->ps.stats ) && !override )
     {
-      G_TriggerMenu(ent->client->ps.clientNum, MN_H_NOSLOTS);
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOSLOTS );
       return;
     }
 
     // determine if it can be bought
-    if( !BG_Upgrade(upgrade)->purchasable && !override )
+    if( !BG_Upgrade( upgrade )->purchasable && !override )
     {
-      trap_SendServerCommand(ent-g_entities,va("print \"You can't buy this item\n\""));
+      trap_SendServerCommand( ent-g_entities, va("print \"You can't buy this item\n\"" ) );
       return;
     }
 
     // determine if buying it is allowed at this stage
-    if( !BG_UpgradeAllowedInStage(upgrade,g_humanStage.integer) && !override)
+    if( !BG_UpgradeAllowedInStage( upgrade, g_humanStage.integer) && !override )
     {
       trap_SendServerCommand( ent-g_entities, va( "print \"You can't buy this item yet\n\"" ) );
+      return;
     }
 
     // determine if buying it is allowed
-    if( !BG_UpgradeIsAllowed(upgrade) && !override )
+    if( !BG_UpgradeIsAllowed( upgrade ) && !override )
     {
       trap_SendServerCommand(ent-g_entities,"print \"Purchasing of this item has been disabled\n\"");
       return;
     }
-
     else
     {
       if( upgrade == UP_BATTLESUIT )
       {
         vec3_t newOrigin;
 
-        if( !G_RoomForClassChange(ent,PCL_HUMAN_BSUIT,newOrigin) )
+        if( !G_RoomForClassChange( ent,PCL_HUMAN_BSUIT, newOrigin ) )
         {
           G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOROOMBSUITON );
           return;
@@ -3124,18 +3109,14 @@ void Cmd_Buy_f( gentity_t *ent )
     G_AddCreditToClient( ent->client, -(short)BG_Upgrade( upgrade )->price, qfalse );
   }
   else
-  {
     G_TriggerMenu( ent->client->ps.clientNum, MN_H_UNKNOWNITEM );
-  }
 
   //update ClientInfo
   ClientUserinfoChanged( ent->client->ps.clientNum );
 
   //make sure it doesnt let them save all the time
   if( !ent->client->pers.teamSelection == TEAM_NONE && ent->client->pers.saved )
-  {
-  ent->client->pers.saved = qfalse;
-  }
+    ent->client->pers.saved = qfalse;
 }
 
 
