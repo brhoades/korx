@@ -208,8 +208,6 @@ vmCvar_t  g_msgTime;
 
 vmCvar_t  g_tkmap;
 
-vmCvar_t  g_unlagged;
-
 static cvarTable_t   gameCvarTable[ ] =
 {
   // don't override the cheat state set by the system
@@ -397,9 +395,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_banNotice, "g_banNotice", "", CVAR_ARCHIVE, 0, qfalse  },
 
   { &g_tag, "g_tag", "main", CVAR_INIT, 0, qfalse },
-  { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse },
-  
-  { &g_unlagged, "g_unlagged", "1", CVAR_ARCHIVE, 0, qfalse }
+  { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse }
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
