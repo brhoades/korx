@@ -1329,25 +1329,17 @@ void G_CalculateBuildPoints( void )
   //check if suddendeathtime has been changed by hand
   if( !level.suddenDeathVote &&
     ( g_suddenDeathTime.integer * 60000 ) != level.suddenDeathTime )
-  {
     level.suddenDeathTime = g_suddenDeathTime.integer * 60000;
-  }
   //check if extremesuddendeathtime has been changed by hand
   if( !level.extremeSuddenDeathVote && 
     ( g_extremeSuddenDeathTime.integer * 60000 ) != level.extremeSuddenDeathTime )
-  {
     level.extremeSuddenDeathTime = g_extremeSuddenDeathTime.integer * 60000;
-  }
   //it is time for suddendeath to start
   if( level.suddenDeathTime && !level.suddenDeath && G_TimeTilSuddenDeath( ) <= 0 )
-  {
     trap_Cvar_Set( "g_suddenDeath", "1" );
-  }
   //it is time for extremesuddendeath to start
   if( level.extremeSuddenDeathTime  && !level.extremeSuddenDeath && G_TimeTilExtremeSuddenDeath( ) <= 0 )
-  {
     trap_Cvar_Set( "g_extremeSuddenDeath", "1" );
-  }
 
   //start suddendeath
   if( g_suddenDeath.integer && !level.suddenDeath )
@@ -1402,17 +1394,22 @@ void G_CalculateBuildPoints( void )
     }
   }
   //start extremesuddendeath
-  if( g_extremeSuddenDeath.integer && !level.extremeSuddenDeath)
+  if( g_extremeSuddenDeath.integer && !level.extremeSuddenDeath )
   {
     level.extremeSuddenDeath = qtrue;
     level.suddenDeath = qtrue;
-    trap_Cvar_Set( "g_extremeSuddenDeath", "1" );
 
     //destroy all spawns
-    for( i = 1, ent = g_entities + i; i < level.num_entities; i++, ent++ )
+    if( !g_tkmap.integer )
     {
-      if( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN)
-        G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+      for( i = 1, ent = g_entities + i; i < level.num_entities; i++, ent++ )
+      {        
+        if( !ent || !ent->s.eType == ET_BUILDABLE || ent->health <= 0 )
+          continue;
+        
+        if( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN )
+          G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+      }
     }
 
     if( g_alienStage.integer < 2 )
@@ -1420,11 +1417,12 @@ void G_CalculateBuildPoints( void )
     if( g_humanStage.integer < 2 )
         trap_Cvar_Set( "g_humanStage", "2" ); // set humans to stage 3
 
-    if( g_smartesd.integer )
+    if( g_smartesd.integer && !g_tkmap.integer )
     {
-      level.alienTeamLocked = qtrue;// lock alien team
-      level.humanTeamLocked = qtrue;// lock human team
+      level.alienTeamLocked = qtrue;  // lock alien team
+      level.humanTeamLocked = qtrue;  // lock human team
     }
+    
     for( i = 0; i < MAX_CLIENTS; i++ )
     {
       if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
@@ -1432,12 +1430,20 @@ void G_CalculateBuildPoints( void )
       else if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
         level.clients[ i ].ps.persistant[ PERS_CREDIT ] = ALIEN_CREDITS_PER_FRAG*10; //Frags are 400 each, 10*400 = 4000, extra for adv. rant
     }
-    if( level.extremeSuddenDeathWarning < TW_PASSED )
+    
+    if( level.extremeSuddenDeathWarning < TW_PASSED && !g_tkmap.integer )
     {
       trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! NO SPAWNS, NO BUILDING\"" );
       trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! NO SPAWNS, NO BUILDING\n\"" );
       level.extremeSuddenDeathWarning = TW_PASSED;
     }
+    else if( level.extremeSuddenDeathWarning < TW_PASSED && g_tkmap.integer )
+    {
+      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! BUILDING TEAMKILLING, NO BUILDING, LAST ONE ALIVE WINS\"" );
+      trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! BUILDING TEAMKILLING, NO BUILDING, LAST ONE ALIVE WINS\n\"" );
+      level.extremeSuddenDeathWarning = TW_PASSED;
+    }
+    
   }
   else if( level.extremeSuddenDeathTime ) // esd warnings if we are using it time based
   {
@@ -1470,6 +1476,7 @@ void G_CalculateBuildPoints( void )
 				g_extremeSuddenDeath.integer = 1;
 		}
   }
+  
   //set BP at each cycle
   if( level.extremeSuddenDeath )
   {
@@ -1541,6 +1548,9 @@ void G_CalculateBuildPoints( void )
   trap_SetConfigstring( CS_BUILDPOINTS, va( "%d %d %d %d",
         level.alienBuildPoints, localATP,
         level.humanBuildPoints, localHTP ) );
+  if( g_extremeSuddenDeath.integer && g_tkmap.integer
+      && ( level.numLiveAlienClients == 1 || level.numLiveAlienClients == 1 ) )
+      level.playerWin = qtrue;
 
   //may as well pump the stages here too
   {
@@ -2575,6 +2585,73 @@ void CheckExitRules( void )
     trap_SetConfigstring( CS_WINNER, "Aliens Win" );
     LogExit( "Aliens win." );
     G_admin_maplog_result( "a" );
+  }
+  else if( level.playerWin )
+  {
+    int i;
+    level.lastWin = TEAM_NONE;
+    if( level.numLiveAlienClients == 1 && level.numLiveHumanClients != 1 )
+    {
+      for( i=0; i<level.maxclients; i++ )
+      {
+        if( level.clients[ i ].pers.connected != CON_DISCONNECTED ||
+             level.clients[ i ].pers.demoClient )
+          continue;
+
+        if( level.clients[ i ].pers.connected != CON_CONNECTED &&
+           !level.clients[ i ].pers.demoClient )
+          continue;
+
+        if( level.clients[ i ].pers.teamSelection == TEAM_NONE )
+          continue;
+        else if( level.clients[ i ].pers.teamSelection == TEAM_HUMANS )
+          continue;
+        else if( level.clients[ i ].pers.teamSelection == TEAM_ALIENS )
+        {
+          if( level.clients[ i ].sess.spectatorState == SPECTATOR_NOT )
+            break;
+        }
+      }
+      trap_SendServerCommand( -1, va( "print \"Alien Player %s Wins \n\"", level.clients[ i ].pers.netname ) );
+      trap_SetConfigstring( CS_WINNER, va( "%s Wins", level.clients[ i ].pers.netname ) );
+      LogExit( va( "%s Wins", level.clients[ i ].pers.netname )  );
+      G_admin_maplog_result( "t" );   //FIXME: Should have something special
+    }
+    else if( level.numLiveHumanClients == 1 && level.numLiveAlienClients != 1 )
+    {
+      for( i=0; i<level.maxclients; i++ )
+      {
+        if( level.clients[ i ].pers.connected != CON_DISCONNECTED ||
+             level.clients[ i ].pers.demoClient )
+          continue;
+
+        if( level.clients[ i ].pers.connected != CON_CONNECTED &&
+           !level.clients[ i ].pers.demoClient )
+          continue;
+
+        if( level.clients[ i ].pers.teamSelection == TEAM_NONE )
+          continue;
+        else if( level.clients[ i ].pers.teamSelection == TEAM_ALIENS )
+          continue;
+        else if( level.clients[ i ].pers.teamSelection == TEAM_HUMANS )
+        {
+          if( level.clients[ i ].sess.spectatorState == SPECTATOR_NOT )
+            break;
+        }
+      }
+      trap_SendServerCommand( -1, va( "print \"Human Player %s Wins \n\"", level.clients[ i ].pers.netname ) );
+      trap_SetConfigstring( CS_WINNER, va( "%s Wins", level.clients[ i ].pers.netname ) );
+      LogExit( va( "%s Wins", level.clients[ i ].pers.netname )  );
+      G_admin_maplog_result( "t" ); //FIXME: Should have something special
+    }
+    else if( level.numLiveHumanClients == 1 && level.numLiveAlienClients == 1 )
+    {
+      trap_SendServerCommand( -1, "print \"Draw \n\"" );
+      trap_SetConfigstring( CS_WINNER, "Draw" );
+      LogExit( "Draw" );
+      G_admin_maplog_result( "t" ); //FIXME: Should have something special
+    }
+    return;
   }
 }
 
