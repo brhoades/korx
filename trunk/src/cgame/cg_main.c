@@ -163,8 +163,8 @@ vmCvar_t  cg_teamChatsOnly;
 vmCvar_t  cg_noPrintDuplicate;
 vmCvar_t  cg_noVoiceChats;
 vmCvar_t  cg_noVoiceText;
-vmCvar_t  cg_hudFilesTrep;
-vmCvar_t  cg_hudFilesEnableTrep;
+vmCvar_t  cg_hudFileskorx;
+vmCvar_t  cg_hudFilesEnablekorx;
 vmCvar_t  cg_smoothClients;
 vmCvar_t  pmove_fixed;
 vmCvar_t  pmove_msec;
@@ -319,9 +319,11 @@ static cvarTable_t cvarTable[ ] =
   { &cg_disableCommandDialogs, "cg_disableCommandDialogs", "0", CVAR_ARCHIVE },
   { &cg_disableScannerPlane, "cg_disableScannerPlane", "0", CVAR_ARCHIVE },
   { &cg_tutorial, "cg_tutorial", "1", CVAR_ARCHIVE },
-  { &cg_hudFilesTrep, "cg_hudFilesTrep", "ui/korx-hud.txt", CVAR_ARCHIVE},
-  { &cg_hudFilesEnableTrep, "cg_hudFilesEnableTrep", "0", CVAR_ARCHIVE},
-
+  { &cg_hudFileskorx, "cg_hudFileskorx", "ui/korx-hud.txt", CVAR_ARCHIVE},
+  { &cg_hudFilesEnablekorx, "cg_hudFilesEnablekorx", "0", CVAR_ARCHIVE},
+  { NULL, "cg_alienConfig", "", CVAR_ARCHIVE },
+  { NULL, "cg_humanConfig", "", CVAR_ARCHIVE },
+  { NULL, "cg_spectatorConfig", "", CVAR_ARCHIVE },
   { &cg_painBlendUpRate, "cg_painBlendUpRate", "10.0", 0 },
   { &cg_painBlendDownRate, "cg_painBlendDownRate", "0.5", 0 },
   { &cg_painBlendMax, "cg_painBlendMax", "0.7", 0 },
@@ -342,12 +344,13 @@ static cvarTable_t cvarTable[ ] =
   
   { &cg_optimizePrediction, "cg_optimizePrediction", "1", CVAR_ARCHIVE },
   { &cg_projectileNudge, "cg_projectileNudge", "1", CVAR_ARCHIVE },
-
+  
   { &cg_drawBuildableStatus, "cg_drawBuildableStatus", "1", CVAR_ARCHIVE },
   { &cg_hideHealthyBuildableStatus, "cg_hideHealthyBuildableStatus", "1", CVAR_ARCHIVE },
   { &cg_drawTeamStatus, "cg_drawTeamStatus", "1", CVAR_USERINFO | CVAR_ARCHIVE },
   { &cg_hideHealthyTeamStatus, "cg_hideHealthyTeamStatus", "1", CVAR_ARCHIVE },
   { NULL, "teamoverlay", "1", CVAR_USERINFO | CVAR_ARCHIVE }, //if this is 0 the server will not send tinfo and teammate health will not work
+
 
   // the following variables are created in other parts of the system,
   // but we also reference them here
@@ -834,45 +837,45 @@ static void CG_RegisterGraphics( void )
   };
    static char *alienAttackFeedbackShaders[ 11 ] =
   {
-        "ui/assets/alien/feedback/scratch_00",
-        "ui/assets/alien/feedback/scratch_01",
-        "ui/assets/alien/feedback/scratch_02",
-        "ui/assets/alien/feedback/scratch_03",
-        "ui/assets/alien/feedback/scratch_04",
-        "ui/assets/alien/feedback/scratch_05",
-        "ui/assets/alien/feedback/scratch_06",
-        "ui/assets/alien/feedback/scratch_07",
-        "ui/assets/alien/feedback/scratch_08",
-        "ui/assets/alien/feedback/scratch_09",
-        "ui/assets/alien/feedback/scratch_10"
+    "ui/assets/alien/feedback/scratch_00",
+    "ui/assets/alien/feedback/scratch_01",
+    "ui/assets/alien/feedback/scratch_02",
+    "ui/assets/alien/feedback/scratch_03",
+    "ui/assets/alien/feedback/scratch_04",
+    "ui/assets/alien/feedback/scratch_05",
+    "ui/assets/alien/feedback/scratch_06",
+    "ui/assets/alien/feedback/scratch_07",
+    "ui/assets/alien/feedback/scratch_08",
+    "ui/assets/alien/feedback/scratch_09",
+    "ui/assets/alien/feedback/scratch_10"
   };
    static char *alienAttackFeedbackShadersFlipped[ 11 ] =
   {
-        "ui/assets/alien/feedback/scratchr_00",
-        "ui/assets/alien/feedback/scratchr_01",
-        "ui/assets/alien/feedback/scratchr_02",
-        "ui/assets/alien/feedback/scratchr_03",
-        "ui/assets/alien/feedback/scratchr_04",
-        "ui/assets/alien/feedback/scratchr_05",
-        "ui/assets/alien/feedback/scratchr_06",
-        "ui/assets/alien/feedback/scratchr_07",
-        "ui/assets/alien/feedback/scratchr_08",
-        "ui/assets/alien/feedback/scratchr_09",
-        "ui/assets/alien/feedback/scratchr_10"
+    "ui/assets/alien/feedback/scratchr_00",
+    "ui/assets/alien/feedback/scratchr_01",
+    "ui/assets/alien/feedback/scratchr_02",
+    "ui/assets/alien/feedback/scratchr_03",
+    "ui/assets/alien/feedback/scratchr_04",
+    "ui/assets/alien/feedback/scratchr_05",
+    "ui/assets/alien/feedback/scratchr_06",
+    "ui/assets/alien/feedback/scratchr_07",
+    "ui/assets/alien/feedback/scratchr_08",
+    "ui/assets/alien/feedback/scratchr_09",
+    "ui/assets/alien/feedback/scratchr_10"
   };
    static char *alienRangedAttackFeedbackShaders[ 11 ] =
   {
-        "ui/assets/alien/feedback/rangefeedback_00",
-        "ui/assets/alien/feedback/rangefeedback_01",
-        "ui/assets/alien/feedback/rangefeedback_02",
-        "ui/assets/alien/feedback/rangefeedback_03",
-        "ui/assets/alien/feedback/rangefeedback_04",
-        "ui/assets/alien/feedback/rangefeedback_05",
-        "ui/assets/alien/feedback/rangefeedback_06",
-        "ui/assets/alien/feedback/rangefeedback_07",
-        "ui/assets/alien/feedback/rangefeedback_08",
-        "ui/assets/alien/feedback/rangefeedback_09",
-        "ui/assets/alien/feedback/rangefeedback_10"
+    "ui/assets/alien/feedback/rangefeedback_00",
+    "ui/assets/alien/feedback/rangefeedback_01",
+    "ui/assets/alien/feedback/rangefeedback_02",
+    "ui/assets/alien/feedback/rangefeedback_03",
+    "ui/assets/alien/feedback/rangefeedback_04",
+    "ui/assets/alien/feedback/rangefeedback_05",
+    "ui/assets/alien/feedback/rangefeedback_06",
+    "ui/assets/alien/feedback/rangefeedback_07",
+    "ui/assets/alien/feedback/rangefeedback_08",
+    "ui/assets/alien/feedback/rangefeedback_09",
+    "ui/assets/alien/feedback/rangefeedback_10"
   };
 
   // clear any references to old media
@@ -1859,10 +1862,10 @@ void CG_LoadHudMenu( void )
 
   Menu_Reset( );
 
-  trap_Cvar_VariableStringBuffer( "cg_hudFilesTrep", buff, sizeof( buff ) );
+  trap_Cvar_VariableStringBuffer( "cg_hudFileskorx", buff, sizeof( buff ) );
   hudSet = buff;
 
-  if( !cg_hudFilesEnableTrep.integer || hudSet[ 0 ] == '\0' )
+  if( !cg_hudFilesEnablekorx.integer || hudSet[ 0 ] == '\0' )
     hudSet = "ui/korx-hud.txt";
 
   CG_LoadMenus( hudSet );

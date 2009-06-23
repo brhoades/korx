@@ -187,48 +187,50 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ALIEN_REGEN_DAMAGE_TIME     1500 //msec since damage that regen starts again
-#define ALIEN_REGEN_TIME            25000 //msec that it takes for an alien to heal all the way
+#define ALIEN_REGEN_NOCREEP_MOD     (1.0f/3.0f) //regen off creep
+
+#define ALIEN_REGEN_TIME            40000 //msec that it takes for an alien to heal all the way
 #define ARMSEC(h)                   ((int)((float)ALIEN_REGEN_TIME/h))
 
 #define ABUILDER_SPEED              0.9f
 #define ABUILDER_VALUE              AVM(200)
 #define ABUILDER_HEALTH             AHM(50)
-#define ABUILDER_REGEN              2
+#define ABUILDER_REGEN              (0.04f * ABUILDER_HEALTH)
 #define ABUILDER_REGEN_MSEC         ARMSEC(ABUILDER_HEALTH)
 #define ABUILDER_COST               0
 
 #define ABUILDER_UPG_SPEED          1.1f
 #define ABUILDER_UPG_VALUE          AVM(250)
 #define ABUILDER_UPG_HEALTH         AHM(75)
-#define ABUILDER_UPG_REGEN          3
+#define ABUILDER_UPG_REGEN          (0.04f * ABUILDER_UPG_HEALTH)
 #define ABUILDER_UPG_REGEN_MSEC     ARMSEC(ABUILDER_UPG_HEALTH)
 #define ABUILDER_UPG_COST           0
 
 #define ABGRANGER_SPEED             1.3f
 #define ABGRANGER_VALUE             AVM(300)
 #define ABGRANGER_HEALTH            AHM(100)
-#define ABGRANGER_REGEN             4
+#define ABGRANGER_REGEN             (0.05f * ABGRANGER_HEALTH)
 #define ABGRANGER_REGEN_MSEC        ARMSEC(ABUILDER_UPG_HEALTH)
 #define ABGRANGER_COST              1
 
 #define LEVEL0_SPEED                1.4f
 #define LEVEL0_VALUE                AVM(175)
 #define LEVEL0_HEALTH               AHM(25)
-#define LEVEL0_REGEN                1
+#define LEVEL0_REGEN                (0.05f * LEVEL0_HEALTH)
 #define LEVEL0_REGEN_MSEC           ARMSEC(LEVEL0_HEALTH)
 #define LEVEL0_COST                 0
 
 #define LEVEL0_UPG_SPEED            1.4f
 #define LEVEL0_UPG_VALUE            AVM(200)
 #define LEVEL0_UPG_HEALTH           AHM(50)
-#define LEVEL0_UPG_REGEN            2
+#define LEVEL0_UPG_REGEN            (0.03f * LEVEL1_UPG_HEALTH)
 #define LEVEL0_UPG_REGEN_MSEC       ARMSEC(LEVEL0_UPG_HEALTH)
 #define LEVEL0_UPG_COST             1
 
 #define LEVEL1_SPEED                1.25f
 #define LEVEL1_VALUE                AVM(225)
 #define LEVEL1_HEALTH               AHM(75)
-#define LEVEL1_REGEN                3
+#define LEVEL1_REGEN                (0.03f * LEVEL1_HEALTH)
 #define LEVEL1_REGEN_MSEC           ARMSEC(LEVEL1_HEALTH)
 #define LEVEL1_COST                 1
 #define LEVEL1_REGEN_MOD            1.5f
@@ -236,42 +238,42 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL1_UPG_SPEED            1.25f
 #define LEVEL1_UPG_VALUE            AVM(275)
 #define LEVEL1_UPG_HEALTH           AHM(100)
-#define LEVEL1_UPG_REGEN            3
+#define LEVEL1_UPG_REGEN            (0.03f * LEVEL1_UPG_HEALTH)
 #define LEVEL1_UPG_REGEN_MSEC       ARMSEC(LEVEL1_UPG_HEALTH)
 #define LEVEL1_UPG_COST             1
 
 #define LEVEL2_SPEED                1.2f
 #define LEVEL2_VALUE                AVM(350)
 #define LEVEL2_HEALTH               AHM(150)
-#define LEVEL2_REGEN                4
+#define LEVEL2_REGEN                (0.03f * LEVEL2_HEALTH)
 #define LEVEL2_REGEN_MSEC           ARMSEC(LEVEL2_HEALTH)
 #define LEVEL2_COST                 1
 
 #define LEVEL2_UPG_SPEED            1.2f
 #define LEVEL2_UPG_VALUE            AVM(450)
 #define LEVEL2_UPG_HEALTH           AHM(175)
-#define LEVEL2_UPG_REGEN            5
+#define LEVEL2_UPG_REGEN            (0.03f * LEVEL2_UPG_HEALTH)
 #define LEVEL2_UPG_REGEN_MSEC       ARMSEC(LEVEL2_UPG_HEALTH)
 #define LEVEL2_UPG_COST             1
 
 #define LEVEL3_SPEED                1.1f
 #define LEVEL3_VALUE                AVM(500)
 #define LEVEL3_HEALTH               AHM(200)
-#define LEVEL3_REGEN                6
+#define LEVEL3_REGEN                (0.03f * LEVEL3_HEALTH)
 #define LEVEL3_REGEN_MSEC           ARMSEC(LEVEL3_HEALTH)
 #define LEVEL3_COST                 1
 
 #define LEVEL3_UPG_SPEED            1.1f
 #define LEVEL3_UPG_VALUE            AVM(600)
 #define LEVEL3_UPG_HEALTH           AHM(250)
-#define LEVEL3_UPG_REGEN            7
+#define LEVEL3_UPG_REGEN            (0.03f * LEVEL3_UPG_HEALTH)
 #define LEVEL3_UPG_REGEN_MSEC       ARMSEC(LEVEL3_UPG_HEALTH)
 #define LEVEL3_UPG_COST             1
 
 #define LEVEL4_SPEED                1.2f
 #define LEVEL4_VALUE                AVM(800)
 #define LEVEL4_HEALTH               AHM(400)
-#define LEVEL4_REGEN                9
+#define LEVEL4_REGEN                (0.025f * LEVEL4_HEALTH)
 #define LEVEL4_REGEN_MSEC           ARMSEC(LEVEL4_HEALTH)
 #define LEVEL4_COST                 2
 #define LEVEL4_REGEN_RANGE          200.0f
@@ -279,7 +281,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_UPG_SPEED            1.2f
 #define LEVEL4_UPG_VALUE            AVM(1000)
 #define LEVEL4_UPG_HEALTH           AHM(600)
-#define LEVEL4_UPG_REGEN            11
+#define LEVEL4_UPG_REGEN            (0.02f * LEVEL4_HEALTH)
 #define LEVEL4_UPG_REGEN_MSEC       ARMSEC(LEVEL4_UPG_HEALTH)
 #define LEVEL4_UPG_COST             5
 #define LEVEL4_UPG_REGEN_MOD        1.5f
@@ -650,6 +652,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 
+#define HUMAN_BUILDER_SCOREINC      AVM( LEVEL0_VALUE );
+#define ALIEN_BUILDER_SCOREINC      HVM( ALIEN_CREDITS_PER_FRAG );
+
 /*
  * HUMAN upgrades
  */
@@ -770,7 +775,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_SPREAD             200
 #define MGTURRET_DMG                HDM(4)
 #define MGTURRET_SPINUP_TIME        0 // time between target sighted and fire
-#define MGTURRET_DROOPSCALE         0.5f // rate at which turret droops when unpowered
+#define MGTURRET_DROOP_RATE         1.0f // rate at which turret droops when unpowered
 
 #define MGTURRET_VALUE              HBVM(0)
 

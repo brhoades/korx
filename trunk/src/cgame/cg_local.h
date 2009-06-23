@@ -1534,8 +1534,8 @@ extern  vmCvar_t    cg_drawFriend;
 extern  vmCvar_t    cg_teamChatsOnly;
 extern  vmCvar_t    cg_noVoiceChats;
 extern  vmCvar_t    cg_noVoiceText;
-extern  vmCvar_t    cg_hudFilesTrep;
-extern  vmCvar_t    cg_hudFilesEnableTrep;
+extern  vmCvar_t    cg_hudFileskorx;
+extern  vmCvar_t    cg_hudFilesEnablekorx;
 extern  vmCvar_t    cg_smoothClients;
 extern  vmCvar_t    pmove_fixed;
 extern  vmCvar_t    pmove_msec;
@@ -1764,7 +1764,6 @@ void        CG_PainEvent( centity_t *cent, int health );
 void        CG_MissileHitEntity( weapon_t weaponNum, weaponMode_t weaponMode,
                 vec3_t origin, vec3_t dir, int entityNum, int charge );
 void        CG_TeamJoinMessage( clientInfo_t *newInfo, clientInfo_t *ci );
-
 
 //
 // cg_ents.c
@@ -2038,7 +2037,6 @@ sfxHandle_t   trap_S_RegisterSound( const char *sample, qboolean compressed );  
 void          trap_S_StartBackgroundTrack( const char *intro, const char *loop ); // empty name stops music
 void          trap_S_StopBackgroundTrack( void );
 int           trap_S_SoundDuration( sfxHandle_t handle );
-
 
 void          trap_R_LoadWorldMap( const char *mapname );
 
