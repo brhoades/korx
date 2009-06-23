@@ -1364,6 +1364,12 @@ void ClientUserinfoChanged( int clientNum )
   else
     client->pers.teamInfo = qfalse;
   
+  s = Info_ValueForKey( userinfo, "cg_unlagged" );
+  if( !s[0] || atoi( s ) != 0 )
+    client->pers.useUnlagged = qtrue;
+  else
+    client->pers.useUnlagged = qfalse;
+
   // colors
   strcpy( c1, Info_ValueForKey( userinfo, "color1" ) );
   strcpy( c2, Info_ValueForKey( userinfo, "color2" ) );
@@ -1697,6 +1703,7 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   // toggle the teleport bit so the client knows to not lerp
   flags = ent->client->ps.eFlags & ( EF_TELEPORT_BIT | EF_VOTED | EF_TEAMVOTED );
   flags ^= EF_TELEPORT_BIT;
+  G_UnlaggedClear( ent );
 
   // clear everything but the persistant data
 
