@@ -303,22 +303,10 @@ void CG_OffsetThirdPersonView( void )
 
   // If player is dead, we want the player to be between us and the killer
   // so pretend that the player was looking at the killer, then place cam behind them.
+  // FIXME: This still fails to see killer when killer is above/below or killer moves 
+  // out of view (relative to the dead player).
   if( cg.predictedPlayerState.stats[ STAT_HEALTH ] <= 0 )
-  {
-    int killerEntNum;
-    vec3_t killerPos;
-
-    killerEntNum = cg.predictedPlayerState.stats[ STAT_VIEWLOCK ];
-    
-    // already looking at ourself
-    if( killerEntNum != cg.snap->ps.clientNum )
-    {
-      VectorCopy( cg_entities[ killerEntNum ].lerpOrigin, killerPos );
-
-      VectorSubtract( killerPos, cg.refdef.vieworg, killerPos );
-      vectoangles( killerPos, cg.refdefViewAngles );
-    }
-  }
+    cg.refdefViewAngles[ YAW ] = cg.predictedPlayerState.stats[ STAT_VIEWLOCK ];
 
   // get and rangecheck cg_thirdPersonRange
   range = cg_thirdPersonRange.value;
@@ -554,12 +542,10 @@ void CG_OffsetShoulderView( void )
 
   // Handle pitch.
   rotationAngles[ PITCH ] = mousePitch;
-
   // Ignore following pitch; it's too jerky otherwise.
   if( cg_thirdPersonPitchFollow.integer ) 
     mousePitch += cg.refdefViewAngles[ PITCH ];
-
-  rotationAngles[ PITCH ] = AngleNormalize180( rotationAngles[ PITCH ] );
+  AngleNormalize180( rotationAngles[ PITCH ] );
   if( rotationAngles [ PITCH ] < -90 ) rotationAngles [ PITCH ] = -90;
   if( rotationAngles [ PITCH ] > 90 ) rotationAngles [ PITCH ] = 90;
 
@@ -574,6 +560,9 @@ void CG_OffsetShoulderView( void )
                       cg.snap->ps.eFlags & EF_WALLCLIMBCEILING ) )
     AxisCopy( axis, rotaxis );
   AxisToAngles( rotaxis, rotationAngles );
+
+  for( i = 0; i < 3; i++ )
+    AngleNormalize180( rotationAngles[ i ] );
 
   // Actually set the viewangles.
   for( i = 0; i < 3; i++ )

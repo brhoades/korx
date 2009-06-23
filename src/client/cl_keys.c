@@ -746,10 +746,13 @@ void Message_Key( int key ) {
 				Com_sprintf( buffer, sizeof( buffer ), "vstr %s\n", prompt.callback );
 				Cbuf_ExecuteText( EXEC_NOW, buffer);
 
-			} else {
+			} else
 				Com_sprintf( buffer, sizeof( buffer ), "say \"%s\"\n", chatField.buffer );
-				Hist_Add( buffer );
-			}
+
+			if ( !strncmp( buffer, "say ", 4 ) )
+				Hist_Add( chatField.buffer );
+			else
+				Hist_Add( va( "/%s", buffer ) );
 
 			if ( !prompt.active )
 				CL_AddReliableCommand( buffer );

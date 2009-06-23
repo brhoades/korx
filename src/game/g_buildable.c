@@ -2427,7 +2427,7 @@ void HMGTurret_Think( gentity_t *self )
     droop = AngleNormalize180( self->s.angles2[ PITCH ] );
     if( droop < MGTURRET_VERTICALCAP )
     {
-      droop +=  MGTURRET_DROOPSCALE;
+      droop += MGTURRET_DROOP_RATE ;
       if( droop > MGTURRET_VERTICALCAP )
         droop = MGTURRET_VERTICALCAP;
       self->s.angles2[ PITCH ] = droop;

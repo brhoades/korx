@@ -39,13 +39,6 @@ ifndef BUILD_GAME_QVM
   BUILD_GAME_QVM   = 1
 endif
 
-# SMP only works on Mac and Windows
-ifneq ($(PLATFORM),darwin)
-ifneq ($(PLATFORM),mingw32)
-  BUILD_CLIENT_SMP = 0
-endif
-endif
-
 #############################################################################
 #
 # If you require a different configuration from the defaults below, create a
@@ -165,6 +158,8 @@ ifndef USE_OLD_HOMEPATH
   USE_OLD_HOMEPATH=1
 endif
 
+# SSE is buggy, disabled until it's fixed
+USE_SSE=0
 ifndef USE_SSE
   ifeq ($(ARCH),x86_64)
     USE_SSE=2
@@ -192,6 +187,7 @@ JPDIR=$(MOUNT_DIR)/jpeg-6b
 SPEEXDIR=$(MOUNT_DIR)/libspeex
 Q3ASMDIR=$(MOUNT_DIR)/tools/asm
 LBURGDIR=$(MOUNT_DIR)/tools/lcc/lburg
+Q3CPPDIR=$(MOUNT_DIR)/tools/lcc/cpp
 Q3LCCETCDIR=$(MOUNT_DIR)/tools/lcc/etc
 Q3LCCSRCDIR=$(MOUNT_DIR)/tools/lcc/src
 SDLHDIR=$(MOUNT_DIR)/SDL12
@@ -1165,6 +1161,7 @@ makedirs:
 	@if [ ! -d $(B)/tools/asm ];then $(MKDIR) $(B)/tools/asm;fi
 	@if [ ! -d $(B)/tools/etc ];then $(MKDIR) $(B)/tools/etc;fi
 	@if [ ! -d $(B)/tools/rcc ];then $(MKDIR) $(B)/tools/rcc;fi
+	@if [ ! -d $(B)/tools/cpp ];then $(MKDIR) $(B)/tools/cpp;fi
 	@if [ ! -d $(B)/tools/lburg ];then $(MKDIR) $(B)/tools/lburg;fi
 
 #############################################################################
@@ -1196,6 +1193,7 @@ endef
 LBURG       = $(B)/tools/lburg/lburg$(BINEXT)
 DAGCHECK_C  = $(B)/tools/rcc/dagcheck.c
 Q3RCC       = $(B)/tools/q3rcc$(BINEXT)
+Q3CPP       = $(B)/tools/q3cpp$(BINEXT)
 Q3LCC       = $(B)/tools/q3lcc$(BINEXT)
 Q3ASM       = $(B)/tools/q3asm$(BINEXT)
 
@@ -1255,6 +1253,25 @@ $(Q3RCC): $(Q3RCCOBJ)
 	$(echo_cmd) "LD $@"
 	$(Q)$(CC) $(TOOLS_CFLAGS) $(TOOLS_LDFLAGS) -o $@ $^ $(TOOLS_LIBS)
 
+Q3CPPOBJ = \
+	$(B)/tools/cpp/cpp.o \
+	$(B)/tools/cpp/lex.o \
+	$(B)/tools/cpp/nlist.o \
+	$(B)/tools/cpp/tokens.o \
+	$(B)/tools/cpp/macro.o \
+	$(B)/tools/cpp/eval.o \
+	$(B)/tools/cpp/include.o \
+	$(B)/tools/cpp/hideset.o \
+	$(B)/tools/cpp/getopt.o \
+	$(B)/tools/cpp/unix.o
+
+$(B)/tools/cpp/%.o: $(Q3CPPDIR)/%.c
+	$(DO_TOOLS_CC)
+
+$(Q3CPP): $(Q3CPPOBJ)
+	$(echo_cmd) "LD $@"
+	$(Q)$(CC) $(TOOLS_CFLAGS) $(TOOLS_LDFLAGS) -o $@ $^ $(TOOLS_LIBS)
+
 Q3LCCOBJ = \
 	$(B)/tools/etc/lcc.o \
 	$(B)/tools/etc/bytecode.o
@@ -1262,7 +1279,7 @@ Q3LCCOBJ = \
 $(B)/tools/etc/%.o: $(Q3LCCETCDIR)/%.c
 	$(DO_TOOLS_CC)
 
-$(Q3LCC): $(Q3LCCOBJ) $(Q3RCC)
+$(Q3LCC): $(Q3LCCOBJ) $(Q3RCC) $(Q3CPP)
 	$(echo_cmd) "LD $@"
 	$(Q)$(CC) $(TOOLS_CFLAGS) $(TOOLS_LDFLAGS) -o $@ $(Q3LCCOBJ) $(TOOLS_LIBS)
 
@@ -2002,7 +2019,7 @@ $(B)/base/qcommon/%.asm: $(CMDIR)/%.c $(Q3LCC)
 OBJ = $(Q3OBJ) $(Q3POBJ) $(Q3POBJ_SMP) $(Q3TOBJ) $(Q3DOBJ) \
   $(GOBJ) $(CGOBJ) $(UIOBJ) \
   $(GVMOBJ) $(CGVMOBJ) $(UIVMOBJ)
-TOOLSOBJ = $(LBURGOBJ) $(Q3RCCOBJ) $(Q3LCCOBJ) $(Q3ASMOBJ)
+TOOLSOBJ = $(LBURGOBJ) $(Q3CPPOBJ) $(Q3RCCOBJ) $(Q3LCCOBJ) $(Q3ASMOBJ)
 
 
 clean: clean-debug clean-release
@@ -2033,7 +2050,7 @@ toolsclean2:
 	@echo "TOOLS_CLEAN $(B)"
 	@rm -f $(TOOLSOBJ)
 	@rm -f $(TOOLSOBJ_D_FILES)
-	@rm -f $(LBURG) $(DAGCHECK_C) $(Q3RCC) $(Q3LCC) $(Q3ASM)
+	@rm -f $(LBURG) $(DAGCHECK_C) $(Q3RCC) $(Q3CPP) $(Q3LCC) $(Q3ASM)
 
 distclean:
 	@rm -rf $(BUILD_DIR)
