@@ -306,6 +306,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     ent->s.otherEntityNum = self->s.number;
     ent->s.otherEntityNum2 = killer;
     ent->r.svFlags = SVF_BROADCAST; // send to everyone
+    
+    //Aaron: Add the kill here, to make sure everything lines up.
+    AddKill( attacker );
   }
   else 
   {
@@ -409,68 +412,13 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
               trap_SendServerCommand( self->client->ps.clientNum, va( "print \"Received ^3%d credits ^7from %s ^7in retribution.\n\"", price, g_entities[ i ].client->pers.netname ) );
               trap_SendServerCommand( g_entities[ i ].client->ps.clientNum, va( "print \"Transfered ^3%d credits ^7to %s ^7in retribution.\n\"", price, self->client->pers.netname ) );
             }
+          }
         }
-      }
-        /*else
-        {
-          int toPay[ MAX_CLIENTS ] = { 0 };
-          int frags = totalPrice;
-          int damageForEvo = totalTK / totalPrice;
-          for ( i = 0; i < MAX_CLIENTS; i++ )
-          {
-            // no retribution if self damage or enemmy damage or building damage or no damage from this client
-            if ( i == self - g_entities || !g_entities[ i ].client || !OnSameTeam( &g_entities[ i ], self ) || !self->client->tkcredits[ i ] )
-              continue;
-
-            // find out how many full evos this client needs to pay
-            toPay[ i ] = ( totalPrice * self->client->tkcredits[ i ] ) / totalTK;
-            if ( toPay[ i ] > g_entities[ i ].client->ps.persistant[ PERS_CREDIT ] )
-              toPay[ i ] = g_entities[ i ].client->ps.persistant[ PERS_CREDIT ];
-            frags -= toPay[ i ];
-            self->client->tkcredits[ i ] -= damageForEvo * toPay[ i ];
-          }
-
-          // if we have not met the evo count, continue stealing evos
-          while ( 1 )
-          {
-            int maximum = 0;
-            int topClient = 0;
-            for ( i = 0; i < MAX_CLIENTS; i++ )
-            {
-              if ( self->client->tkcredits[ i ] > maximum && g_entities[ i ].client->ps.persistant[ PERS_CREDIT ] )
-              {
-                maximum = self->client->tkcredits[ i ];
-                topClient = i;
-              }
-            }
-            if ( !maximum )
-              break;
-            toPay[ topClient ]++;
-            self->client->tkcredits[ topClient ] = 0;
-            frags--;
-            if ( !frags )
-             break;
-          }
-          
-          // now move the evos around
-          for ( i = 0; i < MAX_CLIENTS; i++ )
-          {
-            if ( !toPay[ i ] )
-              continue;
-            
-            G_AddCreditToClient( self->client, toPay[ i ], qtrue );
-            G_AddCreditToClient( g_entities[ i ].client, -toPay[ i ], qtrue );
-
-            trap_SendServerCommand( self->client->ps.clientNum, va( "print \"Received ^3%d ^7evos from %s ^7in retribution.\n\"", toPay[ i ], g_entities[ i ].client->pers.netname ) );
-            trap_SendServerCommand( g_entities[ i ].client->ps.clientNum, va( "print \"Transfered ^3%d ^7evos to %s ^7in retribution.\n\"", toPay[ i ], self->client->pers.netname ) );
-          } 
-        } */
       }
     }
     else
     {
       //AddScore( attacker, 1 ); 
-      AddKill( attacker );
 
       attacker->client->lastKillTime = level.time;
       attacker->client->pers.statscounters.kills++;
