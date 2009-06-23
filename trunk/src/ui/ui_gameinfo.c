@@ -363,6 +363,8 @@ void UI_ServerInfo( void )
                    Info_ValueForKey( info, "sv_maxclients" ) );
     trap_Cvar_Set( "ui_serverinfo_version",
                    Info_ValueForKey( info, "version" ) );
+    trap_Cvar_Set( "ui_serverinfo_unlagged",
+                   Info_ValueForKey( info, "g_unlagged" ) );
     trap_Cvar_Set( "ui_serverinfo_ff",
                    Info_ValueForKey( info, "ff" ) );
   }

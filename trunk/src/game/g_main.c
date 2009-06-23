@@ -116,6 +116,8 @@ vmCvar_t  g_alienStage3Threshold;
 
 vmCvar_t  g_teamImbalanceWarnings;
 
+vmCvar_t  g_unlagged;
+
 vmCvar_t  g_disabledEquipment;
 vmCvar_t  g_disabledClasses;
 vmCvar_t  g_disabledBuildables;
@@ -205,6 +207,8 @@ vmCvar_t  g_msg;
 vmCvar_t  g_msgTime;
 
 vmCvar_t  g_tkmap;
+
+vmCvar_t  g_unlagged;
 
 static cvarTable_t   gameCvarTable[ ] =
 {
@@ -315,6 +319,8 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_alienStage3Threshold, "g_alienStage3Threshold", DEFAULT_ALIEN_STAGE3_THRESH, 0, 0, qfalse  },
   { &g_teamImbalanceWarnings, "g_teamImbalanceWarnings", "30", CVAR_ARCHIVE, 0, qfalse  },
 
+  { &g_unlagged, "g_unlagged", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse  },
+
   { &g_disabledEquipment, "g_disabledEquipment", "", CVAR_ROM, 0, qfalse  },
   { &g_disabledClasses, "g_disabledClasses", "", CVAR_ROM, 0, qfalse  },
   { &g_disabledBuildables, "g_disabledBuildables", "", CVAR_ROM, 0, qfalse  },
@@ -391,7 +397,9 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_banNotice, "g_banNotice", "", CVAR_ARCHIVE, 0, qfalse  },
 
   { &g_tag, "g_tag", "main", CVAR_INIT, 0, qfalse },
-  { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse }
+  { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse },
+  
+  { &g_unlagged, "g_unlagged", "1", CVAR_ARCHIVE, 0, qfalse }
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
@@ -3327,6 +3335,8 @@ void G_RunFrame( int levelTime )
   }
 
   // save position information for all active clients
+  G_UnlaggedStore( );
+
   end = trap_Milliseconds();
 
   G_CountSpawns( );
