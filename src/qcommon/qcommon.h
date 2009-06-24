@@ -136,6 +136,7 @@ NET
 #define	MAX_RELIABLE_COMMANDS	128			// max string commands buffered for restransmit
 
 typedef enum {
+	NA_BOT,
 	NA_BAD,					// an address lookup failed
 	NA_LOOPBACK,
 	NA_BROADCAST,
@@ -578,8 +579,6 @@ issues.
 #define FS_CGAME_REF	0x04
 
 #define	MAX_FILE_HANDLES	64
-
-#define BASEGAME "base"
 
 #ifdef DEDICATED
 #	define Q3CONFIG_CFG "autogen_server.cfg"
