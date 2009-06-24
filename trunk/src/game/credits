@@ -1,0 +1,38 @@
+g_active.c: 	if ( ( victim->client->ps.weapon >= WP_ABUILD ) &&
+g_active.c:       ( victim->client->ps.weapon <= WP_HBUILD ) &&
+g_active.c: 	     ( victim->client->ps.stats[ STAT_BUILDABLE ] != BA_NONE ) )
+g_active.c:      victim->client->ps.groundEntityNum != ent - g_entities )
+g_active.c:  VectorSubtract( victim->r.currentOrigin, ent->r.currentOrigin, dir );
+g_active.c:  VectorAdd( victim->client->ps.velocity, push, victim->client->ps.velocity );
+g_active.c:  if( !victim->client->ps.pm_time )
+g_active.c:    victim->client->ps.pm_time = time;
+g_active.c:    victim->client->ps.pm_flags |= PMF_TIME_KNOCKBACK;
+g_active.c:    if( ( victim->client->ps.groundEntityNum == ent - g_entities ) &&
+g_active.c:        ( victim->client->ps.stats[ STAT_STATE ] & SS_WALLCLIMBING ) )
+g_active.c:      victim->client->ps.pm_flags |= PMF_TIME_KNOCKOFF;
+g_admin.c:    victim->client->pers.guid );
+g_admin.c:                 victim->client->pers.guid,
+g_admin.c:                 victim->client->pers.netname,
+g_weapon.c:  if( victim->health <= 0 )
+g_weapon.c:  tent->s.otherEntityNum = victim->s.number;
+g_weapon.c:  if( victim->health <= 0 )
+g_weapon.c:    VectorSubtract( tr->endpos, victim->s.origin, normal );
+g_weapon.c:                    victim->s.origin, normal );
+g_weapon.c:  radius = victim->r.maxs[ 0 ] * 1.21f;
+g_weapon.c:  if( normal[ 2 ] > victim->r.maxs[ 2 ] )
+g_weapon.c:    normal[ 2 ] = victim->r.maxs[ 2 ];
+g_weapon.c:  if( normal[ 2 ] < victim->r.mins[ 2 ] )
+g_weapon.c:    normal[ 2 ] = victim->r.mins[ 2 ];
+g_weapon.c:  VectorAdd( victim->s.origin, normal, origin );
+g_weapon.c:  tent->s.otherEntityNum = victim->s.number;
+g_weapon.c:  VectorSubtract( victim->s.origin, ent->s.origin, forward );
+g_weapon.c:  if( !victim->takedamage )
+g_weapon.c:  G_Damage( victim, ent, ent, forward, victim->s.origin, damage,
+g_weapon.c:  if( !victim->client )
+g_weapon.c:  if( !victim->takedamage ||
+g_weapon.c:      victim->s.origin[ 2 ] + victim->r.maxs[ 2 ] ||
+g_weapon.c:      ( victim->client &&
+g_weapon.c:        victim->client->ps.groundEntityNum == ENTITYNUM_NONE ) )
+g_weapon.c:  if( victim->client &&
+g_weapon.c:  VectorSubtract( victim->s.origin, ent->client->ps.origin, dir );
+g_weapon.c:  G_Damage( victim, ent, ent, dir, victim->s.origin, damage,

@@ -476,6 +476,31 @@ static void Svcmd_PrintQueue_f( void )
   }
 }
 
+/*
+===============
+Svcmd_BotlibSetVariable_f
+===============
+*/
+void Svcmd_BotlibSetVariable_f( void ){
+	char key[MAX_TOKEN_CHARS];
+	char value[MAX_TOKEN_CHARS];
+	
+	trap_Argv( 1, key, sizeof( key ) );
+	if ( !key[0] ) {
+    	G_Printf( "Usage: blibset <key> <value> \n" );
+    	return;
+  	}
+  	
+  	trap_Argv( 2, value, sizeof( value ) );
+	if ( !value[0] ) {
+    	G_Printf( "Usage: blibset <key> <value> \n" );
+    	return;
+  	}
+  	
+	trap_BotLibVarSet( key, va("%s", value ) );
+}
+
+
 // dumb wrapper for "a", "m", and "c"
 static void Svcmd_MessageWrapper( void )
 {
@@ -509,6 +534,8 @@ struct
   { "dumpuser", qfalse, Svcmd_DumpUser_f },
   { "admitDefeat", qfalse, Svcmd_AdmitDefeat_f },
   { "evacuation", qfalse, Svcmd_Evacuation_f },
+  { "printqueue", qfalse, Svcmd_PrintQueue_f },
+  { "blibset", qfalse, Svcmd_BotlibSetVariable_f },
   // don't handle communication commands unless dedicated
   { "say_team", qtrue, Svcmd_TeamMessage_f },
   { "say", qtrue, Svcmd_SendMessage },
