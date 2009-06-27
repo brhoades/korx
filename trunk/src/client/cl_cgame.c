@@ -496,15 +496,17 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		if ( com_sse->integer >= 1 ) {
 			return CM_TempBoxModel_sse( vec3Load(VMA(1)), vec3Load(VMA(2)), /*int capsule*/ qfalse );
 		}
-#endif
+#else
 		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qfalse );
+#endif
 	case CG_CM_TEMPCAPSULEMODEL:
 #if id386_sse >= 1
 		if ( com_sse->integer >= 1 ) {
 			return CM_TempBoxModel_sse( vec3Load(VMA(1)), vec3Load(VMA(2)), /*int capsule*/ qtrue );
 		}
-#endif
+#else
 		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qtrue );
+#endif
 	case CG_CM_POINTCONTENTS:
 		return CM_PointContents( VMA(1), args[2] );
 	case CG_CM_TRANSFORMEDPOINTCONTENTS:

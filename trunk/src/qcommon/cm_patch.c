@@ -145,7 +145,7 @@ static qboolean CM_PlaneFromPoints_sse( v4f *plane, v4f a, v4f b, v4f c ) {
 	}
 
 	planeVec = v4fScale( v4fInverseRoot( planeLength ), planeVec );
-	planeVec = v4fMix( planeVec, v4fDotProduct( a, planeVec ), mixMask0001 );
+	planeVec = v4fMix( planeVec, v4fDotProduct( a, planeVec ), 0,0,0,1 );
 	*plane = planeVec;
 	return qtrue;
 }
@@ -2932,10 +2932,6 @@ CM_DrawDebugSurface
 Called from the renderer
 ==================
 */
-#ifndef BSPC
-void BotDrawDebugPolygons(void (*drawPoly)(int color, int numPoints, float *points), int value);
-#endif
-
 void CM_DrawDebugSurface( void (*drawPoly)(int color, int numPoints, float *points) ) {
 	static cvar_t	*cv;
 #ifndef BSPC
@@ -2959,7 +2955,6 @@ void CM_DrawDebugSurface( void (*drawPoly)(int color, int numPoints, float *poin
 
 	if (cv2->integer != 1)
 	{
-		BotDrawDebugPolygons( drawPoly, cv2->integer );
 		return;
 	}
 #endif

@@ -1862,11 +1862,11 @@ void CG_LoadHudMenu( void )
 
   Menu_Reset( );
 
-  //trap_Cvar_VariableStringBuffer( "cg_hudFileskorx", buff, sizeof( buff ) );
-  //hudSet = buff;
+  trap_Cvar_VariableStringBuffer( "cg_hudFileskorx", buff, sizeof( buff ) );
+  hudSet = buff;
 
-  //if( !cg_hudFilesEnablekorx.integer || hudSet[ 0 ] == '\0' )
-  hudSet = "ui/korx-hud.txt";
+  if( !cg_hudFilesEnablekorx.integer || hudSet[ 0 ] == '\0' )
+    hudSet = "ui/korx-hud.txt";
 
   CG_LoadMenus( hudSet );
   cgDC.hudloading = qfalse;

@@ -42,7 +42,7 @@ BASIC MATH
 RotatePoint
 ================
 */
-void RotatePoint(vec3_t point, /*const*/ vec3_t matrix[3]) { // FIXME 
+static void RotatePoint(vec3_t point, /*const*/ vec3_t matrix[3]) { // FIXME 
 	vec3_t tvec;
 
 	VectorCopy(point, tvec);
@@ -70,7 +70,7 @@ static void TransposeMatrix(/*const*/ vec3_t matrix[3], vec3_t transpose[3]) { /
 CreateRotationMatrix
 ================
 */
-void CreateRotationMatrix(const vec3_t angles, vec3_t matrix[3]) {
+static void CreateRotationMatrix(const vec3_t angles, vec3_t matrix[3]) {
 	AngleVectors(angles, matrix[0], matrix[1], matrix[2]);
 	VectorInverse(matrix[1]);
 }
@@ -2564,14 +2564,14 @@ static void CM_Trace_sse( trace_t *results, v4f start, v4f end,
 	tw.maxOffset = tw.size[1][0] + tw.size[1][1] + tw.size[1][2];
 
 	// tw.offsets[signbits] = vector to apropriate corner from origin
-	vec3aStore( tw.offsets[0], v4fMix( size0, size1, mixMask0000 ));
-	vec3aStore( tw.offsets[1], v4fMix( size0, size1, mixMask1000 ));
-	vec3aStore( tw.offsets[2], v4fMix( size0, size1, mixMask0100 ));
-	vec3aStore( tw.offsets[3], v4fMix( size0, size1, mixMask1100 ));
-	vec3aStore( tw.offsets[4], v4fMix( size0, size1, mixMask0010 ));
-	vec3aStore( tw.offsets[5], v4fMix( size0, size1, mixMask1010 ));
-	vec3aStore( tw.offsets[6], v4fMix( size0, size1, mixMask0110 ));
-	vec3aStore( tw.offsets[7], v4fMix( size0, size1, mixMask1110 ));
+	vec3aStore( tw.offsets[0], v4fMix( size0, size1, 0,0,0,0 ));
+	vec3aStore( tw.offsets[1], v4fMix( size0, size1, 1,0,0,0 ));
+	vec3aStore( tw.offsets[2], v4fMix( size0, size1, 0,1,0,0 ));
+	vec3aStore( tw.offsets[3], v4fMix( size0, size1, 1,1,0,0 ));
+	vec3aStore( tw.offsets[4], v4fMix( size0, size1, 0,0,1,0 ));
+	vec3aStore( tw.offsets[5], v4fMix( size0, size1, 1,0,1,0 ));
+	vec3aStore( tw.offsets[6], v4fMix( size0, size1, 0,1,1,0 ));
+	vec3aStore( tw.offsets[7], v4fMix( size0, size1, 1,1,1,0 ));
 
 	//
 	// calculate bounds

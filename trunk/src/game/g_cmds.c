@@ -1157,7 +1157,7 @@ static void Cmd_Tell_f( gentity_t *ent )
   G_Say( ent, target, SAY_TELL, p );
   // don't tell to the player self if it was already directed to this player
   // also don't send the chat back to a bot
-  if( ent != target && !( ent->r.svFlags & SVF_BOT ) )
+  if( ent != target )
     G_Say( ent, ent, SAY_TELL, p );
 }
 
@@ -3786,7 +3786,6 @@ void G_StopFollowing( gentity_t *ent )
   ent->client->ps.eFlags &= ~( EF_WALLCLIMB | EF_WALLCLIMBCEILING );
   ent->client->ps.stats[ STAT_VIEWLOCK ] = 0;
   ent->client->ps.viewangles[ PITCH ] = 0.0f;
-//  ent->r.svFlags &= ~SVF_BOT;
   ent->client->ps.clientNum = ent - g_entities;
 
   CalculateRanks( );
@@ -4449,7 +4448,7 @@ void Cmd_Donate_f( gentity_t *ent ) {
   if( ent->client->pers.teamSelection == TEAM_ALIENS )
     value = value * ALIEN_CREDITS_PER_FRAG;
 
-  if( value > ent->client->ps.persistant[ PERS_CREDIT ])
+  if( value > ent->client->ps.persistant[ PERS_CREDIT ] )
     value = ent->client->ps.persistant[ PERS_CREDIT ];
 
   // allocate memory for distribution amounts
@@ -4552,28 +4551,6 @@ void Cmd_Damage_f( gentity_t *ent )
             ( nonloc ? DAMAGE_NO_LOCDAMAGE : 0 ), MOD_TARGET_LASER );
 }
 
-void EditPlayerInventory(gentity_t *ent){
-	char itstr[MAX_TOKEN_CHARS];
-	char arg[MAX_TOKEN_CHARS];
-	trap_Argv( 1, itstr, sizeof( itstr ) );
-	
-	if (Q_stricmp (itstr, "dmg") == 0) {
-		trap_Argv( 2, arg, sizeof( arg ) );
-		G_Damage (ent, NULL, NULL, NULL, NULL, atoi(arg), 0, MOD_UNKNOWN);
-	}
-	else if (Q_stricmp (itstr, "cash") == 0) {
-		trap_Argv( 2, arg, sizeof( arg ) );
-		ent->client->ps.persistant[ PERS_CREDIT ] += atoi(arg);
-		// sanity check
-		if(ent->client->ps.persistant[ PERS_CREDIT ] < 0)
-			ent->client->ps.persistant[ PERS_CREDIT ] = 0;
-		else if(ent->client->ps.persistant[ PERS_CREDIT ] > HUMAN_MAX_CREDITS)
-			ent->client->ps.persistant[ PERS_CREDIT ] = HUMAN_MAX_CREDITS;
-	}
-	else
-		trap_SendServerCommand(ent-g_entities, va("print \"unknown parameter\n\"" ) );
-}
-
 /*
 ==================
 G_FloodLimited
@@ -4609,28 +4586,6 @@ int G_FloodLimited( gentity_t *ent )
                           ( ms + 999 ) / 1000, ( ms > 1000 ) ? "s" : "" ) );
   return ms;
 }
-
-extern vmCvar_t bot_developer;
-void Cmd_EditBotInv_f( gentity_t *ent ){
-	//gentity_t	*ent2;
-	//int i;
-	gentity_t	*spec_ent;
-
-	if(!bot_developer.integer){
-		trap_SendServerCommand(ent-g_entities, va("print \"this cmd is only for bot testing\n\"" ) );
-		return;
-	}
-
-	spec_ent = &g_entities[ ent->client->sess.spectatorClient ];
-
-	if(!spec_ent->r.svFlags & SVF_BOT){
-		trap_SendServerCommand(ent-g_entities, va("print \"error: target is human \n\"" ) );
-		return;
-	}
-
-	EditPlayerInventory( spec_ent );
-}
-
 
 commands_t cmds[ ] = {
   // normal commands
@@ -4672,7 +4627,6 @@ commands_t cmds[ ] = {
   { "destroy", CMD_CHEAT|CMD_TEAM|CMD_LIVING, Cmd_Destroy_f },
   { "test", CMD_CHEAT, Cmd_Test_f },
   { "damage", CMD_CHEAT|CMD_LIVING, Cmd_Damage_f },
-  { "botgod", CMD_CHEAT, Cmd_EditBotInv_f },
   { "where", 0, Cmd_Where_f },
 
   // game commands
