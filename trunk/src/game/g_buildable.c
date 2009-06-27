@@ -2067,7 +2067,7 @@ void HMedistat_Think( gentity_t *self )
       {
         self->enemy->health =  self->enemy->client->ps.stats[ STAT_MAX_HEALTH ];
         if( !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
-        BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
+          BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
       }
     }
   }
