@@ -5757,8 +5757,8 @@ void Item_Model_Paint( itemDef_t *item )
   modelDef_t *modelPtr = ( modelDef_t* )item->typeData;
 
   qhandle_t hModel;
-  int backLerpWhole;
-//  vec3_t axis[3];
+  //int backLerpWhole;
+  //vec3_t axis[3];
 
   if( modelPtr == NULL )
     return;
