@@ -98,6 +98,7 @@ typedef struct unz_file_info_internal_s
     uLong offset_curfile;/* relative offset of local header 4 bytes */
 } unz_file_info_internal;
 
+
 /* file_in_zip_read_info_s contain internal information about a file in zipfile,
     when reading and decompress it */
 typedef struct
@@ -123,36 +124,35 @@ typedef struct
     int   raw;
 } file_in_zip_read_info_s;
 
+
 /* unz_s contain internal information about the zipfile
 */
 typedef struct
 {
-        FILE* file;                 /* io structore of the zipfile */
-        zlib_filefunc_def z_filefunc;
-        voidpf filestream;        /* io structore of the zipfile */
-        unz_global_info gi;       /* public global information */
-        unsigned long byte_before_the_zipfile;/* unsigned char before the zipfile, (>0 for sfx)*/
-        unsigned long num_file;             /* number of the current file in the zipfile*/
-        unsigned long pos_in_central_dir;   /* pos of the current file in the central dir*/
-        unsigned long current_file_ok;      /* flag about the usability of the current file*/
-        unsigned long central_pos;          /* position of the beginning of the central dir*/
+    zlib_filefunc_def z_filefunc;
+    voidpf filestream;        /* io structore of the zipfile */
+    unz_global_info gi;       /* public global information */
+    uLong byte_before_the_zipfile;/* byte before the zipfile, (>0 for sfx)*/
+    uLong num_file;             /* number of the current file in the zipfile*/
+    uLong pos_in_central_dir;   /* pos of the current file in the central dir*/
+    uLong current_file_ok;      /* flag about the usability of the current file*/
+    uLong central_pos;          /* position of the beginning of the central dir*/
 
-        unsigned long size_central_dir;     /* size of the central directory  */
-        unsigned long offset_central_dir;   /* offset of start of central directory with
-                                                                   respect to the starting disk number */
+    uLong size_central_dir;     /* size of the central directory  */
+    uLong offset_central_dir;   /* offset of start of central directory with
+                                   respect to the starting disk number */
 
-        unz_file_info cur_file_info; /* public info about the current file in zip*/
-        unz_file_info_internal cur_file_info_internal; /* private info about it*/
-        file_in_zip_read_info_s* pfile_in_zip_read; /* structure about the current
-                                            file if we are decompressing it */
-        unsigned char*  tmpFile;
-        int     tmpPos,tmpSize;
-        int encrypted;
-#ifndef NOUNCRYPT
-        unsigned long keys[3];     /* keys defining the pseudo-random sequence */
-        const unsigned long* pcrc_32_tab;
-#endif
+    unz_file_info cur_file_info; /* public info about the current file in zip*/
+    unz_file_info_internal cur_file_info_internal; /* private info about it*/
+    file_in_zip_read_info_s* pfile_in_zip_read; /* structure about the current
+                                        file if we are decompressing it */
+    int encrypted;
+#    ifndef NOUNCRYPT
+    unsigned long keys[3];     /* keys defining the pseudo-random sequence */
+    const unsigned long* pcrc_32_tab;
+#    endif
 } unz_s;
+
 
 #ifndef NOUNCRYPT
 #include "crypt.h"
