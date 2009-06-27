@@ -247,6 +247,7 @@
     "[flamer][[flamer]\n"
     "[lcannon][[lcannon]\n"
     "[grenade][[grenade]\n"
+    "[xael][[xael]\n"
   }
   "Emoticons: H Buildables"
   {
@@ -270,5 +271,11 @@
     "[booster][[booster]\n"
     "[hive][[hive]\n"
     "[hovel][[hovel]\n"
+    "[trapper][[trapper]\n"
+  }
+  "Emoticons: Miscellaneous"
+  {
+    "[heart][[heart]\n"
+    "[beer][[beer]\n"
   }
 }
