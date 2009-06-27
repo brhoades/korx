@@ -4488,8 +4488,8 @@ void Cmd_Donate_f( gentity_t *ent )
       //if we're out break out of the loop
       if( value == 0 )
       {
-        break;
         donated = qtrue;
+        break;
       }
       
       //find out how much to give

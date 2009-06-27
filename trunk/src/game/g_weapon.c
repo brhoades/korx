@@ -505,9 +505,7 @@ void massDriverFire( gentity_t *ent )
   if( traceEnt->takedamage && 
       ( traceEnt->s.eType == ET_BUILDABLE || 
         traceEnt->s.eType == ET_PLAYER ) )
-  {
     BloodSpurt( ent, traceEnt, &tr );
-  }
   else
   {
     tent = G_TempEntity( tr.endpos, EV_MISSILE_MISS );

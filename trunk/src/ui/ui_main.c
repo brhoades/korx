@@ -4555,7 +4555,7 @@ void UI_DrawConnectScreen( qboolean overlay )
     case CA_CONNECTED:
       {
         char downloadName[MAX_INFO_VALUE];
-        int prompt = trap_Cvar_VariableValue( "cl_downloadPrompt" );
+        //int prompt = trap_Cvar_VariableValue( "cl_downloadPrompt" );
   
         //FIXME: Aaron: This is causing issues on TF clients. Requires you to /disconnect and /reconnect to download anything.
         //FIXME: Aaron: Commenting this whole thing out causes an error.
