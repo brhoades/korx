@@ -4388,11 +4388,13 @@ Cmd_Donate_f
 Alms for the poor
 =================
 */
-void Cmd_Donate_f( gentity_t *ent ) {
+void Cmd_Donate_f( gentity_t *ent ) 
+{
   char s[ MAX_TOKEN_CHARS ] = "", *type = "evo(s)";
-  int i, value, divisor, portion, new_credits, total=0,
-    max = ALIEN_MAX_CREDITS, *amounts, minportion=1;
-  qboolean donated = qtrue;
+  int i, value, divisor, portion, total=0,
+    max, minportion=1;
+  qboolean donated = qtrue, once=qfalse;
+  gentity_t *thisclient;
 
   if( !ent->client ) return;
 
@@ -4421,18 +4423,22 @@ void Cmd_Donate_f( gentity_t *ent ) {
   {
     minportion = ALIEN_CREDITS_PER_FRAG;
     divisor = level.numAlienClients-1;
+    max = ALIEN_MAX_CREDITS;
   }
   else if( ent->client->pers.teamSelection == TEAM_HUMANS ) {
     divisor = level.numHumanClients-1;
     max = HUMAN_MAX_CREDITS;
     type = "credit(s)";
-  } else {
+  } 
+  else 
+  {
     trap_SendServerCommand( ent-g_entities,
       va( "print \"donate: spectators cannot be so gracious\n\"" ) );
     return;
   }
 
-  if( divisor < 1 ) {
+  if( divisor < 1 ) 
+  {
     trap_SendServerCommand( ent-g_entities,
       "print \"donate: get yourself some teammates first\n\"" );
     return;
@@ -4440,58 +4446,82 @@ void Cmd_Donate_f( gentity_t *ent ) {
 
   trap_Argv( 1, s, sizeof( s ) );
   value = atoi(s);
-  if( value <= 0 ) {
+  if( value <= 0 ) 
+  {
     trap_SendServerCommand( ent-g_entities,
       "print \"donate: very funny\n\"" );
     return;
   }
+  
   if( ent->client->pers.teamSelection == TEAM_ALIENS )
     value = value * ALIEN_CREDITS_PER_FRAG;
 
   if( value > ent->client->ps.persistant[ PERS_CREDIT ] )
     value = ent->client->ps.persistant[ PERS_CREDIT ];
 
-  // allocate memory for distribution amounts
-  amounts = BG_Alloc( level.maxclients * sizeof( int ) );
-  for( i = 0; i < level.maxclients; i++ ) amounts[ i ] = 0;
-
-  // determine donation amounts for each client
   total = value;
-  while( donated && value ) {
-    donated = qfalse;
-    portion = value / divisor;
-    if( portion < minportion ) portion = minportion;
+  
+  while( !donated )
+  {
+    //loops so that if we have spares we keep donating
+    
     for( i = 0; i < level.maxclients; i++ )
-      if( level.clients[ i ].pers.connected == CON_CONNECTED &&
-            ent->client != level.clients + i &&
-            level.clients[ i ].pers.teamSelection ==
-            ent->client->pers.teamSelection ) {
-        new_credits = level.clients[ i ].ps.persistant[ PERS_CREDIT ] + portion;
-        amounts[ i ] = portion;
-        if( new_credits > max ) {
-          amounts[ i ] -= new_credits - max;
-          new_credits = max;
-        }
-        if( amounts[ i ] ) {
-          G_AddCreditToClient( &(level.clients[ i ]), amounts[ i ], qtrue );
-          donated = qtrue;
-          value -= amounts[ i ];
-          if( value < portion ) break;
-        }
+    {
+      thisclient = g_entities + i;
+      
+      //check if a client
+      if( !thisclient->client )
+        continue;
+        
+      //check team
+      if( thisclient->client->pers.teamSelection != ent->client->pers.teamSelection )
+        continue;
+      
+      //check if self
+      if( thisclient->client == ent->client )
+        continue;
+      
+      //check for max credits
+      if( thisclient->client->ps.persistant[ PERS_CREDIT ] >= max )
+        continue;
+      
+      //if we're out break out of the loop
+      if( value == 0 )
+      {
+        break;
+        donated = qtrue;
       }
-  }
+      
+      //find out how much to give
+      if( value >= portion )
+        value -= portion;
+      else if( value < portion )
+      {
+        portion = value;
+        value = 0;
+        donated = qtrue;
+      }
+      
+      //give it out
+      G_AddCreditToClient( thisclient->client, portion, qtrue );
 
-  // transfer funds
-  G_AddCreditToClient( ent->client, value - total, qtrue );
-  for( i = 0; i < level.maxclients; i++ )
-    if( amounts[ i ] ) {
+      //spam them
       trap_SendServerCommand( i,
         va( "print \"%s^7 donated %d %s to you, don't forget to say 'thank you'!\n\"",
-        ent->client->pers.netname, (amounts[ i ]/minportion), type ) );
+        ent->client->pers.netname, (portion/minportion), type ) );
     }
-
-  BG_Free( amounts );
-
+    
+    //If we've went through the loop once before, everyone has max credits or something
+    //without this, I can expect a crash.
+    if( once || value == 0 )
+      break;
+    once = qtrue;
+  }
+  
+  //take away what we've used minus any left over
+  G_AddCreditToClient( ent->client, total-value, qtrue );
+  
+  //tell the donator
   trap_SendServerCommand( ent-g_entities,
     va( "print \"Donated %d %s to the cause.\n\"",
     ((total-value)/minportion), type ) );
