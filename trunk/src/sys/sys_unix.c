@@ -530,7 +530,7 @@ void Sys_ErrorDialog( const char *error )
 
 	Sys_Print( va( "%s\n", error ) );
 
-	// Write console log to file and to stderr
+	// Write console log to file
 	f = FS_FOpenFileWrite( fileName );
 	if( !f )
 	{
@@ -539,10 +539,7 @@ void Sys_ErrorDialog( const char *error )
 	}
 
 	while( ( size = CON_LogRead( buffer, sizeof( buffer ) ) ) > 0 )
-	{
 		FS_Write( buffer, size, f );
-		fputs( buffer, stderr );
-	}
 
 	FS_FCloseFile( f );
 }

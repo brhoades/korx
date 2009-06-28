@@ -259,7 +259,6 @@ void CON_Clear_f(void)
 CON_Shutdown
 
 Never exit without calling this, or your terminal will be left in a pretty bad state
-This will also spit out the whole log to the terminal, so that it can be seen even after we close
 ==================
 */
 void CON_Shutdown(void)
@@ -270,9 +269,6 @@ void CON_Shutdown(void)
 	}
 
 	endwin();
-
-	// Dump console to stderr
-	CON_Print_tty(logbuf);
 }
 
 /*
@@ -303,8 +299,8 @@ void CON_Init(void)
 	if (!curses_on) {
 		SCREEN *test = newterm(NULL, stdout, stdin);
 		if (!test) {
-			CON_Init_tty();
 			CON_Print_tty("Couldn't initialize curses, falling back to tty\n");
+			CON_Init_tty();
 			return;
 		}
 		endwin();

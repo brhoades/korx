@@ -355,7 +355,7 @@ static void Svcmd_TeamMessage_f( void )
     return;
   }
 
-  G_TeamCommand( team, va( "tchat \"console: %s\"", ConcatArgs( 2 ) ) );
+  G_TeamCommand( team, va( "tchat \"console: ^5%s\"", ConcatArgs( 2 ) ) );
 }
 
 static void Svcmd_SendMessage( void )
@@ -369,7 +369,7 @@ static void Svcmd_SendMessage( void )
     return;
   }
 
-  trap_SendServerCommand( -1, va( "chat \"console: %s\"", ConcatArgs( 1 ) ) );
+  trap_SendServerCommand( -1, va( "chat \"console: ^2%s\"", ConcatArgs( 1 ) ) );
 }
 
 static void Svcmd_CenterPrint_f( void )
@@ -509,6 +509,7 @@ struct
   { "dumpuser", qfalse, Svcmd_DumpUser_f },
   { "admitDefeat", qfalse, Svcmd_AdmitDefeat_f },
   { "evacuation", qfalse, Svcmd_Evacuation_f },
+  { "printqueue", qfalse, Svcmd_PrintQueue_f },
   // don't handle communication commands unless dedicated
   { "say_team", qtrue, Svcmd_TeamMessage_f },
   { "say", qtrue, Svcmd_SendMessage },

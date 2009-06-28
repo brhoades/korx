@@ -1734,7 +1734,7 @@ CL_Rcon_f
 void CL_Rcon_f( void ) {
 	char	message[MAX_RCON_MESSAGE];
 	netadr_t	to;
-  
+
 	if ( Cmd_Argc() < 2 ) {
 		Com_Printf ("Usage: rcon <command>\n");
 		return;
@@ -2096,10 +2096,17 @@ void CL_NextDownload(void) {
 	// We are looking to start a download here
 	if (*clc.downloadList) {
 
+	// Don't show a download prompt for tty clients
+#ifdef BUILD_TTY_CLIENT
+		if( cl_allowDownload->integer & DLF_ENABLE )
+			Cvar_Set( "cl_downloadPrompt", va( "%d", DLP_CURL|DLP_UDP ) );
+		else
+			Cvar_Set( "cl_downloadPrompt", va( "%d", DLP_IGNORE ) );
+#endif
+
 		// Prompt if we do not allow automatic downloads
 		prompt = cl_downloadPrompt->integer;
-		if( !( prompt & DLP_TYPE_MASK ) &&
-		    cl_showdlPrompt->integer ) {
+		if( !( prompt & DLP_TYPE_MASK ) && cl_showdlPrompt->integer ) {
 		    char files[ MAX_INFO_STRING ], *name, *head, *pure_msg,
 		         *url_msg = "";
 		    int i = 0, others = 0, swap = 0, max_list = 12;
@@ -2852,9 +2859,9 @@ void CL_Frame ( int msec ) {
 	else if( cl_downloadPrompt->integer & DLP_SHOW ) {
 		if( cl_downloadPrompt->integer & DLP_STALE ) {
 			Com_Printf( "WARNING: UI VM does not support download prompt\n" );
-			if( cl_allowDownload->integer & DLF_ENABLE ) {
+			if( cl_allowDownload->integer & DLF_ENABLE )
 				Cvar_Set( "cl_downloadPrompt", va( "%d", DLP_CURL|DLP_UDP ) );
-			} else
+			else
 				Cvar_Set( "cl_downloadPrompt", va( "%d", DLP_IGNORE ) );
 			CL_NextDownload( );
 		} else
@@ -3229,7 +3236,6 @@ video [filename]
 */
 void CL_Video_f( void )
 {
-#ifndef BUILD_TTY_CLIENT
   char  filename[ MAX_OSPATH ];
   int   i, last;
 
@@ -3276,7 +3282,6 @@ void CL_Video_f( void )
   }
 
   CL_OpenAVIForWriting( filename );
-#endif
 }
 
 /*
@@ -3709,7 +3714,7 @@ void CL_ServerInfoPacket( netadr_t from, msg_t *msg ) {
 		if ( cl_pinglist[i].adr.port && !cl_pinglist[i].time && NET_CompareAdr( from, cl_pinglist[i].adr ) )
 		{
 			// calc ping time
-			cl_pinglist[i].time = realmsec - cl_pinglist[i].start + 1;
+			cl_pinglist[i].time = realmsec - cl_pinglist[i].start;
 			Com_DPrintf( "ping time %dms from %s\n", cl_pinglist[i].time, NET_AdrToString( from ) );
 
 			// save of info
@@ -4366,7 +4371,7 @@ qboolean CL_UpdateVisiblePings_f(int source) {
 							}
 						}
 						memcpy(&cl_pinglist[j].adr, &server[i].adr, sizeof(netadr_t));
-						cl_pinglist[j].start = cls.realtime;
+						cl_pinglist[j].start = Sys_Milliseconds();
 						cl_pinglist[j].time = 0;
 						NET_OutOfBandPrint( NS_CLIENT, cl_pinglist[j].adr, "getinfo xxx" );
 						slots++;

@@ -974,7 +974,13 @@ int G_GetSpawnQueueLength( spawnQueue_t *sq )
 {
   int length = sq->back - sq->front + 1;
 
-  return length % MAX_CLIENTS;
+  while( length < 0 )
+    length += MAX_CLIENTS;
+
+  while( length >= MAX_CLIENTS )
+    length -= MAX_CLIENTS;
+
+  return length;
 }
 
 /*
@@ -2775,6 +2781,7 @@ void CheckVote( void )
     else if( !Q_stricmpn( level.voteString, "map", 3 ) )
       G_admin_maplog_result( "m" );
 
+
     if( !Q_stricmp( level.voteString, "suddendeath" ) )
     {
       level.suddenDeathTime = level.time + ( 1000 * g_suddenDeathVoteDelay.integer ) - level.startTime;
@@ -2812,7 +2819,9 @@ void CheckVote( void )
 
     if( !Q_stricmp( level.voteString, "map_restart" ) ||
         !Q_stricmpn( level.voteString, "map", 3 ) )
+    {
       level.restarted = qtrue;
+    }
   }
 
   if( !level.voteTime )
@@ -2843,7 +2852,7 @@ void CheckVote( void )
       trap_SendServerCommand( -1, va("print \"^1Vote Failed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
     }
   }
-  else if( Q_stricmpn( level.voteDisplayString, "[Poll]", 6 ) )
+  else
   {
      if( level.voteYes > ( level.numVotingClients * votePassThreshold/100 ) && voteYesPercent > votePassThreshold )
     {   
@@ -2862,9 +2871,6 @@ void CheckVote( void )
       return;
     }
   }
-  else
-    return;
-    //Still waiting for a majority
 
   level.voteTime = 0;
   trap_SetConfigstring( CS_VOTE_TIME, "" );

@@ -88,7 +88,7 @@
       model_angle 180
       //model_rotation 1
       //model_axis 1 1 1
-      //model_animplay 0 29 10
+      model_animplay 0 29 10
       visible 1
       decoration
     }

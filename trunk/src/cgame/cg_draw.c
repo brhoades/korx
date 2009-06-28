@@ -339,15 +339,16 @@ static void CG_DrawPlayerCreditsValue( rectDef_t *rect, vec4_t color, qboolean p
     trap_R_SetColor( NULL );
   }
 }
-
+qboolean flipAttackFeedback = qfalse;
 static void CG_DrawAttackFeedback( rectDef_t *rect )
 {
-        qboolean flipAttackFeedback = qfalse;
+        static qboolean flipAttackFeedback = qfalse;
         int frame = cg.feedbackAnimation;
         qhandle_t shader;
         vec4_t hit_color = { 1, 0, 0, 0.5 };
         vec4_t miss_color = { 0.3, 0.3, 0.3, 0.5 };
         vec4_t teamhit_color = { 0.39, 0.80, 0.00, 0.5 };
+
 
         if ( frame == 1 )
         {
@@ -708,7 +709,7 @@ static void CG_DrawStack( rectDef_t *rect, vec4_t color, float fill,
   float each;
   int   ival;
   float frac;
-  float nudge = 0;
+  float nudge=0;
   float fmax = max; // otherwise we'd be (float) casting everywhere
 
   if( val <= 0 || max <= 0 )
