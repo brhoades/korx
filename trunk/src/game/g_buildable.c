@@ -1537,9 +1537,13 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
 
   if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
     return;
-
-  client->ps.stats[ STAT_STATE ] |= SS_BOOSTED;
-  client->boostedTime = level.time;
+  
+  //Only allow boostage once every 10 seconds
+  if( client->boostedTime + 10*1000 < level.time )
+  {
+    client->ps.stats[ STAT_STATE ] |= SS_BOOSTED;
+    client->boostedTime = level.time;
+  }
 }
 
 
@@ -2063,7 +2067,7 @@ void HMedistat_Think( gentity_t *self )
       {
         self->enemy->health =  self->enemy->client->ps.stats[ STAT_MAX_HEALTH ];
         if( !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
-        BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
+          BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
       }
     }
   }
