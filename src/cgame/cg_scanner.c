@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 static entityPos_t entityPositions;
 
-#define HUMAN_SCANNER_UPDATE_PERIOD 700
+#define HUMAN_SCANNER_UPDATE_PERIOD 100
 
 /*
 =============
@@ -225,8 +225,8 @@ void CG_AlienSense( rectDef_t *rect )
   int     i;
   vec3_t  origin;
   vec3_t  relOrigin;
-  vec4_t  buildable = { 1.0f, 0.0f, 0.0f, 0.7f };
-  vec4_t  client    = { 0.0f, 0.0f, 1.0f, 0.7f };
+  vec4_t  buildable = { 0.0f, 0.8f, 1.0f, 0.7f };
+  vec4_t  client    = { 0.0f, 1.0f, 0.0f, 0.7f };
 
   VectorCopy( entityPositions.origin, origin );
 
@@ -261,55 +261,25 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
   int     i;
   vec3_t  origin;
   vec3_t  relOrigin;
-  vec4_t  hIabove;
-  vec4_t  hIbelow;
-  vec4_t  aIabove = { 1.0f, 0.0f, 0.0f, 0.75f };
-  vec4_t  aIbelow = { 1.0f, 0.0f, 0.0f, 0.5f };
-
-  Vector4Copy( color, hIabove );
-  hIabove[ 3 ] *= 1.5f;
-  Vector4Copy( color, hIbelow );
+  vec4_t  enemyStructure = { 0.0f, 0.8f, 1.0f, 0.75f };
+  vec4_t  enemyPlayer = { 0.0f, 1.0f, 0.0f, 0.5f };
 
   VectorCopy( entityPositions.origin, origin );
 
-  //draw human buildables below scanner plane
-  for( i = 0; i < entityPositions.numHumanBuildables; i++ )
-  {
-    VectorClear( relOrigin );
-    VectorSubtract( entityPositions.humanBuildablePos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
-      CG_DrawBlips( rect, relOrigin, hIbelow );
-  }
-
-  //draw alien buildables below scanner plane
+  // draw alien structures
   for( i = 0; i < entityPositions.numAlienBuildables; i++ )
   {
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.alienBuildablePos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
-      CG_DrawBlips( rect, relOrigin, aIbelow );
+    CG_DrawBlips( rect, relOrigin, enemyStructure );
   }
 
-  //draw human clients below scanner plane
-  for( i = 0; i < entityPositions.numHumanClients; i++ )
-  {
-    VectorClear( relOrigin );
-    VectorSubtract( entityPositions.humanClientPos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
-      CG_DrawBlips( rect, relOrigin, hIbelow );
-  }
-
-  //draw alien buildables below scanner plane
+  // draw alien players
   for( i = 0; i < entityPositions.numAlienClients; i++ )
   {
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.alienClientPos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
-      CG_DrawBlips( rect, relOrigin, aIbelow );
+    CG_DrawBlips( rect, relOrigin, enemyPlayer );
   }
 
   if( !cg_disableScannerPlane.integer )
@@ -317,45 +287,5 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     trap_R_SetColor( color );
     CG_DrawPic( rect->x, rect->y, rect->w, rect->h, shader );
     trap_R_SetColor( NULL );
-  }
-
-  //draw human buildables above scanner plane
-  for( i = 0; i < entityPositions.numHumanBuildables; i++ )
-  {
-    VectorClear( relOrigin );
-    VectorSubtract( entityPositions.humanBuildablePos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
-      CG_DrawBlips( rect, relOrigin, hIabove );
-  }
-
-  //draw alien buildables above scanner plane
-  for( i = 0; i < entityPositions.numAlienBuildables; i++ )
-  {
-    VectorClear( relOrigin );
-    VectorSubtract( entityPositions.alienBuildablePos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
-      CG_DrawBlips( rect, relOrigin, aIabove );
-  }
-
-  //draw human clients above scanner plane
-  for( i = 0; i < entityPositions.numHumanClients; i++ )
-  {
-    VectorClear( relOrigin );
-    VectorSubtract( entityPositions.humanClientPos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
-      CG_DrawBlips( rect, relOrigin, hIabove );
-  }
-
-  //draw alien clients above scanner plane
-  for( i = 0; i < entityPositions.numAlienClients; i++ )
-  {
-    VectorClear( relOrigin );
-    VectorSubtract( entityPositions.alienClientPos[ i ], origin, relOrigin );
-
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
-      CG_DrawBlips( rect, relOrigin, aIabove );
   }
 }
