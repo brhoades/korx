@@ -993,11 +993,11 @@ void ClientTimerActions( gentity_t *ent, int msec )
     //calculate resistance to infection ('aids')
     ent->client->pers.aidresistance = 0;
     if( BG_InventoryContainsUpgrade( UP_REGEN, ent->client->ps.stats ) )
-      ent->client->pers.aidresistance = 75;
+      ent->client->pers.aidresistance += 75;
     if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, ent->client->ps.stats ) )
-      ent->client->pers.aidresistance += 20;
+      ent->client->pers.aidresistance += 23;
     if( BG_InventoryContainsUpgrade( UP_HELMET, ent->client->ps.stats ) )
-      ent->client->pers.aidresistance += 13;
+      ent->client->pers.aidresistance += 20;
 
     //infection - stay away from teh infected ones!!! :)
     if( client->infected && !OnSameTeam( client->infector , ent ) )
@@ -1006,7 +1006,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if( client->infectionTime + 20000 > level.time )
       {
         int i, num, entityList[ MAX_GENTITIES ];
-        vec3_t range = { 150, 150, 150 }, mins, maxs;
+        vec3_t range = { 75, 75, 75 }, mins, maxs;
         gentity_t *target;
 
         VectorAdd( ent->s.origin, range, maxs );
