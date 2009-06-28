@@ -1648,7 +1648,7 @@ void Cmd_CallVote_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, "print \"callvote: You forgot to specify what people should vote on.\n\"" );
       return;
     }
-    Com_sprintf( level.voteString, sizeof( level.voteString ), nullstring);
+    Com_sprintf( level.voteString, sizeof( level.voteString ), nullstring );
     Com_sprintf( level.voteDisplayString,
         sizeof( level.voteDisplayString ), "[Poll] \'%s\'", arg2plus );
   }

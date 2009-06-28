@@ -2812,9 +2812,7 @@ void CheckVote( void )
 
     if( !Q_stricmp( level.voteString, "map_restart" ) ||
         !Q_stricmpn( level.voteString, "map", 3 ) )
-    {
       level.restarted = qtrue;
-    }
   }
 
   if( !level.voteTime )
@@ -2864,6 +2862,9 @@ void CheckVote( void )
       return;
     }
   }
+  else
+    return;
+    //Still waiting for a majority
 
   level.voteTime = 0;
   trap_SetConfigstring( CS_VOTE_TIME, "" );
