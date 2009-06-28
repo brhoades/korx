@@ -187,7 +187,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ALIEN_REGEN_DAMAGE_TIME     1500 //msec since damage that regen starts again
-#define ALIEN_REGEN_TIME            25000 //msec that it takes for an alien to heal all the way
+#define ALIEN_REGEN_TIME            50000 //msec that it takes for an alien to heal all the way
 #define ARMSEC(h)                   ((int)((float)ALIEN_REGEN_TIME/h))
 
 #define ABUILDER_SPEED              0.9f
