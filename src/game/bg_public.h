@@ -365,7 +365,6 @@ typedef enum
    AFEEDBACK_HIT,
    AFEEDBACK_MISS,
    AFEEDBACK_TEAMHIT,
-   
    AFEEDBACK_RANGED_HIT,
    AFEEDBACK_RANGED_MISS,
    AFEEDBACK_RANGED_TEAMHIT,
@@ -569,11 +568,11 @@ typedef enum
   EV_ALIEN_HIT,       // Alien attack feedback hit enemy
   EV_ALIEN_MISS,      // Alien attack feedback miss enemy
   EV_ALIEN_TEAMHIT,   // Alien attack feedback hit teammate
-  
+
   EV_ALIENRANGED_HIT,       // Alien ranged attack feedback hit enemy
   EV_ALIENRANGED_MISS,      // Alien ranged attack feedback miss enemy
   EV_ALIENRANGED_TEAMHIT,   // Alien ranged attack feedback hit teammate
-
+  
   EV_LEV2_ZAP
 } entity_event_t;
 
@@ -957,7 +956,7 @@ typedef struct
 
   int       health;
   float     fallDamage;
-  float     regenRate;
+  int       regenRate;
   int       regenRateMsec;
 
   int       abilities;

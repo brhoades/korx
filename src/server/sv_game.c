@@ -31,12 +31,6 @@ typedef enum {
 } syscallVersion_t;
 syscallVersion_t syscallVersion;
 
-typedef enum {
-	SYSCALL_UNKNOWN,
-	SYSCALL_OLD,
-	SYSCALL_NEW
-} syscallVersion_t;
-
 void SV_GameError( const char *string ) {
 	Com_Error( ERR_DROP, "%s", string );
 }
@@ -313,12 +307,9 @@ The module is making a system call
 ====================
 */
 intptr_t SV_GameSystemCalls( intptr_t *args ) {
-	static syscallVersion_t syscallVersion;
-	static int serverId = -1;
-
 	if ( syscallVersion == SYSCALL_OLD ) {
 		if ( args[0] >= 36 && args[0] <= 38 )
-		args[0] -= 2;
+			args[0] -= 2;
 		else if ( args[0] >= 41 && args[0] <= 46 )
 			args[0] -= 4;
 	}
@@ -446,15 +437,12 @@ intptr_t SV_GameSystemCalls( intptr_t *args ) {
 		}
 
 	case G_REAL_TIME:
-		if ( serverId != sv.serverId && syscallVersion == SYSCALL_UNKNOWN && args[2] == 1024 ) {
+		if ( syscallVersion == SYSCALL_UNKNOWN && args[2] == 1024 ) {
 			syscallVersion = SYSCALL_OLD;
-			serverId = sv.serverId;
 			return SV_GameSystemCalls( args );
-		} else {
+		} else
 			syscallVersion = SYSCALL_NEW;
-			serverId = sv.serverId;
-			return Com_RealTime( VMA(1) );
-		}
+		return Com_RealTime( VMA(1) );
 	case G_SNAPVECTOR:
 		Sys_SnapVector( VMA(1) );
 		return 0;

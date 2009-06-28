@@ -569,17 +569,14 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   gentity_t *bolt;
   float charge;
 
-  int thinkTime = (int) ( 10000 * ( 1.0f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
+  int thinkTime = (int) ( 5000 * ( 1.5f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
 
   VectorNormalize( dir );
 
   bolt = G_Spawn( );
-  bolt->classname = "xael";
+  bolt->classname = "xeal";
 
-  if( damage == XAEL_DAMAGE )
-    bolt->nextthink = level.time;
-  else
-    bolt->nextthink = level.time + thinkTime;
+  bolt->nextthink = level.time + thinkTime;
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;

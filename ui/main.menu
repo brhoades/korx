@@ -58,7 +58,7 @@ aspectBias ASPECT_NONE
       model_angle 180
       model_rotation 1
       //model_axis 1 1 1
-      //model_animplay 0 29 10
+      model_animplay 0 29 10
       visible 1
       decoration
     }
@@ -144,7 +144,7 @@ aspectBias ASPECT_NONE
     itemDef
     {
       name copyright
-      text "KoRx (Tremx-KoR) (C) 2007-2009 KnightsofReason.net"
+      text "KoRx (Tremx-KoR) (C) 2007-2009 KnightsofReason.org"
       style WINDOW_STYLE_EMPTY
       textstyle ITEM_TEXTSTYLE_NORMAL
       textscale .25

@@ -721,6 +721,7 @@ void CG_PrecacheClientInfo( class_t class, char *model, char *skin )
   CG_LoadClientInfo( ci );
 }
 
+
 /*
 =============
 CG_TeamJoinMessage
@@ -817,20 +818,6 @@ void CG_NewClientInfo( int clientNum )
   v = Info_ValueForKey( configstring, "t" );
   newInfo.team = atoi( v );
   CG_TeamJoinMessage( &newInfo, ci );
-
-  // if this is us, execute team-specific config files
-  // unfortunately, these get re-executed after a vid_restart, because the
-  // cgame can't tell the difference between that and joining a new server
-  if( clientNum == cg.clientNum &&
-    ( !ci->infoValid || ci->team != newInfo.team ) )
-  {
-    char config[ MAX_STRING_CHARS ];
-    trap_Cvar_VariableStringBuffer( va( "cg_%sConfig",
-                                        BG_TeamName( newInfo.team ) ),
-                                    config, sizeof( config ) );
-    if( config[ 0 ] )
-      trap_SendConsoleCommand( va( "exec %s\n", config ) );
-  }
 
   // if this is us, execute team-specific config files
   // unfortunately, these get re-executed after a vid_restart, because the

@@ -76,9 +76,6 @@ int openMenuCount = 0;
 #define DOUBLE_CLICK_DELAY 300
 static int lastListBoxClickTime = 0;
 
-static char screenshots[ 1024 ][ MAX_QPATH ];
-static int current_screen = 0, maxscreens = 0;
-
 void Item_RunScript( itemDef_t *item, const char *s );
 void Item_SetupKeywordHash( void );
 void Menu_SetupKeywordHash( void );
@@ -88,6 +85,7 @@ itemDef_t *Menu_SetPrevCursorItem( menuDef_t *menu );
 itemDef_t *Menu_SetNextCursorItem( menuDef_t *menu );
 static qboolean Menu_OverActiveItem( menuDef_t *menu, float x, float y );
 
+void trap_R_AddLightToScene( const vec3_t org, float intensity, float r, float g, float b );
 /*
 ===============
 UI_InstallCaptureFunc
@@ -1890,82 +1888,6 @@ void Script_playLooped( itemDef_t *item, char **args )
   }
 }
 
-void Script_ScreenChange( itemDef_t *item, char **args )
-{
-  static int saved_index = 0;
-  const char *string;
-  int i, modifier;
-  char buffer[ 8192 ];
-
-  // Reload the screenshots list
-  maxscreens = DC->getFileList( "screenshots", ".jpg", buffer, sizeof( buffer ));
-  if ( maxscreens > 1024 )
-    maxscreens = 1024;
-  string = buffer;
-  for (i = 0; i < maxscreens; i++)
-  {
-    Q_strncpyz( screenshots[ i ], string, sizeof( screenshots[ i ] ) );
-    string += strlen( string ) + 1;
-  }
-
-  // Also load TGAs
-  maxscreens += DC->getFileList( "screenshots", ".tga", buffer, sizeof( buffer ));
-  if ( maxscreens > 1024 )
-    maxscreens = 1024;
-  DC->setCVar( "ui_screens", va( "%i", maxscreens ) );
-  string = buffer;
-  for (; i < maxscreens; i++)
-  {
-    Q_strncpyz( screenshots[ i ], string, sizeof( screenshots[ i ] ) );
-    string += strlen( string ) + 1;
-  }
-
-  // Sort the list
-  qsort(screenshots, maxscreens, MAX_QPATH, (int(*)(const void *, const void *))strcmp);
-
-  // Get the modifier & find the screen index
-  if( String_Parse( args, &string ) )
-  {
-    if( string[0] == '+' )
-    {
-      if( Int_Parse( args, &modifier ) )
-        current_screen += modifier;
-    }
-    else if( string[0] == '-' )
-    {
-      if( Int_Parse( args, &modifier ) )
-        current_screen -= modifier;
-    }
-    else if( string[0] == '=' )
-    {
-      if( Int_Parse( args, &modifier ) )
-        current_screen = modifier;
-    }
-    // Hack for saving the index when switching from multiview to detail view
-    else if( string[0] == '?' )
-      saved_index = current_screen;
-    else if( string[0] == '!' )
-      current_screen = saved_index;
-  }
-
-  // We don't want it to go below 0 or above the max number of screens
-  if( current_screen >= maxscreens )
-  {
-    current_screen -= modifier;
-    if( current_screen >= maxscreens )
-      current_screen = maxscreens - 1;
-  }
-  else if( current_screen < 0 )
-  {
-    current_screen += modifier;
-    if( current_screen < 0 )
-      current_screen = 0;
-  }
-
-  DC->setCVar( "ui_screen", va( "%i", current_screen ) );
-  DC->setCVar( "ui_screenname", screenshots[ current_screen ] );
-}
-
 static qboolean UI_Text_Emoticon( const char *s, qboolean *escaped,
                                   int *length, qhandle_t *h, int *width )
 {
@@ -2628,7 +2550,6 @@ commandDef_t commandList[] =
     {"play", &Script_Play},           // group/name
     {"playlooped", &Script_playLooped},           // group/name
     {"orbit", &Script_Orbit},                      // group/name
-    {"screenchange", &Script_ScreenChange}        // modifier
   };
 
 int scriptCommandCount = sizeof( commandList ) / sizeof( commandDef_t );
@@ -4473,7 +4394,7 @@ void Menu_HandleKey( menuDef_t *menu, int key, qboolean down )
   switch( key )
   {
     case K_F11:
-      DC->executeText( EXEC_APPEND, "screenshot\n" );
+      DC->executeText( EXEC_APPEND, "screenshotJPEG\n" );
       break;
 
     case K_KP_UPARROW:
@@ -5734,19 +5655,6 @@ void AdjustFrom640( float *x, float *y, float *w, float *h )
   *h *= DC->yscale;
 }
 
-void Item_Screen_Paint( itemDef_t *item )
-{
-  int shotNumber;
-
-  shotNumber = current_screen + item->modifier;
-
-  if ( shotNumber < 0 || shotNumber >= maxscreens )
-    return;
-
-  DC->drawHandlePic( item->window.rect.x, item->window.rect.y, item->window.rect.w, item->window.rect.h,
-      	             DC->registerShaderNoMip( va( "screenshots/%s", screenshots[ shotNumber ] ) ) );
-}
-
 void Item_Model_Paint( itemDef_t *item )
 {
   float x, y, w, h;
@@ -5757,8 +5665,8 @@ void Item_Model_Paint( itemDef_t *item )
   modelDef_t *modelPtr = ( modelDef_t* )item->typeData;
 
   qhandle_t hModel;
-  //int backLerpWhole;
-  //vec3_t axis[3];
+  int backLerpWhole;
+//  vec3_t axis[3];
 
   if( modelPtr == NULL )
     return;
@@ -5840,16 +5748,65 @@ void Item_Model_Paint( itemDef_t *item )
     }
   }
 
-  VectorSet( angles, 0, modelPtr->angle, 0 );
-  AnglesToAxis( angles, ent.axis );
+  if(VectorLengthSquared(modelPtr->axis))
+  {
+    VectorNormalize(modelPtr->axis);
+    angles[0] = AngleNormalize360(modelPtr->axis[0]*modelPtr->angle);
+    angles[1] = AngleNormalize360(modelPtr->axis[1]*modelPtr->angle);
+    angles[2] = AngleNormalize360(modelPtr->axis[2]*modelPtr->angle);
+    AnglesToAxis( angles, ent.axis );
+  }
+  else
+  {
+    VectorSet( angles, 0, modelPtr->angle, 0 );
+    AnglesToAxis( angles, ent.axis );
+  }
 
-  ent.hModel = item->asset;
+  ent.hModel = hModel;
+
+
+  if(modelPtr->frameTime)	// don't advance on the first frame
+    modelPtr->backlerp+=( ((DC->realTime - modelPtr->frameTime)/1000.0f) * (float)modelPtr->fps );
+
+  if(modelPtr->backlerp > 1)
+  {
+    backLerpWhole = floor(modelPtr->backlerp);
+
+    modelPtr->frame+=(backLerpWhole);
+    if((modelPtr->frame - modelPtr->startframe) > modelPtr->numframes)
+      modelPtr->frame = modelPtr->startframe + modelPtr->frame % modelPtr->numframes;	// todo: ignoring loopframes
+
+    modelPtr->oldframe+=(backLerpWhole);
+    if((modelPtr->oldframe - modelPtr->startframe) > modelPtr->numframes)
+      modelPtr->oldframe = modelPtr->startframe + modelPtr->oldframe % modelPtr->numframes;	// todo: ignoring loopframes
+
+    modelPtr->backlerp = modelPtr->backlerp - backLerpWhole;
+  }
+
+  modelPtr->frameTime = DC->realTime;
+
+  ent.frame		= modelPtr->frame;
+  ent.oldframe	= modelPtr->oldframe;
+  ent.backlerp	= 1.0f - modelPtr->backlerp;
+
   VectorCopy( origin, ent.origin );
   VectorCopy( origin, ent.lightingOrigin );
   ent.renderfx = RF_LIGHTING_ORIGIN | RF_NOSHADOW;
   VectorCopy( ent.origin, ent.oldorigin );
 
   DC->addRefEntityToScene( &ent );
+
+  // add an accent light
+  origin[0] -= 100;	// + = behind, - = in front
+  origin[1] += 100;	// + = left, - = right
+  origin[2] += 100;	// + = above, - = below
+  trap_R_AddLightToScene( origin, 500, 1.0, 1.0, 1.0 );
+
+  origin[0] -= 100;
+  origin[1] -= 100;
+  origin[2] -= 100;
+  trap_R_AddLightToScene( origin, 500, 1.0, 0.0, 0.0 );
+
   DC->renderScene( &refdef );
 
 }
@@ -6463,10 +6420,6 @@ void Item_Paint( itemDef_t *item )
       Item_Slider_Paint( item );
       break;
 
-    case ITEM_TYPE_SCREEN:
-      Item_Screen_Paint( item );
-      break;
-
     default:
       break;
   }
@@ -7024,6 +6977,38 @@ qboolean ItemParse_model_angle( itemDef_t *item, int handle )
   return qtrue;
 }
 
+// model_axis <number> <number> <number> //:://
+qboolean ItemParse_model_axis( itemDef_t *item, int handle ) {
+  modelDef_t *modelPtr;
+  Item_ValidateTypeData(item);
+  modelPtr = (modelDef_t*)item->typeData;
+
+  if (!PC_Float_Parse(handle, &modelPtr->axis[0])) return qfalse;
+  if (!PC_Float_Parse(handle, &modelPtr->axis[1])) return qfalse;
+  if (!PC_Float_Parse(handle, &modelPtr->axis[2])) return qfalse;
+
+  return qtrue;
+}
+
+// model_animplay <int(startframe)> <int(numframes)> <int(fps)>
+qboolean ItemParse_model_animplay(itemDef_t *item, int handle ) {
+  modelDef_t *modelPtr;
+  Item_ValidateTypeData(item);
+  modelPtr = (modelDef_t*)item->typeData;
+
+  modelPtr->animated = 1;
+
+  if (!PC_Int_Parse(handle, &modelPtr->startframe))	return qfalse;
+  if (!PC_Int_Parse(handle, &modelPtr->numframes))	return qfalse;
+  if (!PC_Int_Parse(handle, &modelPtr->fps))			return qfalse;
+
+  modelPtr->frame		= modelPtr->startframe + 1;
+  modelPtr->oldframe	= modelPtr->startframe;
+  modelPtr->backlerp	= 0.0f;
+  modelPtr->frameTime = DC->realTime;
+  return qtrue;
+}
+
 // rect <rectangle>
 qboolean ItemParse_rect( itemDef_t *item, int handle )
 {
@@ -7469,14 +7454,6 @@ qboolean ItemParse_special( itemDef_t *item, int handle )
   return qtrue;
 }
 
-qboolean ItemParse_modifier( itemDef_t *item, int handle )
-{
-  if( !PC_Int_Parse( handle, &item->modifier ) )
-    return qfalse;
-
-  return qtrue;
-}
-
 qboolean ItemParse_cvarTest( itemDef_t *item, int handle )
 {
   if( !PC_String_Parse( handle, &item->cvarTest ) )
@@ -7785,6 +7762,8 @@ keywordHash_t itemParseKeywords[] = {
   {"model_fovy", ItemParse_model_fovy, NULL},
   {"model_rotation", ItemParse_model_rotation, NULL},
   {"model_angle", ItemParse_model_angle, NULL},
+  {"model_axis", ItemParse_model_axis, NULL},
+  {"model_animplay", ItemParse_model_animplay, NULL},
   {"rect", ItemParse_rect, NULL},
   {"aspectBias", ItemParse_aspectBias, NULL},
   {"style", ItemParse_style, NULL},
@@ -7824,7 +7803,6 @@ keywordHash_t itemParseKeywords[] = {
   {"onTextEntry", ItemParse_onTextEntry, NULL},
   {"action", ItemParse_action, NULL},
   {"special", ItemParse_special, NULL},
-  {"modifier", ItemParse_modifier, NULL},
   {"cvar", ItemParse_cvar, NULL},
   {"maxChars", ItemParse_maxChars, NULL},
   {"maxPaintChars", ItemParse_maxPaintChars, NULL},

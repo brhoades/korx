@@ -166,7 +166,7 @@ void QDECL Com_Printf( const char *fmt, ... ) {
 		return;
 	}
 
-#if !DEDICATED && !BUILD_TTY_CLIENT
+#ifndef DEDICATED
 	CL_ConsolePrint( msg );
 #endif
 
@@ -1509,11 +1509,7 @@ void Com_InitHunkMemory( void ) {
 	cv = Cvar_Get( "com_hunkMegs", DEF_COMHUNKMEGS_S, CVAR_LATCH | CVAR_ARCHIVE );
 
 	// if we are not dedicated min allocation is 56, otherwise min is 1
-#if DEDICATED || BUILD_TTY_CLIENT
-	if (1) {
-#else
 	if (com_dedicated && com_dedicated->integer) {
-#endif
 		nMinAlloc = MIN_DEDICATED_COMHUNKMEGS;
 		pMsg = "Minimum com_hunkMegs for a dedicated server is %i, allocating %i megs.\n";
 	}
@@ -3104,22 +3100,6 @@ Field_CompleteAlias
 ===============
 */
 void Field_CompleteAlias( void )
-{
-	matchCount = 0;
-	shortestMatch[ 0 ] = 0;
-
-	Cmd_AliasCompletion( FindMatches );
-
-	if( !Field_Complete( ) )
-		Cmd_AliasCompletion( PrintMatches );
-}
-
-/*
-===============
-Field_CompleteDelay
-===============
-*/
-void Field_CompleteDelay( void )
 {
 	matchCount = 0;
 	shortestMatch[ 0 ] = 0;
