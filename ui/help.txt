@@ -197,20 +197,20 @@
   }
   "Emoticons: Groups"
   {
+    "Only use if you are in this group:\n"
     "[kor][[kor]\n"
     "[rk][[rk]\n"
     "[mg][[mg]\n"
     "[soh][[soh]\n"
+    "[korn][[korn]\n"
     "\n"
-    "More KoR:\n"
-    "[kor1][[kor1]\n"
-    "[kor2][[kor2]\n"
-    "[kor3][[kor3]\n"
+    "More KoR / KoR Developers/Contributors ONLY please:\n"
+    "[kor1][[kor1] / [korx1][[korx1]\n"
+    "[kor2][[kor2] / [korx2][[korx2]\n"
+    "[kor3][[kor3] / [korx3][[korx3]\n"
     "\n"
-    "KoR Developers/Contributors ONLY please:\n"
-    "[korx1][[korx1]\n"
-    "[korx2][[korx2]\n"
-    "[korx3][[korx3]\n"
+    "Misc / Free to use:\n"
+    "[ah][[ah] (Aaron Haters)\n"
   }
   "Emoticons: Aliens"
   {
@@ -271,7 +271,7 @@
     "[booster][[booster]\n"
     "[hive][[hive]\n"
     "[hovel][[hovel]\n"
-    "[trapper][[trapper]\n"
+    "[trapper][[trapper]/[ftrapper][[ftrapper]\n"
   }
   "Emoticons: Miscellaneous"
   {
