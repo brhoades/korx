@@ -5666,7 +5666,7 @@ void Item_Model_Paint( itemDef_t *item )
 
   qhandle_t hModel;
   int backLerpWhole;
-//  vec3_t axis[3];
+  //vec3_t axis[3];
 
   if( modelPtr == NULL )
     return;
