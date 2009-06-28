@@ -4519,7 +4519,7 @@ void Cmd_Donate_f( gentity_t *ent )
   }
   
   //take away what we've used minus any left over
-  G_AddCreditToClient( ent->client, total-value, qtrue );
+  G_AddCreditToClient( ent->client, -(total-value), qtrue );
   
   //tell the donator
   trap_SendServerCommand( ent-g_entities,
