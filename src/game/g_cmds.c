@@ -4393,7 +4393,7 @@ void Cmd_Donate_f( gentity_t *ent )
   char s[ MAX_TOKEN_CHARS ] = "", *type = "evo(s)";
   int i, value, divisor, portion, total=0,
     max, minportion=1;
-  qboolean donated = qtrue, once=qfalse;
+  qboolean donated = qfalse, once=qfalse;
   gentity_t *thisclient;
 
   if( !ent->client ) return;
