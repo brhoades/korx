@@ -2830,7 +2830,7 @@ void CheckVote( void )
    voteYesPercent = 0; 
     
   
-  if( level.time - level.voteTime >= VOTE_TIME || ( level.voteYes + level.voteNo >= level.numAlienClients + level.numHumanClients ) )
+  if( level.time - level.voteTime >= VOTE_TIME || ( level.voteYes + level.voteNo >= level.numVotingClients ) )
   {
     if( voteYesPercent > votePassThreshold )
     {   
