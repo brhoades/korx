@@ -4461,7 +4461,7 @@ void Cmd_Donate_f( gentity_t *ent )
 
   total = value;
   
-  while( !donated )
+  while( donated == qfalse )
   {
     //loops so that if we have spares we keep donating
     
