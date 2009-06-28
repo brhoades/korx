@@ -4423,10 +4423,14 @@ void Cmd_Donate_f( gentity_t *ent )
   {
     minportion = ALIEN_CREDITS_PER_FRAG;
     divisor = level.numAlienClients-1;
+    portion = value/divisor;
+    if( portion < minportion )
+      portion = minportion;
     max = ALIEN_MAX_CREDITS;
   }
   else if( ent->client->pers.teamSelection == TEAM_HUMANS ) {
     divisor = level.numHumanClients-1;
+    portion = value/divisor;
     max = HUMAN_MAX_CREDITS;
     type = "credit(s)";
   } 
