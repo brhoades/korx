@@ -179,13 +179,13 @@ g_admin_cmd_t g_admin_cmds[ ] =
     {"pause", G_admin_pause, "g",
       "buy some time, specifying m instead of a target mutes everyone "
       "without immunity. Specifying a or h pauses that team only",
-      "(^5name|slot^7)|(m|a|h)"
+      "(^5name|slot|m|a|h^7)"
     },
 
     {"unpause", G_admin_pause, "g",
       "carry on with the game, specifying m instead of a target unmutes everyone "
       " without immunity. Specifying a or h pauses that team only",
-      "(^5name|slot^7)|(m|a|h)"
+      "(^5name|slot|m|a|h^7)"
     },
 
     {"lock", G_admin_lock, "G",
@@ -4045,7 +4045,7 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
   }
   else if( G_SayArgc() > 2 + skiparg )
   {
-    ADMP( va( "^3!%s: ^7usage: ^3!%s ^7(^5name|slot^7)|(^5m|a|h^7)\n", cmd, cmd ) );
+    ADMP( va( "^3!%s: ^7usage: ^3!%s ^7(^5name|slot|m|a|h^7)\n", cmd, cmd ) );
     return qfalse;
   }
 
