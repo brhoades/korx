@@ -276,6 +276,9 @@
   "Emoticons: Miscellaneous"
   {
     "[heart][[heart]\n"
+    "[bheart][[bheart]\n"
     "[beer][[beer]\n"
+    "[nutella][[nutella]\n"
+    "[milk][[milk]\n"
   }
 }
