@@ -1867,9 +1867,14 @@ void HArmoury_Activate( gentity_t *self, gentity_t *other, gentity_t *activator 
 {
   if( self->spawned )
   {
+    int i;
     //only humans can activate this
     if( activator->client->ps.stats[ STAT_TEAM ] != TEAM_HUMANS )
       return;
+      
+    //zero all tk accounts
+    for( i = 0; i < MAX_CLIENTS; i++ )
+      activator->client->tkcredits[ i ] = 0;
 
     //if this is powered then call the armoury menu
     if( self->powered )
@@ -2052,6 +2057,7 @@ void HMedistat_Think( gentity_t *self )
     }
     else if( self->enemy && self->enemy->client ) //heal!
     {
+      int i;
       if( self->enemy->client->ps.stats[ STAT_STAMINA ] <  MAX_STAMINA )
         self->enemy->client->ps.stats[ STAT_STAMINA ] += STAMINA_MEDISTAT_RESTORE;
       if( self->enemy->client->ps.stats[ STAT_STAMINA ] > MAX_STAMINA )
@@ -2061,10 +2067,17 @@ void HMedistat_Think( gentity_t *self )
         self->enemy->client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
 
       self->enemy->health += 1;
-
+      
+      //take away some credits with with each HP healed
+      for( i = 0; i< MAX_CLIENTS; i++ )
+        self->enemy->client->tkcredits[ i ]--;
+        
       //if they're completely healed, give them a medkit
       if( self->enemy->health >= self->enemy->client->ps.stats[ STAT_MAX_HEALTH ] )
       {
+        //zero all tk accounts
+        for( i = 0; i < MAX_CLIENTS; i++ )
+          self->enemy->client->tkcredits[ i ] = 0;
         self->enemy->health =  self->enemy->client->ps.stats[ STAT_MAX_HEALTH ];
         if( !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
           BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );

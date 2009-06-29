@@ -616,6 +616,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
       {
         ent->health += 1;
         ent->nextRegenTime += client->healRate;
+        //take away one tk credit
+        for( i = 0; i < MAX_CLIENTS; i++ )
+          ent->client->tkcredits[ i ]--;
       }
       if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
       {
@@ -623,6 +626,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
         ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
         for( i = 0; i < MAX_CLIENTS; i++ )
           ent->credits[ i ] = 0;
+        //zero all tk accounts
+        for( i = 0; i < MAX_CLIENTS; i++ )
+          ent->client->tkcredits[ i ] = 0;
+
       }
     }
   }
@@ -652,6 +659,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
     {
       ent->health += 1;
       ent->nextRegenTime = level.time + 1000/regen;
+      //take away one tk credit
+      for( i = 0; i < MAX_CLIENTS; i++ )
+        ent->client->tkcredits[ i ]--;
     }
     
     if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
@@ -660,6 +670,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
       ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
       for( i = 0; i < MAX_CLIENTS; i++ )
         ent->credits[ i ] = 0;
+          //zero all tk accounts
+        for( i = 0; i < MAX_CLIENTS; i++ )
+          ent->client->tkcredits[ i ] = 0;
     }
   }
   
