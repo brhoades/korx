@@ -2662,7 +2662,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Lucifer Cannon",     //char      *humanName;
     "Blaster technology scaled up to deliver devastating power. "
       "Primary fire must be charged before firing. It has a quick "
-      "secondary attack that does not require charging. Surge increases damage"
+      "secondary attack that does not require charging. Surge increases damage "
       "by about 20 percent.",
     LCANNON_AMMO,         //int       maxAmmo;
     0,                    //int       maxClips;
@@ -2691,8 +2691,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     "An initial prototype of a second generation Lucifer Cannon. "
       "Similar damage to the lucifer cannon, but please note "
       "that this weapon's shots are very bouncy."
-      "Has a higher splash damage with its highly charged shots "
-      "have been reported to be slightly unstable. Surge increases damage by about 20 percent."
+      "Has a higher splash damage with its highly charged shots. "
+      "Surge increases damage by about 20 percent. "
       "USE AT YOUR OWN RISK.",
     XAEL_AMMO,            //int       maxAmmo;
     0,                    //int       maxClips;
