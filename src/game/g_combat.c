@@ -1522,9 +1522,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     //if boosted poison every attack
     if( attacker->client && attacker->client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
     {
-      if( mod != MOD_LEVEL2_ZAP && mod != MOD_POISON &&
-          mod != MOD_LEVEL1_PCLOUD && mod != MOD_INFECTION &&
-          targ->client->poisonImmunityTime < level.time )
+      if( mod != MOD_POISON && mod != MOD_INFECTION &&
+          targ->client->poisonImmunityTime < level.time
+          && targ->client->ps.stats[ STAT_CLASS ] != PCL_HUMAN_BSUIT )
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;
         targ->client->lastPoisonTime = level.time;
