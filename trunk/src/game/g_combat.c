@@ -1228,7 +1228,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( targ->use && ( targ->moverState == MOVER_POS1 ||
                        targ->moverState == ROTATOR_POS1 ) )
       targ->use( targ, inflictor, attacker );
-    if( attacker->client->pers.teamSelection == TEAM_ALIENS && !(mod == MOD_LEVEL2_ZAP) )
+    if( attacker->client->pers.teamSelection == TEAM_ALIENS && !( mod == MOD_LEVEL2_ZAP || mod == MOD_POISON || mod == MOD_INFECTION ) )
     {
       if( mod == MOD_LEVEL2_BOUNCEBALL  ||
           mod == MOD_LEVEL3_BOUNCEBALL  ||
@@ -1240,7 +1240,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           mod == MOD_LEVEL3_POUNCE      ||
           mod == MOD_LEVEL1_PCLOUD )
         G_AddEvent( attacker, EV_ALIENRANGED_HIT, 0 );
-      else if( mod != MOD_POISON && mod != MOD_INFECTION )
+      else
         G_AddEvent( attacker, EV_ALIEN_HIT, 0 );
     }
     return;
@@ -1359,7 +1359,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           return;
         }
         if( !g_friendlyFireAliens.integer &&
-             targ->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+             targ->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS
+             && !( mod == MOD_POISON ) )
         {
           if( mod == MOD_LEVEL2_BOUNCEBALL  ||
               mod == MOD_LEVEL3_BOUNCEBALL  ||
@@ -1372,11 +1373,11 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
             G_AddEvent( attacker, EV_ALIENRANGED_TEAMHIT, 0 );
-          else if( mod != MOD_POISON )
+          else
             G_AddEvent( attacker, EV_ALIEN_TEAMHIT, 0 );
           return;
         }
-        else
+        else if( !( mod == MOD_POISON || mod == MOD_INFECTION ) )
         {
           if( mod == MOD_LEVEL2_BOUNCEBALL  ||
               mod == MOD_LEVEL3_BOUNCEBALL  ||
@@ -1389,7 +1390,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
             G_AddEvent( attacker, EV_ALIENRANGED_MISS, 0 );
-          else if( mod != MOD_POISON && mod != MOD_INFECTION )
+          else
             G_AddEvent( attacker, EV_ALIEN_MISS, 0 );
         }
       }
@@ -1419,7 +1420,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
             G_AddEvent( attacker, EV_ALIEN_MISS, 0 );
           return;
         }
-        else
+        else if( !( mod == MOD_POISON || mod == MOD_INFECTION ) )
+        {
           if( mod == MOD_LEVEL2_BOUNCEBALL  ||
               mod == MOD_LEVEL3_BOUNCEBALL  ||
               mod == MOD_LEVEL4_EBLOB       ||
@@ -1431,8 +1433,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
               mod == MOD_LEVEL1_PCLOUD      ||
               mod == MOD_LEVEL2_ZAP )
             G_AddEvent( attacker, EV_ALIENRANGED_HIT, 0 );
-          else if( mod != MOD_POISON && mod != MOD_INFECTION )
+          else
             G_AddEvent( attacker, EV_ALIEN_HIT, 0 );
+        }
       }
 
       // base is under attack warning if DCC'd
@@ -1562,7 +1565,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   {
     if( attacker->client )
     {
-      if ( attacker->client->pers.teamSelection == TEAM_ALIENS )
+      if ( attacker->client->pers.teamSelection == TEAM_ALIENS
+           && !( mod == MOD_INFECTION || mod == MOD_POISON ) )
       {
         if( mod == MOD_LEVEL2_BOUNCEBALL  ||
             mod == MOD_LEVEL3_BOUNCEBALL  ||
@@ -1575,7 +1579,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
             mod == MOD_LEVEL1_PCLOUD      ||
             mod == MOD_LEVEL2_ZAP )
           G_AddEvent( attacker, EV_ALIENRANGED_HIT, 0 );
-        else if( mod != MOD_POISON )
+        else
           G_AddEvent( attacker, EV_ALIEN_HIT, 0 );
       }
       if( targ->buildableTeam == attacker->client->pers.teamSelection || OnSameTeam( targ, attacker ) ) 
