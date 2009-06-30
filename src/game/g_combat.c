@@ -383,6 +383,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
           // no retribution if self damage or enemmy damage or building damage or no damage from this client
           if( i == self - g_entities || !g_entities[ i ].client || !OnSameTeam( &g_entities[ i ], self ) || !self->client->tkcredits[ i ] )
             continue;
+            
+          if( self->client->tkcredits[ i ] < 0 )
+            self->client->tkcredits[ i ] = 0;
 
           // calculate retribution price (rounded up)
           price = ( totalPrice * self->client->tkcredits[ i ] ) / totalTK + 0.5f;

@@ -2070,7 +2070,10 @@ void HMedistat_Think( gentity_t *self )
       
       //take away some credits with with each HP healed
       for( i = 0; i< MAX_CLIENTS; i++ )
-        self->enemy->client->tkcredits[ i ]--;
+      {
+        if( self->enemy->client->tkcredits[ i ] > 0 )
+          self->enemy->client->tkcredits[ i ]--;
+      }
         
       //if they're completely healed, give them a medkit
       if( self->enemy->health >= self->enemy->client->ps.stats[ STAT_MAX_HEALTH ] )
