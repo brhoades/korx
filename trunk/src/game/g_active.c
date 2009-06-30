@@ -618,7 +618,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
         ent->nextRegenTime += client->healRate;
         //take away one tk credit
         for( i = 0; i < MAX_CLIENTS; i++ )
-          ent->client->tkcredits[ i ]--;
+        {
+          if( ent->client->tkcredits[ i ] > 0 )
+            ent->client->tkcredits[ i ]--;
+        }
       }
       if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
       {
@@ -661,7 +664,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
       ent->nextRegenTime = level.time + 1000/regen;
       //take away one tk credit
       for( i = 0; i < MAX_CLIENTS; i++ )
-        ent->client->tkcredits[ i ]--;
+      {
+        if( ent->client->tkcredits[ i ] > 0 )
+          ent->client->tkcredits[ i ]--;
+      }
     }
     
     if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
