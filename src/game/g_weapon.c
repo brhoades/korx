@@ -732,6 +732,21 @@ void throwGrenade( gentity_t *ent )
 /*
 ======================================================================
 
+JETPACK EXPLOSION
+
+======================================================================
+*/
+
+void explodeJetpack( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = jetpack_explode( ent, muzzle );
+}
+
+/*
+======================================================================
+
 SHOTGUN NADE
 
 ======================================================================
@@ -1500,10 +1515,23 @@ void G_UpdateZaps( gentity_t *ent )
       if( BG_Weapon( enemy->client->ps.weapon )->usesEnergy && enemy->client->ps.ammo > 0 )
         enemy->client->ps.ammo--;
         
-      //drain those batteries!
-      if( BG_InventoryContainsUpgrade( UP_JETPACK, enemy->client->ps.stats )
-          && enemy->client->ps.stats[ STAT_JPCHARGE ] >= 0 )
-        enemy->client->ps.stats[ STAT_JPCHARGE ]--;
+      srand( level.time );
+
+      if( BG_InventoryContainsUpgrade( UP_JETPACK, enemy->client->ps.stats ) )
+      {
+        int chance = ( (int)(1 / JETPACK_EXPLODE_CHANCE ) );
+        //drain those batteries!
+        if( enemy->client->ps.stats[ STAT_JPCHARGE ] > 0 )
+          enemy->client->ps.stats[ STAT_JPCHARGE ]--;
+        
+        //once in a blue moon... BOOM!
+        if( rand() % chance  == chance/2 )
+        {
+          CPx( enemy->client->ps.clientNum, 
+               "cp \"^1WARNING: JETPACK CAPACITOR OVERLOAD DETECTED\"" ); 
+          explodeJetpack( enemy );
+        }
+      }
     }
 
     if( damage > 0 )

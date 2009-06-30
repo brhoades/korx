@@ -176,6 +176,10 @@ static void CG_Obituary( entityState_t *ent )
         else
           message = "blew himself up";
         break;
+        
+      case MOD_JETPACK_EXPLODE:
+        message = "should have monitored his capacitor readings more carefully";
+        break;
 
       case MOD_LEVEL3_BOUNCEBALL:
       case MOD_LEVEL2_BOUNCEBALL:
@@ -276,6 +280,10 @@ static void CG_Obituary( entityState_t *ent )
       case MOD_GRENADE:
         message = "couldn't escape";
         message2 = "'s grenade";
+        break;
+      case MOD_JETPACK_EXPLODE:
+        message = "couldn't run far enough from";
+        message2 = "'s exploding jetpack";
         break;
 
       case MOD_ABUILDER_CLAW:
