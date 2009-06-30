@@ -442,22 +442,63 @@ void CheckTeamStatus( void )
   }
 
   //Warn on unbalanced teams
-  if ( g_teamImbalanceWarnings.integer && !level.intermissiontime && level.time - level.lastTeamUnbalancedTime > ( g_teamImbalanceWarnings.integer * 1000 ) && level.numTeamWarnings<3 )
+  if( g_teamImbalanceWarnings.integer && !level.intermissiontime && level.time - level.lastTeamUnbalancedTime > ( g_teamImbalanceWarnings.integer * 1000 ) && level.numTeamWarnings < 3 )
   {
     level.lastTeamUnbalancedTime = level.time;
-    if (level.numAlienSpawns > 0 && level.numHumanClients - level.numAlienClients > 2)
+    if(level.numAlienSpawns > 0 && level.numHumanClients - level.numAlienClients > 2 )
     {
-      trap_SendServerCommand (-1, "print \"Teams are unbalanced. Humans have more players.\n Humans will keep their points when switching teams.\n\"");
+      trap_SendServerCommand( -1, "print \"Teams are unbalanced. Humans have more players.\n Humans will keep their points when switching teams.\n\"");
       level.numTeamWarnings++;
     }
-    else if (level.numHumanSpawns > 0 && level.numAlienClients - level.numHumanClients > 2)
+    else if( level.numHumanSpawns > 0 && level.numAlienClients - level.numHumanClients > 2 )
     {
-      trap_SendServerCommand (-1, "print \"Teams are unbalanced. Aliens have more players.\n Aliens will keep their points when switching teams.\n\"");
+      trap_SendServerCommand( -1, "print \"Teams are unbalanced. Aliens have more players.\n Aliens will keep their points when switching teams.\n\"");
       level.numTeamWarnings++;
     }
     else
-    {
       level.numTeamWarnings = 0;
+  }
+  else if( g_teamImbalanceWarnings.integer && !level.intermissiontime && level.time - level.lastTeamUnbalancedTime > ( g_teamImbalanceWarnings.integer * 1000 ) && level.numTeamWarnings == 3 )
+  {
+    level.lastTeamUnbalancedTime = level.time;
+    if( level.numAlienSpawns > 0 && level.numHumanClients - level.numAlienClients > 2 )
+    {
+      trap_SendServerCommand( -1, "print \"Teams are unbalanced. Humans have more players.\n After this warning all aliens will be given one evo per warning until the balance is corrected.\n\"");
+      level.numTeamWarnings++;
     }
+    else if( level.numHumanSpawns > 0 && level.numAlienClients - level.numHumanClients > 2 )
+    {
+      trap_SendServerCommand( -1, "print \"Teams are unbalanced. Aliens have more players.\n After this warning all humans will be given 250 credits per warning until the balance is corrected.\n\"");
+      level.numTeamWarnings++;
+    }
+    else
+      level.numTeamWarnings = 0;
+  }
+  else if( g_teamImbalanceWarnings.integer && !level.intermissiontime && level.time - level.lastTeamUnbalancedTime > ( g_teamImbalanceWarnings.integer * 1000 ) && level.numTeamWarnings > 3 )
+  {
+    level.lastTeamUnbalancedTime = level.time;
+    if( level.numAlienSpawns > 0 && level.numHumanClients - level.numAlienClients > 2 )
+    {
+      trap_SendServerCommand( -1, "print \"Teams are unbalanced. Humans have more players.\n All Aliens have been given 1 evo, this will continue until the balance is corrected.\n\"" );
+      level.numTeamWarnings++;
+      for( i = 0; i < MAX_CLIENTS; i++ )
+      {
+        if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+          G_AddCreditToClient( &(level.clients[ i ]), ALIEN_CREDITS_PER_FRAG, qtrue );
+      }
+    }
+    else if( level.numHumanSpawns > 0 && level.numAlienClients - level.numHumanClients > 2 )
+    {
+      int i;
+      trap_SendServerCommand( -1, "print \"Teams are unbalanced. Aliens have more players.\n All Humans have been given 250 credits, this will continue until the balance is corrected.\n\"" );
+      for( i = 0; i < MAX_CLIENTS; i++ )
+      {
+        if( level.clients[ i ].ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+          G_AddCreditToClient( &(level.clients[ i ]), 250, qtrue );
+      }
+      level.numTeamWarnings++;
+    }
+    else
+      level.numTeamWarnings = 0;
   }
 }
