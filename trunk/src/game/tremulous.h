@@ -690,6 +690,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_RC_CHARGE_RATE      2.0   // x JPU/s (Reactor Charge Bonus) (RC Up = RC Charge Bonus + Onboard Charge Rate)
 #define JETPACK_RC_CHARGE_DELAY     10000 // Milliseconds from when jetpack was last deactivated before RC starts giving extra charge
 #define JETPACK_FAILURE             10     // Jetpack encounters intermittent failure when its charge is equal to or less than this
+#define JETPACK_EXPLODE_MOD         5      // Range and damage multiplier for shotgun nade - used when a jetpack explodes due to mara zap
+#define JETPACK_EXPLODE_CHANCE      .01f  // Chance that the jetpack will explode, as a float, not percent
 
 /*
   for 60 JPUs

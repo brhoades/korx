@@ -938,7 +938,8 @@ typedef enum
   MOD_OVERMIND,
   MOD_SLAP,
   MOD_KILL,
-  MOD_BOOSTER
+  MOD_BOOSTER,
+  MOD_JETPACK_EXPLODE
 } meansOfDeath_t;
 
 

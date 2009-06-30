@@ -128,7 +128,8 @@ char *modNames[ ] =
   "MOD_ATUBE",
   "MOD_OVERMIND",
   "MOD_KILL",
-  "MOD_SLAP"
+  "MOD_SLAP",
+  "MOD_JETPACK_EXPLODE"
 };
 
 /*

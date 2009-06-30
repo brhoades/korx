@@ -3090,8 +3090,9 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "jetpack",              //char  *upgradeName;
     "Jet Pack",             //char  *humanName;
     "Back-mounted jet pack that enables the user to fly to remote "
-      "locations. It is very useful against alien spawns in hard "
-      "to reach spots.",
+      "locations on a rechargable battery. "
+      "It is very useful against alien spawns in hard to reach spots. "
+      "WARNING: if the capicitors are overloaded explosions may occur.",
     "icons/iconu_jetpack",
     qtrue,                  //qboolean purchasable
     qtrue,                  //qboolean usable

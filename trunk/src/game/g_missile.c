@@ -774,6 +774,51 @@ gentity_t *launch_shotgunNade( gentity_t *self, vec3_t start, vec3_t dir )
   return bolt;
 }
 
+/*
+=================
+jetpack_explode
+This is just like shotgun grenade!
+=================
+*/
+gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
+{
+  gentity_t *bolt;
+
+  //VectorNormalize( dir );
+
+  bolt = G_Spawn( );
+  bolt->classname = "shotnade";
+  bolt->nextthink = level.time + 3000;
+  bolt->think = G_ExplodeMissile;
+  bolt->s.eType = ET_MISSILE;
+  bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+  bolt->s.weapon = WP_SHOTGUN;
+  bolt->s.eFlags = EF_BOUNCE_HALF;
+  bolt->s.generic1 =  self->s.generic1; //weaponMode
+  bolt->r.ownerNum = self->s.number;
+  bolt->parent = self;
+  bolt->damage = SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD;
+  bolt->splashDamage = SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD;
+  bolt->splashRadius = SHOTGUN_NADE_RANGE*JETPACK_EXPLODE_MOD;
+  bolt->methodOfDeath = MOD_JETPACK_EXPLODE;
+  bolt->splashMethodOfDeath = MOD_JETPACK_EXPLODE;
+  bolt->clipmask = MASK_SHOT;
+  bolt->target_ent = NULL;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -3.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 3.0f;
+  bolt->s.time = level.time;
+
+  bolt->s.pos.trType = TR_GRAVITY;
+  //bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
+  VectorCopy( start, bolt->s.pos.trBase );
+  //VectorScale( dir, SHOTGUN_NADE_SPEED, bolt->s.pos.trDelta );
+  SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
+
+  VectorCopy( start, bolt->r.currentOrigin );
+
+  return bolt;
+}
+
 //=============================================================================
 
 
