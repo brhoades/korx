@@ -390,15 +390,6 @@ static void CG_ConfigStringModified( void )
   {
     CG_ShaderStateChanged( );
   }
-  else if( num == CS_DRETCHTOGRANGER )
-  {
-    int nograngertodretch;
-    sscanf( str, "%d", &nograngertodretch );
-    if( nograngertodretch )
-      trap_Cvar_Set( "ui_nodretchtogranger", "1" );
-    else
-      trap_Cvar_Set( "ui_nodretchtogranger", "0" );
-  }
 }
 
 

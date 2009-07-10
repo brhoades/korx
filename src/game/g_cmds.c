@@ -2366,13 +2366,6 @@ void Cmd_Class_f( gentity_t *ent )
           G_TriggerMenu2( ent->client->ps.clientNum, MN_A_CLASSNOTSPAWN, newClass );
           return;
         }
-      
-        if( ( newClass == PCL_ALIEN_BUILDER0 
-            || newClass == PCL_ALIEN_BUILDER0_UPG ) && !g_nodretchtogranger.integer ) 
-        {
-          G_TriggerMenu2( ent->client->ps.clientNum, MN_A_CLASSNOTSPAWN, newClass );
-          return;
-        }
 
       if( !BG_ClassIsAllowed( newClass ) )
       {
