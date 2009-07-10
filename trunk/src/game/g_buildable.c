@@ -1876,6 +1876,10 @@ void HArmoury_Activate( gentity_t *self, gentity_t *other, gentity_t *activator 
     for( i = 0; i < MAX_CLIENTS; i++ )
       activator->client->tkcredits[ i ] = 0;
 
+    //if we can't see it we can't use it
+    if( !G_Visible( self, activator, CONTENTS_SOLID ) )
+      return;
+
     //if this is powered then call the armoury menu
     if( self->powered )
       G_TriggerMenu( activator->client->ps.clientNum, MN_H_ARMOURY );

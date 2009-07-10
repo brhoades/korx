@@ -1969,9 +1969,9 @@ void SP_func_button( gentity_t *ent )
     ent->takedamage = qtrue;
     ent->touch = Touch_Button;
   }
-  // touchable button only
   else
   {
+    // touchable button only
     ent->touch = Touch_Button;
   }
 

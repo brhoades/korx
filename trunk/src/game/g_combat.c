@@ -41,7 +41,7 @@ void AddKill( gentity_t *ent )
   if( !ent->client )
     return;
 
-  // no scoring during pre-match warmup
+  // no kills during pre-match warmup
   if( level.warmupTime )
     return;
 
@@ -307,10 +307,6 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     ent->s.otherEntityNum = self->s.number;
     ent->s.otherEntityNum2 = killer;
     ent->r.svFlags = SVF_BROADCAST; // send to everyone
-    
-    //Aaron: Add the kill here, to make sure everything lines up.
-    if( ( !tk || g_tkmap.integer ) && attacker != self )
-      AddKill( attacker );
   }
   else 
   {
@@ -424,6 +420,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     else
     {
       //AddScore( attacker, 1 ); 
+      AddKill( attacker );
 
       attacker->client->lastKillTime = level.time;
       attacker->client->pers.statscounters.kills++;
@@ -444,7 +441,11 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   }
 
   // give credits for killing this player
-  totalDamage = G_RewardAttackers( self );
+  // jetpack explosions give no credits
+  if( meansOfDeath != MOD_JETPACK_EXPLODE )
+    totalDamage = G_RewardAttackers( self );
+  else
+    totalDamage = 0;
   //FIXME: WIRE: This is broken with the new balance
   if( ( !OnSameTeam( self, attacker ) || g_tkmap.integer ) 
       && totalDamage >= ( self->client->ps.stats[ STAT_MAX_HEALTH ] * DAMAGE_FRACTION_FOR_KILL ) )
@@ -688,6 +689,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   }
 
   trap_LinkEntity( self );
+
 }
 
 /*

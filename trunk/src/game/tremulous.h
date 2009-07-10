@@ -21,7 +21,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
-
 /*
  * ALIEN weapons
  *
@@ -183,11 +182,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_HLTH_MODIFIER         1.0f
 #define AHM(h)                      ((int)((float)h*ALIEN_HLTH_MODIFIER))
 
-#define ALIEN_VALUE_MODIFIER        1.0f
+#define ALIEN_VALUE_MODIFIER        1.10f
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ALIEN_REGEN_DAMAGE_TIME     1500 //msec since damage that regen starts again
-#define ALIEN_REGEN_TIME            50000 //msec that it takes for an alien to heal all the way
+#define ALIEN_REGEN_TIME            50000//msec that it takes for an alien to heal all the way
 #define ARMSEC(h)                   ((int)((float)ALIEN_REGEN_TIME/h))
 
 #define ABUILDER_SPEED              0.9f
@@ -325,7 +324,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define BARRICADE_BP                6
 #define BARRICADE_BT                20000
-#define BARRICADE_HEALTH            ABHM(800)
+#define BARRICADE_HEALTH            ABHM(600)
 #define BARRICADE_REGEN             14
 #define BARRICADE_SPLASHDAMAGE      50
 #define BARRICADE_SPLASHRADIUS      50
@@ -576,7 +575,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FLAMER_GAS                  150
 #define FLAMER_REPEAT               200
 #define FLAMER_K_SCALE              1.0f
-#define FLAMER_DMG                  HDM(20)
+#define FLAMER_DMG                  HDM(15)
 #define FLAMER_RADIUS               50       // splash radius
 #define FLAMER_SIZE                 15       // missile bounding box
 #define FLAMER_LIFETIME             800.0f
@@ -591,7 +590,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_DAMAGE              HDM(250)
 #define LCANNON_RADIUS              150      // primary splash damage radius
 #define LCANNON_SIZE                5        // missile bounding box radius
-#define LCANNON_SECONDARY_DAMAGE    HDM(20)
+#define LCANNON_SECONDARY_DAMAGE    HDM(15)
 #define LCANNON_SECONDARY_RADIUS    75       // secondary splash damage radius
 #define LCANNON_SECONDARY_SPEED     1700
 #define LCANNON_SECONDARY_RELOAD    2000
@@ -610,7 +609,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_SEC_RECOIL_MAX_X    10
 #define LCANNON_SEC_RECOIL_SOFTEN   0.25f
 #define LCANNON_SURGE_DMG_MOD       1.2f
-#define LCANNON_SURGE_PRIM_TIME_MOD 0.75f
+#define LCANNON_SURGE_SEC_TIME_MOD 0.75f
 
 
 #define XAEL_PRICE                  600
@@ -622,15 +621,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_DAMAGE                 HDM(250)
 #define XAEL_RADIUS                 175
 #define XAEL_SIZE                   5        // missile bounding box radius
-#define XAEL_SECONDARY_DAMAGE       HDM(20)
-#define XAEL_SECONDARY_RADIUS       50
-#define XAEL_SECONDARY_SPEED        1350
+#define XAEL_SECONDARY_DAMAGE       HDM(15)
+#define XAEL_SECONDARY_RADIUS       75
+#define XAEL_SECONDARY_SPEED        1700
+#define XAEL_SECONDARY_REPEAT       1000
 #define XAEL_SPEED                  800
 #define XAEL_CHARGE_TIME            2000
 #define XAEL_TOTAL_CHARGE           255
 #define XAEL_MIN_CHARGE             50
 #define XAEL_CHARGE_TIME_MAX        2000
-#define XAEL_CHARGE_TIME_MIN        50
+#define XAEL_CHARGE_TIME_MIN        150
 #define XAEL_CHARGE_TIME_WARN       1250
 #define XAEL_CHARGE_AMMO            10
 #define XAEL_PRI_RECOIL_MIN_Y       20
@@ -642,7 +642,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_SEC_RECOIL_MAX_X       10
 #define XAEL_SEC_RECOIL_SOFTEN      0.25
 #define XAEL_SURGE_DMG_MOD          1.2f
-#define XAEL_SURGE_SEC_TIME_MOD     0.75f
+#define XAEL_SURGE_PRIM_TIME_MOD     0.75f
 
 #define HBUILD_PRICE                0
 #define HBUILD_REPEAT               500
@@ -690,8 +690,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_RC_CHARGE_RATE      2.0   // x JPU/s (Reactor Charge Bonus) (RC Up = RC Charge Bonus + Onboard Charge Rate)
 #define JETPACK_RC_CHARGE_DELAY     10000 // Milliseconds from when jetpack was last deactivated before RC starts giving extra charge
 #define JETPACK_FAILURE             10     // Jetpack encounters intermittent failure when its charge is equal to or less than this
-#define JETPACK_EXPLODE_MOD         5      // Range and damage multiplier for shotgun nade - used when a jetpack explodes due to mara zap
-#define JETPACK_EXPLODE_CHANCE      .01f  // Chance that the jetpack will explode, as a float, not percent
+#define JETPACK_EXPLODE_MOD         7      // Range and damage multiplier for shotgun nade - used when a jetpack explodes due to mara zap
+#define JETPACK_EXPLODE_CHANCE      .001f  // Chance that the jetpack will explode, as a float, not percent
 
 /*
   for 60 JPUs
@@ -742,7 +742,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HSPAWN_BP                   10
 #define HSPAWN_BT                   10000
 #define HSPAWN_HEALTH               HBHM(310)
-#define HSPAWN_DCC_REGEN            4
+#define HSPAWN_DCC_REGEN            2
 #define HSPAWN_SPLASHDAMAGE         50
 #define HSPAWN_SPLASHRADIUS         100
 #define HSPAWN_VALUE                HBVM(HSPAWN_BP)
@@ -750,7 +750,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MEDISTAT_BP                 8
 #define MEDISTAT_BT                 10000
 #define MEDISTAT_HEALTH             HBHM(190)
-#define MEDISTAT_DCC_REGEN          4
+#define MEDISTAT_DCC_REGEN          2
 #define MEDISTAT_SPLASHDAMAGE       50
 #define MEDISTAT_SPLASHRADIUS       100
 #define MEDISTAT_VALUE              HBVM(MEDISTAT_BP)
@@ -758,7 +758,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_BP                 8
 #define MGTURRET_BT                 10000
 #define MGTURRET_HEALTH             HBHM(190)
-#define MGTURRET_DCC_REGEN          10
+#define MGTURRET_DCC_REGEN          5
 #define MGTURRET_SPLASHDAMAGE       100
 #define MGTURRET_SPLASHRADIUS       100
 #define MGTURRET_ANGULARSPEED       8
@@ -779,7 +779,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TESLAGEN_BP                 10
 #define TESLAGEN_BT                 15000
 #define TESLAGEN_HEALTH             HBHM(220)
-#define TESLAGEN_DCC_REGEN          12
+#define TESLAGEN_DCC_REGEN          6
 #define TESLAGEN_SPLASHDAMAGE       50
 #define TESLAGEN_SPLASHRADIUS       100
 #define TESLAGEN_REPEAT             250
@@ -802,7 +802,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ARMOURY_BP                  10
 #define ARMOURY_BT                  10000
 #define ARMOURY_HEALTH              HBHM(280)
-#define ARMOURY_DCC_REGEN           4
+#define ARMOURY_DCC_REGEN           2
 #define ARMOURY_SPLASHDAMAGE        50
 #define ARMOURY_SPLASHRADIUS        100
 #define ARMOURY_VALUE               HBVM(ARMOURY_BP)
@@ -810,7 +810,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REACTOR_BP                  0
 #define REACTOR_BT                  20000
 #define REACTOR_HEALTH              HBHM(930)
-#define REACTOR_DCC_REGEN           8
+#define REACTOR_DCC_REGEN           4
 #define REACTOR_SPLASHDAMAGE        200
 #define REACTOR_SPLASHRADIUS        300
 #define REACTOR_ATTACK_RANGE        100.0f
@@ -824,7 +824,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REPEATER_BP                 0
 #define REPEATER_BT                 10000
 #define REPEATER_HEALTH             HBHM(250)
-#define REPEATER_DCC_REGEN          4
+#define REPEATER_DCC_REGEN          2
 #define REPEATER_SPLASHDAMAGE       50
 #define REPEATER_SPLASHRADIUS       100
 #define REPEATER_INACTIVE_TIME      90000
@@ -836,7 +836,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FORCEFIELD_SPLASHDAMAGE       50
 #define FORCEFIELD_SPLASHRADIUS       100
 #define FORCEFIELD_VALUE              HBVM(0)
-#define FORCEFIELD_DCC_REGEN          20
+#define FORCEFIELD_DCC_REGEN          10
 #define FORCEFIELD_SHRINKPROP         0.1f
 #define FORCEFIELD_SHRINKTIMEOUT      500
 

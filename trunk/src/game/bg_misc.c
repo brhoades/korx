@@ -508,8 +508,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     "dcc",                 //char      *buildName;
     "Defence Computer",    //char      *humanName;
     "A structure that enables self-repair functionality in "
-      "human structures. Each Defence Computer built increases "
-      "repair rate slightly.",
+      "human structures. Each Defence Computer built "
+      "DOES NOT increase repair rate.",
     "team_human_dcc",      //char      *entityName;
     { -35, -35, -13 },     //vec3_t    mins;
     { 35, 35, 47 },        //vec3_t    maxs;
@@ -2699,7 +2699,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //int       infiniteAmmo;
     qtrue,                //int       usesEnergy;
     XAEL_REPEAT,          //int       repeatRate1;
-    XAEL_CHARGEREPEAT,    //int       repeatRate2;
+    XAEL_SECONDARY_REPEAT,//int       repeatRate2;
     0,                    //int       repeatRate3;
     XAEL_RELOAD,          //int       reloadTime;
     XAEL_K_SCALE,         //float     knockbackScale;

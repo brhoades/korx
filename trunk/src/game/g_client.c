@@ -84,6 +84,8 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   int       i;
   int       overflow = 0, max = 0, overflowed = 0, overflowtotal = 0;
   gclient_t *cl;
+  team_t team = TEAM_NONE;
+
   
   if( !client )
     return;
@@ -91,15 +93,15 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
   {
     max = ALIEN_MAX_CREDITS;
-    //strcpy( type, "frag(s)" );
-    //type = "frag(s)";
+    team = TEAM_ALIENS;
   }
   else if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
   {
     max = HUMAN_MAX_CREDITS;
-    //strcpy( type, "credit(s)" );
-    //type = "credit(s)";
+    team = TEAM_HUMANS;
   }
+  else
+    return;
 
   //This doesn't work so well in ESD or with /give all
   if( client->ps.persistant[ PERS_CREDIT ] + credit > max 
@@ -111,22 +113,32 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
     overflowtotal = overflow;
 
     // give precedence to live players
-    for( i = level.numConnectedClients - 1; overflow > 0 && i >= 0; i-- )
+    for( i = 0; overflow > 0 && i < MAX_CLIENTS; i++ )
     {
-      team_t    team = TEAM_NONE;
+      team_t    thisteam = TEAM_NONE;
       char      *type = "";
       int       overflowamt = 0;
-      cl = &level.clients[ level.sortedClients[ i ] ];
-      if( cl->pers.teamSelection != client->pers.teamSelection )
+      
+      cl = &level.clients[ i ];
+      
+      if( !cl )
         continue;
+      
+      if( cl == client )
+        continue;
+
+     thisteam = cl->pers.teamSelection;
+
+      if( team != thisteam )
+        continue;
+        
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
         continue;
+        
       if( cl->sess.spectatorState != SPECTATOR_NOT )
         continue;
 
-      team = cl->pers.teamSelection;
       overflowed++;
-
       if( cl->ps.persistant[ PERS_CREDIT ] + overflow > max )
       {
         overflowamt = max - cl->ps.persistant[ PERS_CREDIT ];
@@ -149,7 +161,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "frag";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
-        cl->pers.netname, overflowamt, type ) );
+        client->pers.netname, overflowamt, type ) );
       }
       else
       {
@@ -159,36 +171,44 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "credit";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
-        cl->pers.netname, overflowamt, type ) );
+        client->pers.netname, overflowamt, type ) );
       }
     }
     // give anything else to dead players
-    for( i = 0; overflow > 0 && i < level.numConnectedClients; i++ )
+    for( i = 0; overflow > 0 && i < MAX_CLIENTS; i++ )
     {
-      team_t    team = TEAM_NONE;
+      team_t    thisteam = TEAM_NONE;
       char      *type = "";
       int       overflowamt = 0;
       
-      cl = &level.clients[ level.sortedClients[ i ] ];
-      if( cl->pers.teamSelection != client->pers.teamSelection )
+      cl = &level.clients[ i ];
+      
+      if( !cl )
         continue;
+      
+      if( cl == client )
+        continue;
+
+      thisteam = cl->pers.teamSelection;
+
+      if( team != thisteam )
+        continue;
+        
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
         continue;
 
-      team = cl->pers.teamSelection;
+      overflowed++;
       if( cl->ps.persistant[ PERS_CREDIT ] + overflow > max )
       {
         overflowamt = max - cl->ps.persistant[ PERS_CREDIT ];
         overflow -= overflowamt;
         cl->ps.persistant[ PERS_CREDIT ] = max;
-        overflowed++;
       }
       else
       {
         overflowamt = overflow;
         cl->ps.persistant[ PERS_CREDIT ] += overflow;
         overflow = 0;
-        overflowed++;
       }
 
       if( team == TEAM_ALIENS )
@@ -200,7 +220,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "frag";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
-        cl->pers.netname, overflowamt, type ) );
+        client->pers.netname, overflowamt, type ) );
       }
       else
       {
@@ -210,7 +230,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "credit";
         trap_SendServerCommand( i,
         va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
-        cl->pers.netname, overflowamt, type ) );
+        client->pers.netname, overflowamt, type ) );
       }
     }
     
@@ -1612,6 +1632,31 @@ void ClientBegin( int clientNum )
   // count current clients and rank for scoreboard
   CalculateRanks( );
 }
+ /*
++==================
++ClientPingOverride
++
++Called by server every time a client connects to check
++whether it is immune to ping restrictions.
++==================
++*/
+int ClientPingPrivOverride( void )
+{
+  char userinfo[ MAX_INFO_STRING ];
+  // create a temporary gentity
+  gentity_t ent;
+  gclient_t client;
+  ent.client = &client;
+
+  // userinfo for the client is not yet availible so just use Argv(1)
+  trap_Argv( 1, userinfo, sizeof( userinfo ) );
+  Q_strncpyz( client.pers.guid, Info_ValueForKey( userinfo, "cl_guid" ), sizeof( client.pers.guid ) );
+  if ( !client.pers.guid[0] )
+    return 0;
+  
+  return G_admin_permission( &ent, ADMF_PINGPRIVOVERRIDE );
+}
+
 
 /*
 ===========

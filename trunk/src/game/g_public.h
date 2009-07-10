@@ -258,6 +258,8 @@ typedef enum {
   // The game can issue trap_argc() / trap_argv() commands to get the command
   // and parameters.  Return qfalse if the game doesn't recognize it as a command.
 
-  GAME_DEMO_COMMAND         // ( int cmd, const char *string );
+  GAME_DEMO_COMMAND,         // ( int cmd, const char *string );
+  
+  GAME_PINGPRIV_OVERRIDE
 } gameExport_t;
 

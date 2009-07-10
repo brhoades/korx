@@ -1073,7 +1073,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
                             vec3_origin, ps ? cgs.media.lCannonWarningSound :
                                               cgs.media.lCannonWarningSound2 );
 
-  // Lucifer cannon charge warning beep
+  // Xael cannon charge warning beep
   // FIXME: should not send this to aliens at all, rather than just ignoring it
   if( weaponNum == WP_XAEL &&
       ( cent->currentState.eFlags & EF_WARN_CHARGE ) &&

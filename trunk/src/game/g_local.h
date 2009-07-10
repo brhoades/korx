@@ -989,6 +989,7 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_prifle_stasis( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int damage, int radius, int speed );
 gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir, int damage, int radius, int speed );
+gentity_t *fire_xael_secondary( gentity_t *self, vec3_t start, vec3_t dir, int damage, int radius, int speed );
 gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_paraLockBlob( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir );
@@ -1117,6 +1118,7 @@ void ClientDisconnect( int clientNum );
 void ClientBegin( int clientNum );
 void ClientCommand( int clientNum );
 char *G_NextNewbieName( gentity_t *ent );
+int ClientPingPrivOverride( void );
 
 //
 // g_active.c
@@ -1408,6 +1410,7 @@ extern  vmCvar_t  g_banNotice;
 extern  vmCvar_t  g_msg;
 extern  vmCvar_t  g_msgTime;
 extern  vmCvar_t  g_tkmap;
+extern  vmCvar_t  g_nodretchtogranger;
 
 void      trap_Print( const char *fmt );
 void      trap_Error( const char *fmt );
