@@ -1285,16 +1285,6 @@ void G_CalculateBuildPoints( void )
   int         localHTP = level.humanBuildPoints = g_humanBuildPoints.integer,
               localATP = level.alienBuildPoints = g_alienBuildPoints.integer;
 
-  //Don't know where else to put this stuff
-  trap_SetConfigstring( CS_DRETCHTOGRANGER, va( "%d", g_nodretchtogranger.integer ) );
-  
-  if( g_nodretchtogranger.integer && level.time >= g_nodretchtogranger.integer*60000
-      && !strcmp( g_disabledClasses.string, "level0" ) )
-    trap_Cvar_Set( "g_disabledClasses", "" );
-  else if( strcmp( g_disabledClasses.string, "level0" ) 
-           && g_nodretchtogranger.integer*60000 < level.time )
-    trap_Cvar_Set( "g_disabledClasses", "level0" );
-
   // BP queue updates
   while( level.alienBuildPointQueue > 0 &&
          level.alienNextQueueTime < level.time )
