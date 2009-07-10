@@ -568,18 +568,85 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
 {
   gentity_t *bolt;
   float charge;
-
-  int thinkTime = (int) ( 10000 * ( 1.0f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
+  int thinkTime;
+  
+  if( !BG_InventoryContainsUpgrade( UP_SURGE, self->client->ps.stats ) )
+    thinkTime = (int) ( 10000 * ( 1.0f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
+  else
+    thinkTime = (int) ( 10000 * ( 1.0f - (float)damage / (float)(XAEL_TOTAL_CHARGE*XAEL_SURGE_DMG_MOD ) ) );
 
   VectorNormalize( dir );
 
   bolt = G_Spawn( );
   bolt->classname = "xael";
 
-  if( damage == XAEL_DAMAGE )
+  if( ( damage == XAEL_DAMAGE && !BG_InventoryContainsUpgrade( UP_SURGE, self->client->ps.stats ) )
+        || damage == XAEL_DAMAGE * XAEL_SURGE_DMG_MOD )
     bolt->nextthink = level.time;
-  else
+  else if( damage != XAEL_SECONDARY_DAMAGE && damage != XAEL_SECONDARY_DAMAGE * XAEL_SURGE_DMG_MOD )
     bolt->nextthink = level.time + thinkTime;
+  else
+    bolt->nextthink = level.time + 2500;
+
+  bolt->think = G_ExplodeMissile;
+  bolt->s.eType = ET_MISSILE;
+  bolt->s.eFlags |= EF_BOUNCE|EF_NO_BOUNCE_SOUND;
+  bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+  bolt->s.weapon = WP_XAEL;
+  bolt->s.generic1 = self->s.generic1; //weaponMode
+  bolt->r.ownerNum = self->s.number;
+  bolt->parent = self;
+  bolt->damage = damage;
+  bolt->splashDamage = damage / 2;
+  bolt->splashRadius = radius;
+  bolt->methodOfDeath = MOD_XAEL;
+  bolt->splashMethodOfDeath = MOD_XAEL;
+  bolt->clipmask = MASK_SHOT;
+  bolt->target_ent = NULL;
+    
+  // Give the missile a small bounding box
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] =
+    -XAEL_SIZE;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] =
+    -bolt->r.mins[ 0 ];
+  
+  // Pass the missile charge through
+  charge = (float)( damage - XAEL_SECONDARY_DAMAGE ) / XAEL_DAMAGE;
+  bolt->s.torsoAnim = charge * 255;
+  if( bolt->s.torsoAnim < 0 )
+    bolt->s.torsoAnim = 0;
+
+  bolt->s.pos.trType = TR_GRAVITY;
+  bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
+  VectorCopy( start, bolt->s.pos.trBase );
+  VectorScale( dir, speed, bolt->s.pos.trDelta );
+  SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
+
+  VectorCopy( start, bolt->r.currentOrigin );
+
+  return bolt;
+}
+
+/*
+=================
+fire_xael_secondary
+
+=================
+*/
+gentity_t *fire_xael_secondary( gentity_t *self, vec3_t start, vec3_t dir,
+  int damage, int radius, int speed )
+{
+  gentity_t *bolt;
+  float charge;
+
+  int thinkTime = 500;
+
+  VectorNormalize( dir );
+
+  bolt = G_Spawn( );
+  bolt->classname = "xael_secondary";
+
+  bolt->nextthink = level.time + thinkTime;
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
@@ -665,7 +732,11 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir,
     -bolt->r.mins[ 0 ];
   
   // Pass the missile charge through
-  charge = (float)( damage - LCANNON_SECONDARY_DAMAGE ) / LCANNON_DAMAGE;
+  if( !BG_InventoryContainsUpgrade( UP_SURGE, self->client->ps.stats ) )
+    charge = (float)( damage - LCANNON_SECONDARY_DAMAGE ) / LCANNON_DAMAGE;
+  else
+    charge = (float)( damage - LCANNON_SECONDARY_DAMAGE ) / ( LCANNON_DAMAGE * LCANNON_SURGE_DMG_MOD );
+
   bolt->s.torsoAnim = charge * 255;
   if( bolt->s.torsoAnim < 0 )
     bolt->s.torsoAnim = 0;
@@ -783,6 +854,7 @@ This is just like shotgun grenade!
 gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
 {
   gentity_t *bolt;
+  gentity_t *tent;
 
   //VectorNormalize( dir );
 
@@ -798,8 +870,8 @@ gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD;
-  bolt->splashDamage = SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD;
-  bolt->splashRadius = SHOTGUN_NADE_RANGE*JETPACK_EXPLODE_MOD;
+  bolt->splashDamage = ( SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD )/2;
+  bolt->splashRadius = ( SHOTGUN_NADE_RANGE*JETPACK_EXPLODE_MOD )/2;
   bolt->methodOfDeath = MOD_JETPACK_EXPLODE;
   bolt->splashMethodOfDeath = MOD_JETPACK_EXPLODE;
   bolt->clipmask = MASK_SHOT;
@@ -815,6 +887,8 @@ gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
 
   VectorCopy( start, bolt->r.currentOrigin );
+
+  tent = G_TempEntity( self->s.origin, EV_HUMAN_BUILDABLE_EXPLOSION );
 
   return bolt;
 }

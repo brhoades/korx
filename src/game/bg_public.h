@@ -73,7 +73,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CS_BUILDPOINTS      28
 #define CS_STAGES           29
 
-#define CS_MODELS           33
+#define CS_DRETCHTOGRANGER  33    //Tells the client if it should show grangers on the spawn menu
+#define CS_MODELS           34
+
 #define CS_SOUNDS           (CS_MODELS+MAX_MODELS)
 #define CS_SHADERS          (CS_SOUNDS+MAX_SOUNDS)
 #define CS_PARTICLE_SYSTEMS (CS_SHADERS+MAX_GAME_SHADERS)

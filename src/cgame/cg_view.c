@@ -1025,7 +1025,8 @@ static int CG_CalcFov( void )
         // BUTTON_ATTACK2 isn't held so unzoom next time
         if( !( cmd.buttons & BUTTON_ATTACK2 ) )
         {
-          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_AUTO, cgs.media.weaponZoomOut );
+          //hijack the voice channel
+          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_VOICE, cgs.media.weaponZoomOut );
           cg.zoomed   = qfalse;
           cg.zoomTime = MIN( cg.time, 
               cg.time + cg.time - cg.zoomTime - ZOOM_TIME );
@@ -1043,7 +1044,8 @@ static int CG_CalcFov( void )
         // BUTTON_ATTACK2 is held so zoom next time
         if( cmd.buttons & BUTTON_ATTACK2 )
         {
-          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_AUTO, cgs.media.weaponZoomIn );
+          //hijack the voice channel
+          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_VOICE, cgs.media.weaponZoomIn );
           cg.zoomed   = qtrue;
           cg.zoomTime = MIN( cg.time, 
               cg.time + cg.time - cg.zoomTime - ZOOM_TIME );

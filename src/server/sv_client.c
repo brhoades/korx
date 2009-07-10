@@ -167,8 +167,11 @@ void SV_DirectConnect( netadr_t from ) {
 		svs.challenges[i].connected = qtrue;
 
 		// never reject a LAN client based on ping
-		if ( !Sys_IsLANAddress( from ) ) {
-			if ( sv_maxPing->value && ping > sv_maxPing->value ) {
+		if ( !Sys_IsLANAddress( from ) && VM_Call( gvm, GAME_PINGPRIV_OVERRIDE ) != 1 )
+		{
+  		if ( sv_minPing->value && ping < sv_minPing->value )
+			{
+ 				// don't let them keep trying until they
 				NET_OutOfBandPrint( NS_SERVER, from, "print\nServer is for low pings only\n" );
 				Com_DPrintf ("Client %i rejected on a too high ping\n", i);
 				return;
@@ -212,7 +215,8 @@ void SV_DirectConnect( netadr_t from ) {
 
 	// check for privateClient password
 	password = Info_ValueForKey( userinfo, "password" );
-	if ( !strcmp( password, sv_privatePassword->string ) ) {
+  
+	if ( !strcmp( password, sv_privatePassword->string ) || VM_Call( gvm, GAME_PINGPRIV_OVERRIDE ) == 1 ) {
 		startIndex = sv_democlients->integer;
 	} else {
 		// skip past the reserved slots

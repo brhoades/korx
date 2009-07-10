@@ -675,10 +675,10 @@ void ClientTimerActions( gentity_t *ent, int msec )
       int i;
       ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
       for( i = 0; i < MAX_CLIENTS; i++ )
+      {
         ent->credits[ i ] = 0;
-          //zero all tk accounts
-        for( i = 0; i < MAX_CLIENTS; i++ )
-          ent->client->tkcredits[ i ] = 0;
+        ent->client->tkcredits[ i ] = 0;
+      }
     }
   }
   
@@ -1638,6 +1638,11 @@ void ClientThink_real( gentity_t *ent )
   {
     if( client->sess.spectatorState == SPECTATOR_SCOREBOARD )
       return;
+      
+    //To clean up teams during ESD
+    if( g_extremeSuddenDeath.integer && g_smartesd.integer 
+        && !level.intermissiontime && ent->lastDamageTime + 3000 <= level.time )
+      G_ChangeTeam( ent, TEAM_NONE );
 
     SpectatorThink( ent, ucmd );
     return;

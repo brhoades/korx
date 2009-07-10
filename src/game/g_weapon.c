@@ -39,7 +39,7 @@ addRecoil
 void addRecoil( float recoilMinY, float recoilMaxY, float recoilMaxX, float recoilPercentageSoften )
 {
   float recoilSoften = (float)(abs((int)(100 * (recoilPercentageSoften - 1)))) / 100;
-  srand( level.time );
+ 
   pm->ps->delta_angles[ PITCH ] -= ANGLE2SHORT( random() * ((recoilMaxY * recoilSoften) - (recoilMinY * recoilSoften)) + (recoilMinY * recoilSoften) );
   pm->ps->delta_angles[ YAW ] -= ANGLE2SHORT( (random() - 0.5) * 2 * recoilMaxX * recoilSoften );
 }
@@ -1236,7 +1236,6 @@ qboolean CheckVenomAttack2( gentity_t *ent )
       return qfalse;
     if( traceEnt->client->ps.stats[ STAT_HEALTH ] <= 0 )
       return qfalse;
-    srand( level.time );
     if( !traceEnt->client->infected && ( rand( ) % 100 ) > traceEnt->client->pers.aidresistance )
     {
       traceEnt->client->infected = qtrue;
@@ -1514,8 +1513,6 @@ void G_UpdateZaps( gentity_t *ent )
       //drain that ammo!
       if( BG_Weapon( enemy->client->ps.weapon )->usesEnergy && enemy->client->ps.ammo > 0 )
         enemy->client->ps.ammo--;
-        
-      srand( level.time );
 
       if( BG_InventoryContainsUpgrade( UP_JETPACK, enemy->client->ps.stats ) )
       {
@@ -1525,11 +1522,15 @@ void G_UpdateZaps( gentity_t *ent )
           enemy->client->ps.stats[ STAT_JPCHARGE ]--;
         
         //once in a blue moon... BOOM!
-        if( rand() % chance  == chance/2 )
+        if( rand() % chance  == chance / 2 )
         {
           CPx( enemy->client->ps.clientNum, 
                "cp \"^1WARNING: JETPACK CAPACITOR OVERLOAD DETECTED\"" ); 
           explodeJetpack( enemy );
+          BG_DeactivateUpgrade( UP_JETPACK, enemy->client->ps.stats );
+          BG_RemoveUpgradeFromInventory( UP_JETPACK, enemy->client->ps.stats );
+          if( enemy->client->ps.stats[ STAT_HEALTH ] > 0 )
+            G_Damage( enemy, enemy, enemy, NULL, NULL, enemy->client->ps.stats[ STAT_HEALTH ], 0, MOD_JETPACK_EXPLODE );
         }
       }
     }

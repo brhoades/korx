@@ -84,7 +84,7 @@ static void CG_Obituary( entityState_t *ent )
       message = "can't take it anymore";
       break;
     case MOD_FALLING:
-      message = "fell fowl to gravity";
+      message = "fell foul to gravity";
       break;
     case MOD_CRUSH:
       message = "was squished";
@@ -287,8 +287,16 @@ static void CG_Obituary( entityState_t *ent )
         break;
 
       case MOD_ABUILDER_CLAW:
-        message = "should leave";
-        message2 = "'s buildings alone";
+        if( rand( ) % 2 )
+        {
+          message = "shouldn't have angered";
+          message2 = "'s granger";
+        }
+        else
+        {
+          message = "should leave";
+          message2 = "'s buildings alone";
+        }
         break;
       case MOD_LEVEL0_BITE:
         message = "was bitten by";
@@ -336,9 +344,9 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_CLAW:
-        if( rand() % 3 )
+        if( rand( ) % 2 )
           message = "was sliced and diced by";
-        else if( rand() % 2 )
+        else if( rand( ) % 2 )
           message = "was filleted by";
         else
           message = "was eviscerated by";
@@ -347,7 +355,7 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_TRAMPLE:
-        if( rand() % 2 )
+        if( rand( ) % 2 )
           message = "should have gotten out of the way of";
         else
           message = "was tenderized by";
@@ -356,7 +364,7 @@ static void CG_Obituary( entityState_t *ent )
         message2 = className;
         break;
       case MOD_LEVEL4_CRUSH:
-        if( rand() % 2 )
+        if( rand( ) % 2 )
         {
           message = "was crushed under";
           message2 = "'s weight";
@@ -365,7 +373,7 @@ static void CG_Obituary( entityState_t *ent )
           message = "was made into a pancake by";
         break;
       case MOD_LEVEL4_EBLOB:
-        if( rand() % 2 )
+        if( rand( ) % 2 )
         {
           message = "got the acid of";
           Com_sprintf( className, 64, "'s %s in his eyes",
@@ -390,13 +398,15 @@ static void CG_Obituary( entityState_t *ent )
         message2 = "'s poison";
         break;
       case MOD_SLOWBLOB:
-        if( rand() % 2 )
+        if( rand( ) % 2 )
           message = "shouldn't have provoked";
         else
           message = "got spat on by";
+          
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
+        break;
       case MOD_LEVEL1_PCLOUD:
         message = "was gassed by";
         Com_sprintf( className, 64, "'s %s",
@@ -405,7 +415,7 @@ static void CG_Obituary( entityState_t *ent )
         break;
         
       case MOD_INFECTION:
-        if( rand() % 2 )
+        if( rand( ) % 2 )
           message = "got infected by";
         else
           message = "got AIDs from";

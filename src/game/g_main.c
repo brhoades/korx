@@ -207,6 +207,7 @@ vmCvar_t  g_msg;
 vmCvar_t  g_msgTime;
 
 vmCvar_t  g_tkmap;
+vmCvar_t  g_nodretchtogranger;
 
 static cvarTable_t   gameCvarTable[ ] =
 {
@@ -395,7 +396,9 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_banNotice, "g_banNotice", "", CVAR_ARCHIVE, 0, qfalse  },
 
   { &g_tag, "g_tag", "main", CVAR_INIT, 0, qfalse },
-  { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse }
+  { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_nodretchtogranger, "g_nodretchtogranger", "0", CVAR_ARCHIVE, 0, qfalse }
+  
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
@@ -477,7 +480,9 @@ intptr_t vmMain( int command, int arg0, int arg1, int arg2, int arg3, int arg4,
         G_DemoSetStage( );
         break;
       }
-      return 0;
+
+    case GAME_PINGPRIV_OVERRIDE:
+			return ClientPingPrivOverride( );
   }
 
   return -1;
@@ -1280,6 +1285,16 @@ void G_CalculateBuildPoints( void )
   int         localHTP = level.humanBuildPoints = g_humanBuildPoints.integer,
               localATP = level.alienBuildPoints = g_alienBuildPoints.integer;
 
+  //Don't know where else to put this stuff
+  trap_SetConfigstring( CS_DRETCHTOGRANGER, va( "%d", g_nodretchtogranger.integer ) );
+  
+  if( g_nodretchtogranger.integer && level.time >= g_nodretchtogranger.integer*60000
+      && !strcmp( g_disabledClasses.string, "level0" ) )
+    trap_Cvar_Set( "g_disabledClasses", "" );
+  else if( strcmp( g_disabledClasses.string, "level0" ) 
+           && g_nodretchtogranger.integer*60000 < level.time )
+    trap_Cvar_Set( "g_disabledClasses", "level0" );
+
   // BP queue updates
   while( level.alienBuildPointQueue > 0 &&
          level.alienNextQueueTime < level.time )
@@ -1525,15 +1540,16 @@ void G_CalculateBuildPoints( void )
 
       if( buildable == BA_A_OVERMIND && ent->spawned && ent->health > 0 )
         level.overmindPresent = qtrue;
+      
+      if( g_suddenDeath.integer == 1 
+          && !BG_FindReplaceableTestForBuildable( buildable )
+          && g_suddenDeathMode.integer == SDMODE_SELECTIVE )
+        continue;
 
       if( BG_Buildable( buildable )->team == TEAM_HUMANS )
-      {
         level.humanBuildPoints -= BG_Buildable( buildable )->buildPoints;
-      }
       else if( BG_Buildable( buildable )->team == TEAM_ALIENS )
-      {
         level.alienBuildPoints -= BG_Buildable( buildable )->buildPoints;
-      }
     }
   }
 
@@ -1552,8 +1568,9 @@ void G_CalculateBuildPoints( void )
   trap_SetConfigstring( CS_BUILDPOINTS, va( "%d %d %d %d",
         level.alienBuildPoints, localATP,
         level.humanBuildPoints, localHTP ) );
+    
   if( g_extremeSuddenDeath.integer && g_tkmap.integer
-      && ( level.numLiveAlienClients == 1 || level.numLiveAlienClients == 1 ) )
+      && ( level.numLiveAlienClients == 1 || level.numLiveHumanClients == 1 ) )
       level.playerWin = qtrue;
 
   //may as well pump the stages here too
@@ -1615,9 +1632,13 @@ void G_CalculateStages( void )
 
   if( alienPlayerCountMod < 0.1f )
     alienPlayerCountMod = 0.1f;
+  else if( alienPlayerCountMod > 2.0f )
+    alienPlayerCountMod = 2.0f;
 
   if( humanPlayerCountMod < 0.1f )
     humanPlayerCountMod = 0.1f;
+  else if( humanPlayerCountMod > 2.0f )
+    humanPlayerCountMod = 2.0f;
 
   if( g_alienCredits.integer >=
       (int)( ceil( (float)g_alienStage2Threshold.integer * alienPlayerCountMod ) ) &&

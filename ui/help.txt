@@ -7,14 +7,15 @@
     "We can also be reached on IRC:\n"
     "irc.quakenet.org - #knightsofreason or #korx"
   }
-  "Sprinting"
+  "Sprint / Dodge"
   {
-    "A change from MGdev, the sprinting system has had a major change. "
-    "This leaves the default bind incompatiable with the original X bind.\n\n"
-    "So please rebind your x keys (or whatever they are now) to: \n"
-    "  +button6\n"
-    "Like so:\n"
-    "  /bind x +button6"
+    "Human players will find their old binds for sprinting will no longer "
+    "work. Sprinting has been merged with a new Human ability, dodging. You "
+    "can bind a key for Sprint and Dodge via the Options menu or bind a "
+    "key (\\bind shift +button6). When you are strafing or walking backwards, "
+    "press the dodge key to make a quick sideways jump. When running forward, "
+    "press the dodge key to start a sprint. The sprint will last until you let "
+    "go of the forward key."
   }
   "Infection and Biokits"
   {
@@ -24,18 +25,19 @@
     "is multiplied when someone who is infected is poisoned, and comes into "
     "contact with someone else is infected, the poison spreads too. The biokit "
     "no longer instantly heals infections, it increases resistance by 75 percent. "
-    "The Helmet increases the resistance by an additional 13 percent, and the "
-    "Battle Suit by 20 percent."
+    "The Helmet increases the resistance by an additional 20 percent, and the "
+    "Battle Suit by 23 percent."
   }
   "Alien Healing"
   {
     "Alien healing has changed in KoRx. Aliens now heal smoothly instead "
     "of gaining health once a second. If you are standing on creep you will "
-    "heal twice as fast as you would normally. You also heal faster when near "
-    "a booster, basilisk, or advanced tyrant. All alien healing bonuses stack "
-    "so if you are near several than you will get the combined effect.\n\n"
-    "Watch the health cross icon on your HUD to see what your healing rate is."
-    "The icon will glow if you are on creep. two barbs is 2x, four is 4x."
+    "heal 1.5x as fast as you would normally. You also heal faster when near "
+    "a booster or advanced tyrant. All alien healing bonuses stack "
+    "so if you are near several than you will get the combined effect. \n"
+    "Watch the health cross icon on your HUD to see what your healing rate is. "
+    "The icon will glow if you are on creep (<2x healing rate). "
+    "Two barbs is 2x, four is 4x."
   }
   "Anti-Camping"
   {
@@ -79,7 +81,7 @@
     "attacks, setting cg_unlagged to 0 will disable backward reconcilliation "
     "on your hitscan weapons."
   }
-  "Marauder"
+  "Adv. Marauder"
   {
     "The Adv. Marauder now has a simpler, area-effect electric shock attack "
     "that does not need to be aimed. Use this to attack large groups of Humans "
@@ -88,22 +90,13 @@
   }
   "Mark Deconstruction"
   {
-    "The deconstruction method has changed. Buildables are no longer instantly "
+    "The deconstruction method (on some servers) has changed. Buildables "
+    "are no longer instantly "
     "deconstructed. Instead, a deconstruct mark appears on the health bar. "
     "Go ahead and build a new buildable somewhere else and the old one will "
     "be removed automatically. Buildables that are about to be removed by "
     "constructing the selected buildable glow red. This feature may or may "
     "not be enabled on the server you are currently playing on"
-  }
-  "Sprint / Dodge"
-  {
-    "Human players will find their old binds for sprinting will no longer "
-    "work. Sprinting has been merged with a new Human ability, dodging. You "
-    "can bind a key for Sprint and Dodge via the Options menu or bind a "
-    "key (\\bind shift +button6). When you are strafing or walking backwards, "
-    "press the dodge key to make a quick sideways jump. When running forward, "
-    "press the dodge key to start a sprint. The sprint will last until you let "
-    "go of the forward key."
   }
   "Dretch"
   {
@@ -123,12 +116,12 @@
     "Tyrants can charge for longer periods of time, hit targets multiple times "
     "in a single charge, and crush any Humans they land on top of. Trample "
     "charge does not instantly release when full but can be held for two "
-    "seconds. The Tyrant's healing aura has been removed, find a booster, basilisk, "
-    "Advanced Tyrant, or return to base to heal faster."
+    "seconds. The Tyrant's healing aura has been removed, find a booster, "
+    "Advanced Tyrant, or return to your base to heal faster."
   }
   "Boosters"
   {
-    "Boosters, as in most recent tremulous servers, provide a 1.5X healing aura for "
+    "Boosters, as in most recent tremulous servers, provide a 2X healing aura for "
     "aliens. But unique to KoRx, they now poison humans who touch them and provide "
     "antivenin to any poisoned aliens." 
   }
@@ -175,11 +168,7 @@
     "  Lord-Anubis\n"
     "  Metal\n"
     "  Fox One\n"
-    "\n"
-    "Testers:\n"
-    "  Metal\n"
-    "  The KoR clan\n"
-    "  The |KoR|Tremx Server\n"
+    " |KoR|KoRx Server\n"
   }
   "^3Special Thanks^7"
   {
@@ -189,26 +178,24 @@
     "  benmachine\n"
     "  Lakitu7\n"
     "  kevlarman\n"
-    "  Trepidus Developer(s)\n"
+    "  Einstein\n"
     "  TremFusion Developers\n"
     "  MGDev Developers\n"
     "  f0rqu3(Original Tremx Developer)\n"
-    "  And most importantly, the |KoR|Tremx server\n"
+    "  And most importantly, the |KoR|KoRx server\n"
   }
   "Emoticons: Groups"
   {
     "Only use if you are in this group:\n"
-    "[kor][[kor]\n"
-    "[rk][[rk]\n"
-    "[mg][[mg]\n"
-    "[soh][[soh]\n"
-    "[korn][[korn]\n"
-    "\n"
+    "[kor][[kor] (|KoR|)\n"
+    "[rk][[rk] (|RK|)\n"
+    "[mg][[mg] (|MG|)\n"
+    "[soh][[soh] (|SoH|)\n"
+    "[korn][[korn] (|KoR|N|)\n"
     "More KoR / KoR Developers/Contributors ONLY please:\n"
     "[kor1][[kor1] / [korx1][[korx1]\n"
     "[kor2][[kor2] / [korx2][[korx2]\n"
     "[kor3][[kor3] / [korx3][[korx3]\n"
-    "\n"
     "Misc / Free to use:\n"
     "[ah][[ah] (Aaron Haters)\n"
   }
@@ -273,7 +260,7 @@
     "[hovel][[hovel]\n"
     "[trapper][[trapper]/[ftrapper][[ftrapper]\n"
   }
-  "Emoticons: Miscellaneous"
+  "Emoticons: Misc."
   {
     "[heart][[heart]\n"
     "[bheart][[bheart]\n"

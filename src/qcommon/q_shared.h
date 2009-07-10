@@ -27,14 +27,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // q_shared.h -- included first by ALL program modules.
 // A user mod should never modify this file
 
-#define PRODUCT_NAME            "trepidus"
+#define PRODUCT_NAME            "KoRx"
 
 #ifdef _MSC_VER
 # define PRODUCT_VERSION          "0.9"
 #endif
 
-#define CLIENT_WINDOW_TITLE       "Trepidus " PRODUCT_VERSION
-#define CLIENT_WINDOW_MIN_TITLE   "Trepidus"
+#define CLIENT_WINDOW_TITLE       "KoRx " PRODUCT_VERSION
+#define CLIENT_WINDOW_MIN_TITLE   "KoRx"
 #define Q3_VERSION                 PRODUCT_NAME " " PRODUCT_VERSION
 
 #define MAX_TEAMNAME 32

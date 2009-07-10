@@ -1608,6 +1608,11 @@ void Cmd_CallVote_f( gentity_t *ent )
         "'maps/%s.bsp' could not be found on the server\n\"", arg2 ) );
       return;
     }
+    if( g_extremeSuddenDeath.integer )
+    {
+      trap_SendServerCommand( ent-g_entities, "print \"callvote: You cannot call map votes in Extreme Sudden Death\n\"" );
+      return;
+    } 
     Com_sprintf( level.voteString, sizeof( level.voteString ), "%s %s", arg1, arg2 );
     Com_sprintf( level.voteDisplayString,
         sizeof( level.voteDisplayString ), "Change to map '%s'", arg2 );
@@ -1631,7 +1636,7 @@ void Cmd_CallVote_f( gentity_t *ent )
     Com_sprintf( level.voteString, sizeof( level.voteString ),
       "set g_nextMap %s", arg2 );
     Com_sprintf( level.voteDisplayString,
-        sizeof( level.voteDisplayString ), "Set the next map to '%s^7'", arg2 );
+        sizeof( level.voteDisplayString ), "Set the ^1next map^7 to '%s^7'", arg2 );
     level.votePassThreshold = g_mapVotesPercent.integer;
   }
   else if( !Q_stricmp( arg1, "draw" ) )
@@ -1704,7 +1709,7 @@ void Cmd_CallVote_f( gentity_t *ent )
         "print \"callvote: Extreme Sudden Death has already begun\n\"" );
       return;
     }
-    if(!g_extremeSuddenDeathVotePercent.integer)
+    if( !g_extremeSuddenDeathVotePercent.integer )
     {
       trap_SendServerCommand( ent-g_entities, "print \"callvote: Extreme Sudden Death votes have been disabled\n\"" );
       return;
@@ -2354,11 +2359,20 @@ void Cmd_Class_f( gentity_t *ent )
       G_StopFollowing( ent );
     if( ent->client->pers.teamSelection == TEAM_ALIENS )
     {
-      if( newClass != PCL_ALIEN_LEVEL0 )
-      {
-        G_TriggerMenu2( ent->client->ps.clientNum, MN_A_CLASSNOTSPAWN, newClass );
-        return;
-      }
+      if( newClass != PCL_ALIEN_LEVEL0 
+          && newClass != PCL_ALIEN_BUILDER0 
+          && newClass != PCL_ALIEN_BUILDER0_UPG ) 
+        {
+          G_TriggerMenu2( ent->client->ps.clientNum, MN_A_CLASSNOTSPAWN, newClass );
+          return;
+        }
+      
+        if( ( newClass == PCL_ALIEN_BUILDER0 
+            || newClass == PCL_ALIEN_BUILDER0_UPG ) && !g_nodretchtogranger.integer ) 
+        {
+          G_TriggerMenu2( ent->client->ps.clientNum, MN_A_CLASSNOTSPAWN, newClass );
+          return;
+        }
 
       if( !BG_ClassIsAllowed( newClass ) )
       {
@@ -2459,6 +2473,14 @@ void Cmd_Class_f( gentity_t *ent )
           !ent->client->pers.override )
       {
         G_TriggerMenu( clientNum, MN_A_NOOVMND_EVOLVE );
+        return;
+      }
+      
+      if( g_nodretchtogranger.integer 
+          && ( currentClass == PCL_ALIEN_LEVEL0 || currentClass ==  PCL_ALIEN_LEVEL0_UPG )
+          && ( newClass == PCL_ALIEN_BUILDER0 || newClass == PCL_ALIEN_BUILDER0_UPG ) )
+      {
+        trap_SendServerCommand( ent-g_entities, "print \"Evolving to a granger from a dretch is disabled on this map\n\"" );
         return;
       }
 
@@ -2896,8 +2918,38 @@ void Cmd_Buy_f( gentity_t *ent )
   }
 
   // determine if there is a nearby arm
-  if( G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) || override )
+  if( G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) && !override )
+  {
+    gentity_t *armEnt;
+    int       entityList[ MAX_GENTITIES ];
+    vec3_t    range = { 100, 100, 100 };
+    vec3_t    mins, maxs;
+    int       i, num;
+
+    VectorAdd( ent->client->ps.origin, range, maxs );
+    VectorSubtract( ent->client->ps.origin, range, mins );
+    
+    num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
+    for( i = 0; i < num; i++ )
+    {
+      armEnt = &g_entities[ entityList[ i ] ];
+
+      //checked for the range in the if clause, no need to do the other things again
+      if( armEnt->s.eType != ET_BUILDABLE 
+          || armEnt->s.modelindex != BA_H_ARMOURY )
+      continue;
+      
+      if( !G_Visible( ent, armEnt, CONTENTS_SOLID ) )
+        armAvailable = qfalse;
+      else
+        armAvailable = qtrue;
+        
+      break;
+    }
+  }
+  else if( override )
     armAvailable = qtrue;
+    
   // determine if there is a nearby reactor or repeater
   if( G_BuildableRange( ent->client->ps.origin, 100, BA_H_REACTOR ) || G_BuildableRange( ent->client->ps.origin, 100, BA_H_REPEATER) )
     powerAvailable = qtrue;
@@ -2985,7 +3037,12 @@ void Cmd_Buy_f( gentity_t *ent )
 
     // can't buy something new while building (or charging xael/luci)
     if( !BG_PlayerCanChangeWeapon( &ent->client->ps ) && !override )
+      return;
+    
+    // check to see if we are near an arm
+    if( !armAvailable && !override )
     {
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
       return;
     }
 
@@ -3049,6 +3106,13 @@ void Cmd_Buy_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"You can't buy this item yet\n\"" ) );
       return;
     }
+    
+    // check to see if we are near an arm
+    if( !armAvailable && !override )
+    {
+      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
+      return;
+    }
 
     // determine if buying it is allowed
     if( !BG_UpgradeIsAllowed( upgrade ) && !override )
@@ -3085,24 +3149,16 @@ void Cmd_Buy_f( gentity_t *ent )
     else
     {
       if( upgrade == UP_BATTPACK )
-      {
         G_GiveClientMaxAmmo( ent, qtrue );
-      }
 
       if( upgrade == UP_AMMOPACK )
-      {
         G_GiveClientMaxAmmo( ent, qfalse );
-      }
       if( upgrade == UP_CLOAK )
-      {
         ent->client->cloakReady = qtrue;
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
         ent->client->ps.stats[ STAT_CLOAK ] = 100;
-      }
       if( upgrade == UP_JETPACK )
-      {
         ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
-      }
     }
       
     //subtract from funds
@@ -3130,12 +3186,48 @@ void Cmd_Sell_f( gentity_t *ent )
   char      s[ MAX_TOKEN_CHARS ];
   int       i;
   int       weapon, upgrade;
-
+  qboolean armAvailable = qfalse;
+  qboolean override = ent->client->pers.override;
+  
   trap_Argv( 1, s, sizeof( s ) );
 
+  if( G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY ) && !override )
+  {
+    int       entityList[ MAX_GENTITIES ];
+    vec3_t    range = { 100, 100, 100 };
+    vec3_t    mins, maxs;
+    int       i, num;
+    gentity_t *armEnt;
+    
+    VectorAdd( ent->client->ps.origin, range, maxs );
+    VectorSubtract( ent->client->ps.origin, range, mins );
+    
+    num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
+    
+    for( i = 0; i < num; i++ )
+    {
+      armEnt = &g_entities[ entityList[ i ] ];
+
+      //checked for range in the first clause, no need to do that again
+      if( armEnt->s.eType != ET_BUILDABLE 
+          || armEnt->s.modelindex != BA_H_ARMOURY )
+      continue;
+      
+      if( G_Visible( ent, armEnt, CONTENTS_SOLID ) )
+        armAvailable = qtrue;
+      else
+        armAvailable = qfalse;
+        
+      break;
+    }
+  }
+  else if( override )
+    armAvailable = qtrue;
+  else
+    armAvailable = qfalse;
+
   //no armoury nearby
-  if( !G_BuildableRange( ent->client->ps.origin, 100, BA_H_ARMOURY )  &&
-      !ent->client->pers.override )
+  if( !armAvailable )
   {
     G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOARMOURYHERE );
     return;
@@ -4381,6 +4473,8 @@ void Cmd_Share_f( gentity_t *ent )
     level.clients[ clientNum ].pers.netname );
 }
 
+#define MAX_DONATE_LOOPS 15
+
 /*
 =================
 Cmd_Donate_f
@@ -4391,12 +4485,18 @@ Alms for the poor
 void Cmd_Donate_f( gentity_t *ent ) 
 {
   char s[ MAX_TOKEN_CHARS ] = "", *type = "evo(s)";
-  int i, value, divisor, portion, total=0,
-    max, minportion=1;
-  qboolean donated = qfalse, once=qfalse;
+  int i, value, divisor, portion, total=0, pwm=0,
+    max, minportion=1, times;
+  qboolean donated = qfalse;
   gentity_t *thisclient;
 
-  if( !ent->client ) return;
+  //annoying warning prevention
+  value = 0;
+  times = 0;
+  divisor = 0;
+  
+  if( !ent->client )
+    return;
 
   if( !g_allowShare.integer )
   {
@@ -4418,36 +4518,6 @@ void Cmd_Donate_f( gentity_t *ent )
       return;
     }
 
-
-  if( ent->client->pers.teamSelection == TEAM_ALIENS )
-  {
-    minportion = ALIEN_CREDITS_PER_FRAG;
-    divisor = level.numAlienClients-1;
-    portion = value/divisor;
-    if( portion < minportion )
-      portion = minportion;
-    max = ALIEN_MAX_CREDITS;
-  }
-  else if( ent->client->pers.teamSelection == TEAM_HUMANS ) {
-    divisor = level.numHumanClients-1;
-    portion = value/divisor;
-    max = HUMAN_MAX_CREDITS;
-    type = "credit(s)";
-  } 
-  else 
-  {
-    trap_SendServerCommand( ent-g_entities,
-      va( "print \"donate: spectators cannot be so gracious\n\"" ) );
-    return;
-  }
-
-  if( divisor < 1 ) 
-  {
-    trap_SendServerCommand( ent-g_entities,
-      "print \"donate: get yourself some teammates first\n\"" );
-    return;
-  }
-
   trap_Argv( 1, s, sizeof( s ) );
   value = atoi(s);
   if( value <= 0 ) 
@@ -4463,14 +4533,48 @@ void Cmd_Donate_f( gentity_t *ent )
   if( value > ent->client->ps.persistant[ PERS_CREDIT ] )
     value = ent->client->ps.persistant[ PERS_CREDIT ];
 
+  if( ent->client->pers.teamSelection == TEAM_ALIENS )
+  {
+    minportion = ALIEN_CREDITS_PER_FRAG;
+    divisor = level.numAlienClients-1;
+    max = ALIEN_MAX_CREDITS;
+    if( value > divisor )
+      portion = value/divisor;
+    else
+      portion = value;
+  }
+  else if( ent->client->pers.teamSelection == TEAM_HUMANS ) 
+  {
+    divisor = level.numHumanClients-1;
+    max = HUMAN_MAX_CREDITS;
+    type = "credit(s)";
+    if( value > divisor )
+      portion = value/divisor;
+    else
+      portion = value;
+  } 
+  else 
+  {
+    trap_SendServerCommand( ent-g_entities,
+      va( "print \"donate: spectators cannot be so gracious\n\"" ) );
+    return;
+  }
+  
+  if( divisor < 1 ) 
+  {
+    trap_SendServerCommand( ent-g_entities,
+      "print \"donate: get yourself some teammates first\n\"" );
+    return;
+  }
+
   total = value;
   
-  while( donated == qfalse )
+  while( !donated && value > 0 )
   {
     //loops so that if we have spares we keep donating
-    
     for( i = 0; i < level.maxclients; i++ )
     {
+      int thisportion = portion;    //by default we try to donate what we calculated above
       thisclient = g_entities + i;
       
       //check if a client
@@ -4487,39 +4591,49 @@ void Cmd_Donate_f( gentity_t *ent )
       
       //check for max credits
       if( thisclient->client->ps.persistant[ PERS_CREDIT ] >= max )
+      {
+        pwm++;
         continue;
+      }
       
       //if we're out break out of the loop
-      if( value == 0 )
+      if( value <= 0 )
       {
         donated = qtrue;
         break;
       }
       
-      //find out how much to give
-      if( value >= portion )
-        value -= portion;
-      else if( value < portion )
+      //Give them stuff until they pop
+      if( portion + thisclient->client->ps.persistant[ PERS_CREDIT ] >= max )
       {
-        portion = value;
-        value = 0;
-        donated = qtrue;
+        thisportion = max - thisclient->client->ps.persistant[ PERS_CREDIT ];
+        if( thisportion < minportion )
+          continue;
       }
+      else if( portion < value )
+        thisportion = value;
+      
+      value -= thisportion;
       
       //give it out
-      G_AddCreditToClient( thisclient->client, portion, qtrue );
+      G_AddCreditToClient( thisclient->client, thisportion, qtrue );
 
       //spam them
-      trap_SendServerCommand( i,
-        va( "print \"%s^7 donated %d %s to you, don't forget to say 'thank you'!\n\"",
-        ent->client->pers.netname, (portion/minportion), type ) );
+      if( thisportion > 0 )
+      {
+        trap_SendServerCommand( i,
+          va( "print \"%s^7 donated %d %s to you, don't forget to say 'thank you'!\n\"",
+          ent->client->pers.netname, (thisportion/minportion), type ) );
+      }
     }
-    
-    //If we've went through the loop once before, everyone has max credits or something
-    //without this, I can expect a crash.
-    if( once || value == 0 )
+    //prevents issues with infinite loops
+    if( pwm == divisor )
       break;
-    once = qtrue;
+    else if( times >= MAX_DONATE_LOOPS )
+      break;
+  
+    pwm = 0;
+    times++;
   }
   
   //take away what we've used minus any left over
@@ -5057,11 +5171,11 @@ void Cmd_PrivateMessage_f( gentity_t *ent )
     matches = pcount;
   }
 
- if( g_smartesd.integer && g_extremeSuddenDeath.integer && nteammater == qtrue )
- {
+  if( g_smartesd.integer && g_extremeSuddenDeath.integer && nteammater == qtrue )
+  {
    ADMP( "Sorry, but you cannot pm anyone who isn't a teammate during ESD.\n" );
    return;
- }
+  }
 
   color = teamonly ? COLOR_CYAN : COLOR_YELLOW;
 

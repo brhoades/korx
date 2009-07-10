@@ -678,7 +678,7 @@ void Sys_PlatformInit( void )
 #endif
 
 	// Display a console
-	SetConsoleTitle( "Trepidus Console" );
+	SetConsoleTitle( "KoRx Console" );
 
 	// Handle Ctrl-C or other console termination
 	SetConsoleCtrlHandler( CON_CtrlHandler, TRUE );

@@ -103,6 +103,7 @@ vmCvar_t  ui_screens;
 vmCvar_t  ui_screenname;
 
 vmCvar_t  ui_winner;
+vmCvar_t  ui_nodretchtogranger;
 
 vmCvar_t  ui_emoticons;
 
@@ -2360,10 +2361,22 @@ UI_LoadAlienClasses
 */
 static void UI_LoadAlienClasses( void )
 {
-  uiInfo.alienClassCount = 0;
 
+  uiInfo.alienClassCount = 0;
+  
   if( BG_ClassIsAllowed( PCL_ALIEN_LEVEL0 ) )
+  {
     UI_AddClass( PCL_ALIEN_LEVEL0 );
+  }
+  
+  if( trap_Cvar_VariableValue( "ui_nodretchtogranger" ) )
+  {
+    if( BG_ClassIsAllowed( PCL_ALIEN_BUILDER0_UPG ) &&
+        BG_ClassAllowedInStage( PCL_ALIEN_BUILDER0_UPG, UI_GetCurrentStage( ) ) )
+      UI_AddClass( PCL_ALIEN_BUILDER0_UPG );
+    else if( BG_ClassIsAllowed( PCL_ALIEN_BUILDER0 ) )
+      UI_AddClass( PCL_ALIEN_BUILDER0 );
+  }
 //   WIRE: this is where starting classes are specified for aliens I think
 //   if( BG_ClassIsAllowed( PCL_ALIEN_BUILDER0_UPG ) &&
 //       BG_ClassAllowedInStage( PCL_ALIEN_BUILDER0_UPG, UI_GetCurrentStage( ) ) )

@@ -3363,7 +3363,9 @@ static void PM_Weapon( void )
       PM_AddEvent( EV_FIRE_WEAPON2 );
       addTime = BG_Weapon( pm->ps->weapon )->repeatRate2;
       if( pm->ps->weapon == WP_LUCIFER_CANNON )
-        addTime *= LCANNON_SURGE_PRIM_TIME_MOD;
+        addTime *= LCANNON_SURGE_SEC_TIME_MOD;
+      else if( pm->ps->weapon == WP_XAEL )
+        addTime *= XAEL_SURGE_PRIM_TIME_MOD;
     }
     else
     {
@@ -3386,8 +3388,6 @@ static void PM_Weapon( void )
         addTime *= LASGUN_SURGE_TIME_MOD;
       else if( pm->ps->weapon == WP_MASS_DRIVER )
         addTime *= MDRIVER_SURGE_TIME_MOD;
-      else if( pm->ps->weapon == WP_XAEL )
-        addTime *= XAEL_SURGE_SEC_TIME_MOD;
     }
   }
 
