@@ -2020,7 +2020,7 @@ static void PM_GroundClimbTrace( void )
     //if we hit something
     if( trace.fraction < 1.0f && !( trace.surfaceFlags & ( SURF_SKY | SURF_SLICK ) ) && 
 #ifdef ALIEN_WALLWALK_ENTITIES
-      ( trace.entityNum < MAX_CLIENTS && i != 4 ) )
+      !( i != 4 ) )
 #else
       !( trace.entityNum != ENTITYNUM_WORLD && i != 4 ) )
 #endif
