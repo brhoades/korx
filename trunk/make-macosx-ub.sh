@@ -1,19 +1,24 @@
 #!/bin/sh
-APPBUNDLE=Tremfusion.app
-BINARY=Tremfusion
-DEDBIN=Tremfusionded
-PKGINFO=APPLTREMFUSION
+APPBUNDLE=Tremulous.app
+BINARY=Tremulous.ub
+DEDBIN=Tremded.ub
+TTYBIN=Tremulous-tty.ub
+PKGINFO=APPLTREM
 ICNS=misc/Tremfusion.icns
 DESTDIR=build/release-darwin-ub
 BASEDIR=base
 
 BIN_OBJ="
-	build/release-darwin-ppc/tremfusion-smp.ppc
-	build/release-darwin-x86/tremfusion-smp.x86
+	build/release-darwin-ppc/tremulous.ppc
+	build/release-darwin-x86/tremulous.x86
 "
 BIN_DEDOBJ="
-	build/release-darwin-ppc/tremfusionded.ppc
-	build/release-darwin-x86/tremfusionded.x86
+	build/release-darwin-ppc/tremded.ppc
+	build/release-darwin-x86/tremded.x86
+"
+BIN_TTYOBJ="
+	build/release-darwin-ppc/tremulous-tty.ppc
+	build/release-darwin-x86/tremulous-tty.x86
 "
 
 cd `dirname $0`
@@ -113,12 +118,13 @@ NCPU=`sysctl -n hw.ncpu`
 
 # ppc client and server
 (ARCH=ppc USE_OPENAL_DLOPEN=1 CC=$PPC_CC CFLAGS=$PPC_CFLAGS \
-	LDFLAGS=$PPC_LDFLAGS make -j$NCPU BUILD_CLIENT_SMP=1 BUILD_GAME_SO=0 \
-	BUILD_GAME_QVM=0 $*) || exit 1;
+	LDFLAGS=$PPC_LDFLAGS make -j$NCPU BUILD_CLIENT=1 BUILD_GAME_SO=0 \
+	BUILD_GAME_QVM=0 BUILD_SERVER=1 BUILD_CLIENT_TTY=1 $*) || exit 1;
 
 # intel client and server
 (ARCH=x86 CFLAGS=$X86_CFLAGS LDFLAGS=$X86_LDFLAGS make -j$NCPU \
-	BUILD_CLIENT_SMP=1 BUILD_GAME_SO=0 BUILD_GAME_QVM=0 $*) || exit 1;
+	BUILD_CLIENT=1 BUILD_GAME_SO=0 BUILD_GAME_QVM=0 \
+	BUILD_SERVER=1 BUILD_CLIENT_TTY=1 $*) || exit 1;
 
 echo "Creating .app bundle $DESTDIR/$APPBUNDLE"
 if [ ! -d $DESTDIR/$APPBUNDLE/Contents/MacOS/$BASEDIR ]; then
@@ -148,11 +154,11 @@ echo "
 		<key>CFBundleIconFile</key>
 		<string>Tremfusion.icns</string>
 		<key>CFBundleIdentifier</key>
-		<string>net.tremfusion</string>
+		<string>net.tremulous</string>
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>Tremfusion</string>
+		<string>Tremulous</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -171,4 +177,5 @@ echo "
 
 lipo -create -o $DESTDIR/$APPBUNDLE/Contents/MacOS/$BINARY $BIN_OBJ
 lipo -create -o $DESTDIR/$DEDBIN $BIN_DEDOBJ
+lipo -create -o $DESTDIR/$TTYBIN $BIN_TTYOBJ
 cp src/libs/macosx/*.dylib $DESTDIR/$APPBUNDLE/Contents/MacOS/

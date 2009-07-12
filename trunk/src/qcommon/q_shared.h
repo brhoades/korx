@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRODUCT_NAME            "KoRx"
 
 #ifdef _MSC_VER
-# define PRODUCT_VERSION          "0.99"
+# define PRODUCT_VERSION          "0.99r2"
 #endif
 
 #define CLIENT_WINDOW_TITLE       "KoRx " PRODUCT_VERSION
@@ -39,8 +39,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define MAX_TEAMNAME 32
 
-#define GAMENAME BASEGAME
-#define GAMENAME_FOR_MASTER GAMENAME
+#define BASEGAME "base"
+
+#define GAMENAME_FOR_MASTER "tremulous"
 
 #ifdef _MSC_VER
 
@@ -1030,6 +1031,8 @@ typedef enum {
 
 #define	GENTITYNUM_BITS		10		// don't need to send any more
 #define	MAX_GENTITIES		(1<<GENTITYNUM_BITS)
+#define GENTITYNUM_MASK		(MAX_GENTITIES - 1)
+#define MAX_GENTITYNUM_PACK	10
 
 // entitynums are communicated with GENTITY_BITS, so any reserved
 // values that are going to be communcated over the net need to

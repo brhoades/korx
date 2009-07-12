@@ -26,9 +26,6 @@ endif
 ifndef BUILD_CLIENT
   BUILD_CLIENT     = 0
 endif
-ifndef BUILD_CLIENT_SMP
-  BUILD_CLIENT_SMP = 0
-endif
 ifndef BUILD_SERVER
   BUILD_SERVER     = 1
 endif
@@ -37,15 +34,6 @@ ifndef BUILD_GAME_SO
 endif
 ifndef BUILD_GAME_QVM
   BUILD_GAME_QVM   = 1
-endif
-
-# SMP only works on Mac, Linux and Windows
-ifneq ($(PLATFORM),darwin)
-ifneq ($(PLATFORM),mingw32)
-ifneq ($(PLATFORM),linux)
-  BUILD_CLIENT_SMP = 0
-endif
-endif
 endif
 
 #############################################################################
@@ -92,10 +80,6 @@ endif
 
 ifndef BUILD_DIR
   BUILD_DIR=build
-endif
-
-ifndef INSTALL_PREFIX
-  INSTALL_PREFIX = "/usr/local"
 endif
 
 ifndef GENERATE_DEPENDENCIES
@@ -163,10 +147,6 @@ ifndef USE_FREETYPE
   USE_FREETYPE=1
 endif
 
-ifndef USE_OLD_HOMEPATH
-  USE_OLD_HOMEPATH=0
-endif
-
 ifndef USE_SSE
   ifeq ($(ARCH),x86_64)
     USE_SSE=2
@@ -220,7 +200,7 @@ ifeq ($(shell which pkg-config > /dev/null; echo $$?),0)
 endif
 
 # version info
-VERSION_NUMBER=0.99
+VERSION_NUMBER=0.99r2
 
 ifeq ($(USE_SCM_VERSION),1)
   # For svn
@@ -263,6 +243,22 @@ LIB=lib
 
 INSTALL=install
 MKDIR=mkdir
+
+ifndef BUILDROOT
+  BUILDROOT = ""
+endif
+ifndef INSTALL_PREFIX
+  INSTALL_PREFIX = "/usr/local"
+endif
+ifndef BINDIR
+  BINDIR = $(INSTALL_PREFIX)/bin
+endif
+ifndef LIBDIR
+  LIBDIR = $(INSTALL_PREFIX)/$(LIB)
+endif
+ifndef DATADIR
+  DATADIR = $(INSTALL_PREFIX)/share
+endif
 
 ifeq ($(PLATFORM),linux)
 
@@ -368,11 +364,10 @@ ifeq ($(PLATFORM),linux)
   SHLIBLDFLAGS=-shared $(LDFLAGS) --no-allow-shlib-undefined
 
   BASE_CFLAGS+=-I/usr/X11R6/include
-  THREAD_LDFLAGS=-L/usr/X11R6/$(LIB)
-  THREAD_LIBS=-lpthread -lX11
+  CLIENT_LDFLAGS=-L/usr/X11R6/$(LIB)
   LIBS=-ldl -lm
 
-  CLIENT_LIBS += $(shell sdl-config --libs) -lGL
+  CLIENT_LIBS += $(shell sdl-config --libs) -lGL -lpthread -lX11
 
   ifeq ($(USE_OPENAL),1)
     ifneq ($(USE_OPENAL_DLOPEN),1)
@@ -737,15 +732,14 @@ ifeq ($(PLATFORM),freebsd)
   SHLIBCFLAGS=-fPIC
   SHLIBLDFLAGS=-shared $(LDFLAGS) --no-allow-shlib-undefined
 
-  THREAD_LIBS=-lpthread
   # don't need -ldl (FreeBSD)
   LIBS+=-lm
 
-  CLIENT_LIBS += $(shell sdl-config --libs) -lGL
+  CLIENT_LIBS += $(shell sdl-config --libs) -lGL -lpthread
 
   ifeq ($(USE_OPENAL),1)
     ifneq ($(USE_OPENAL_DLOPEN),1)
-      CLIENT_LIBS += $(THREAD_LIBS) -lopenal
+      CLIENT_LIBS += -lopenal
     endif
   endif
 
@@ -761,8 +755,8 @@ else # ifeq freebsd
 
 ifeq ($(PLATFORM),openbsd)
 
-  #default to i386, no tests done on anything else
-  ARCH=i386
+  #default to x86, no tests done on anything else
+  ARCH=x86
 
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes \
@@ -797,14 +791,13 @@ ifeq ($(PLATFORM),openbsd)
   SHLIBCFLAGS=-fPIC
   SHLIBLDFLAGS=-shared $(LDFLAGS) --no-allow-shlib-undefined
 
-  THREAD_LIBS=-lpthread
   LIBS=-lm
 
-  CLIENT_LIBS = $(shell sdl-config --libs) -lGL
+  CLIENT_LIBS = $(shell sdl-config --libs) -lGL -lpthread
 
   ifeq ($(USE_OPENAL),1)
     ifneq ($(USE_OPENAL_DLOPEN),1)
-      CLIENT_LIBS += $(THREAD_LIBS) -lossaudio -lopenal
+      CLIENT_LIBS += -lossaudio -lopenal
     endif
   endif
 
@@ -820,15 +813,11 @@ else # ifeq openbsd
 
 ifeq ($(PLATFORM),netbsd)
 
-  ifeq ($(shell uname -m),i386)
-    ARCH=x86
-  endif
-
   LIBS=-lm
   SHLIBEXT=so
   SHLIBCFLAGS=-fPIC
   SHLIBLDFLAGS=-shared $(LDFLAGS) --no-allow-shlib-undefined
-  THREAD_LIBS=-lpthread
+  CLIENT_LIBS=-lpthread
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes
 
@@ -927,10 +916,9 @@ ifeq ($(PLATFORM),sunos)
   SHLIBCFLAGS=-fPIC
   SHLIBLDFLAGS=-shared $(LDFLAGS) --no-allow-shlib-undefined
 
-  THREAD_LIBS=-lpthread
   LIBS=-lsocket -lnsl -ldl -lm
 
-  CLIENT_LIBS +=$(shell sdl-config --libs) -lGL
+  CLIENT_LIBS +=$(shell sdl-config --libs) -lGL -lpthread
 
 else # ifeq sunos
 
@@ -957,18 +945,15 @@ endif #SunOS
 TARGETS =
 
 ifneq ($(BUILD_SERVER),0)
-  TARGETS += $(B)/tremfusionded.$(ARCH)$(BINEXT)
+  TARGETS += $(B)/tremded.$(ARCH)$(BINEXT)
 endif
 
 ifneq ($(BUILD_CLIENT),0)
-  TARGETS += $(B)/tremfusion.$(ARCH)$(BINEXT)
-  ifneq ($(BUILD_CLIENT_SMP),0)
-    TARGETS += $(B)/tremfusion-smp.$(ARCH)$(BINEXT)
-  endif
+  TARGETS += $(B)/tremulous.$(ARCH)$(BINEXT)
 endif
 
 ifneq ($(BUILD_CLIENT_TTY),0)
-  TARGETS += $(B)/tremfusion-tty.$(ARCH)$(BINEXT)
+  TARGETS += $(B)/tremulous-tty.$(ARCH)$(BINEXT)
 endif
 
 ifneq ($(BUILD_GAME_SO),0)
@@ -1023,7 +1008,6 @@ else
 endif
 
 BASE_CFLAGS += -DPRODUCT_VERSION=\\\"$(VERSION)\\\"
-BASE_CFLAGS += -DUSE_OLD_HOMEPATH=$(USE_OLD_HOMEPATH)
 
 ifeq ($(V),1)
   echo_cmd=@:
@@ -1036,11 +1020,6 @@ endif
 define DO_CC
 $(echo_cmd) "CC $<"
 $(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -o $@ -c $<
-endef
-
-define DO_SMP_CC
-$(echo_cmd) "SMP_CC $<"
-$(Q)$(CC) $(NOTSHLIBCFLAGS) $(CFLAGS) -DSMP -o $@ -c $<
 endef
 
 define DO_TTY_CC
@@ -1157,7 +1136,6 @@ makedirs:
 	@if [ ! -d $(BUILD_DIR) ];then $(MKDIR) $(BUILD_DIR);fi
 	@if [ ! -d $(B) ];then $(MKDIR) $(B);fi
 	@if [ ! -d $(B)/client ];then $(MKDIR) $(B)/client;fi
-	@if [ ! -d $(B)/clientsmp ];then $(MKDIR) $(B)/clientsmp;fi
 	@if [ ! -d $(B)/clienttty ];then $(MKDIR) $(B)/clienttty;fi
 	@if [ ! -d $(B)/ded ];then $(MKDIR) $(B)/ded;fi
 	@if [ ! -d $(B)/base ];then $(MKDIR) $(B)/base;fi
@@ -1171,22 +1149,6 @@ makedirs:
 	@if [ ! -d $(B)/tools/etc ];then $(MKDIR) $(B)/tools/etc;fi
 	@if [ ! -d $(B)/tools/rcc ];then $(MKDIR) $(B)/tools/rcc;fi
 	@if [ ! -d $(B)/tools/lburg ];then $(MKDIR) $(B)/tools/lburg;fi
-
-#############################################################################
-# INSTALL
-#############################################################################
-
-install: release
-	@echo ""
-	@echo "Installing TremFusion in $(INSTALL_PREFIX):"
-	@if [ ! -d $(INSTALL_PREFIX) ];then $(MKDIR) $(INSTALL_PREFIX);fi
-	@if [ ! -d $(INSTALL_PREFIX)/lib ];then $(MKDIR) $(INSTALL_PREFIX)/lib;fi
-	@if [ ! -d $(INSTALL_PREFIX)/share ];then $(MKDIR) $(INSTALL_PREFIX)/share;fi
-	@if [ ! -d $(INSTALL_PREFIX)/lib/tremfusion ];then $(MKDIR) $(INSTALL_PREFIX)/lib/tremfusion;fi
-	@if [ ! -d $(INSTALL_PREFIX)/share/tremfusion ];then $(MKDIR) $(INSTALL_PREFIX)/share/tremfusion;fi
-	@$(Q)$(INSTALL) -v $(BR)/tremfusion.$(ARCH)$(BINEXT) $(INSTALL_PREFIX)/lib/tremfusion/tremfusion
-	@$(Q)$(INSTALL) -v misc/transfer_settings.sh $(INSTALL_PREFIX)/share/tremfusion/transfer_settings.sh
-
 
 #############################################################################
 # QVM BUILD TOOLS
@@ -1464,7 +1426,8 @@ Q3OBJ = \
   \
   $(B)/client/sdl_gamma.o \
   $(B)/client/sdl_input.o \
-  $(B)/client/sdl_snd.o
+  $(B)/client/sdl_snd.o \
+  $(B)/client/sdl_glimp.o
 
 Q3TOBJ += \
   $(B)/clienttty/null_input.o \
@@ -1572,28 +1535,16 @@ ifeq ($(USE_MUMBLE),1)
     $(B)/client/libmumblelink.o
 endif
 
-Q3POBJ = \
-  $(B)/client/sdl_glimp.o
-
-Q3POBJ_SMP = \
-  $(B)/clientsmp/sdl_glimp.o
-
 Q3TOBJ += $(subst /client/,/clienttty/,$(Q3OBJ_))
 Q3OBJ += $(Q3OBJ_)
 
-$(B)/tremfusion.$(ARCH)$(BINEXT): $(Q3OBJ) $(Q3POBJ) $(LIBSDLMAIN) $(LIBOGG) $(LIBVORBIS) $(LIBVORBISFILE) $(LIBFREETYPE)
+$(B)/tremulous.$(ARCH)$(BINEXT): $(Q3OBJ) $(LIBSDLMAIN) $(LIBOGG) $(LIBVORBIS) $(LIBVORBISFILE) $(LIBFREETYPE)
 	$(echo_cmd) "LD $@"
 	$(Q)$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) \
-	    -o $@ $(Q3OBJ) $(Q3POBJ) $(CLIENT_LIBS) $(LIBS) \
+	    -o $@ $(Q3OBJ) $(CLIENT_LIBS) $(LIBS) \
         $(LIBSDLMAIN) $(LIBVORBISFILE) $(LIBVORBIS) $(LIBOGG) $(LIBFREETYPE)
 
-$(B)/tremfusion-smp.$(ARCH)$(BINEXT): $(Q3OBJ) $(Q3POBJ_SMP) $(LIBSDLMAIN) $(LIBOGG) $(LIBVORBIS) $(LIBVORBISFILE) $(LIBFREETYPE)
-	$(echo_cmd) "LD $@"
-	$(Q)$(CC) $(CLIENT_CFLAGS) $(CFLAGS) $(CLIENT_LDFLAGS) $(LDFLAGS) $(THREAD_LDFLAGS) \
-       -o $@ $(Q3OBJ) $(Q3POBJ_SMP) $(CLIENT_LIBS) $(LIBS) $(THREAD_LIBS) \
-        $(LIBSDLMAIN) $(LIBVORBISFILE) $(LIBVORBIS) $(LIBOGG) $(LIBFREETYPE)
-
-$(B)/tremfusion-tty.$(ARCH)$(BINEXT): $(Q3TOBJ)
+$(B)/tremulous-tty.$(ARCH)$(BINEXT): $(Q3TOBJ)
 	$(echo_cmd) "LD $@"
 	$(Q)$(CC) $(CFLAGS) $(TTYC_CFLAGS) $(TTYC_LDFLAGS) $(LDFLAGS) \
 	    -o $@ $(Q3TOBJ) $(TTYC_LIBS) $(LIBS)
@@ -1734,7 +1685,7 @@ else
     $(B)/ded/con_tty.o
 endif
 
-$(B)/tremfusionded.$(ARCH)$(BINEXT): $(Q3DOBJ)
+$(B)/tremded.$(ARCH)$(BINEXT): $(Q3DOBJ)
 	$(echo_cmd) "LD $@"
 	$(Q)$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(Q3DOBJ) $(LIBS)
 
@@ -1900,9 +1851,6 @@ $(B)/client/%.o: $(RDIR)/%.c
 $(B)/client/%.o: $(SDLDIR)/%.c
 	$(DO_CC)
 
-$(B)/clientsmp/%.o: $(SDLDIR)/%.c
-	$(DO_SMP_CC)
-
 $(B)/client/%.o: $(SYSDIR)/%.c
 	$(DO_CC)
 
@@ -2026,7 +1974,7 @@ $(B)/base/qcommon/%.asm: $(CMDIR)/%.c $(Q3LCC)
 # MISC
 #############################################################################
 
-OBJ = $(Q3OBJ) $(Q3POBJ) $(Q3POBJ_SMP) $(Q3TOBJ) $(Q3DOBJ) \
+OBJ = $(Q3OBJ) $(Q3TOBJ) $(Q3DOBJ) \
   $(GOBJ) $(CGOBJ) $(UIOBJ) \
   $(GVMOBJ) $(CGVMOBJ) $(UIVMOBJ)
 TOOLSOBJ = $(LBURGOBJ) $(Q3RCCOBJ) $(Q3LCCOBJ) $(Q3ASMOBJ)
