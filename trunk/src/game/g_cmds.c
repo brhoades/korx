@@ -4004,7 +4004,12 @@ qboolean G_FollowNewClient( gentity_t *ent, int dir )
     if( !ent->client->pers.stickySpec &&
         level.clients[ clientnum ].sess.spectatorState != SPECTATOR_NOT )
       continue;
-    
+
+    // cannot follow a teammate who is following you
+    if( level.clients[ clientnum ].sess.spectatorState == SPECTATOR_FOLLOW && 
+        ( level.clients[ clientnum ].sess.spectatorClient == ent->s.number ) )
+      continue;
+      
     // can only follow teammates when dead and on a team
     if( ent->client->pers.teamSelection != TEAM_NONE && 
         ( level.clients[ clientnum ].pers.teamSelection != 
