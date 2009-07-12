@@ -230,6 +230,7 @@ typedef enum
   STAT_CLOAK,     // when invis started
   STAT_JPCHARGE,   // jetpack fuel counter
   STAT_JPRCDELAY  // jetpack RC charge delay
+  //netcode has space for -2 more (lol...)
 } statIndex_t;
 
 #define SCA_WALLCLIMBER         0x00000001
@@ -276,6 +277,7 @@ typedef enum
   PERS_CREDIT,    // human credit
   PERS_QUEUEPOS,  // position in the spawn queue
   PERS_NEWWEAPON  // weapon to switch to
+  // netcode has space for 5 more
 } persEnum_t;
 
 #define PS_WALLCLIMBINGFOLLOW   0x00000001

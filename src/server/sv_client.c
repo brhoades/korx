@@ -169,7 +169,7 @@ void SV_DirectConnect( netadr_t from ) {
 		// never reject a LAN client based on ping
 		if ( !Sys_IsLANAddress( from ) && VM_Call( gvm, GAME_PINGPRIV_OVERRIDE ) != 1 )
 		{
-  		if ( sv_minPing->value && ping < sv_minPing->value )
+			if ( sv_maxPing->value && ping > sv_maxPing->value )
 			{
  				// don't let them keep trying until they
 				NET_OutOfBandPrint( NS_SERVER, from, "print\nServer is for low pings only\n" );

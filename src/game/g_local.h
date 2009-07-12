@@ -475,6 +475,7 @@ struct gclient_s
 
   int                 time100;          // timer for 100ms interval events
   int                 time1000;         // timer for one second interval events
+  int                 time10000;        // timer for ten second interval events
 
   char                *areabits;
 
@@ -814,6 +815,7 @@ qboolean  G_FollowNewClient( gentity_t *ent, int dir );
 void      G_ToggleFollow( gentity_t *ent );
 void      G_MatchOnePlayer( int *plist, int num, char *err, int len );
 int       G_ClientNumbersFromString( char *s, int *plist, int max );
+void      G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText );
 int       G_ClientNumberFromString( char *s );
 int       G_SayArgc( void );
 qboolean  G_SayArgv( int n, char *buffer, int bufferLength );
@@ -1229,6 +1231,7 @@ qboolean  G_StartMapRotation( char *name, qboolean changeMap );
 void      G_StopMapRotation( void );
 qboolean  G_MapRotationActive( void );
 void      G_InitMapRotations( void );
+qboolean  G_MapExists( char *name );
 
 //
 // g_ptr.c
@@ -1374,8 +1377,10 @@ extern  vmCvar_t  g_slapKnockback;
 extern  vmCvar_t  g_slapDamage;
 
 extern  vmCvar_t  g_privateMessages;
+extern  vmCvar_t  g_specChat;
 extern  vmCvar_t  g_publicAdminMessages;
 extern  vmCvar_t  g_publicClanMessages;
+
 extern  vmCvar_t  g_minLevelToSpecMM1;
 extern  vmCvar_t  g_actionPrefix;
 extern  vmCvar_t  g_myStats;

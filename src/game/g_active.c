@@ -602,6 +602,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
   client = ent->client;
   client->time100 += msec;
   client->time1000 += msec;
+  client->time10000 += msec;
 
   // smooth alien regeneration
   if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS &&

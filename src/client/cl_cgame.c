@@ -496,17 +496,15 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		if ( com_sse->integer >= 1 ) {
 			return CM_TempBoxModel_sse( vec3Load(VMA(1)), vec3Load(VMA(2)), /*int capsule*/ qfalse );
 		}
-#else
-		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qfalse );
 #endif
+		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qfalse );
 	case CG_CM_TEMPCAPSULEMODEL:
 #if id386_sse >= 1
 		if ( com_sse->integer >= 1 ) {
 			return CM_TempBoxModel_sse( vec3Load(VMA(1)), vec3Load(VMA(2)), /*int capsule*/ qtrue );
 		}
-#else
-		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qtrue );
 #endif
+		return CM_TempBoxModel( VMA(1), VMA(2), /*int capsule*/ qtrue );
 	case CG_CM_POINTCONTENTS:
 		return CM_PointContents( VMA(1), args[2] );
 	case CG_CM_TRANSFORMEDPOINTCONTENTS:
@@ -647,10 +645,9 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 
 	case CG_GETDEMOSTATE:
 		return CL_DemoState( );
+	// unused
 	case CG_GETDEMOPOS:
-		return CL_DemoPos( );
 	case CG_GETDEMONAME:
-		CL_DemoName( VMA(1), args[2] );
 		return 0;
 
 	case CG_KEY_KEYNUMTOSTRINGBUF:
@@ -701,8 +698,6 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		return FloatAsInt( floor( VMF(1) ) );
 	case CG_CEIL:
 		return FloatAsInt( ceil( VMF(1) ) );
-	case CG_ACOS:
-		return FloatAsInt( Q_acos( VMF(1) ) );
 
 	case CG_S_STOPBACKGROUNDTRACK:
 		S_StopBackgroundTrack();

@@ -129,9 +129,10 @@ static cvarTable_t    cvarTable[ ] =
   { &ui_textWrapCache, "ui_textWrapCache", "1", CVAR_ARCHIVE },
   { &ui_developer, "ui_developer", "0", CVAR_ARCHIVE | CVAR_CHEAT },
   { &ui_emoticons, "cg_emoticons", "1", CVAR_LATCH | CVAR_ARCHIVE },
+  { &ui_winner, "ui_winner", "", CVAR_ROM },
   { &ui_screen, "ui_screen", "0", CVAR_ROM },
   { &ui_screens, "ui_screens", "0", CVAR_ROM },
-  { &ui_screenname, "ui_screenname", "", CVAR_ROM },
+  { &ui_screenname, "ui_screenname", "", CVAR_ROM }
 };
 
 static int    cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );
@@ -2020,6 +2021,18 @@ static void UI_DrawScreen( rectDef_t *rect, int modifier )
                     trap_R_RegisterShaderNoMip( va( "screenshots/%s", screenshots[ shotNumber ] ) ) );
 }
 
+static qboolean UI_HideScreen( int modifier )
+{
+  int shotNumber;
+
+  shotNumber = current_screen + modifier;
+
+  if ( shotNumber < 0 || shotNumber >= maxscreens )
+    return qtrue;
+  else
+    return qfalse;
+}
+
 // FIXME: table drive
 //
 static void UI_OwnerDraw( float x, float y, float w, float h,
@@ -2125,85 +2138,66 @@ static qboolean UI_OwnerDrawVisible( int flags )
   team = atoi( Info_ValueForKey( info, "t" ) );
 
 
-  while( flags )
+  if( flags & UI_SHOW_NOTSPECTATING )
   {
-    if( flags & UI_SHOW_NOTSPECTATING )
+    if( team == TEAM_NONE )
+      vis = qfalse;
+  }
+
+  if( flags & UI_SHOW_VOTEACTIVE )
+  {
+    if( !trap_Cvar_VariableValue( "ui_voteActive" ) )
+      vis = qfalse;
+  }
+
+  if( flags & UI_SHOW_CANVOTE )
+  {
+    if( trap_Cvar_VariableValue( "ui_voteActive" ) )
+      vis = qfalse;
+  }
+
+  if( flags & UI_SHOW_TEAMVOTEACTIVE )
+  {
+    if( team == TEAM_ALIENS )
     {
-      if( team == TEAM_NONE )
+      if( !trap_Cvar_VariableValue( "ui_alienTeamVoteActive" ) )
         vis = qfalse;
-
-      flags &= ~UI_SHOW_NOTSPECTATING;
     }
-
-    if( flags & UI_SHOW_VOTEACTIVE )
+    else if( team == TEAM_HUMANS )
     {
-      if( !trap_Cvar_VariableValue( "ui_voteActive" ) )
+      if( !trap_Cvar_VariableValue( "ui_humanTeamVoteActive" ) )
         vis = qfalse;
-
-      flags &= ~UI_SHOW_VOTEACTIVE;
     }
+  }
 
-    if( flags & UI_SHOW_CANVOTE )
+  if( flags & UI_SHOW_CANTEAMVOTE )
+  {
+    if( team == TEAM_ALIENS )
     {
-      if( trap_Cvar_VariableValue( "ui_voteActive" ) )
+      if( trap_Cvar_VariableValue( "ui_alienTeamVoteActive" ) )
         vis = qfalse;
-
-      flags &= ~UI_SHOW_CANVOTE;
     }
-
-    if( flags & UI_SHOW_TEAMVOTEACTIVE )
+    else if( team == TEAM_HUMANS )
     {
-      if( team == TEAM_ALIENS )
-      {
-        if( !trap_Cvar_VariableValue( "ui_alienTeamVoteActive" ) )
-          vis = qfalse;
-      }
-      else if( team == TEAM_HUMANS )
-      {
-        if( !trap_Cvar_VariableValue( "ui_humanTeamVoteActive" ) )
-          vis = qfalse;
-      }
-
-      flags &= ~UI_SHOW_TEAMVOTEACTIVE;
-    }
-
-    if( flags & UI_SHOW_CANTEAMVOTE )
-    {
-      if( team == TEAM_ALIENS )
-      {
-        if( trap_Cvar_VariableValue( "ui_alienTeamVoteActive" ) )
-          vis = qfalse;
-      }
-      else if( team == TEAM_HUMANS )
-      {
-        if( trap_Cvar_VariableValue( "ui_humanTeamVoteActive" ) )
-          vis = qfalse;
-      }
-
-      flags &= ~UI_SHOW_CANTEAMVOTE;
-    }
-
-    if( flags & UI_SHOW_FAVORITESERVERS )
-    {
-      // this assumes you only put this type of display flag on something showing in the proper context
-
-      if( ui_netSource.integer != AS_FAVORITES )
+      if( trap_Cvar_VariableValue( "ui_humanTeamVoteActive" ) )
         vis = qfalse;
-
-      flags &= ~UI_SHOW_FAVORITESERVERS;
     }
+  }
 
-    if( flags & UI_SHOW_NOTFAVORITESERVERS )
-    {
-      // this assumes you only put this type of display flag on something showing in the proper context
+  if( flags & UI_SHOW_FAVORITESERVERS )
+  {
+    // this assumes you only put this type of display flag on something showing in the proper context
 
-      if( ui_netSource.integer == AS_FAVORITES )
-        vis = qfalse;
+    if( ui_netSource.integer != AS_FAVORITES )
+      vis = qfalse;
+  }
 
-      flags &= ~UI_SHOW_NOTFAVORITESERVERS;
-    }
-    else
-      flags = 0;
+  if( flags & UI_SHOW_NOTFAVORITESERVERS )
+  {
+    // this assumes you only put this type of display flag on something showing in the proper context
+
+    if( ui_netSource.integer == AS_FAVORITES )
+      vis = qfalse;
   }
 
   return vis;
@@ -2941,7 +2935,6 @@ static void UI_Update( const char *name )
 
 void UI_ScreenChange( char **args )
 {
-  static int saved_index = 0;
   const char *string;
   int i, modifier;
   char buffer[ 8192 ];
@@ -2990,11 +2983,6 @@ void UI_ScreenChange( char **args )
       if( Int_Parse( args, &modifier ) )
         current_screen = modifier;
     }
-    // Hack for saving the index when switching from multiview to detail view
-    else if( string[0] == '?' )
-      saved_index = current_screen;
-    else if( string[0] == '!' )
-      current_screen = saved_index;
   }
 
   // We don't want it to go below 0 or above the max number of screens
@@ -3192,9 +3180,7 @@ static void UI_RunMenuScript( char **args )
       char buffer[ MAX_CVAR_VALUE_STRING ];
       trap_Cvar_VariableStringBuffer( "ui_sayBuffer", buffer, sizeof( buffer ) );
 
-      if( !buffer[ 0 ] )
-      {
-      }
+      if( !buffer[ 0 ] ) {}
       else if( uiInfo.chatTargetClientNum != -1 )
         trap_Cmd_ExecuteText( EXEC_APPEND, va( "tell %i \"%s\"\n", uiInfo.chatTargetClientNum, buffer  ) );
       else if( uiInfo.chatTeam )
@@ -3206,10 +3192,7 @@ static void UI_RunMenuScript( char **args )
         char clantagDecolored[ 32 ];
         trap_Cvar_VariableStringBuffer( "cl_clantag", clantagDecolored, sizeof( clantagDecolored ) );
         Q_CleanStr( clantagDecolored );
-        if( strlen(clantagDecolored) > 2 && strlen(clantagDecolored) < 11 )
-          trap_Cmd_ExecuteText( EXEC_APPEND, va( "m \"%s\" \"%s\"\n", clantagDecolored, buffer ) );
-        else
-          Com_Printf( "^3Error: Your clantag has to be between 3 and 10 chars long. Current value is:^7 %s^7\n", clantagDecolored );
+        trap_Cmd_ExecuteText( EXEC_APPEND, va( "m \"%s\" \"%s\"\n", clantagDecolored, buffer ) );
       }
       else if( uiInfo.chatPrompt )
         trap_Cmd_ExecuteText( EXEC_APPEND, va( "vstr \"%s\"\n", uiInfo.chatPromptCallback ) );
@@ -4180,6 +4163,7 @@ void UI_Init( qboolean inGameLoad )
   uiInfo.uiDC.ownerDrawItem = &UI_OwnerDraw;
   uiInfo.uiDC.getValue = &UI_GetValue;
   uiInfo.uiDC.ownerDrawVisible = &UI_OwnerDrawVisible;
+  uiInfo.uiDC.hideScreen = &UI_HideScreen;
   uiInfo.uiDC.runScript = &UI_RunMenuScript;
   uiInfo.uiDC.setCVar = trap_Cvar_Set;
   uiInfo.uiDC.getCVarString = trap_Cvar_VariableStringBuffer;
@@ -4664,9 +4648,10 @@ void UI_DrawConnectScreen( qboolean overlay )
         //FIXME: Aaron: Commenting this whole thing out causes an error.
         /*if( prompt & DLP_SHOW )
         {
+          if (!Menus_ActivateByName( "download_popmenu" ))
+            return;
           Com_Printf( "Opening download prompt...\n" );
           trap_Key_SetCatcher( KEYCATCH_UI );
-          Menus_ActivateByName( "download_popmenu" );
           trap_Cvar_Set( "cl_downloadPrompt", "0" );
         }*/
 
