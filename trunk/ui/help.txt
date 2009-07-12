@@ -73,6 +73,14 @@
     "making it easier to chase down aliens without burning yourself to a "
     "crisp."
   }
+  "VSay"
+  {
+    "VSay is a new command from the Tremfusion merge. It comes in 3 different forms: "
+    "/vsay, /vsay_team, and /vsay_local. The format is like so: \n"
+    "/vsay (what to say) (optional text)\n"
+    "With what to say being as2, as3, base, builder, getback, moveforward, rush, grenade, "
+    "repair, or followme. Note, if you just use /vsay, everyone will hear it."
+  }
   "Lag Correction"
   {
     "While the Tremulous implementation of Neil Toronto's unlagged is "
