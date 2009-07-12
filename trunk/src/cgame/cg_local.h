@@ -1493,7 +1493,6 @@ extern  vmCvar_t    cg_drawCrosshairNames;
 extern  vmCvar_t    cg_crosshairSize;
 extern  vmCvar_t    cg_drawAmmoStack;
 extern  vmCvar_t    cg_draw2D;
-extern  vmCvar_t    cg_drawStatus;
 extern  vmCvar_t    cg_animSpeed;
 extern  vmCvar_t    cg_debugAnim;
 extern  vmCvar_t    cg_debugPosition;
@@ -2105,10 +2104,6 @@ qboolean      trap_GetUserCmd( int cmdNumber, usercmd_t *ucmd );
 
 // used for the weapon select and zoom
 void          trap_SetUserCmdValue( int stateValue, float sensitivityScale );
-
-// aids for VM testing
-void          testPrintInt( char *string, int i );
-void          testPrintFloat( char *string, float f );
 
 int           trap_MemoryRemaining( void );
 void          trap_R_RegisterFont(const char *fontName, int pointSize, fontInfo_t *font);

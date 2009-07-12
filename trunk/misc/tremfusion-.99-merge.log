@@ -1,0 +1,313 @@
+patching file Makefile
+Hunk #2 succeeded at 39 (offset -1 lines).
+Hunk #3 succeeded at 86 (offset -1 lines).
+Hunk #4 succeeded at 94 (offset -1 lines).
+Hunk #5 succeeded at 164 (offset -1 lines).
+Hunk #6 succeeded at 220 (offset -1 lines).
+Hunk #7 succeeded at 344 (offset -1 lines).
+Hunk #8 succeeded at 356 (offset -1 lines).
+Hunk #9 succeeded at 367 (offset -1 lines).
+Hunk #10 succeeded at 879 (offset -1 lines).
+Hunk #11 succeeded at 943 (offset -1 lines).
+Hunk #12 succeeded at 957 (offset -1 lines).
+Hunk #13 succeeded at 1117 (offset -1 lines).
+Hunk #14 succeeded at 1173 (offset -1 lines).
+Hunk #15 succeeded at 1551 (offset -1 lines).
+Hunk #16 succeeded at 1581 (offset -1 lines).
+Hunk #17 succeeded at 1718 (offset -1 lines).
+Hunk #18 succeeded at 1734 (offset -1 lines).
+Hunk #19 succeeded at 1793 (offset -1 lines).
+Hunk #20 succeeded at 1842 (offset -1 lines).
+Hunk #21 FAILED at 2065. //FIXED
+Hunk #22 succeeded at 2076 (offset 1 line).
+1 out of 22 hunks FAILED -- saving rejects to file Makefile.rej
+patching file make-macosx-ub.sh
+patching file misc/SLA-dmg.sh
+patching file misc/run-tremfusion.sh.in
+patching file misc/sdl-win32-fixes.diff
+patching file misc/transfer_settings.sh
+patching file misc/tremfusion.desktop
+patching file misc/tremfusion.xpm
+patching file misc/tremulous.xpm
+patching file src/asm/ftola.s
+patching file src/asm/matha.s
+patching file src/asm/snapvectora.s
+patching file src/asm/snd_mixa.s
+patching file src/cgame/cg_consolecmds.c
+patching file src/cgame/cg_draw.c
+Hunk #1 succeeded at 1820 (offset 154 lines).
+Hunk #2 succeeded at 2440 (offset 153 lines).
+Hunk #3 succeeded at 2563 (offset 153 lines).
+Hunk #4 succeeded at 2813 (offset 166 lines).
+Hunk #5 succeeded at 2991 (offset 169 lines).
+Hunk #6 succeeded at 3096 (offset 175 lines).
+Hunk #7 succeeded at 3596 (offset 175 lines).
+Hunk #8 succeeded at 3656 (offset 175 lines).
+Hunk #9 succeeded at 3663 (offset 175 lines).
+Hunk #10 succeeded at 3680 (offset 175 lines).
+patching file src/cgame/cg_ents.c
+patching file src/cgame/cg_local.h
+Hunk #1 succeeded at 1493 (offset 20 lines).
+Hunk #2 succeeded at 2105 (offset 22 lines).
+patching file src/cgame/cg_main.c
+Hunk #2 succeeded at 245 (offset 1 line).
+Hunk #3 succeeded at 328 (offset -1 lines).
+Hunk #4 succeeded at 1959 (offset 30 lines).
+patching file src/cgame/cg_public.h
+patching file src/cgame/cg_servercmds.c
+Hunk #1 succeeded at 580 (offset -8 lines).
+Hunk #2 succeeded at 755 (offset -8 lines).
+Hunk #3 succeeded at 790 (offset -8 lines).
+patching file src/cgame/cg_syscalls.asm
+patching file src/cgame/cg_syscalls.c
+patching file src/cgame/cg_tutorial.c
+Hunk #1 succeeded at 270 with fuzz 2.
+Hunk #2 succeeded at 292 (offset 7 lines).
+patching file src/client/cl_cgame.c
+patching file src/client/cl_console.c
+patching file src/client/cl_curl.c
+patching file src/client/cl_keys.c
+patching file src/client/cl_main.c
+Hunk #3 FAILED at 3423. //NO NEED
+1 out of 4 hunks FAILED -- saving rejects to file src/client/cl_main.c.rej
+patching file src/client/cl_net_chan.c
+patching file src/client/client.h
+patching file src/client/qal.c
+patching file src/client/qal.h
+patching file src/client/snd_dma.c
+patching file src/client/snd_local.h
+patching file src/client/snd_main.c
+patching file src/client/snd_mix.c
+patching file src/client/snd_openal.c
+patching file src/game/bg_pmove.c
+Hunk #1 succeeded at 3606 (offset 144 lines).
+patching file src/game/bg_public.h
+Hunk #1 FAILED at 224. //FIXED (kinda)
+Hunk #2 succeeded at 277 (offset 6 lines).
+1 out of 2 hunks FAILED -- saving rejects to file src/game/bg_public.h.rej
+patching file src/game/g_active.c
+Hunk #1 succeeded at 602 with fuzz 2 (offset 10 lines).
+Hunk #2 FAILED at 752. //NOT NEEDED, NO SCORES
+Hunk #3 succeeded at 2218 (offset 336 lines).
+1 out of 3 hunks FAILED -- saving rejects to file src/game/g_active.c.rej
+patching file src/game/g_admin.c
+Hunk #1 FAILED at 162. //FIXED
+Hunk #2 succeeded at 861 (offset 306 lines).
+Hunk #3 succeeded at 1715 (offset 451 lines).
+Hunk #4 succeeded at 1866 (offset 451 lines).
+Hunk #5 FAILED at 2070. //ALREADY ADDED
+Hunk #6 FAILED at 2091. //ALREADY ADDED
+Hunk #7 succeeded at 2123 with fuzz 2 (offset 464 lines).
+Hunk #8 succeeded at 2285 (offset 473 lines).
+Hunk #9 succeeded at 2306 (offset 473 lines).
+Hunk #10 FAILED at 2355. //subnetban needs rewrite
+Hunk #11 succeeded at 2849 with fuzz 2 (offset 933 lines).
+Hunk #12 succeeded at 2898 (offset 515 lines).
+Hunk #13 succeeded at 2926 (offset 515 lines).
+Hunk #14 succeeded at 2956 (offset 515 lines).
+Hunk #15 succeeded at 3015 (offset 515 lines).
+Hunk #16 succeeded at 3042 (offset 515 lines).
+Hunk #17 succeeded at 3093 (offset 515 lines).
+Hunk #18 succeeded at 3180 (offset 515 lines).
+Hunk #19 succeeded at 3201 (offset 515 lines).
+4 out of 19 hunks FAILED -- saving rejects to file src/game/g_admin.c.rej
+patching file src/game/g_admin.h
+Hunk #1 FAILED at 71. //FIXED
+1 out of 1 hunk FAILED -- saving rejects to file src/game/g_admin.h.rej
+patching file src/game/g_buildable.c
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] y
+Hunk #1 FAILED at 2446. //We already have it
+Hunk #2 succeeded at 4524 (offset 749 lines).
+Hunk #3 succeeded at 4545 (offset 749 lines).
+Hunk #4 succeeded at 4555 (offset 749 lines).
+Hunk #5 succeeded at 4577 (offset 749 lines).
+1 out of 5 hunks FAILED -- saving rejects to file src/game/g_buildable.c.rej
+patching file src/game/g_client.c
+Hunk #1 FAILED at 853. //FIXED
+Hunk #2 succeeded at 1423 (offset 221 lines).
+Hunk #3 succeeded at 1434 (offset 221 lines).
+Hunk #4 succeeded at 1450 (offset 221 lines).
+1 out of 4 hunks FAILED -- saving rejects to file src/game/g_client.c.rej
+patching file src/game/g_cmds.c
+Hunk #1 FAILED at 506. //FIXED
+Hunk #2 succeeded at 798 with fuzz 2 (offset 110 lines).
+Hunk #3 FAILED at 818. //chatteamprefix was removed by akane very early on
+Hunk #4 FAILED at 826. //FIXED
+Hunk #5 succeeded at 893 with fuzz 1 (offset 138 lines).
+Hunk #6 succeeded at 1970 with fuzz 1 (offset 869 lines).
+Hunk #7 succeeded at 1980 (offset 869 lines).
+Hunk #8 succeeded at 2003 (offset 874 lines).
+Hunk #9 FAILED at 2080. //FIXED
+Hunk #10 FAILED at 2091. //FIXED
+Hunk #11 FAILED at 2157. //FAIL VOTE SYSTEM
+Hunk #12 FAILED at 2169. //FAIL VOTE SYSTEM
+Hunk #13 FAILED at 2281. //FAIL VOTE SYSTEM
+Hunk #14 FAILED at 2291. //FIXED
+Hunk #15 succeeded at 2037 (offset 595 lines).
+Hunk #16 succeeded at 2178 with fuzz 2 (offset 638 lines).
+Hunk #17 succeeded at 2490 (offset 689 lines). //REVERTED
+Hunk #18 FAILED at 2513. //NOT NEEDED
+10 out of 18 hunks FAILED -- saving rejects to file src/game/g_cmds.c.rej
+patching file src/game/g_combat.c
+Hunk #1 FAILED at 52. //SCORE SYSTEM SUCKS
+1 out of 1 hunk FAILED -- saving rejects to file src/game/g_combat.c.rej
+patching file src/game/g_local.h
+Hunk #1 succeeded at 475 (offset 65 lines).
+Hunk #2 FAILED at 759. //FIXED
+Hunk #3 succeeded at 1053 with fuzz 1 (offset 146 lines).
+Hunk #4 succeeded at 1231 (offset 153 lines).
+Hunk #5 FAILED at 1320. //ALREADY THERE
+Hunk #6 FAILED at 1345. //FIXED
+3 out of 6 hunks FAILED -- saving rejects to file src/game/g_local.h.rej
+patching file src/game/g_main.c
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] y
+Hunk #1 FAILED at 128. //ALREADY THERE
+Hunk #2 FAILED at 153. //FIXED
+Hunk #3 FAILED at 266. //ALREADY THERE
+Hunk #4 FAILED at 284. //FIXED
+Hunk #5 succeeded at 854 (offset 160 lines).
+Hunk #6 succeeded at 1239 (offset 164 lines).
+Hunk #7 FAILED at 1994.  //PARTIAL FIX
+Hunk #8 succeeded at 2898 (offset 423 lines).
+Hunk #9 succeeded at 2968 with fuzz 1 (offset 444 lines).
+Hunk #10 succeeded at 3367 (offset 553 lines).
+5 out of 10 hunks FAILED -- saving rejects to file src/game/g_main.c.rej
+patching file src/game/g_maprotation.c 
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] y
+Hunk #1 FAILED at 34. //ALREADY THERE
+1 out of 1 hunk FAILED -- saving rejects to file src/game/g_maprotation.c.rej
+patching file src/game/g_svcmds.c
+Hunk #4 FAILED at 457. //FIXED
+Hunk #5 succeeded at 498 with fuzz 2 (offset 2 lines).
+1 out of 5 hunks FAILED -- saving rejects to file src/game/g_svcmds.c.rej
+patching file src/game/g_syscalls.asm
+patching file src/game/g_target.c
+Hunk #1 FAILED at 63. //SCORE SYSTEM FAILS
+1 out of 7 hunks FAILED -- saving rejects to file src/game/g_target.c.rej
+patching file src/game/g_trigger.c
+patching file src/game/g_weapon.c
+//
+//THIS FILE WAS REVERTED AND PATCHED MANUALLY
+//
+Hunk #1 FAILED at 463. //MD IS FINE
+Hunk #2 FAILED at 635.  //^^^
+Hunk #3 FAILED at 658.  //^^^
+Hunk #4 succeeded at 1218 (offset 283 lines). //FIXED TWO OCCASIONS
+Hunk #5 succeeded at 1381 (offset 297 lines). //HELL NOES
+Hunk #6 FAILED at 1409. //NEVAH
+Hunk #7 succeeded at 1872 with fuzz 1 (offset 293 lines). //NOT HAPPENING
+4 out of 7 hunks FAILED -- saving rejects to file src/game/g_weapon.c.rej
+patching file src/game/tremulous.h
+Hunk #1 FAILED at 77. //ZAP IS FINE AS IS
+Hunk #2 succeeded at 300 with fuzz 1 (offset 70 lines).
+Hunk #3 FAILED at 508. //WASN'T THERE ANYWAY
+Hunk #4 succeeded at 732 (offset 185 lines).
+Hunk #5 FAILED at 768. //IN THE NEWEST TF THEY USE DROOPRATE
+Hunk #6 succeeded at 868 (offset 206 lines).
+3 out of 6 hunks FAILED -- saving rejects to file src/game/tremulous.h.rej
+patching file src/libspeex/config.h
+patching file src/qcommon/cm_load.c
+patching file src/qcommon/cm_patch.c
+patching file src/qcommon/cm_trace.c
+patching file src/qcommon/cmd.c
+Hunk #2 succeeded at 889 (offset 1 line).
+Hunk #3 succeeded at 995 (offset 1 line).
+Hunk #4 succeeded at 1015 (offset 1 line).
+Hunk #5 succeeded at 1027 (offset 1 line).
+Hunk #6 succeeded at 1036 (offset 1 line).
+patching file src/qcommon/common.c
+patching file src/qcommon/files.c
+patching file src/qcommon/net_chan.c
+patching file src/qcommon/q_platform.h
+patching file src/qcommon/q_shared.h
+Hunk #1 succeeded at 30 with fuzz 1.
+patching file src/qcommon/qcommon.h
+patching file src/qcommon/qsse.c
+patching file src/qcommon/qsse.h
+patching file src/qcommon/vm.c
+patching file src/qcommon/vm_local.h
+patching file src/qcommon/vm_sparc.c
+patching file src/qcommon/vm_sparc.h
+patching file src/renderer/qgl.h
+patching file src/renderer/tr_animation.c
+patching file src/renderer/tr_backend.c
+patching file src/renderer/tr_bsp.c
+patching file src/renderer/tr_image.c
+patching file src/renderer/tr_init.c
+patching file src/renderer/tr_local.h
+patching file src/renderer/tr_marks.c
+patching file src/renderer/tr_shade.c
+patching file src/renderer/tr_shader.c
+patching file src/renderer/tr_surface.c
+patching file src/renderer/tr_types.h
+patching file src/renderer/tr_world.c
+patching file src/sdl/sdl_glimp.c
+patching file src/sdl/sdl_icon.h
+patching file src/sdl/sdl_input.c
+patching file src/server/server.h
+patching file src/server/sv_ccmds.c
+patching file src/server/sv_game.c
+patching file src/server/sv_init.c
+patching file src/server/sv_main.c
+patching file src/server/sv_net_chan.c
+patching file src/server/sv_world.c
+patching file src/sys/con_curses.c
+patching file src/sys/sys_main.c
+patching file src/sys/sys_unix.c
+patching file src/sys/sys_win32.c
+patching file src/sys/win_resource.h
+patching file src/sys/win_resource.rc
+patching file src/ui/ui_main.c
+Hunk #4 succeeded at 2935 (offset 17 lines).
+Hunk #5 succeeded at 2983 (offset 17 lines).
+Hunk #6 succeeded at 3180 (offset 17 lines).
+Hunk #7 succeeded at 3192 (offset 17 lines).
+Hunk #8 succeeded at 4163 (offset 17 lines).
+Hunk #9 succeeded at 4648 with fuzz 2 (offset 19 lines).
+patching file src/ui/ui_shared.c
+Hunk #2 succeeded at 1188 (offset 1 line).
+Hunk #3 succeeded at 1708 (offset 1 line).
+Hunk #4 succeeded at 1721 (offset 1 line).
+Hunk #5 succeeded at 1744 (offset 1 line).
+Hunk #6 succeeded at 1804 (offset 1 line).
+Hunk #7 succeeded at 1903 (offset 1 line).
+Hunk #8 succeeded at 2597 (offset 1 line).
+Hunk #9 succeeded at 3704 (offset 1 line).
+Hunk #10 succeeded at 4396 (offset 1 line).
+Hunk #11 succeeded at 4404 (offset 1 line).
+Hunk #12 succeeded at 4417 (offset 1 line).
+Hunk #13 succeeded at 4431 (offset 1 line).
+Hunk #14 succeeded at 4444 (offset 1 line).
+Hunk #15 succeeded at 4460 (offset 1 line).
+Hunk #16 succeeded at 4578 (offset 1 line).
+Hunk #17 succeeded at 4607 (offset 1 line).
+Hunk #18 succeeded at 4865 (offset 1 line).
+Hunk #19 succeeded at 4888 (offset 1 line).
+Hunk #20 succeeded at 4896 (offset 1 line).
+Hunk #21 succeeded at 4919 (offset 1 line).
+Hunk #22 succeeded at 5032 (offset 1 line).
+Hunk #23 succeeded at 6260 (offset 7 lines).
+Hunk #24 succeeded at 6269 (offset 7 lines).
+Hunk #25 succeeded at 6304 (offset 7 lines).
+Hunk #26 succeeded at 6427 (offset 7 lines).
+Hunk #27 succeeded at 6724 (offset 7 lines).
+Hunk #28 succeeded at 7527 (offset 7 lines).
+Hunk #29 succeeded at 7898 (offset 7 lines).
+patching file src/ui/ui_shared.h
+patching file src/ui/ui_syscalls.c
+patching file ui/help.txt
+Hunk #1 FAILED at 68. //GOOD
+Hunk #2 FAILED at 94. //GOOD
+2 out of 2 hunks FAILED -- saving rejects to file ui/help.txt.rej
+patching file ui/menudef.h
+Hunk #1 succeeded at 113 (offset 8 lines).
+Hunk #2 FAILED at 199. //NOT NEEDED BUT ADDED ANYWAY
+1 out of 2 hunks FAILED -- saving rejects to file ui/menudef.h.rej
+patching file ui/teamscore.menu
+patching file ui/tremulous_alien_common_hud.h
+patching file ui/tremulous_default_hud.menu
+patching file ui/tremulous_human_hud.menu
+Hunk #1 succeeded at 410 (offset 24 lines).

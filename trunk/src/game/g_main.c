@@ -166,8 +166,10 @@ vmCvar_t  g_slapKnockback;
 vmCvar_t  g_slapDamage;
 
 vmCvar_t  g_privateMessages;
+vmCvar_t  g_specChat;
 vmCvar_t  g_publicAdminMessages;
 vmCvar_t  g_publicClanMessages;
+
 vmCvar_t  g_minLevelToSpecMM1;
 vmCvar_t  g_actionPrefix;
 vmCvar_t  g_myStats;
@@ -367,8 +369,10 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_slapDamage, "g_slapDamage", "5", CVAR_ARCHIVE, 0, qfalse},
 
   { &g_privateMessages, "g_privateMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
+  { &g_specChat, "g_specChat", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_publicAdminMessages, "g_publicAdminMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_publicClanMessages, "g_publicClanMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
+  
   { &g_minLevelToSpecMM1, "g_minLevelToSpecMM1", "0", CVAR_ARCHIVE, 0, qfalse  },
   { &g_actionPrefix, "g_actionPrefix", "* ", CVAR_ARCHIVE, 0, qfalse },
   { &g_myStats, "g_myStats", "1", CVAR_ARCHIVE, 0, qfalse  },
@@ -848,10 +852,13 @@ static void G_ClearVotes( void )
 {
   level.voteTime = 0;
   trap_SetConfigstring( CS_VOTE_TIME, "" );
+  trap_SetConfigstring( CS_VOTE_STRING, "" );
   level.teamVoteTime[ 0 ] = 0;
   trap_SetConfigstring( CS_TEAMVOTE_TIME, "" );
+  trap_SetConfigstring( CS_TEAMVOTE_STRING, "" );
   level.teamVoteTime[ 1 ] = 0;
   trap_SetConfigstring( CS_TEAMVOTE_TIME + 1, "" );
+  trap_SetConfigstring( CS_TEAMVOTE_STRING + 1, "" );
 }
 
 /*
@@ -1230,13 +1237,13 @@ void G_CountSpawns( void )
 
   for( i = 1, ent = g_entities + i ; i < level.num_entities ; i++, ent++ )
   {
-    if( !ent->inuse )
+    if( !ent->inuse || ent->s.eType != ET_BUILDABLE || ent->health <= 0 )
       continue;
 
-    if( ent->s.modelindex == BA_A_SPAWN && ent->health > 0 )
+    if( ent->s.modelindex == BA_A_SPAWN )
       level.numAlienSpawns++;
 
-    if( ent->s.modelindex == BA_H_SPAWN && ent->health > 0 )
+    if( ent->s.modelindex == BA_H_SPAWN )
       level.numHumanSpawns++;
   }
 }
@@ -2061,10 +2068,10 @@ void ExitLevel( void )
       BG_Free( mark );
     }
   }
-  if( strcmp( g_nextMap.string, "0" ) )
-    trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextMap.string ) );
-  else if( G_MapRotationActive( ) )
+  if( G_MapRotationActive( ) )
     G_AdvanceMapRotation( );
+  else  if( strcmp( g_nextMap.string, "0" ) && G_MapExists( g_nextMap.string ) )
+    trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextMap.string ) );
   else
     trap_SendConsoleCommand( EXEC_APPEND, "map_restart\n" );
 
@@ -2885,6 +2892,7 @@ void CheckVote( void )
 
   level.voteTime = 0;
   trap_SetConfigstring( CS_VOTE_TIME, "" );
+  trap_SetConfigstring( CS_VOTE_STRING, "" );
 }
 
 
@@ -2954,6 +2962,7 @@ void CheckTeamVote( team_t team )
 
   level.teamVoteTime[ cs_offset ] = 0;
   trap_SetConfigstring( CS_TEAMVOTE_TIME + cs_offset, "" );
+  trap_SetConfigstring( CS_TEAMVOTE_STRING + cs_offset, "" );
 }
 
 /*

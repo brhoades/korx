@@ -72,7 +72,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ADMF_IMMUTABLE '!'
 #define ADMF_INCOGNITO '@'
 #define ADMF_PINGPRIVOVERRIDE '%'
-#define ADMF_SEESFULLLISTPLAYERS '$'
 #define ADMF_DBUILDER '#'
 #define ADMF_ADMINCHAT '?'
 #define ADMF_ADMINSTEALTH '&'
