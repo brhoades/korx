@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRODUCT_NAME            "KoRx"
 
 #ifdef _MSC_VER
-# define PRODUCT_VERSION          "0.99r2"
+# define PRODUCT_VERSION          "0.99r3"
 #endif
 
 #define CLIENT_WINDOW_TITLE       "KoRx " PRODUCT_VERSION
@@ -168,6 +168,10 @@ typedef int		clipHandle_t;
 #ifndef NULL
 #define NULL ((void *)0)
 #endif
+
+#define STRING(s)			#s
+// expand constants before stringifying them
+#define XSTRING(s)			STRING(s)
 
 #define	MAX_QINT			0x7fffffff
 #define	MIN_QINT			(-MAX_QINT-1)

@@ -1,0 +1,132 @@
+can't find file to patch at input line 4
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff -r 87f98d895296 -r 91f0a3d9f930 .hgtags
+|--- a/.hgtags	Sun Mar 29 01:15:08 2009 +0800
+|+++ b/.hgtags	Sat Jun 06 02:45:31 2009 +0800
+--------------------------
+File to patch:  
+Skip this patch? [y] y
+Skipping patch.
+1 out of 1 hunk ignored
+patching file Makefile
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] y
+Hunk #1 FAILED at 20. //FIXED
+Hunk #2 succeeded at 36 (offset -1 lines).
+Hunk #3 succeeded at 82 (offset -1 lines).
+Hunk #4 succeeded at 147 (offset -1 lines).
+Hunk #5 succeeded at 200 (offset -1 lines).
+Hunk #6 succeeded at 244 (offset -1 lines).
+Hunk #7 succeeded at 364 (offset -1 lines).
+Hunk #8 succeeded at 732 (offset -1 lines).
+Hunk #9 succeeded at 755 (offset -1 lines).
+Hunk #10 succeeded at 791 (offset -1 lines).
+Hunk #11 succeeded at 813 (offset -1 lines).
+Hunk #12 succeeded at 916 (offset -1 lines).
+Hunk #13 succeeded at 945 (offset -1 lines).
+Hunk #14 succeeded at 1008 (offset -1 lines).
+Hunk #15 succeeded at 1022 (offset -1 lines).
+Hunk #16 succeeded at 1136 (offset -1 lines).
+Hunk #17 succeeded at 1151 (offset -1 lines).
+Hunk #18 succeeded at 1426 (offset -1 lines).
+Hunk #19 succeeded at 1535 (offset -1 lines).
+Hunk #20 succeeded at 1685 (offset -1 lines).
+Hunk #21 succeeded at 1851 (offset -1 lines).
+Hunk #22 succeeded at 1974 (offset -1 lines).
+1 out of 22 hunks FAILED -- saving rejects to file Makefile.rej
+patching file make-macosx-ub.sh
+patching file misc/merge-ioq3-into-trem.sh
+patching file misc/run-tremfusion.sh.in
+patching file misc/sdl-win32-fixes.diff
+patching file misc/transfer_settings.sh
+patching file misc/tremfusion.xpm
+patching file src/cgame/cg_draw.c
+Hunk #1 succeeded at 3669 (offset 175 lines).
+Hunk #2 succeeded at 3682 (offset 175 lines).
+patching file src/cgame/cg_ents.c
+Hunk #2 FAILED at 817. //MORE ZAP CRAP
+Hunk #3 FAILED at 1050. //MORE ZAP CRAP
+2 out of 3 hunks FAILED -- saving rejects to file src/cgame/cg_ents.c.rej
+patching file src/cgame/cg_local.h
+Hunk #1 succeeded at 677 (offset 2 lines).
+patching file src/client/cl_keys.c
+patching file src/client/cl_main.c
+patching file src/game/bg_misc.c
+Hunk #1 succeeded at 4148 (offset 697 lines).
+patching file src/game/bg_pmove.c
+Hunk #3 succeeded at 2811 (offset 35 lines).
+Hunk #4 succeeded at 2839 (offset 35 lines).
+Hunk #5 succeeded at 3112 with fuzz 2 (offset 63 lines).
+Hunk #6 succeeded at 3173 (offset 67 lines).
+Hunk #7 FAILED at 3348.  //FIXED
+1 out of 7 hunks FAILED -- saving rejects to file src/game/bg_pmove.c.rej
+patching file src/game/bg_public.h
+Hunk #1 succeeded at 800 (offset 28 lines).
+Hunk #2 FAILED at 1147. //FAIL ZAP CODE
+1 out of 2 hunks FAILED -- saving rejects to file src/game/bg_public.h.rej
+patching file src/game/g_client.c
+Hunk #1 succeeded at 1559 (offset 258 lines).
+patching file src/game/g_weapon.c
+Hunk #1 FAILED at 1149. //
+Hunk #2 FAILED at 1161. //
+Hunk #3 FAILED at 1200. //ZAP
+Hunk #4 FAILED at 1258. //FAIL
+Hunk #5 FAILED at 1271. //
+Hunk #6 FAILED at 1291. //
+6 out of 6 hunks FAILED -- saving rejects to file src/game/g_weapon.c.rej
+patching file src/game/tremulous.h
+Hunk #1 succeeded at 155 (offset 25 lines).
+patching file src/master/messages.c
+patching file src/qcommon/cmd.c
+Hunk #2 succeeded at 837 (offset 1 line).
+Hunk #3 succeeded at 1025 (offset 1 line).
+Hunk #4 succeeded at 1034 (offset 1 line).
+Hunk #5 succeeded at 1107 (offset 1 line).
+patching file src/qcommon/common.c
+patching file src/qcommon/files.c
+patching file src/qcommon/q_shared.h
+Hunk #1 succeeded at 30 with fuzz 1.
+patching file src/qcommon/qcommon.h
+patching file src/qcommon/qsse.c
+patching file src/qcommon/qsse.h
+patching file src/qcommon/vm.c
+patching file src/qcommon/vm_x86_64_assembler.c
+patching file src/renderer/qgl.h
+patching file src/renderer/tr_animation.c
+patching file src/renderer/tr_backend.c
+patching file src/renderer/tr_bsp.c
+patching file src/renderer/tr_image.c
+patching file src/renderer/tr_init.c
+patching file src/renderer/tr_local.h
+patching file src/renderer/tr_shade.c
+patching file src/renderer/tr_shader.c
+patching file src/renderer/tr_surface.c
+patching file src/renderer/tr_types.h
+patching file src/renderer/tr_world.c
+patching file src/sdl/sdl_glimp.c
+patching file src/sdl/sdl_input.c
+patching file src/server/server.h
+patching file src/server/sv_client.c
+Hunk #1 succeeded at 902 (offset 4 lines).
+patching file src/server/sv_init.c
+patching file src/server/sv_main.c
+patching file src/server/sv_world.c
+patching file src/sys/con_curses.c
+patching file src/sys/con_tty.c
+patching file src/sys/con_win32.c
+patching file src/sys/sys_unix.c
+patching file src/sys/sys_win32.c
+patching file src/ui/ui_local.h
+patching file src/ui/ui_main.c
+patching file src/ui/ui_shared.c
+Hunk #1 succeeded at 1804 (offset 1 line).
+Hunk #2 succeeded at 2884 (offset 1 line).
+Hunk #3 succeeded at 2903 (offset 1 line).
+Hunk #4 succeeded at 3545 (offset 1 line).
+Hunk #5 succeeded at 3978 (offset 1 line).
+Hunk #6 succeeded at 5559 (offset 1 line).
+Hunk #7 FAILED at 5991. //WE ALREADY HAVE IT
+1 out of 7 hunks FAILED -- saving rejects to file src/ui/ui_shared.c.rej
+patching file voice/default.voice
