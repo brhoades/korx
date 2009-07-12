@@ -61,6 +61,16 @@ typedef struct
  
 delayed_cmd_s delayed_cmd[MAX_DELAYED_COMMANDS]; 
 
+typedef struct cmd_function_s
+{
+	struct cmd_function_s	*next;
+	char					*name;
+	xcommand_t				function;
+	completionFunc_t	complete;
+} cmd_function_t;
+
+cmd_function_t *Cmd_FindCommand( const char *cmd_name );
+
 //=============================================================================
 
 /*
@@ -827,7 +837,7 @@ void Cmd_Random_f( void ) {
 	int 	v1;
 	int 	v2;
 
-	if (Cmd_Argc() == 3) {
+	if (Cmd_Argc() == 4) {
 		v1 = atoi(Cmd_Argv(2));
 		v2 = atoi(Cmd_Argv(3));
 		Cvar_SetValueLatched(Cmd_Argv(1), (int)(rand() / (float)RAND_MAX * (MAX(v1, v2) - MIN(v1, v2)) + MIN(v1, v2)));
@@ -1015,10 +1025,20 @@ void Cmd_Alias_f(void)
 	// Modify/create an alias
 	if (Cmd_Argc() > 2)
 	{
+		cmd_function_t	*cmd;
+
 		// Crude protection from infinite loops
 		if (!strcmp(Cmd_Argv(2), name))
 		{
 			Com_Printf("Can't make an alias to itself\n");
+			return;
+		}
+
+		// Don't allow overriding builtin commands
+		cmd = Cmd_FindCommand( name );
+		if (cmd && cmd->function != Cmd_RunAlias_f)
+		{
+			Com_Printf("Can't override a builtin function with an alias\n");
 			return;
 		}
 
@@ -1086,15 +1106,6 @@ void	Cmd_DelayCompletion( void(*callback)(const char *s) ) {
 
 =============================================================================
 */
-
-typedef struct cmd_function_s
-{
-	struct cmd_function_s	*next;
-	char					*name;
-	xcommand_t				function;
-	completionFunc_t	complete;
-} cmd_function_t;
-
 
 typedef struct cmdContext_s
 {

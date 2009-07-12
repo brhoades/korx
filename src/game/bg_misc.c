@@ -4148,6 +4148,117 @@ int atoi_neg( char *token, qboolean allowNegative )
 
 /*
 ===============
+BG_PackZapTargets
+
+pack up to 12 targets into an entityState_t
+===============
+*/
+//FIXME: magic - 1 and count makes no sense
+void BG_PackZapTargets( entityState_t *es, int creator, const int *targets, int count )
+{
+  int i;
+  es->misc = es->time = es->time2 = es->constantLight = 0;
+  for( i = 0; i < MAX_GENTITYNUM_PACK; i++ )
+  {
+    int entityNum = ENTITYNUM_NONE;
+    if( i < count )
+    {
+      if( i == 0 )
+        entityNum = creator;
+      else
+        entityNum = targets[ i - 1 ];
+    }
+    if( entityNum & ~(GENTITYNUM_MASK) )
+    {
+      Com_Printf("Warning: BG_PackZapTargets: targets[%d] (%d) doesn't fit in %d bits, using ENTITYNUM_NONE\n",
+                 i, targets[i], GENTITYNUM_BITS);
+      entityNum = ENTITYNUM_NONE;
+    }
+    switch( i )
+    {
+      case 0:
+        es->misc |= entityNum;
+        break;
+      case 1:
+        es->time |= entityNum;
+        break;
+      case 2:
+        es->time |= entityNum << GENTITYNUM_BITS;
+        break;
+      case 3:
+        es->time |= entityNum << (GENTITYNUM_BITS * 2);
+        break;
+      case 4:
+        es->time2 |= entityNum;
+        break;
+      case 5:
+        es->time2 |= entityNum << GENTITYNUM_BITS;
+        break;
+      case 6:
+        es->time2 |= entityNum << (GENTITYNUM_BITS * 2);
+        break;
+      case 7:
+        es->constantLight |= entityNum;
+        break;
+      case 8:
+        es->constantLight |= entityNum << GENTITYNUM_BITS;
+        break;
+      case 9:
+        es->constantLight |= entityNum << (GENTITYNUM_BITS * 2);
+    }
+  }
+}
+
+/*
+===============
+BG_UnpackZapTargets
+
+unpacks the 12 targets in an entityState_t
+===============
+*/
+void BG_UnpackZapTargets( entityState_t *es, int *creator, int *targets, int count )
+{
+  int i;
+  for( i = 0; i < count; i++ )
+  {
+    switch( i )
+    {
+      case 0:
+        if(creator)
+          *creator = es->misc & GENTITYNUM_MASK;
+        break;
+      case 1:
+        targets[ i - 1 ] = es->time & GENTITYNUM_MASK;
+        break;
+      case 2:
+        targets[ i - 1 ] = (es->time >> GENTITYNUM_BITS) & GENTITYNUM_MASK;
+        break;
+      case 3:
+        targets[ i - 1 ] = (es->time >> (GENTITYNUM_BITS * 2)) & GENTITYNUM_MASK;
+        break;
+      case 4:
+        targets[ i - 1 ] = es->time2 & GENTITYNUM_MASK;
+        break;
+      case 5:
+        targets[ i - 1 ] = (es->time2 >> GENTITYNUM_BITS) & GENTITYNUM_MASK;
+        break;
+      case 6:
+        targets[ i - 1 ] = (es->time2 >> (GENTITYNUM_BITS * 2)) & GENTITYNUM_MASK;
+        break;
+      case 7:
+        targets[ i - 1 ] = es->constantLight & GENTITYNUM_MASK;
+        break;
+      case 8:
+        targets[ i - 1 ] = (es->constantLight >> GENTITYNUM_BITS) & GENTITYNUM_MASK;
+        break;
+      case 9:
+        targets[ i - 1 ] = (es->constantLight >> (GENTITYNUM_BITS * 2)) & GENTITYNUM_MASK;
+        break;
+    }
+  }
+}
+/*
+===============
 BG_ParseCSVEquipmentList
 ===============
 */

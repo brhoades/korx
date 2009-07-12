@@ -246,7 +246,7 @@ extern int demo_protocols[];
 #define MASTER_SERVER_NAME	"master.tremulous.net"
 #endif
 #ifndef MOTD_SERVER_NAME
-#define MOTD_SERVER_NAME	"master.tremforges.net"
+#define MOTD_SERVER_NAME	"master.tremfusion.net"
 #endif
 
 #define	PORT_MASTER			30710
@@ -574,8 +574,6 @@ issues.
 #define FS_EXTRA_REF	0x08
 
 #define	MAX_FILE_HANDLES	64
-
-#define BASEGAME "base"
 
 #ifdef DEDICATED
 #	define Q3CONFIG_CFG "autogen_server.cfg"
