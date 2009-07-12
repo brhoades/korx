@@ -110,6 +110,14 @@ ifndef USE_CODEC_VORBIS
   USE_CODEC_VORBIS=1
 endif
 
+ifndef USE_CIN_THEORA
+  USE_CIN_THEORA=0
+endif
+
+ifeq ($(USE_CIN_THEORA),1)
+  USE_CODEC_VORBIS=1
+endif
+
 ifndef USE_CURSES
   USE_CURSES=1
 endif
@@ -151,7 +159,11 @@ ifndef USE_SSE
   ifeq ($(ARCH),x86_64)
     USE_SSE=2
   else
-    USE_SSE=1
+	ifeq ($(ARCH),x86)
+	  USE_SSE=1
+	else
+	  USE_SSE=0
+	endif
   endif
 endif
 
@@ -197,10 +209,24 @@ ifeq ($(shell which pkg-config > /dev/null; echo $$?),0)
   SDL_LIBS=$(shell pkg-config --libs sdl)
   OGG_CFLAGS=$(shell pkg-config --cflags ogg vorbis vorbisfile)
   OGG_LIBS=$(shell pkg-config --libs ogg vorbis vorbisfile)
+  # Some distros still use the old pkgconfig string
+  THEORA_CFLAGS=$(shell pkg-config --cflags theoradec 2> /dev/null)
+  THEORA_LIBS=$(shell pkg-config --libs theoradec 2> /dev/null)
+  ifeq ($(THEORA_LIBS),)
+    THEORA_CFLAGS=$(shell pkg-config --cflags theora)
+	THEORA_LIBS=$(shell pkg-config --libs theora)
+  endif
+endif
+# Use sdl-config if all else fails
+ifeq ($(SDL_CFLAGS),)
+  ifeq ($(shell which sdl-config > /dev/null; echo $$?),0)
+    SDL_CFLAGS=$(shell sdl-config --cflags)
+    SDL_LIBS=$(shell sdl-config --libs)
+  endif
 endif
 
 # version info
-VERSION_NUMBER=0.99r2
+VERSION_NUMBER=0.99r3
 
 ifeq ($(USE_SCM_VERSION),1)
   # For svn
@@ -279,7 +305,7 @@ ifeq ($(PLATFORM),linux)
   endif
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes -pipe \
-    -DUSE_ICON $(shell sdl-config --cflags)
+    -DUSE_ICON $(SDL_CFLAGS)
 
   ifeq ($(USE_OPENAL),1)
     BASE_CFLAGS += -DUSE_OPENAL
@@ -314,6 +340,16 @@ ifeq ($(PLATFORM),linux)
       BASE_CFLAGS += $(OGG_CFLAGS)
     endif
     TTYC_CFLAGS += -UUSE_CODEC_VORBIS
+  endif
+
+  ifeq ($(USE_CIN_THEORA),1)
+    BASE_CFLAGS += -DUSE_CIN_THEORA
+    ifeq ($(USE_LOCAL_HEADERS),1)
+      BASE_CFLAGS += -I$(OGGDIR)
+    else
+      BASE_CFLAGS += $(THEORA_CFLAGS)
+    endif
+    TTYC_CFLAGS += -UUSE_CIN_THEORA
   endif
 
   OPTIMIZE = -O3 -funroll-loops -fomit-frame-pointer
@@ -367,7 +403,7 @@ ifeq ($(PLATFORM),linux)
   CLIENT_LDFLAGS=-L/usr/X11R6/$(LIB)
   LIBS=-ldl -lm
 
-  CLIENT_LIBS += $(shell sdl-config --libs) -lGL -lpthread -lX11
+  CLIENT_LIBS += $(SDL_LIBS) -lGL -lpthread -lX11
 
   ifeq ($(USE_OPENAL),1)
     ifneq ($(USE_OPENAL_DLOPEN),1)
@@ -384,6 +420,10 @@ ifeq ($(PLATFORM),linux)
 
   ifeq ($(USE_CODEC_VORBIS),1)
     CLIENT_LIBS += $(OGG_LIBS)
+  endif
+
+  ifeq ($(USE_CIN_THEORA),1)
+    CLIENT_LIBS += $(THEORA_LIBS)
   endif
 
   ifeq ($(USE_CURSES),1)
@@ -436,9 +476,9 @@ ifeq ($(PLATFORM),darwin)
   endif
   ifeq ($(ARCH),x86)
     OPTIMIZE += -march=prescott -mfpmath=sse
-    # x86 vm will crash without -mstackrealign since MMX instructions will be
-    # used no matter what and they corrupt the frame pointer in VM calls
-    BASE_CFLAGS += -mstackrealign
+  endif
+  ifeq ($(ARCH),x86_64)
+    OPTIMIZE += -mfpmath=sse
   endif
 
   BASE_CFLAGS += -DMACOS_X -fno-common -pipe
@@ -492,6 +532,16 @@ ifeq ($(PLATFORM),darwin)
     TTYC_CFLAGS += -UUSE_CODEC_VORBIS
   endif
 
+  ifeq ($(USE_CIN_THEORA),1)
+    BASE_CFLAGS += -DUSE_CIN_THEORA
+    ifeq ($(USE_LOCAL_HEADERS),1)
+      BASE_CFLAGS += -I$(OGGDIR)
+    else
+      BASE_CFLAGS += $(THEORA_CFLAGS)
+    endif
+    TTYC_CFLAGS += -UUSE_CIN_THEORA
+  endif
+
   ifeq ($(USE_CURSES),1)
      LIBS += -lncurses
      BASE_CFLAGS += -DUSE_CURSES
@@ -520,6 +570,15 @@ ifeq ($(PLATFORM),darwin)
       LIBOGGSRC=$(LIBSDIR)/macosx/libogg.a
     else
       CLIENT_LIBS += $(OGG_LIBS)
+    endif
+  endif
+
+  ifeq ($(USE_CIN_THEORA),1)
+    ifeq ($(USE_LOCAL_HEADERS),1)
+      LIBTHEORA=$(B)/libtheoradec.a
+      LIBTHEORASRC=$(LIBSDIR)/macosx/libtheoradec.a
+    else
+      CLIENT_LIBS += $(THEORA_LIBS)
     endif
   endif
 
@@ -594,6 +653,16 @@ ifeq ($(PLATFORM),mingw32)
     TTYC_CFLAGS += -UUSE_CODEC_VORBIS
   endif
 
+  ifeq ($(USE_CIN_THEORA),1)
+    BASE_CFLAGS += -DUSE_CIN_THEORA
+    ifeq ($(USE_LOCAL_HEADERS),1)
+      BASE_CFLAGS += -I$(OGGDIR)
+    else
+      BASE_CFLAGS += $(THEORA_CFLAGS)
+    endif
+    TTYC_CFLAGS += -UUSE_CIN_THEORA
+  endif
+
   OPTIMIZE = -O3 -march=i586 -fno-omit-frame-pointer \
     -falign-loops=2 -funroll-loops -falign-jumps=2 -falign-functions=2 \
     -fstrength-reduce
@@ -644,6 +713,15 @@ ifeq ($(PLATFORM),mingw32)
     endif
   endif
 
+  ifeq ($(USE_CIN_THEORA),1)
+    ifeq ($(USE_LOCAL_HEADERS),1)
+      CLIENT_LIBS += \
+        $(LIBSDIR)/win32/libtheoradec.a
+    else
+      CLIENT_LIBS += $(THEORA_LIBS)
+    endif
+  endif
+
   ifeq ($(USE_CURSES),1)
      LIBS += $(LIBSDIR)/win32/pdcurses.a
      BASE_CFLAGS += -DUSE_CURSES -I$(PDCDIR)
@@ -685,7 +763,7 @@ ifeq ($(PLATFORM),freebsd)
 
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes \
-    -DUSE_ICON $(shell sdl-config --cflags)
+    -DUSE_ICON $(SDL_CFLAGS)
 
   ifeq ($(USE_OPENAL),1)
     BASE_CFLAGS += -DUSE_OPENAL
@@ -735,7 +813,7 @@ ifeq ($(PLATFORM),freebsd)
   # don't need -ldl (FreeBSD)
   LIBS+=-lm
 
-  CLIENT_LIBS += $(shell sdl-config --libs) -lGL -lpthread
+  CLIENT_LIBS += $(SDL_LIBS) -lGL -lpthread
 
   ifeq ($(USE_OPENAL),1)
     ifneq ($(USE_OPENAL_DLOPEN),1)
@@ -760,7 +838,7 @@ ifeq ($(PLATFORM),openbsd)
 
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes \
-    -DUSE_ICON $(shell sdl-config --cflags)
+    -DUSE_ICON $(SDL_CFLAGS)
 
   ifeq ($(USE_OPENAL),1)
     BASE_CFLAGS += -DUSE_OPENAL
@@ -793,7 +871,7 @@ ifeq ($(PLATFORM),openbsd)
 
   LIBS=-lm
 
-  CLIENT_LIBS = $(shell sdl-config --libs) -lGL -lpthread
+  CLIENT_LIBS = $(SDL_LIBS) -lGL -lpthread
 
   ifeq ($(USE_OPENAL),1)
     ifneq ($(USE_OPENAL_DLOPEN),1)
@@ -844,7 +922,7 @@ ifeq ($(PLATFORM),irix64)
   MKDIR = mkdir -p
 
   BASE_CFLAGS=-Dstricmp=strcasecmp -Xcpluscomm -woff 1185 \
-    -I. $(shell sdl-config --cflags) -I$(ROOT)/usr/include -DNO_VM_COMPILED
+    -I. $(SDL_CFLAGS) -I$(ROOT)/usr/include -DNO_VM_COMPILED
   RELEASE_CFLAGS=$(BASE_CFLAGS) -O3
   DEBUG_CFLAGS=$(BASE_CFLAGS) -g
 
@@ -854,7 +932,7 @@ ifeq ($(PLATFORM),irix64)
 
   LIBS=-ldl -lm -lgen
   # FIXME: The X libraries probably aren't necessary?
-  CLIENT_LIBS=-L/usr/X11/$(LIB) $(shell sdl-config --libs) -lGL \
+  CLIENT_LIBS=-L/usr/X11/$(LIB) $(SDL_LIBS) -lGL \
     -lX11 -lXext -lm
 
 else # ifeq IRIX
@@ -883,7 +961,7 @@ ifeq ($(PLATFORM),sunos)
 
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes \
-    -pipe -DUSE_ICON $(shell sdl-config --cflags)
+    -pipe -DUSE_ICON $(SDL_CFLAGS)
 
   OPTIMIZE = -O3 -funroll-loops
 
@@ -892,6 +970,7 @@ ifeq ($(PLATFORM),sunos)
       -fstrength-reduce -falign-functions=2 \
       -mtune=ultrasparc3 -mv8plus -mno-faster-structs \
       -funroll-loops #-mv8plus
+    HAVE_VM_COMPILED=true
   else
   ifeq ($(ARCH),x86)
     OPTIMIZE = -O3 -march=i586 -fomit-frame-pointer \
@@ -918,7 +997,7 @@ ifeq ($(PLATFORM),sunos)
 
   LIBS=-lsocket -lnsl -ldl -lm
 
-  CLIENT_LIBS +=$(shell sdl-config --libs) -lGL -lpthread
+  CLIENT_LIBS +=$(SDL_LIBS) -lGL -lpthread
 
 else # ifeq sunos
 
@@ -1122,6 +1201,18 @@ targets: makedirs
 		echo "    $$i"; \
 	done
 	@echo ""
+	@echo "  CLIENT_LDFLAGS:"
+	-@for i in $(CLIENT_LDFLAGS); \
+	do \
+		echo "    $$i"; \
+	done
+	@echo ""
+	@echo "  CLIENT_LIBS:"
+	-@for i in $(CLIENT_LIBS); \
+	do \
+		echo "    $$i"; \
+	done
+	@echo ""
 	@echo "  Output:"
 	-@for i in $(TARGETS); \
 	do \
@@ -1149,6 +1240,35 @@ makedirs:
 	@if [ ! -d $(B)/tools/etc ];then $(MKDIR) $(B)/tools/etc;fi
 	@if [ ! -d $(B)/tools/rcc ];then $(MKDIR) $(B)/tools/rcc;fi
 	@if [ ! -d $(B)/tools/lburg ];then $(MKDIR) $(B)/tools/lburg;fi
+
+#############################################################################
+# INSTALL
+#############################################################################
+
+install: release run-tremfusion.sh
+	@echo ""
+	@echo "Installing TremFusion in $(BUILDROOT)$(INSTALL_PREFIX):"
+	@if [ ! -d $(BUILDROOT)$(INSTALL_PREFIX) ];then $(MKDIR) -p $(BUILDROOT)$(INSTALL_PREFIX);fi
+	@if [ ! -d $(BUILDROOT)$(BINDIR) ];then $(MKDIR) -p $(BUILDROOT)$(BINDIR);fi
+	@if [ ! -d $(BUILDROOT)$(LIBDIR)/tremfusion ];then $(MKDIR) -p $(BUILDROOT)$(LIBDIR)/tremfusion;fi
+	@if [ ! -d $(BUILDROOT)$(DATADIR)/tremfusion ];then $(MKDIR) -p $(BUILDROOT)$(DATADIR)/tremfusion;fi
+ifeq ($(BUILD_CLIENT),1)
+	@$(Q)$(INSTALL) -vpm 755 $(BR)/tremulous.$(ARCH)$(BINEXT) $(BUILDROOT)$(LIBDIR)/tremfusion/tremfusion
+	@$(Q)$(INSTALL) -vpm 755 run-tremfusion.sh $(BUILDROOT)$(BINDIR)/tremfusion
+endif
+ifeq ($(BUILD_CLIENT_TTY),1)
+	@$(Q)$(INSTALL) -vpm 755 $(BR)/tremulous-tty.$(ARCH)$(BINEXT) $(BUILDROOT)$(LIBDIR)/tremfusion/tremfusion-tty
+	@$(Q)$(INSTALL) -vpm 755 run-tremfusion.sh $(BUILDROOT)$(BINDIR)/tremfusion-tty
+endif
+ifeq ($(BUILD_SERVER),1)
+	@$(Q)$(INSTALL) -vpm 755 $(BR)/tremded.$(ARCH)$(BINEXT) $(BUILDROOT)$(LIBDIR)/tremfusion/tremfusionded
+	@$(Q)$(INSTALL) -vpm 755 run-tremfusion.sh $(BUILDROOT)$(BINDIR)/tremfusionded
+endif
+
+run-tremfusion.sh:
+	@cp misc/run-tremfusion.sh.in ./run-tremfusion.sh
+	@sed -ie "s!@LIBDIR@!$(LIBDIR)!" run-tremfusion.sh
+	@sed -ie "s!@DATADIR@!$(DATADIR)!" run-tremfusion.sh
 
 #############################################################################
 # QVM BUILD TOOLS
@@ -1287,6 +1407,7 @@ $(Q3ASM): $(Q3ASMOBJ)
 #############################################################################
 
 Q3OBJ_ = \
+  $(B)/client/cin_ogm.o \
   $(B)/client/cl_cgame.o \
   $(B)/client/cl_cin.o \
   $(B)/client/cl_console.o \
@@ -1576,6 +1697,14 @@ endif
 ifneq ($(strip $(LIBVORBISFILE)),)
 ifneq ($(strip $(LIBVORBISFILESRC)),)
 $(LIBVORBISFILE) : $(LIBVORBISFILESRC)
+	cp $< $@
+	ranlib $@
+endif
+endif
+
+ifneq ($(strip $(LIBTHEORA)),)
+ifneq ($(strip $(LIBTHEORASRC)),)
+$(LIBTHEORA) : $(LIBTHEORASRC)
 	cp $< $@
 	ranlib $@
 endif

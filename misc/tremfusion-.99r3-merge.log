@@ -1,0 +1,94 @@
+can't find file to patch at input line 4
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff -r 91f0a3d9f930 -r 4b5fc919fd59 .hgtags
+|--- a/.hgtags	Sat Jun 06 02:45:31 2009 +0800
+|+++ b/.hgtags	Mon Jul 06 04:07:05 2009 +0800
+--------------------------
+File to patch: n
+n: No such file or directory
+Skip this patch? [y] y
+Skipping patch.
+1 out of 1 hunk ignored
+patching file Makefile
+Hunk #1 succeeded at 110 (offset -1 lines).
+Hunk #2 succeeded at 159 (offset -1 lines).
+Hunk #3 succeeded at 209 (offset -1 lines).
+Hunk #4 succeeded at 305 (offset -1 lines).
+Hunk #5 succeeded at 342 (offset -1 lines).
+Hunk #6 succeeded at 403 (offset -1 lines).
+Hunk #7 succeeded at 422 (offset -1 lines).
+Hunk #8 succeeded at 476 (offset -1 lines).
+Hunk #9 succeeded at 532 (offset -1 lines).
+Hunk #10 succeeded at 573 (offset -1 lines).
+Hunk #11 succeeded at 653 (offset -1 lines).
+Hunk #12 succeeded at 713 (offset -1 lines).
+Hunk #13 succeeded at 763 (offset -1 lines).
+Hunk #14 succeeded at 813 (offset -1 lines).
+Hunk #15 succeeded at 838 (offset -1 lines).
+Hunk #16 succeeded at 871 (offset -1 lines).
+Hunk #17 succeeded at 922 (offset -1 lines).
+Hunk #18 succeeded at 932 (offset -1 lines).
+Hunk #19 succeeded at 961 (offset -1 lines).
+Hunk #20 succeeded at 970 (offset -1 lines).
+Hunk #21 succeeded at 997 (offset -1 lines).
+Hunk #22 succeeded at 1201 (offset -1 lines).
+Hunk #23 succeeded at 1242 (offset -1 lines).
+Hunk #24 succeeded at 1407 (offset -1 lines).
+Hunk #25 succeeded at 1702 (offset -1 lines).
+patching file make-macosx-ub.sh
+patching file misc/lakitu7-qvm-svdemo.patch
+The next patch would create the file misc/run-tremfusion.sh.in,
+which already exists!  Assume -R? [n] y
+patching file misc/run-tremfusion.sh.in
+Hunk #1 FAILED at 1. //FILE ALREADY EXISTS
+File misc/run-tremfusion.sh.in is not empty after patch, as expected
+1 out of 1 hunk FAILED -- saving rejects to file misc/run-tremfusion.sh.in.rej
+patching file src/client/cin_ogm.c
+patching file src/client/cl_cgame.c
+patching file src/client/cl_cin.c
+patching file src/client/cl_console.c
+patching file src/client/cl_keys.c
+patching file src/client/cl_main.c
+Hunk #11 FAILED at 3672.
+1 out of 12 hunks FAILED -- saving rejects to file src/client/cl_main.c.rej
+patching file src/client/client.h
+patching file src/client/keys.h
+patching file src/client/qal.h
+patching file src/client/snd_codec.c
+patching file src/client/snd_openal.c
+patching file src/ogg_vorbis/ogg/ogg.h
+patching file src/ogg_vorbis/theora/codec.h
+patching file src/ogg_vorbis/theora/theora.h
+patching file src/ogg_vorbis/theora/theoradec.h
+patching file src/ogg_vorbis/vorbis/codec.h
+patching file src/ogg_vorbis/vorbis/vorbisfile.h
+patching file src/qcommon/common.c
+patching file src/qcommon/cvar.c
+patching file src/qcommon/net_ip.c
+patching file src/qcommon/q_shared.h
+Hunk #1 succeeded at 30 with fuzz 1.
+patching file src/qcommon/qcommon.h
+patching file src/qcommon/vm_x86_64.c
+patching file src/renderer/tr_init.c
+patching file src/renderer/tr_local.h
+patching file src/renderer/tr_main.c
+patching file src/renderer/tr_noise.c
+patching file src/renderer/tr_surface.c
+patching file src/sdl/sdl_glimp.c
+patching file src/server/server.h
+patching file src/server/sv_client.c
+Hunk #3 succeeded at 395 (offset 4 lines).
+Hunk #4 succeeded at 530 (offset 4 lines).
+Hunk #5 succeeded at 544 (offset 4 lines).
+Hunk #6 succeeded at 558 (offset 4 lines).
+Hunk #7 succeeded at 587 (offset 4 lines).
+patching file src/server/sv_init.c
+patching file src/server/sv_main.c
+patching file src/server/sv_net_chan.c
+patching file src/server/sv_world.c
+patching file src/sys/con_tty.c
+patching file src/sys/sys_main.c
+patching file src/sys/sys_win32.c
+aaron@kamilah ~/work/korx/ $ 
