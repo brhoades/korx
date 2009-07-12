@@ -1946,6 +1946,8 @@ static void CG_DrawStageReport( rectDef_t *rect, float text_x, float text_y,
         Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, %d credits for next stage",
             cgs.humanStage + 1, credits );
     }
+    else
+      Com_sprintf( s, MAX_TOKEN_CHARS, "" );
   }
   else if( cg.extremesuddendeath )
   {
