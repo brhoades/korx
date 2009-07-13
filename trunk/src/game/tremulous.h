@@ -182,7 +182,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_HLTH_MODIFIER         1.0f
 #define AHM(h)                      ((int)((float)h*ALIEN_HLTH_MODIFIER))
 
-#define ALIEN_VALUE_MODIFIER        1.10f
+#define ALIEN_VALUE_MODIFIER        1.0f
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ALIEN_REGEN_DAMAGE_TIME     1500 //msec since damage that regen starts again
@@ -467,7 +467,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_RELOAD                2000
 #define RIFLE_PRICE                 0
 #define RIFLE_SPREAD                200
-#define RIFLE_DMG                   HDM(5)
+#define RIFLE_DMG                   HDM(6)
 #define RIFLE_RECOIL_MIN_Y          0.25
 #define RIFLE_RECOIL_MAX_Y          1.2
 #define RIFLE_RECOIL_MAX_X          0.3
@@ -496,7 +496,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_K_SCALE             1.0f
 #define SHOTGUN_RELOAD              2000
 #define SHOTGUN_SPREAD              600
-#define SHOTGUN_DMG                 HDM(7)
+#define SHOTGUN_DMG                 HDM(9)
 #define SHOTGUN_RANGE               (8192 * 12)
 #define SHOTGUN_PRI_RECOIL_MIN_Y    4
 #define SHOTGUN_PRI_RECOIL_MAX_Y    10
@@ -509,7 +509,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 #define SHOTGUN_NADE_REPEAT         1000
-#define SHOTGUN_NADE_DAMAGE         HDM(40)
+#define SHOTGUN_NADE_DAMAGE         HDM(45)
 #define SHOTGUN_NADE_RANGE          100.0f
 #define SHOTGUN_NADE_SPEED          800.0f
 #define SHOTGUN_NADE_TAKE           2
@@ -526,7 +526,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_PRICE               350
 #define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            4
-#define MDRIVER_DMG                 HDM(40)
+#define MDRIVER_DMG                 HDM(43)
 #define MDRIVER_REPEAT              1000
 #define MDRIVER_K_SCALE             1.0f
 #define MDRIVER_RELOAD              2000
@@ -544,7 +544,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_REPEAT             80
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             1000
-#define CHAINGUN_DMG                HDM(6)
+#define CHAINGUN_DMG                HDM(8)
 #define CHAINGUN_PRI_RECOIL_MIN_Y   0.15
 #define CHAINGUN_PRI_RECOIL_MAX_Y   1.5
 #define CHAINGUN_PRI_RECOIL_MAX_X   2
@@ -556,7 +556,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define CHAINGUN_REPEAT_2           60
 #define CHAINGUN_SPREAD_2           600
-#define CHAINGUN_DMG_2              HDM(4)
+#define CHAINGUN_DMG_2              HDM(5)
 
 #define PRIFLE_PRICE                400
 #define PRIFLE_CLIPS                50
@@ -686,8 +686,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_DISABLE_TIME        1000   //time to disable the jetpack when player damaged
 #define JETPACK_DISABLE_CHANCE      0.3f
 #define JETPACK_CHARGE_CAPACITY     90     // JPU (Jetpack Power Units) (Consumption Rate = 1 JPU/s)
-#define JETPACK_STD_CHARGE_RATE     1.0   // x JPU/s (Onboard Recharge)
-#define JETPACK_RC_CHARGE_RATE      2.0   // x JPU/s (Reactor Charge Bonus) (RC Up = RC Charge Bonus + Onboard Charge Rate)
+#define JETPACK_STD_CHARGE_RATE     0.5f   // x JPU/s (Onboard Recharge)
+#define JETPACK_RC_CHARGE_RATE      2.0f   // x JPU/s (Reactor Charge Bonus) (RC Up = RC Charge Bonus + Onboard Charge Rate)
 #define JETPACK_RC_CHARGE_DELAY     10000 // Milliseconds from when jetpack was last deactivated before RC starts giving extra charge
 #define JETPACK_FAILURE             10     // Jetpack encounters intermittent failure when its charge is equal to or less than this
 #define JETPACK_EXPLODE_MOD         7      // Range and damage multiplier for shotgun nade - used when a jetpack explodes due to mara zap
