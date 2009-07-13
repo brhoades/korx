@@ -611,7 +611,8 @@ void Cmd_Team_f( gentity_t *ent )
     if( ent->client->pers.specd )
     {
       team = TEAM_NONE;
-      trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
+      trap_SendServerCommand( ent-g_entities, va( "print \"You cannot join teams, you are forced to the spectators\n\"" ) );
+      return;
     }
    	if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
     {
@@ -639,7 +640,7 @@ void Cmd_Team_f( gentity_t *ent )
     case TEAM_ALIENS:
       if( ent->client->pers.specd )
       {
-        trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
+        trap_SendServerCommand( ent-g_entities, va( "print \"You cannot join teams, you are forced to the spectators\n\"" ) );
         return;
       }
       if( g_forceAutoSelect.integer && !G_admin_permission(ent, ADMF_FORCETEAMCHANGE) )
@@ -681,7 +682,7 @@ void Cmd_Team_f( gentity_t *ent )
     case TEAM_HUMANS:
       if( ent->client->pers.specd )
       {
-        trap_SendServerCommand( ent-g_entities, va( "print \"you cannot join teams\n\"" ) );
+        trap_SendServerCommand( ent-g_entities, va( "print \"You cannot join teams, you are forced to the spectators\n\"" ) );
         return;
       }
       if( g_forceAutoSelect.integer && !G_admin_permission(ent, ADMF_FORCETEAMCHANGE) )
