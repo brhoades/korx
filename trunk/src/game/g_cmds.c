@@ -3003,7 +3003,7 @@ void Cmd_Buy_f( gentity_t *ent )
         ent->client->cloakReady = qtrue;
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
         BG_DeactivateUpgrade( UP_CLOAK, ent->client->ps.stats );
-        ent->client->ps.stats[ STAT_CLOAK ] = 100;
+        ent->client->ps.stats[ STAT_CLOAK ] = CLOAK_TIME;
       }
     }
     return;
@@ -3179,9 +3179,11 @@ void Cmd_Buy_f( gentity_t *ent )
       if( upgrade == UP_AMMOPACK )
         G_GiveClientMaxAmmo( ent, qfalse );
       if( upgrade == UP_CLOAK )
+      {
         ent->client->cloakReady = qtrue;
         ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-        ent->client->ps.stats[ STAT_CLOAK ] = 100;
+        ent->client->ps.stats[ STAT_CLOAK ] = CLOAK_TIME;
+      }
       if( upgrade == UP_JETPACK )
         ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
     }

@@ -492,7 +492,7 @@ struct gclient_s
   int                 medKitHealthToRestore;
   int                 medKitIncrementTime;
   int                 lastCreepSlowTime;    // time until creep can be removed
-  int                 cloakStartTime;
+  int                 lastcloaktime;
   qboolean            cloakReady;
 
   int                 infectionTime;

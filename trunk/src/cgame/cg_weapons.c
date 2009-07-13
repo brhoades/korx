@@ -1470,10 +1470,9 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
     }
     else if( i == UP_CLOAK )
     {
-//      if( cg.snap->ps.stats[ STAT_CLOAK ] + CLOAK_TIME > cg.snap->serverTime )
       if( cg.snap->ps.stats[ STAT_CLOAK ] > 0 )
       {
-        if( cg.snap->ps.stats[ STAT_CLOAK ] == 100 )
+        if( cg.snap->ps.stats[ STAT_CLOAK ] == CLOAK_TIME )
         {
           colinfo[ numItems ] = 0;
         }
@@ -1489,7 +1488,6 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
     }
     else if( i == UP_JETPACK )
     {
-//      if( cg.snap->ps.stats[ STAT_CLOAK ] + CLOAK_TIME > cg.snap->serverTime )
       if( cg.snap->ps.stats[ STAT_JPCHARGE ] > 0 )
       {
         if( cg.snap->ps.stats[ STAT_JPCHARGE ] == JETPACK_CHARGE_CAPACITY )

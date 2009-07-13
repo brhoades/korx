@@ -1507,8 +1507,8 @@ void G_UpdateZaps( gentity_t *ent )
     {
       //drain them cloaks!
       if( BG_InventoryContainsUpgrade( UP_CLOAK, enemy->client->ps.stats )
-          && enemy->client->ps.stats[ STAT_CLOAK ] > 0 )
-        enemy->client->ps.stats[ STAT_CLOAK ] -= 1;
+          && enemy->client->ps.stats[ STAT_CLOAK ] >= 0 )
+        enemy->client->ps.stats[ STAT_CLOAK ]--;
       
       //drain that ammo!
       if( BG_Weapon( enemy->client->ps.weapon )->usesEnergy && enemy->client->ps.ammo > 0 )
