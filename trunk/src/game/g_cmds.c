@@ -1710,12 +1710,6 @@ void Cmd_CallVote_f( gentity_t *ent )
     !Q_stricmp( arg1, "extremesuddendeath" ) ||
     !Q_stricmp( arg1, "esd" ) )
   {
-    //if( g_extremeSuddenDeathVoteMinTime.integer * 60000 < (level.time - level.startTime) )
-    //{
-    //  trap_SendServerCommand( ent - g_entities,
-    //    "print \"callvote: It is too early to call an Extreme Sudden Death Vote\n\"" );
-    //  return;
-    //}
     if( level.extremeSuddenDeath )
     {
       trap_SendServerCommand( ent - g_entities,
@@ -1727,7 +1721,7 @@ void Cmd_CallVote_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, "print \"callvote: Extreme Sudden Death votes have been disabled\n\"" );
       return;
     } 
-    else if( G_TimeTilExtremeSuddenDeath() <= g_extremeSuddenDeathVoteDelay.integer * 1000 || g_extremeSuddenDeathVote.integer)
+    else if( level.extremeSuddenDeathWarning <= TW_CLOSE || g_extremeSuddenDeathVote.integer)
     {
       trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Extreme Sudden Death is already immenent\n\"") );
       return;
