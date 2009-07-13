@@ -721,36 +721,31 @@ void ClientTimerActions( gentity_t *ent, int msec )
         if( client->ps.stats[ STAT_MISC ] < 0 )
           client->ps.stats[ STAT_MISC ] = 0;
     }
-  if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
-  {	
-    if( ent->client->cloakReady == qfalse && (level.time - ent->client->cloakStartTime > CLOAK_TIME || ent->health <= 0 ) )
-    {
-      ent->client->ps.eFlags &= ~EF_MOVER_STOP;
-      ent->client->ps.stats[ STAT_CLOAK ] = 0;
+    
+    if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
+    {	
+      if( ent->client->cloakReady == qfalse 
+          && ( client->ps.stats[ STAT_CLOAK ] <= 0 || ent->health <= 0 ) )
+      {
+        ent->client->ps.eFlags &= ~EF_MOVER_STOP;
+        ent->client->ps.stats[ STAT_CLOAK ] = 0;
+      }
     }
-  }
+  
     if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
     {
       if( client->cloakReady == qtrue )
+        client->ps.stats[ STAT_CLOAK ] = CLOAK_TIME;
+      else if( client->lastcloaktime + 1000 <= level.time
+               && client->ps.stats[ STAT_CLOAK ] > 0 )
       {
-        client->ps.stats[ STAT_CLOAK ] = 100;
-      }
-      else
-      {
-        if( client->cloakStartTime + CLOAK_TIME > level.time )
-        {
-          client->ps.stats[ STAT_CLOAK ] = CLOAK_TIME - ( ( ( level.time - client->cloakStartTime ) * 100 ) / ( CLOAK_TIME ) );
-        }
-        else
-        {
-          client->ps.stats[ STAT_CLOAK ] = 0;
-        }
+        client->ps.stats[ STAT_CLOAK ]--;
+        client->lastcloaktime = level.time;
       }
     }
     else
-    {
       client->ps.stats[ STAT_CLOAK ] = 0;
-    }
+      
     //client is not moving or is boosted
     if( client->ps.weapon == WP_ALEVEL1_UPG )
     {
@@ -1753,9 +1748,9 @@ void ClientThink_real( gentity_t *ent )
     {
       BG_DeactivateUpgrade( UP_CLOAK, client->ps.stats );
       client->cloakReady = qfalse;
-      client->cloakStartTime = level.time;
+      client->lastcloaktime = level.time;
       client->ps.eFlags |= EF_MOVER_STOP;
-      client->ps.stats[ STAT_CLOAK ] = 100;
+      client->ps.stats[ STAT_CLOAK ] = CLOAK_TIME;
     }
   }
 

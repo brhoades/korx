@@ -678,7 +678,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SURGE_PRICE                 200
 
 #define CLOAK_PRICE                 400
-#define CLOAK_TIME                  40000
+#define CLOAK_TIME                  40
 
 #define JETPACK_PRICE               120
 #define JETPACK_FLOAT_SPEED         128.0f //up movement speed
