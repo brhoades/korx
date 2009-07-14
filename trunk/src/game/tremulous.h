@@ -71,6 +71,26 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // #define LEVEL0_DRILL_SPEED          800
 // #define LEVEL0_DRILL_CHARGE_TIME    600
 
+#define SPITFIRE_ZAP_REPEAT          500
+#define SPITFIRE_SPITBOMB_THINK_TIME 5000
+#define SPITFIRE_SPITBOMB_REPEAT     500
+#define SPITFIRE_SPITBOMB_SPEED      1000.0f
+#define SPITFIRE_SPITBOMB_RANGE      150.0f
+#define SPITFIRE_SPITBOMB_DMG        ADM(20)
+#define SPITFIRE_SPITBOMB_REGEN      3000
+#define SPITFIRE_EBLOB_BUILDABLE     0.50f
+
+/*
+#define LEVEL4_EBLOB_THINK_TIME     5000
+#define LEVEL4_EBLOB_REPEAT         2000
+#define LEVEL4_EBLOB_SPEED          500.0f
+#define LEVEL4_EBLOB_RANGE          200.0f
+#define LEVEL4_EBLOB_DMG            ADM(200)
+#define LEVEL4_EBLOB_REGEN          10000
+#define LEVEL4_EBLOB_BUILDABLE      0.50f    //The percentage of damage done to a buildable by acid
+*/
+
+
 #define LEVEL1_CLAW_DMG             ADM(32)
 #define LEVEL1_CLAW_RANGE           96.0f
 #define LEVEL1_CLAW_WIDTH           10.0f
@@ -223,6 +243,20 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL0_UPG_REGEN            2
 #define LEVEL0_UPG_REGEN_MSEC       ARMSEC(LEVEL0_UPG_HEALTH)
 #define LEVEL0_UPG_COST             1
+
+#define SPITFIRE_SPEED              0.8f
+#define SPITFIRE_VALUE              AVM(210)
+#define SPITFIRE_HEALTH             AHM(65)
+#define SPITFIRE_REGEN              2
+#define SPITFIRE_REGEN_MSEC         ARMSEC(SPITFIRE_HEALTH)
+#define SPITFIRE_COST               1
+
+#define SPITFIRE_UPG_SPEED          0.8f
+#define SPITFIRE_UPG_VALUE          AVM(250)
+#define SPITFIRE_UPG_HEALTH         AHM(90)
+#define SPITFIRE_UPG_REGEN          3
+#define SPITFIRE_UPG_REGEN_MSEC     ARMSEC(SPITFIRE_UPG_HEALTH)
+#define SPITFIRE_UPG_COST               2
 
 #define LEVEL1_SPEED                1.25f
 #define LEVEL1_VALUE                AVM(225)

@@ -644,6 +644,15 @@ void eBlobFire( gentity_t *ent )
 //  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
 }
 
+void spitbombFire( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = fire_spitbomb( ent, muzzle, forward );
+
+}
+
+
 /*
 ======================================================================
 
@@ -1764,6 +1773,10 @@ void FireWeapon3( gentity_t *ent )
       slowBlobFire( ent );
       break;
 
+    case WP_SPITFIRE:
+      spitbombFire( ent );
+      break;
+
     case WP_ALEVEL4_UPG:
       eBlobFire( ent );
       break;
@@ -1943,6 +1956,9 @@ void FireWeapon( gentity_t *ent )
     case WP_GRENADE:
       throwGrenade( ent );
       break;
+    case WP_SPITFIRE:
+
+     break;
 
     case WP_LOCKBLOB_LAUNCHER:
       lockBlobLauncherFire( ent );

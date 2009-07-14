@@ -790,6 +790,9 @@ static void CG_RegisterSounds( void )
 
   cgs.media.lCannonWarningSound     = trap_S_RegisterSound( "models/weapons/lcannon/warning.wav", qfalse );
   cgs.media.lCannonWarningSound2    = trap_S_RegisterSound( "models/weapons/lcannon/warning2.wav", qfalse );
+
+  cgs.media.spitpackFlyingSound      = trap_S_RegisterSound( "sound/player/spitfire/flying.wav", qfalse );
+  cgs.media.spitpackFastFlyingSound      = trap_S_RegisterSound( "sound/player/spitfire/fast_flying.wav", qfalse );
 }
 
 

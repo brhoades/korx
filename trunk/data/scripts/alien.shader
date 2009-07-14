@@ -182,3 +182,24 @@ models/players/level4/level4
 		tcGen environment
 	}
 }
+
+models/players/spitfire/spitfire
+{
+        {
+                map models/players/level4/level4.jpg
+                rgbGen lightingDiffuse
+        }
+        {
+                map models/players/level4/level4.jpg
+                blendFunc GL_SRC_ALPHA GL_ONE
+                detail
+                alphaGen lightingSpecular
+        }
+        {
+                map models/buildables/mgturret/ref_map.jpg
+                blendFunc GL_DST_COLOR GL_ONE
+                detail
+                tcGen environment
+        }
+}
+

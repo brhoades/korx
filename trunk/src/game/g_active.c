@@ -1074,6 +1074,21 @@ void ClientTimerActions( gentity_t *ent, int msec )
     else
       ent->timestamp = level.time;
   }
+  else if( client->ps.weapon == WP_SPITFIRE )
+  {
+    if( client->ps.stats[ STAT_STATE ] & SS_BOOSTED && client->ps.ammo < BG_Weapon( WP_SPITFIRE )->maxAmmo )
+    {
+      if( ent->timestamp + SPITFIRE_SPITBOMB_REGEN < level.time )
+      {
+        client->ps.ammo++;
+        ent->timestamp = level.time;
+      }
+    }
+    else
+    {
+      ent->timestamp = level.time;
+    }
+  }
   else if( client->ps.weapon == WP_ALEVEL3_UPG )
   {
     if( client->ps.ammo < BG_Weapon( WP_ALEVEL3_UPG )->maxAmmo )
@@ -1543,11 +1558,15 @@ static void G_CheckZap( gentity_t *ent )
   ent->wasZapping = ent->zapping;
   ent->zapping = qfalse;
 
-  if( ent->client->ps.weapon == WP_ALEVEL2_UPG &&
-    ( ent->client->pers.cmd.buttons & BUTTON_ATTACK2 ) )
+  if( ent->client->ps.weapon == WP_ALEVEL2_UPG && ( ent->client->pers.cmd.buttons & BUTTON_ATTACK2 ) )
   {
     ent->zapping = qtrue;
   }
+  else if( ent->client->ps.weapon == WP_SPITFIRE && ( ent->client->pers.cmd.buttons & BUTTON_ATTACK ) )
+  {
+    ent->zapping = qtrue;
+  }
+
 
   if( ent->wasZapping && !ent->zapping )
     ent->client->ps.weaponTime = LEVEL2_AREAZAP_REPEAT;
@@ -1664,6 +1683,8 @@ void ClientThink_real( gentity_t *ent )
     client->ps.pm_type = PM_GRABBED;
   else if( BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_JETPACK, client->ps.stats ) )
     client->ps.pm_type = PM_JETPACK;
+  else if( BG_InventoryContainsUpgrade( UP_SPITPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_SPITPACK, client->ps.stats ) )
+    client->ps.pm_type = PM_SPITPACK;
   else
     client->ps.pm_type = PM_NORMAL;
 

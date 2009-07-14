@@ -308,6 +308,9 @@ static void PM_Friction( void )
   // apply flying friction
   if( pm->ps->pm_type == PM_JETPACK )
     drop += speed * pm_flightfriction * pml.frametime;
+  else if( pm->ps->pm_type == PM_SPITPACK )
+    drop += speed * pm_flightfriction * pml.frametime;
+
 
   if( pm->ps->pm_type == PM_SPECTATOR )
     drop += speed * pm_spectatorfriction * pml.frametime;
@@ -1172,6 +1175,55 @@ static void PM_JetPackMove( void )
     PM_ContinueLegsAnim( NSPA_LAND );
 }
 
+/*
+===================
+PM_SpitPackMove
+
+Only with the spitpack
+===================
+*/
+static void PM_SpitPackMove( void )
+{
+  int     i;
+  vec3_t  wishvel;
+  float   wishspeed;
+  vec3_t  wishdir;
+  float   scale;
+  qboolean      attack2 = pm->cmd.buttons & BUTTON_ATTACK2;
+
+  // normal slowdown
+  PM_Friction( );
+
+  scale = PM_CmdScale( &pm->cmd );
+  //
+  // user intentions
+  //
+  if( !scale )
+  {
+    wishvel[ 0 ] = 0;
+    wishvel[ 1 ] = 0;
+    wishvel[ 2 ] = 0;
+  }
+  else
+  {
+    for( i = 0; i < 3; i++ )
+      wishvel[ i ] = scale * pml.forward[ i ] * pm->cmd.forwardmove + scale * pml.right[ i ] * pm->cmd.rightmove;
+
+    wishvel[ 2 ] += scale * pm->cmd.upmove;
+  }
+
+  VectorCopy( wishvel, wishdir );
+  wishspeed = VectorNormalize( wishdir );
+  if (attack2)
+  {
+    wishspeed *= 2;
+  }
+
+  PM_Accelerate( wishdir, wishspeed, pm_flyaccelerate );
+
+  PM_StepSlideMove( qfalse, qfalse );
+
+}
 
 
 
@@ -3332,7 +3384,8 @@ static void PM_Weapon( void )
       //hacky special case for slowblob
       if( ( pm->ps->weapon == WP_ALEVEL2_UPG ||
             pm->ps->weapon == WP_ALEVEL3_UPG ||
-            pm->ps->weapon == WP_ALEVEL4_UPG ) &&
+            pm->ps->weapon == WP_ALEVEL4_UPG ||
+            pm->ps->weapon == WP_SPITFIRE ) &&
           !pm->ps->ammo )
       {
         pm->ps->weaponTime += 200;
@@ -3510,7 +3563,9 @@ static void PM_Weapon( void )
   if( !BG_Weapon( pm->ps->weapon )->infiniteAmmo ||
       ( ( pm->ps->weapon == WP_ALEVEL2_UPG ||
           pm->ps->weapon == WP_ALEVEL3_UPG ||
-          pm->ps->weapon == WP_ALEVEL4_UPG ) && attack3 ) )
+          pm->ps->weapon == WP_ALEVEL4_UPG ||
+          pm->ps->weapon == WP_SPITFIRE )
+                                             && attack3 ) )
   {
     // Special case for lcannon
     if( pm->ps->weapon == WP_LUCIFER_CANNON && attack1 && !attack2 )
@@ -3903,6 +3958,8 @@ void PmoveSingle( pmove_t *pmove )
 
   if( pm->ps->pm_type == PM_JETPACK )
     PM_JetPackMove( );
+  else if( pm->ps->pm_type == PM_SPITPACK )
+    PM_SpitPackMove( );
   else if( pm->ps->pm_flags & PMF_TIME_WATERJUMP )
     PM_WaterJumpMove( );
   else if( pm->waterlevel > 1 )

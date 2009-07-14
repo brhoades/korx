@@ -1950,6 +1950,12 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
     trap_LinkEntity( ent );
   }
 
+  // if spawning into a spitfire, automatically give it the spitpack
+  if( client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_SPITFIRE )
+  {
+    BG_AddUpgradeToInventory( UP_SPITPACK, client->ps.stats );
+  }
+
   // must do this here so the number of active clients is calculated
   CalculateRanks( );
 

@@ -1553,9 +1553,28 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
   refEntity_t   ammopack;
   refEntity_t   flash;
   entityState_t *es = &cent->currentState;
+  usercmd_t cmd;
+  int       cmdNum;
 
   held = es->modelindex;
   active = es->modelindex2;
+
+  cmdNum = trap_GetCurrentCmdNumber( );
+  trap_GetUserCmd( cmdNum, &cmd );
+
+  if( held & ( 1 << UP_SPITPACK ) )
+  {
+    if( active & ( 1 << UP_SPITPACK ) )
+    {
+      if( !cl_jetpackmute.integer)
+      {
+        if( ( cmd.buttons & BUTTON_ATTACK2 ) )
+          trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.spitpackFastFlyingSound );
+        else
+          trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.spitpackFlyingSound );
+      }
+    }
+  }
 
   if( held & ( 1 << UP_JETPACK ) )
   {

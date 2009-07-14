@@ -1049,6 +1049,50 @@ gentity_t *fire_eBlob( gentity_t *self, vec3_t start, vec3_t dir )
 
 /*
 =================
+fire_spitbomb
+=================
+*/
+gentity_t *fire_spitbomb( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  VectorNormalize ( dir );
+
+  bolt = G_Spawn( );
+  bolt->classname = "spitbomb";
+  bolt->nextthink = level.time + SPITFIRE_SPITBOMB_THINK_TIME;
+  bolt->think = G_ExplodeMissile;
+  bolt->s.eType = ET_MISSILE;
+  bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+  bolt->s.weapon = WP_SPITFIRE;
+  bolt->s.generic1 = self->s.generic1; //weaponMode
+  bolt->r.ownerNum = self->s.number;
+  bolt->parent = self;
+  bolt->damage = SPITFIRE_SPITBOMB_DMG;
+  bolt->splashDamage = SPITFIRE_SPITBOMB_DMG;
+  bolt->splashRadius = SPITFIRE_SPITBOMB_RANGE;
+  bolt->methodOfDeath = MOD_SPITFIRE_SPITBOMB;
+  bolt->splashMethodOfDeath = MOD_SPITFIRE_SPITBOMBSPLASH;
+  bolt->clipmask = MASK_SHOT;
+  bolt->target_ent = NULL;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -4.0f;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 4.0f;
+
+  bolt->s.pos.trType = TR_GRAVITY;
+  bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
+  VectorCopy( start, bolt->s.pos.trBase );
+  VectorScale( dir, SPITFIRE_SPITBOMB_SPEED, bolt->s.pos.trDelta );
+  SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
+  VectorCopy( start, bolt->r.currentOrigin );
+
+  return bolt;
+}
+
+
+
+
+/*
+=================
 fire_lockblob
 =================
 */
