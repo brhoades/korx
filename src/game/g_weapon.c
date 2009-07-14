@@ -649,7 +649,6 @@ void spitbombFire( gentity_t *ent )
   gentity_t *m;
 
   m = fire_spitbomb( ent, muzzle, forward );
-
 }
 
 
@@ -1544,11 +1543,17 @@ void G_UpdateZaps( gentity_t *ent )
       }
     }
 
-    if( damage > 0 )
+    if( damage > 0 && ent->client->ps.weapon == WP_ALEVEL2_UPG )
     {
       G_Damage( enemy, ent, ent, NULL, enemy->s.origin,
                     damage, DAMAGE_NO_KNOCKBACK | DAMAGE_NO_LOCDAMAGE, MOD_LEVEL2_ZAP );
     }
+    else if( damage > 0 )
+    {
+      G_Damage( enemy, ent, ent, NULL, enemy->s.origin,
+                    damage, DAMAGE_NO_KNOCKBACK | DAMAGE_NO_LOCDAMAGE, MOD_SPITFIRE_ZAP );
+    }
+    
     switch( i )
     {
       case 0: effect->s.time = hitList[ i ];          break;
@@ -1748,7 +1753,8 @@ void FireWeapon3( gentity_t *ent )
 {
   if( ent->client )
   {
-    if( ent->client->pers.paused ) return; //lulz
+    if( ent->client->pers.paused ) 
+      return;
     // set aiming directions
     AngleVectors( ent->client->ps.viewangles, forward, right, up );
     CalcMuzzlePoint( ent, forward, right, up, muzzle );
@@ -1956,9 +1962,9 @@ void FireWeapon( gentity_t *ent )
     case WP_GRENADE:
       throwGrenade( ent );
       break;
-    case WP_SPITFIRE:
-
-     break;
+    case WP_SPITFIRE: 
+      //FIXME: placeholder?
+      break;
 
     case WP_LOCKBLOB_LAUNCHER:
       lockBlobLauncherFire( ent );

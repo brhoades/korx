@@ -1085,9 +1085,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
       }
     }
     else
-    {
       ent->timestamp = level.time;
-    }
   }
   else if( client->ps.weapon == WP_ALEVEL3_UPG )
   {
@@ -1559,14 +1557,9 @@ static void G_CheckZap( gentity_t *ent )
   ent->zapping = qfalse;
 
   if( ent->client->ps.weapon == WP_ALEVEL2_UPG && ( ent->client->pers.cmd.buttons & BUTTON_ATTACK2 ) )
-  {
     ent->zapping = qtrue;
-  }
   else if( ent->client->ps.weapon == WP_SPITFIRE && ( ent->client->pers.cmd.buttons & BUTTON_ATTACK ) )
-  {
     ent->zapping = qtrue;
-  }
-
 
   if( ent->wasZapping && !ent->zapping )
     ent->client->ps.weaponTime = LEVEL2_AREAZAP_REPEAT;
