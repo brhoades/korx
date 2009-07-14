@@ -1721,7 +1721,7 @@ void Cmd_CallVote_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, "print \"callvote: Extreme Sudden Death votes have been disabled\n\"" );
       return;
     } 
-    else if( level.extremeSuddenDeathWarning <= TW_CLOSE || g_extremeSuddenDeathVote.integer)
+    else if( level.extremeSuddenDeathWarning >= TW_CLOSE || g_extremeSuddenDeathVote.integer)
     {
       trap_SendServerCommand( ent - g_entities, va( "print \"callvote: Extreme Sudden Death is already immenent\n\"") );
       return;
@@ -2676,7 +2676,8 @@ void Cmd_Destroy_f( gentity_t *ent )
       }
 
       // Prevent destruction of the last spawn
-      if( !g_markDeconstruct.integer && !g_cheats.integer )
+      if( !g_markDeconstruct.integer && !g_cheats.integer 
+          && !level.suddenDeath && !level.extremeSuddenDeath )
       {
         if( ent->client->pers.teamSelection == TEAM_ALIENS &&
             traceEnt->s.modelindex == BA_A_SPAWN )

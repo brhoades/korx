@@ -794,8 +794,11 @@ void ASpawn_Think( gentity_t *self )
       self->spawnBlockTime = 0;
     }
   }
-
+  
   G_CreepSlow( self );
+
+  if( level.extremeSuddenDeath && g_smartesd.integer )
+    self->powered = qfalse;
 
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
 }
@@ -871,7 +874,7 @@ void AOvermind_Think( gentity_t *self )
         }
       }
       // aliens now know they have no eggs, but they're screwed, so stfu
-      if( !haveBuilder || level.suddenDeath )
+      if( !haveBuilder || level.suddenDeath || level.extremeSuddenDeath )
         level.overmindMuted = qtrue;
     }
 

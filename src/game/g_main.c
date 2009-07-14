@@ -1241,7 +1241,10 @@ void G_CountSpawns( void )
       continue;
 
     if( ent->s.modelindex == BA_A_SPAWN )
-      level.numAlienSpawns++;
+    {
+      if( !level.extremeSuddenDeath )
+        level.numAlienSpawns++;
+    }
 
     if( ent->s.modelindex == BA_H_SPAWN )
       level.numHumanSpawns++;
@@ -1423,8 +1426,10 @@ void G_CalculateBuildPoints( void )
         if( !ent || !ent->s.eType == ET_BUILDABLE || ent->health <= 0 )
           continue;
         
-        if( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN )
+        if( ent->s.modelindex == BA_H_SPAWN || ( ent->s.modelindex == BA_A_SPAWN && !g_smartesd.integer ) )
           G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+        else if( ent->s.modelindex == BA_A_SPAWN )
+          ent->powered = qfalse;
       }
     }
 
