@@ -3564,8 +3564,7 @@ static void PM_Weapon( void )
       ( ( pm->ps->weapon == WP_ALEVEL2_UPG ||
           pm->ps->weapon == WP_ALEVEL3_UPG ||
           pm->ps->weapon == WP_ALEVEL4_UPG ||
-          pm->ps->weapon == WP_SPITFIRE )
-                                             && attack3 ) )
+          pm->ps->weapon == WP_SPITFIRE ) && attack3 ) )
   {
     // Special case for lcannon
     if( pm->ps->weapon == WP_LUCIFER_CANNON && attack1 && !attack2 )

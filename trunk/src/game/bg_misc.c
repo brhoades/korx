@@ -1647,56 +1647,56 @@ static const classAttributes_t bg_classList[ ] =
     "A granger that has specialized in the desolation of human teams. "
       "Its increased HP, unique camouflage, and stronger attacks make it a foe to fear. "
       "Its sticky blobs provide the perfect way to leave any human prone.",
-    ( 1 << S3 ),                                    //int  stages
-    ABGRANGER_HEALTH,                           //int     health;
-    0.0f,                                           //float   fallDamage;
-    ABGRANGER_REGEN,                            //int     regenRate;
-    ABGRANGER_REGEN_MSEC,                       //int     regenRateMsec;
-    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
-    WP_ABUILD3,                                     //weapon_t  startWeapon
-    105.0f,                                         //float   buildDist;
-    110,                                            //int     fov;
-    0.001f,                                         //float   bob;
-    2.0f,                                           //float   bobCycle;
-    100,                                            //int     steptime;
-    ABGRANGER_SPEED,                            //float   speed;
-    10.0f,                                          //float   acceleration;
-    1.0f,                                           //float   airAcceleration;
-    6.0f,                                           //float   friction;
-    100.0f,                                         //float   stopSpeed;
-    270.0f,                                         //float   jumpMagnitude;
-    1.0f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL1, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
-    ABGRANGER_COST,                             //int     cost;
-    ABGRANGER_VALUE                             //int     value;
+    ( 1 << S3 ),                                   //int  stages
+    ABGRANGER_HEALTH,                              //int     health;
+    0.0f,                                          //float   fallDamage;
+    ABGRANGER_REGEN,                               //int     regenRate;
+    ABGRANGER_REGEN_MSEC,                          //int     regenRateMsec;
+    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,   //int     abilities;
+    WP_ABUILD3,                                    //weapon_t  startWeapon
+    105.0f,                                        //float   buildDist;
+    110,                                           //int     fov;
+    0.001f,                                        //float   bob;
+    2.0f,                                          //float   bobCycle;
+    100,                                           //int     steptime;
+    ABGRANGER_SPEED,                               //float   speed;
+    10.0f,                                         //float   acceleration;
+    1.0f,                                          //float   airAcceleration;
+    6.0f,                                          //float   friction;
+    100.0f,                                        //float   stopSpeed;
+    270.0f,                                        //float   jumpMagnitude;
+    1.0f,                                          //float   knockbackScale;
+    { PCL_ALIEN_LEVEL1, PCL_NONE, PCL_NONE },      //int     children[ 3 ];
+    ABGRANGER_COST,                                //int     cost;
+    ABGRANGER_VALUE                                //int     value;
   },
   {
-    PCL_ALIEN_SPITFIRE,                           //int     classnum;
+    PCL_ALIEN_SPITFIRE,                            //int     classnum;
     "spitfire",                                    //char    *classname;
-    "In addition to the basic Basilisk abilities, the Advanced "
-      "Basilisk sprays a poisonous gas which disorients any "
-      "nearby humans. Has a strong healing aura that "
-      "that accelerates the healing rate of nearby aliens.",
-    ( 1 << S2 )|( 1 << S3 ),                        //int  stages
+    "A small, extremely agile class that has evolved to attack high human bases "
+      "and harass jetpackers. Has a primary zap fire that is weaker than the  "
+      "marauders, but makes up for it when combined with several other spitfires. "
+      "Has a weak acid attack, can fly, and can sprint in the air.",
+    ( 1 << S2 )|( 1 << S3 ),                      //int  stages
     SPITFIRE_HEALTH,                              //int     health;
-    0.0f,                                           //float   fallDamage;
+    0.0f,                                         //float   fallDamage;
     SPITFIRE_REGEN,                               //int     regenRate;
     SPITFIRE_REGEN_MSEC,                          //int     regenRateMsec;
-    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
-    WP_SPITFIRE,                                 //weapon_t  startWeapon
-    0.0f,                                           //float   buildDist;
-    120,                                            //int     fov;
-    0.001f,                                         //float   bob;
-    1.8f,                                           //float   bobCycle;
-    60,                                             //int     steptime;
+    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,  //int     abilities;
+    WP_SPITFIRE,                                  //weapon_t  startWeapon
+    0.0f,                                         //float   buildDist;
+    120,                                          //int     fov;
+    0.001f,                                       //float   bob;
+    1.8f,                                         //float   bobCycle;
+    60,                                           //int     steptime;
     SPITFIRE_SPEED,                               //float   speed;
-    10.0f,                                          //float   acceleration;
-    1.0f,                                           //float   airAcceleration;
-    6.0f,                                           //float   friction;
-    300.0f,                                         //float   stopSpeed;
-    310.0f,                                         //float   jumpMagnitude;
-    1.1f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL2, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
+    10.0f,                                        //float   acceleration;
+    1.0f,                                         //float   airAcceleration;
+    6.0f,                                         //float   friction;
+    300.0f,                                       //float   stopSpeed;
+    310.0f,                                       //float   jumpMagnitude;
+    1.1f,                                         //float   knockbackScale;
+    { PCL_ALIEN_LEVEL2, PCL_NONE, PCL_NONE },     //int     children[ 3 ];
     SPITFIRE_COST,                                //int     cost;
     SPITFIRE_VALUE                                //int     value;
   }
@@ -2970,24 +2970,24 @@ static const weaponAttributes_t bg_weapons[ ] =
     TEAM_ALIENS           //team_t  team;
   },
   {
-    WP_SPITFIRE,           //int       weaponNum;
+    WP_SPITFIRE,          //int       weaponNum;
     0,                    //int       price;
-    ( 1 << S2 )|( 1 << S3 ), //int  stages
+    ( 1 << S2 )|( 1 << S3 ),//int  stages
     SLOT_WEAPON,          //int       slots;
-    "spitfire",             //char      *weaponName;
-    "Spitfire",             //char      *humanName;
+    "spitfire",           //char      *weaponName;
+    "Spitfire",           //char      *humanName;
     "",
     3,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
-    SPITFIRE_ZAP_REPEAT,   //int       repeatRate1;
+    SPITFIRE_ZAP_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
-    SPITFIRE_SPITBOMB_REPEAT, //int       repeatRate3;
+    SPITFIRE_SPITBOMB_REPEAT,//int       repeatRate3;
     0,                    //int       reloadTime;
-    0,  //float     knockbackScale;
+    0,                    //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
-    qtrue,               //qboolean  hasThirdMode;
+    qtrue,                //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  purchasable;

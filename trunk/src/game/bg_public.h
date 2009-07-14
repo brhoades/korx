@@ -954,7 +954,9 @@ typedef enum
   MOD_SLAP,
   MOD_KILL,
   MOD_BOOSTER,
-  MOD_JETPACK_EXPLODE
+  MOD_JETPACK_EXPLODE,
+  
+  MOD_SPITFIRE_ZAP
 } meansOfDeath_t;
 
 

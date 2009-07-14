@@ -2853,7 +2853,7 @@ void Cmd_ActivateItem_f( gentity_t *ent )
   }
   else
   {
-    trap_SendServerCommand( ent-g_entities, va( "print \"actYou don't have the %s\n\"", s ) );
+    trap_SendServerCommand( ent-g_entities, va( "print \"You don't have the %s\n\"", s ) );
   }
 }
 
@@ -2876,7 +2876,7 @@ void Cmd_DeActivateItem_f( gentity_t *ent )
   if( BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
     BG_DeactivateUpgrade( upgrade, ent->client->ps.stats );
   else
-    trap_SendServerCommand( ent-g_entities, va( "print \"deacYou don't have the %s\n\"", s ) );
+    trap_SendServerCommand( ent-g_entities, va( "print \"You don't have the %s\n\"", s ) );
 }
 
 
@@ -2894,16 +2894,12 @@ void Cmd_ToggleItem_f( gentity_t *ent )
   upgrade = BG_UpgradeByName( s )->number;
   weapon = BG_WeaponByName( s )->number;
 
-  if (upgrade == UP_JETPACK)
+  if( upgrade == UP_JETPACK )
   {
-    if( ent->client->ps.stats[STAT_CLASS] == PCL_ALIEN_SPITFIRE )
-    {
+    if( ent->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_SPITFIRE )
       upgrade = UP_SPITPACK;
-    }
     else
-    {
       ent->client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
-    }
   }
 
   if( weapon != WP_NONE )
@@ -2928,7 +2924,7 @@ void Cmd_ToggleItem_f( gentity_t *ent )
       BG_ActivateUpgrade( upgrade, ent->client->ps.stats );
   }
   else
-    trap_SendServerCommand( ent-g_entities, va( "print \"toggYou don't have the %s\n\"", s ) );
+    trap_SendServerCommand( ent-g_entities, va( "print \"You don't have the %s\n\"", s ) );
 }
 
 /*
