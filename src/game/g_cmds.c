@@ -2829,16 +2829,24 @@ void Cmd_ActivateItem_f( gentity_t *ent )
   weapon = BG_WeaponByName( s )->number;
 
   if( upgrade != UP_NONE && BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
-    BG_ActivateUpgrade( upgrade, ent->client->ps.stats );
-  else if( weapon != WP_NONE &&
-           BG_InventoryContainsWeapon( weapon, ent->client->ps.stats ) )
   {
-    if( ent->client->ps.weapon != weapon &&
-        BG_PlayerCanChangeWeapon( &ent->client->ps ) )
+    BG_ActivateUpgrade( upgrade, ent->client->ps.stats );
+  }
+  else if( upgrade == UP_JETPACK && weapon == WP_SPITFIRE )
+  {
+    BG_ActivateUpgrade( UP_SPITPACK, ent->client->ps.stats );
+  }
+  else if( weapon != WP_NONE && BG_InventoryContainsWeapon( weapon, ent->client->ps.stats ) )
+  {
+    if( ent->client->ps.weapon != weapon && BG_PlayerCanChangeWeapon( &ent->client->ps ) )
+    {
       G_ForceWeaponChange( ent, weapon );
+    }
   }
   else
-    trap_SendServerCommand( ent-g_entities, va( "print \"You don't have the %s\n\"", s ) );
+  {
+    trap_SendServerCommand( ent-g_entities, va( "print \"actYou don't have the %s\n\"", s ) );
+  }
 }
 
 
@@ -2860,7 +2868,7 @@ void Cmd_DeActivateItem_f( gentity_t *ent )
   if( BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
     BG_DeactivateUpgrade( upgrade, ent->client->ps.stats );
   else
-    trap_SendServerCommand( ent-g_entities, va( "print \"You don't have the %s\n\"", s ) );
+    trap_SendServerCommand( ent-g_entities, va( "print \"deacYou don't have the %s\n\"", s ) );
 }
 
 
@@ -2880,7 +2888,14 @@ void Cmd_ToggleItem_f( gentity_t *ent )
 
   if (upgrade == UP_JETPACK)
   {
-    ent->client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
+    if( ent->client->ps.stats[STAT_CLASS] == PCL_ALIEN_SPITFIRE )
+    {
+      upgrade = UP_SPITPACK;
+    }
+    else
+    {
+      ent->client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
+    }
   }
 
   if( weapon != WP_NONE )
@@ -2905,7 +2920,7 @@ void Cmd_ToggleItem_f( gentity_t *ent )
       BG_ActivateUpgrade( upgrade, ent->client->ps.stats );
   }
   else
-    trap_SendServerCommand( ent-g_entities, va( "print \"You don't have the %s\n\"", s ) );
+    trap_SendServerCommand( ent-g_entities, va( "print \"toggYou don't have the %s\n\"", s ) );
 }
 
 /*
@@ -4907,12 +4922,15 @@ void ClientCommand( int clientNum )
     return;
   }
 
-  if( cmds[ i ].cmdFlags & CMD_HUMAN &&
-      ent->client->pers.teamSelection != TEAM_HUMANS 
-      && !ent->client->pers.override )
+  if( cmds[ i ].cmdFlags & CMD_HUMAN && ent->client->pers.teamSelection != TEAM_HUMANS && !ent->client->pers.override )
   {
-    G_TriggerMenu( clientNum, MN_CMD_HUMAN );
-    return;
+    // small hack to allow spitfires to use /itemact /itemtoggle /itemdeact
+    // seems safe as they still can't buy human items/weapons/etc nor activate subsequent items they can't buy as they don't have them
+    if( ent->client->ps.stats[ STAT_CLASS ] != PCL_ALIEN_SPITFIRE )
+    {
+      G_TriggerMenu( clientNum, MN_CMD_HUMAN );
+      return;
+    }
   }
 
   if( cmds[ i ].cmdFlags & CMD_LIVING &&

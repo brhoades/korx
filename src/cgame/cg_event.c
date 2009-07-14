@@ -393,6 +393,13 @@ static void CG_Obituary( entityState_t *ent )
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
         break;
+      case MOD_SPITFIRE_SPITBOMBSPLASH:
+      case MOD_SPITFIRE_SPITBOMB:
+        message = "was divebombed by";
+        Com_sprintf( className, 64, "'s %s",
+            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
+        message2 = className;
+        break;
       case MOD_POISON:
         message = "should have used a medkit against";
         message2 = "'s poison";

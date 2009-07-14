@@ -1366,7 +1366,7 @@ static const classAttributes_t bg_classList[ ] =
     300.0f,                                         //float   stopSpeed;
     310.0f,                                         //float   jumpMagnitude;
     1.2f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL2, PCL_ALIEN_LEVEL1_UPG, PCL_NONE },   //int     children[ 3 ];
+    { PCL_ALIEN_LEVEL2, PCL_ALIEN_LEVEL1_UPG, PCL_ALIEN_SPITFIRE },   //int     children[ 3 ];
     LEVEL1_COST,                                     //int     cost;
     LEVEL1_VALUE                                     //int     value;
   },
@@ -1396,7 +1396,7 @@ static const classAttributes_t bg_classList[ ] =
     300.0f,                                         //float   stopSpeed;
     310.0f,                                         //float   jumpMagnitude;
     1.1f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL2, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
+    { PCL_ALIEN_LEVEL2, PCL_ALIEN_SPITFIRE, PCL_NONE },       //int     children[ 3 ];
     LEVEL1_UPG_COST,                                //int     cost;
     LEVEL1_UPG_VALUE                                //int     value;
   },
@@ -1669,6 +1669,36 @@ static const classAttributes_t bg_classList[ ] =
     { PCL_ALIEN_LEVEL1, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
     ABGRANGER_COST,                             //int     cost;
     ABGRANGER_VALUE                             //int     value;
+  },
+  {
+    PCL_ALIEN_SPITFIRE,                           //int     classnum;
+    "spitfire",                                    //char    *classname;
+    "In addition to the basic Basilisk abilities, the Advanced "
+      "Basilisk sprays a poisonous gas which disorients any "
+      "nearby humans. Has a strong healing aura that "
+      "that accelerates the healing rate of nearby aliens.",
+    ( 1 << S2 )|( 1 << S3 ),                        //int  stages
+    SPITFIRE_HEALTH,                              //int     health;
+    0.0f,                                           //float   fallDamage;
+    SPITFIRE_REGEN,                               //int     regenRate;
+    SPITFIRE_REGEN_MSEC,                          //int     regenRateMsec;
+    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
+    WP_SPITFIRE,                                 //weapon_t  startWeapon
+    0.0f,                                           //float   buildDist;
+    120,                                            //int     fov;
+    0.001f,                                         //float   bob;
+    1.8f,                                           //float   bobCycle;
+    60,                                             //int     steptime;
+    SPITFIRE_SPEED,                               //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    300.0f,                                         //float   stopSpeed;
+    310.0f,                                         //float   jumpMagnitude;
+    1.1f,                                           //float   knockbackScale;
+    { PCL_ALIEN_LEVEL2, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
+    SPITFIRE_COST,                                //int     cost;
+    SPITFIRE_VALUE                                //int     value;
   }
 };
 
@@ -2938,6 +2968,31 @@ static const weaponAttributes_t bg_weapons[ ] =
     qtrue,                //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t  team;
+  },
+  {
+    WP_SPITFIRE,           //int       weaponNum;
+    0,                    //int       price;
+    ( 1 << S2 )|( 1 << S3 ), //int  stages
+    SLOT_WEAPON,          //int       slots;
+    "spitfire",             //char      *weaponName;
+    "Spitfire",             //char      *humanName;
+    "",
+    3,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    qtrue,                //int       infiniteAmmo;
+    qfalse,               //int       usesEnergy;
+    SPITFIRE_ZAP_REPEAT,   //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    SPITFIRE_SPITBOMB_REPEAT, //int       repeatRate3;
+    0,                    //int       reloadTime;
+    0,  //float     knockbackScale;
+    qfalse,               //qboolean  hasAltMode;
+    qtrue,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  purchasable;
+    qfalse,               //qboolean  longRanged;
+    TEAM_ALIENS           //team_t  team;
   }
 };
 
@@ -3185,6 +3240,22 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     qtrue,                  //qboolean purchasable
     qtrue,                 //qboolean usable
     TEAM_HUMANS              //WUTeam_t  team;
+  },
+  {
+    UP_SPITPACK,            //int   upgradeNum;
+    0,         //int   price;
+    ( 1 << S2 )|( 1 << S3 ), //int  stages
+    SLOT_BACKPACK,          //int   slots;
+    "spitpack",             //char  *upgradeName;
+    "Spitpack",         //char  *upgradeHumanName;
+    "An invisibility cloak that can be used to sneak up on aliens "
+     "without being seen. The cloak lasts for 30 seconds once it "
+     " is activated. You can recharge your cloak by buying ammo."
+     " The cloak is now more visible to your allies.",
+    "icons/iconu_cloak",
+    qfalse,                  //qboolean purchasable
+    qtrue,                 //qboolean usable
+    TEAM_ALIENS              //WUTeam_t  team;
   }
 };
 

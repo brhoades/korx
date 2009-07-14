@@ -998,6 +998,7 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir);
 gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_eBlob( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *fire_spitbomb( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *launch_shotgunNade( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *jetpack_explode( gentity_t *self, vec3_t start );

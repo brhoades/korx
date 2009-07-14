@@ -479,6 +479,7 @@ void CG_OffsetShoulderView( void )
       classRightOffset = 0;
       classUpOffset = 17; // +10 for dev from svn
       break;
+    case PCL_ALIEN_SPITFIRE:
     case PCL_ALIEN_LEVEL1:
     case PCL_ALIEN_LEVEL1_UPG:
       classFwdOffset = -10;

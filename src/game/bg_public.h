@@ -118,6 +118,7 @@ typedef enum
   PM_FREEZE,        // stuck in place with no control
   PM_INTERMISSION,  // no movement or status bar
   PM_HOVELING,      // stuck in place with rotational camera control
+  PM_SPITPACK
 } pmtype_t;
 
 // pmtype_t categories
@@ -360,6 +361,7 @@ typedef enum
   WP_ABUILD2,
   WP_HBUILD,
   WP_ABUILD3,
+  WP_SPITFIRE,
 
   WP_NUM_WEAPONS
 } weapon_t;
@@ -394,6 +396,7 @@ typedef enum
   UP_REGEN,
   UP_SURGE,
   UP_CLOAK,
+  UP_SPITPACK,
 
   UP_NUM_UPGRADES,
 } upgrade_t;
@@ -859,6 +862,7 @@ typedef enum
   
   //BATTLE GRANGER (caps because it's that cool)
   PCL_ALIEN_BGRANGER,
+  PCL_ALIEN_SPITFIRE,
 
   PCL_NUM_CLASSES
 } class_t;
@@ -931,6 +935,8 @@ typedef enum
   MOD_LEVEL4_CRUSH,
   MOD_LEVEL4_EBLOB,
   MOD_LEVEL4_EBLOBSPLASH,
+  MOD_SPITFIRE_SPITBOMB,
+  MOD_SPITFIRE_SPITBOMBSPLASH,
 
   MOD_SLOWBLOB,
   MOD_POISON,
