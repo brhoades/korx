@@ -2571,7 +2571,11 @@ static void UI_LoadAlienUpgrades( void )
 
   for( i = PCL_NONE + 1; i < (PCL_NUM_CLASSES-1); i++ )
   {
-    if( BG_ClassCanEvolveFromTo( class, i, credits, stage, 0 , 0) >= 0 )
+    //Don't display the bgranger twice
+    if( i == PCL_ALIEN_BGRANGER )
+      continue;
+      
+    if( BG_ClassCanEvolveFromTo( class, i, credits, stage, 0 , 0 ) >= 0 )
     {
       uiInfo.alienUpgradeList[ j ].text = String_Alloc( BG_ClassConfig( i )->humanName );
       uiInfo.alienUpgradeList[ j ].cmd =
