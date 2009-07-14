@@ -1382,7 +1382,7 @@ typedef enum {
 #define SAY_CLAN        6
 
 #define MAX_EMOTICON_NAME_LEN 16
-#define MAX_EMOTICONS 64
+#define MAX_EMOTICONS 512
 
 // flags for cl_downloadPrompt
 #define DLP_TYPE_MASK 0x0f
