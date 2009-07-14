@@ -268,6 +268,13 @@
     "[hovel][[hovel]\n"
     "[trapper][[trapper]/[ftrapper][[ftrapper]\n"
   }
+  "Emoticons: Flags"
+  {
+    All flag emoticons are from http://www.icopedia.com/others/flag-icons.htm\n"
+    "\n"
+    "They are accessable under [flags/countryabbreviation], like [flags/us][[flags/us]\n"
+    "KoRx current has more than 200 flags for countries.\n"
+  }
   "Emoticons: Misc."
   {
     "[heart][[heart]\n"
