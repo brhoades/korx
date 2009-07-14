@@ -2502,6 +2502,13 @@ void Cmd_Class_f( gentity_t *ent )
         trap_SendServerCommand( ent-g_entities, "print \"Evolving to a granger from a dretch is disabled on this map\n\"" );
         return;
       }
+      
+      if( newClass == PCL_ALIEN_SPITFIRE && !g_cheats.integer 
+          && !ent->client->pers.override )
+      {
+        trap_SendServerCommand( ent-g_entities, "print \"You cannot evolve into the Spitfire yet\n\"" );
+        return;
+      }
 
       //guard against selling the HBUILD weapons exploit
       if( ent->client->sess.spectatorState == SPECTATOR_NOT &&
