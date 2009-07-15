@@ -397,7 +397,7 @@ static void CG_Obituary( entityState_t *ent )
       case MOD_SPITFIRE_SPITBOMB:
         message = "was dive-bombed by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_SPITFIRE )->humanName );
         message2 = className;
         break;
       case MOD_SPITFIRE_ZAP:
