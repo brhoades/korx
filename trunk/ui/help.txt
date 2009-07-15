@@ -290,5 +290,9 @@
     "[beer][[beer]\n"
     "[nutella][[nutella]\n"
     "[milk][[milk]\n"
+    "[cell][[cell]\n"
+    "There are over 175 other 'misc' emoticons from Pidgin.\n"
+    "If you look in your korx_emoticons_bla.pk3, you will find all "
+    "the emoticons listed."
   }
 }
