@@ -275,6 +275,13 @@
     "They are accessable under [flags/countryabbreviation], like [flags/us][[flags/us]\n"
     "KoRx current has more than 200 flags for countries.\n"
   }
+  "Emoticons: OSes / DEs"
+  {
+    "Operating system emoticons are from various sources\n"
+    "\n"
+    "They are accessable under [os/(distroname/OS/DE], like [os/linux][[os/linux] or [os/kde][[os/kde]\n"
+    "KoRx current has more than 20 Operating System and Desktop Enviroment emoticons.\n"
+  }
   "Emoticons: Misc."
   {
     "[heart][[heart]\n"
