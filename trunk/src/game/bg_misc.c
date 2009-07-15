@@ -1674,7 +1674,7 @@ static const classAttributes_t bg_classList[ ] =
     PCL_ALIEN_SPITFIRE,                            //int     classnum;
     "spitfire",                                    //char    *classname;
     "A small, extremely agile class that has evolved to attack high human bases "
-      "and harass jetpackers. Has a primary zap fire that is weaker than the  "
+      "and harass jetpackers. It Has a primary zap fire that is weaker than the "
       "marauder's, but makes up for it when combined with several other spitfires. "
       "Has a weak acid attack, can fly, and can sprint in the air.",
     ( 1 << S2 )|( 1 << S3 ),                      //int  stages
