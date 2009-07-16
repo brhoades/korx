@@ -3623,8 +3623,8 @@ qboolean G_admin_putmespec( gentity_t *ent, int skiparg )
 {
   if( !ent )
   {
-	ADMP( "!specme: sorry, but console isn't allowed on the spectators team\n");
-	return qfalse;
+    ADMP( "!specme: sorry, but console isn't allowed on the spectators team\n");
+    return qfalse;
   }
   G_ChangeTeam( ent, TEAM_NONE );
   AP( va("print \"^3!specme: ^7%s^7 decided to join the spectators\n\"", ent->client->pers.netname ) );
@@ -3643,7 +3643,7 @@ qboolean G_admin_register(gentity_t *ent, int skiparg )
 
   if( !Q_stricmp( ent->client->pers.guid, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ) )
   {
-    ADMP( va( "^3!register: ^7 You cannot register for name protection until you update your client. Please replace your client executable with the one at http://trem.tjw.org/backport/ and reconnect. Updating your client will also allow you to have faster map downloads.\n" ) );
+    ADMP( va( "^3!register: ^7 You cannot register for name protection until you update your client. Please replace your client executable with the one at http://tremfusion.net/ and reconnect. Updating your client will also allow you to have faster map downloads.\n" ) );
     return qfalse;
   }
 
@@ -3874,7 +3874,6 @@ qboolean G_admin_warn( gentity_t *ent, int skiparg )
   ClientUserinfoChanged( pids[ 0 ] );
   return qtrue;
 }
-
 
 qboolean G_admin_kill( gentity_t *ent, int skiparg )
 {
@@ -4315,7 +4314,7 @@ qboolean G_admin_unforcespec( gentity_t *ent, int skiparg )
 
 qboolean G_admin_buildlog( gentity_t *ent, int skiparg )
 {
-#define LOG_DISPLAY_LENGTH 10
+  #define LOG_DISPLAY_LENGTH 10
   buildHistory_t *ptr;
   gentity_t *builder = NULL;
   int skip = 0, start = 0, lastID = -1, firstID = -1, i, len, matchlen = 0;
@@ -4747,8 +4746,6 @@ qboolean G_admin_revert( gentity_t *ent, int skiparg )
   }
   return qtrue;
 }
-
-
 
 qboolean G_admin_info( gentity_t *ent, int skiparg )
 {
@@ -5371,7 +5368,6 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
   return qtrue;
 }
 
-
 void G_admin_maplog_update( void )
 {
   char map[ 64 ];
@@ -5607,8 +5603,6 @@ qboolean G_admin_listrotation( gentity_t *ent, int skiparg )
   return qtrue;
 }
 
-
-//FIXME: Needs whole import from tremfusion
 qboolean G_admin_subnetban( gentity_t *ent, int skiparg )
 {
   int bnum;

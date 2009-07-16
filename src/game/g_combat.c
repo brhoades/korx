@@ -1131,6 +1131,7 @@ void G_InitDamageLocations( void )
 
 
 /*
+===========
 G_Knockback
 
 Apply knockback or kickback to an entity.

@@ -728,7 +728,7 @@ const buildableAttributes_t *BG_BuildableByName( const char *name )
 
 /*
 ==============
-BG_FindHumanNameForBuildNum
+BG_FindHumanNameForBuildable
 ==============
 */
 char *BG_FindHumanNameForBuildable( int bclass )
