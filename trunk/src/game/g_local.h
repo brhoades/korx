@@ -904,8 +904,8 @@ void              G_CommitRevertedBuildable( gentity_t *ent );
 qboolean          G_RevertCanFit( buildHistory_t *bh );
 int               G_LogBuild( buildHistory_t *new );
 int               G_CountBuildLog( void );
-qboolean  G_MapExists( char *name );
-int       G_GetCurrentMap( int rotation );
+qboolean          G_MapExists( char *name );
+int               G_GetCurrentMap( int rotation );
 
 //
 // g_utils.c

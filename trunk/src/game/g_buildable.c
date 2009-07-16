@@ -3799,9 +3799,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
     built->builtBy = builder->client->ps.clientNum;
 
     if( builder->client->pers.designatedBuilder )
-    {
       built->s.eFlags |= EF_DBUILDER; // designated builder protection
-    }
   }
   else
     built->builtBy = -1;
@@ -4035,15 +4033,15 @@ void G_SpawnBuildable( gentity_t *ent, buildable_t buildable )
 }
 
 
- /*
- ============
- G_CheckDBProtection
- 
- Count how many designated builders are in both teams and
- if none found in some team, cancel protection for all
- structures of that team
- ============
- */
+/*
+============
+G_CheckDBProtection
+
+Count how many designated builders are in both teams and
+if none found in some team, cancel protection for all
+structures of that team
+============
+*/
 
 void G_CheckDBProtection( void )
 {
@@ -4059,13 +4057,9 @@ void G_CheckDBProtection( void )
     if( ent->client->pers.designatedBuilder)
     {
       if( ent->client->pers.teamSelection == TEAM_HUMANS )
-      {
         humanDBs++;
-      }
       else if( ent->client->pers.teamSelection == TEAM_ALIENS )
-      {
         alienDBs++;
-      }
     }
   }
 
@@ -4081,9 +4075,7 @@ void G_CheckDBProtection( void )
 
     if( ( !alienDBs && ent->buildableTeam == BIT_ALIENS ) ||
       ( !humanDBs && ent->buildableTeam == BIT_HUMANS ) )
-    {
       ent->s.eFlags &= ~EF_DBUILDER;
-    }
   }
 }
 

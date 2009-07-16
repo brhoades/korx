@@ -2137,7 +2137,7 @@ void QDECL G_AdminMessage( const char *prefix, const char *fmt, ... )
   Com_sprintf( outstring, sizeof( outstring ), "%s%s",
                prefix, string );
                
-  // Send to all appropriate clients --- DO NOT REMOVE BRACKETS IN THIS CONDITIONAL
+  // Send to all appropriate clients --- DO NOT REMOVE BRACKETS IN THESE CONDITIONALS
   if( !strcmp( prefix, "[ADMIN]" ) || !strcmp( prefix, "[SERVER]:" ) || !strcmp( prefix, "[A]" )  )
   {
     for( i = 0; i < level.maxclients; i++ )

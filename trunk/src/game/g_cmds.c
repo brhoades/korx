@@ -614,11 +614,12 @@ void Cmd_Team_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, va( "print \"You cannot join teams, you are forced to the spectators\n\"" ) );
       return;
     }
+    
    	if( ( level.time - ent->client->lastspecmeTime ) < ( g_specmetimeout.value*60000 ) && level.time > ( g_specmetimeout.value*60000 ) )
     {
       trap_SendServerCommand( ent-g_entities,
        va( "print \"You just used !specme a little while ago. Please stay on spectators for %i more second(s).\n\"", 
-        ( (int) ( (g_specmetimeout.value*60000) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
+        ( (int) ( ( g_specmetimeout.value*60000 ) - ( level.time - ent->client->lastspecmeTime ) )/1000 )  ) );
       return;
     } 
 
@@ -792,12 +793,6 @@ static void G_SayTo( gentity_t *ent, gentity_t *other, int mode, int color, cons
 
     // specs with ADMF_SPEC_ALLCHAT flag can see team chat
   }
-
-  if( mode == SAY_ADMINS && !G_admin_permission( other, ADMF_ADMINCHAT) )
-     return;
-
-  if( mode == SAY_CLAN && !G_admin_permission( other, ADMF_CLANCHAT) )
-     return;
 
   if( ent && BG_ClientListTest( &other->client->sess.ignoreList, ent-g_entities ) )
     ignore = qtrue;
@@ -1046,10 +1041,6 @@ static void Cmd_Say_f( gentity_t *ent )
   args = G_SayConcatArgs( 0 );
   if( Q_stricmpn( args, "say_team ", 9 ) == 0 )
     mode = SAY_TEAM;
-  if( Q_stricmpn( args, "say_admins ", 11 ) == 0 || Q_stricmpn( args, "a ", 2 ) == 0 )
-    mode = SAY_ADMINS;
-  if( Q_stricmpn( args, "say_clan ", 9 ) == 0 || Q_stricmpn( args, "c ", 2 ) == 0 )
-    mode = SAY_CLAN;
 
   // support parsing /m out of say text since some people have a hard
   // time figuring out what the console is.
@@ -1063,20 +1054,16 @@ static void Cmd_Say_f( gentity_t *ent )
   }
 
   // support parsing /a out of say text for the same reason
-   if( !Q_stricmpn( args, "say /a ", 7) ||
-       !Q_stricmpn( args, "say_team /a ", 12) ||
-       !Q_stricmpn( args, "say /say_admins ", 16) ||
-       !Q_stricmpn( args, "say_team /say_admins ", 21) )
+   if( !Q_stricmpn( args, "say /a ", 7 ) ||
+       !Q_stricmpn( args, "say_team /a ", 12 ) )
    {
       Cmd_AdminMessage_f( ent );
       return;
    }
    
   // support parsing /c out of say text for the same reason
-   if( !Q_stricmpn( args, "say /c ", 7) ||
-       !Q_stricmpn( args, "say_team /c ", 12) ||
-       !Q_stricmpn( args, "say /say_clan ", 14) ||
-       !Q_stricmpn( args, "say_team /say_clan ", 19) )
+   if( !Q_stricmpn( args, "say /c ", 7 ) ||
+       !Q_stricmpn( args, "say_team /c ", 12 ) )
    {
       Cmd_ClanMessage_f( ent );
       return;
@@ -1385,6 +1372,14 @@ void Cmd_CallVote_f( gentity_t *ent )
   {
     trap_SendServerCommand( ent - g_entities,
       "print \"You are muted and cannot call votes\n\"" );
+    return;
+  }
+
+  if( g_doWarmup.integer && g_warmupMode.integer == 1 &&
+      level.time - level.startTime < g_warmup.integer * 1000 )
+  {
+    trap_SendServerCommand( ent - g_entities,
+      "print \"No votes are allowed during warmup\n\"" );
     return;
   }
 
@@ -2589,7 +2584,7 @@ void DBCommand( team_t team, const char *text )
   {
     if( !ent->client || ( ent->client->pers.connected != CON_CONNECTED ) ||
         ( ent->client->pers.teamSelection != team ) ||
-	!ent->client->pers.designatedBuilder )
+        !ent->client->pers.designatedBuilder )
       continue;
 
     trap_SendServerCommand( i, text );
@@ -2641,7 +2636,7 @@ void Cmd_Destroy_f( gentity_t *ent )
     }
     G_Damage( ent->client->hovel, ent, ent, forward, ent->s.origin, 10000, 0, MOD_SUICIDE );
   }
-  if( !( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) )
+  else
   {
     AngleVectors( ent->client->ps.viewangles, forward, NULL, NULL );
     VectorMA( ent->client->ps.origin, 100, forward, end );
@@ -2767,6 +2762,7 @@ void Cmd_Destroy_f( gentity_t *ent )
           new->next = NULL;
           new->marked = NULL;
           G_LogBuild( new );
+          
           G_Damage( traceEnt, ent, ent, forward, tr.endpos, traceEnt->health, 0, MOD_SUICIDE );
         }
         else
@@ -4794,8 +4790,6 @@ commands_t cmds[ ] = {
   // can be used even during intermission
   { "say", CMD_MESSAGE|CMD_INTERMISSION, Cmd_Say_f },
   { "say_team", CMD_MESSAGE|CMD_INTERMISSION, Cmd_Say_f },
-  { "say_admins", CMD_MESSAGE|CMD_INTERMISSION, Cmd_AdminMessage_f },
-  { "say_clan", CMD_MESSAGE|CMD_INTERMISSION, Cmd_ClanMessage_f },
   { "vsay", CMD_MESSAGE|CMD_INTERMISSION, Cmd_VSay_f },
   { "vsay_team", CMD_MESSAGE|CMD_INTERMISSION, Cmd_VSay_f },
   { "vsay_local", CMD_MESSAGE|CMD_INTERMISSION, Cmd_VSay_f },
@@ -5459,7 +5453,7 @@ void Cmd_ClanMessage_f( gentity_t *ent )
   {
     if( !g_publicClanMessages.integer )
     {
-      ADMP( "Sorry, but use of /c by non-clanmembers has been disabled.\n" );
+      ADMP( "Sorry, but use of /c by non clan members has been disabled.\n" );
       return;
     }
     else
@@ -5467,7 +5461,7 @@ void Cmd_ClanMessage_f( gentity_t *ent )
       Com_sprintf( postprefix, sizeof( postprefix ), "[PLAYER]%s" S_COLOR_WHITE ": ",
                    ent->client->pers.netname );
       Com_sprintf( prefix, sizeof( prefix ), "[C]" );
-      ADMP( "Your message has been sent to any available admins "
+      ADMP( "Your message has been sent to any available clan members "
             "and to the server logs.\n" );
     }
   }
