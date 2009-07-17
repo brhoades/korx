@@ -312,13 +312,14 @@ void G_RunMissile( gentity_t *ent )
 {
   vec3_t    origin;
   trace_t   tr;
-  int     passent;
+  int     passent = ENTITYNUM_NONE;
 
   // get current position
   BG_EvaluateTrajectory( &ent->s.pos, level.time, origin );
 
   // ignore interactions with the missile owner
-  passent = ent->r.ownerNum;
+  //passent = ent->r.ownerNum;
+  //Aaron: Xael shots should hit their owners
 
   // general trace to see if we hit anything at all
   trap_Trace( &tr, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, origin, passent, ent->clipmask );
