@@ -2065,6 +2065,7 @@ void HMedistat_Think( gentity_t *self )
     else if( self->enemy && self->enemy->client ) //heal!
     {
       int i;
+      
       if( self->enemy->client->ps.stats[ STAT_STAMINA ] <  MAX_STAMINA )
         self->enemy->client->ps.stats[ STAT_STAMINA ] += STAMINA_MEDISTAT_RESTORE;
       if( self->enemy->client->ps.stats[ STAT_STAMINA ] > MAX_STAMINA )
@@ -2075,7 +2076,7 @@ void HMedistat_Think( gentity_t *self )
 
       self->enemy->health += 1;
       
-      //take away some credits with with each HP healed
+      //take away some tkcredits with with each HP healed
       for( i = 0; i< MAX_CLIENTS; i++ )
       {
         if( self->enemy->client->tkcredits[ i ] > 0 )
@@ -2088,6 +2089,7 @@ void HMedistat_Think( gentity_t *self )
         //zero all tk accounts
         for( i = 0; i < MAX_CLIENTS; i++ )
           self->enemy->client->tkcredits[ i ] = 0;
+          
         self->enemy->health =  self->enemy->client->ps.stats[ STAT_MAX_HEALTH ];
         if( !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
           BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
@@ -2874,7 +2876,7 @@ void G_BuildableThink( gentity_t *ent, int msec )
 
   //We don't think when we're paused
   if( level.paused )
-  return;
+    return;
 
   //toggle spawned flag for buildables
   if( !ent->spawned && ent->health > 0 )

@@ -1910,9 +1910,7 @@ static void CG_DrawStageReport( rectDef_t *rect, float text_x, float text_y,
   }
 
   if ( cg.time < SKIRMISH_TIME && !cg.extremesuddendeath )
-  {
       Com_sprintf( s, MAX_TOKEN_CHARS, "Skirmish Time: Stage Count Starts in %d Seconds", (SKIRMISH_TIME - cg.time + 1000) / 1000 );
-  }
   else if( !cg.extremesuddendeath )
   {
     if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
@@ -1947,12 +1945,10 @@ static void CG_DrawStageReport( rectDef_t *rect, float text_x, float text_y,
             cgs.humanStage + 1, credits );
     }
     else
-      Com_sprintf( s, MAX_TOKEN_CHARS, "" );
+      Com_sprintf( s, MAX_TOKEN_CHARS, " " );
   }
   else if( cg.extremesuddendeath )
-  {
     Com_sprintf( s, MAX_TOKEN_CHARS, "Extreme Sudden Death" );
-  }
 
   CG_AlignText( rect, s, scale, 0.0f, 0.0f, textalign, textvalign, &tx, &ty );
 

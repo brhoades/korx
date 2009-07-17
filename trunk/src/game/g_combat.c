@@ -45,7 +45,7 @@ void AddKill( gentity_t *ent )
   if( level.warmupTime )
     return;
 
-  ent->client->ps.persistant[ PERS_KILLS ] += 1;
+  ent->client->ps.persistant[ PERS_KILLS ]++;
   CalculateRanks( );
 }
 
@@ -326,7 +326,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   }
   self->enemy = attacker;
 
-  self->client->ps.persistant[ PERS_KILLED ]++;
+  if( self->client->sess.spectatorState == SPECTATOR_NOT )
+    self->client->ps.persistant[ PERS_KILLED ]++;
+
   self->client->pers.statscounters.deaths++;
   if( self->client->pers.teamSelection == TEAM_ALIENS ) 
   {

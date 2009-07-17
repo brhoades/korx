@@ -1072,7 +1072,6 @@ static void CG_BuildableStatusDisplay( centity_t *cent )
         CG_DrawPic( pX, subY, subH, subH, bs->noPowerShader );
       else
         CG_DrawPic( pX, subY, subH, subH, bs->esdShader );
-
     }
 
     if( marked )
