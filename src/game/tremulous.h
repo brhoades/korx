@@ -417,7 +417,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_CREEPSIZE           30
 #define TRAPPER_RANGE               400
 #define TRAPPER_REPEAT              1000
-#define TRAPPER_VALUE               ABVM(0)
+#define TRAPPER_VALUE               ABVM(25)
 #define LOCKBLOB_SPEED              650.0f
 #define LOCKBLOB_LOCKTIME           5000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
@@ -529,7 +529,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_REPEAT              1000
 #define SHOTGUN_K_SCALE             1.0f
 #define SHOTGUN_RELOAD              2000
-#define SHOTGUN_SPREAD              600
+#define SHOTGUN_SPREAD              900
 #define SHOTGUN_DMG                 HDM(7)
 #define SHOTGUN_RANGE               (8192 * 12)
 #define SHOTGUN_PRI_RECOIL_MIN_Y    4
