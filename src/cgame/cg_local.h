@@ -699,6 +699,7 @@ typedef struct markPoly_s
   struct markPoly_s *prevMark, *nextMark;
   int               time;
   qhandle_t         markShader;
+  qhandle_t         noPowerShader;
   qboolean          alphaFade;    // fade alpha instead of rgb
   float             color[ 4 ];
   poly_t            poly;

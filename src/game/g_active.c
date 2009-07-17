@@ -629,10 +629,11 @@ void ClientTimerActions( gentity_t *ent, int msec )
         int i;
         ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
         for( i = 0; i < MAX_CLIENTS; i++ )
+        {
           ent->credits[ i ] = 0;
-        //zero all tk accounts
-        for( i = 0; i < MAX_CLIENTS; i++ )
+          //zero all tk accounts
           ent->client->tkcredits[ i ] = 0;
+        }
 
       }
     }

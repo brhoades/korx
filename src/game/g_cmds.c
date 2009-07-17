@@ -1674,7 +1674,7 @@ void Cmd_CallVote_f( gentity_t *ent )
         "print \"callvote: the game is already in extreme sudden death\n\"" );
       return;
     }
-    if(!g_suddenDeathVotePercent.integer)
+    if( !g_suddenDeathVotePercent.integer )
     {
       trap_SendServerCommand( ent-g_entities, "print \"callvote: Sudden Death votes have been disabled\n\"" );
       return;

@@ -108,6 +108,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       && !g_extremeSuddenDeath.integer && !g_cheats.integer
       && g_allowShare.integer && cap )
   {
+    int k, overflowedto[ MAX_CLIENTS ];
     overflow = client->ps.persistant[ PERS_CREDIT ] + credit - max;
     client->ps.persistant[ PERS_CREDIT ] = max;
     overflowtotal = overflow;
@@ -117,9 +118,25 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
     {
       team_t    thisteam = TEAM_NONE;
       char      *type = "";
-      int       overflowamt = 0;
+      int       overflowamt = 0, j;
       
-      cl = &level.clients[ i ];
+      k = rand( ) % MAX_CLIENTS;
+      
+      while( qtrue )
+      {
+        for( j = 0; j < MAX_CLIENTS; j++ )
+        {
+          if( overflowedto[ j ] == k )
+          {
+            k = rand( ) % MAX_CLIENTS;
+            break;
+          }
+        }
+        overflowedto[ j ] = k;
+        break;
+      }
+      
+      cl = &level.clients[ k ];
       
       if( !cl )
         continue;
@@ -174,14 +191,32 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         client->pers.netname, overflowamt, type ) );
       }
     }
+    for( i = 0; i < MAX_CLIENTS; i++ )
+      overflowedto[ i ] = -1;
     // give anything else to dead players
     for( i = 0; overflow > 0 && i < MAX_CLIENTS; i++ )
     {
       team_t    thisteam = TEAM_NONE;
       char      *type = "";
-      int       overflowamt = 0;
+      int       overflowamt = 0, j;
       
-      cl = &level.clients[ i ];
+      k = rand( ) % MAX_CLIENTS;
+      
+      while( qtrue )
+      {
+        for( j = 0; j < MAX_CLIENTS; j++ )
+        {
+          if( overflowedto[ j ] == k )
+          {
+            k = rand( ) % MAX_CLIENTS;
+            break;
+          }
+        }
+        overflowedto[ j ] = k;
+        break;
+      }
+      
+      cl = &level.clients[ k ];
       
       if( !cl )
         continue;

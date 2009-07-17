@@ -4078,23 +4078,25 @@ BG_GetValueOfEquipment
 Returns the equipment value of some human player's gear
 ===============
 */
-int BG_GetValueOfEquipment( playerState_t *ps ) {
-int i, worth = 0;
-
-for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
+int BG_GetValueOfEquipment( playerState_t *ps ) 
 {
-  if( BG_InventoryContainsUpgrade( i, ps->stats ) )
-    worth += BG_FindPriceForUpgrade( i );
-}
+  int i, worth = 0;
 
-for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-{
-  if( BG_InventoryContainsWeapon( i, ps->stats ) )
-    worth += BG_FindPriceForWeapon( i );
-}
+  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
+  {
+    if( BG_InventoryContainsUpgrade( i, ps->stats ) )
+      worth += BG_FindPriceForUpgrade( i );
+  }
+
+  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
+  {
+    if( BG_InventoryContainsWeapon( i, ps->stats ) )
+      worth += BG_FindPriceForWeapon( i );
+  }
 
   return worth;
 }
+
 /*
 ===============
 BG_GetValueOfPlayer
