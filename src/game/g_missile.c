@@ -318,8 +318,9 @@ void G_RunMissile( gentity_t *ent )
   BG_EvaluateTrajectory( &ent->s.pos, level.time, origin );
 
   // ignore interactions with the missile owner
-  //passent = ent->r.ownerNum;
-  //Aaron: Xael shots should hit their owners
+   if( ent->s.time + 2500 > level.time )
+     passent = ent->r.ownerNum;
+  //Aaron: Xael shots / shotty nades should hit their owners
 
   // general trace to see if we hit anything at all
   trap_Trace( &tr, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, origin, passent, ent->clipmask );
@@ -415,6 +416,7 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_FLAMER_SPLASH;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -FLAMER_SIZE;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = FLAMER_SIZE;
 
@@ -462,6 +464,7 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_BLASTER;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -BLASTER_SIZE;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = BLASTER_SIZE;
 
@@ -511,6 +514,8 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_PRIFLE;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
+
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -PRIFLE_SIZE;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = PRIFLE_SIZE;
 
@@ -552,6 +557,8 @@ gentity_t *fire_prifle_stasis( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->methodOfDeath = MOD_UNKNOWN; //doesn't do damage so will never kill
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
+
 
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -611,6 +618,7 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   bolt->splashMethodOfDeath = MOD_XAEL;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
     
   // Give the missile a small bounding box
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] =
@@ -671,6 +679,7 @@ gentity_t *fire_xael_secondary( gentity_t *self, vec3_t start, vec3_t dir,
   bolt->splashMethodOfDeath = MOD_XAEL;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
     
   // Give the missile a small bounding box
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] =
@@ -732,6 +741,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir,
   bolt->splashMethodOfDeath = MOD_LCANNON_SPLASH;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
 
   // Give the missile a small bounding box
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] =
@@ -796,6 +806,7 @@ gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->s.time = level.time;
   bolt->health = 100;
   bolt->takedamage = qtrue;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -886,7 +897,7 @@ gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
   bolt->target_ent = NULL;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -3.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 3.0f;
-  bolt->s.time = level.time;
+  bolt->s.time = level.time-3000;
 
   bolt->s.pos.trType = TR_GRAVITY;
   //bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -994,6 +1005,7 @@ gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = self->target_ent;
   bolt->timestamp = level.time + HIVE_LIFETIME;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -1037,6 +1049,7 @@ gentity_t *fire_eBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->target_ent = NULL;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -4.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 4.0f;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -1078,6 +1091,7 @@ gentity_t *fire_spitbomb( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->target_ent = NULL;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -4.0f;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = 4.0f;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -1120,6 +1134,7 @@ gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->methodOfDeath = MOD_UNKNOWN; //doesn't do damage so will never kill
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -1160,6 +1175,7 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashMethodOfDeath = MOD_SLOWBLOB;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -1198,6 +1214,7 @@ gentity_t *fire_paraLockBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashRadius = 0;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
@@ -1252,6 +1269,7 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir)
   }
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->s.time = level.time;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
