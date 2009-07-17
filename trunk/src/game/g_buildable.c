@@ -4404,12 +4404,26 @@ void G_CommitRevertedBuildable( gentity_t *ent )
   gentity_t *targ;
   int i, n, occupants[ MAX_GENTITIES ];
   vec3_t mins, maxs;
+  int victims = 0;
+
   VectorAdd( ent->s.origin, ent->r.mins, mins );
   VectorAdd( ent->s.origin, ent->r.maxs, maxs );
   trap_UnlinkEntity( ent );
   n = trap_EntitiesInBox( mins, maxs, occupants, MAX_GENTITIES );
   trap_LinkEntity( ent );
-  if( n == 0 )
+
+  for( i = 0; i < n; i++ )
+  {
+    vec3_t gtfo;
+    targ = g_entities + occupants[ i ];
+    if( targ->client )
+    {
+      VectorSet( gtfo, crandom() * 150, crandom() * 150, random() * 150 );
+      VectorAdd( targ->client->ps.velocity, gtfo, targ->client->ps.velocity );
+      victims++;
+    }
+  }
+  if( !victims )
   { // we're in the clear!
     ent->r.contents = MASK_PLAYERSOLID;
     trap_LinkEntity( ent ); // relink
@@ -4470,17 +4484,7 @@ void G_CommitRevertedBuildable( gentity_t *ent )
     // oh if only everything was that simple
     return;
   }
-  for( i = 0; i < n; i++ )
-  {
-    vec3_t gtfo;
-    targ = g_entities + occupants[ i ];
-    if( targ->client )
-    {
-      VectorSet( gtfo, crandom() * 150, crandom() * 150, random() * 150 );
-      VectorAdd( targ->client->ps.velocity, gtfo, targ->client->ps.velocity );
-    }
-  }
-#define REVERT_THINK_INTERVAL 50
+  #define REVERT_THINK_INTERVAL 50
   ent->nextthink = level.time + REVERT_THINK_INTERVAL;
 }
 
