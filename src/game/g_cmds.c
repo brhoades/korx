@@ -3915,6 +3915,8 @@ void G_StopFollowing( gentity_t *ent )
   ent->client->ps.stats[ STAT_VIEWLOCK ] = 0;
   ent->client->ps.viewangles[ PITCH ] = 0.0f;
   ent->client->ps.clientNum = ent - g_entities;
+  ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.savedCredit;
+  ent->client->ps.persistant[ PERS_KILLED ] = ent->client->pers.savedDeaths;
 
   CalculateRanks( );
 }
@@ -4104,6 +4106,8 @@ void Cmd_Follow_f( gentity_t *ent )
           ent->client->pers.teamSelection ) )
       return;
 
+    ent->client->pers.savedCredit = ent->client->ps.persistant[ PERS_CREDIT ];
+    ent->client->pers.savedDeaths = ent->client->ps.persistant[ PERS_KILLED ];
     ent->client->sess.spectatorState = SPECTATOR_FOLLOW;
     ent->client->sess.spectatorClient = i;
   }
