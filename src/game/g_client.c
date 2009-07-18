@@ -109,8 +109,17 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       && g_allowShare.integer && cap )
   {
     int k, overflowedto[ MAX_CLIENTS ];
-    overflow = client->ps.persistant[ PERS_CREDIT ] + credit - max;
-    client->ps.persistant[ PERS_CREDIT ] = max;
+    
+    if( client->sess.spectatorState == SPECTATOR_NOT )
+    {
+      overflow = client->ps.persistant[ PERS_CREDIT ] + credit - max;
+      client->ps.persistant[ PERS_CREDIT ] = max;
+    }
+    else
+    {
+      overflow = client->pers.savedCredit + credit - max;
+      client->pers.savedCredit = max;
+    }
     overflowtotal = overflow;
 
     // give precedence to live players
@@ -237,12 +246,18 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       {
         overflowamt = max - cl->ps.persistant[ PERS_CREDIT ];
         overflow -= overflowamt;
-        cl->ps.persistant[ PERS_CREDIT ] = max;
+        if( cl->sess.spectatorState == SPECTATOR_NOT )
+          cl->ps.persistant[ PERS_CREDIT ] = max;
+        else
+          cl->pers.savedcredit = max;
       }
       else
       {
         overflowamt = overflow;
-        cl->ps.persistant[ PERS_CREDIT ] += overflow;
+        if( cl->sess.spectatorState == SPECTATOR_NOT )
+          cl->ps.persistant[ PERS_CREDIT ] += overflow;
+        else
+          cl->pers.savedCredit += overflow;
         overflow = 0;
       }
 
@@ -301,10 +316,20 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   else if( client->ps.persistant[ PERS_CREDIT ] + credit > max && cap )
   {
     if( client->ps.persistant[ PERS_CREDIT ] < max )
-      client->ps.persistant[ PERS_CREDIT ] = max;
+    {
+      if( client->sess.spectatorState == SPECTATOR_NOT )
+        client->ps.persistant[ PERS_CREDIT ] = max;
+      else
+        client->pers.savedCredit = max;
+    }
   }
   else if( client->ps.persistant[ PERS_CREDIT ] + credit <= max || !cap )
-    client->ps.persistant[ PERS_CREDIT ] += credit;
+  {
+    if( client->sess.spectatorState == SPECTATOR_NOT )
+      client->ps.persistant[ PERS_CREDIT ] += credit;
+    else
+      client->pers.savedCredit += credit;
+  }
 
   if( client->ps.persistant[ PERS_CREDIT ] < 0 )
     client->ps.persistant[ PERS_CREDIT ] = 0;

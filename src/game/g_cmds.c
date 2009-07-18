@@ -2369,7 +2369,7 @@ void Cmd_Class_f( gentity_t *ent )
   int       num;
   qboolean foundhuman = qfalse, foundovermind = qfalse;
   gentity_t *other;
-
+  
   clientNum = ent->client - level.clients;
   trap_Argv( 1, s, sizeof( s ) );
   newClass = BG_ClassByName( s )->number;
@@ -2378,6 +2378,10 @@ void Cmd_Class_f( gentity_t *ent )
   {
     if( ent->client->sess.spectatorState == SPECTATOR_FOLLOW )
       G_StopFollowing( ent );
+
+    ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.savedCredit;
+    ent->client->ps.persistant[ PERS_KILLED ] = ent->client->pers.savedDeaths;
+  
     if( ent->client->pers.teamSelection == TEAM_ALIENS )
     {
       if( newClass != PCL_ALIEN_LEVEL0 
@@ -3915,10 +3919,7 @@ void G_StopFollowing( gentity_t *ent )
   ent->client->ps.stats[ STAT_VIEWLOCK ] = 0;
   ent->client->ps.viewangles[ PITCH ] = 0.0f;
   ent->client->ps.clientNum = ent - g_entities;
-  ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.savedCredit;
-  ent->client->ps.persistant[ PERS_KILLED ] = ent->client->pers.savedDeaths;
-  ent->client->pers.saved = qfalse;
-
+  
   CalculateRanks( );
 }
 
@@ -4107,9 +4108,6 @@ void Cmd_Follow_f( gentity_t *ent )
           ent->client->pers.teamSelection ) )
       return;
 
-    ent->client->pers.saved = qtrue;
-    ent->client->pers.savedCredit = ent->client->ps.persistant[ PERS_CREDIT ];
-    ent->client->pers.savedDeaths = ent->client->ps.persistant[ PERS_KILLED ];
     ent->client->sess.spectatorState = SPECTATOR_FOLLOW;
     ent->client->sess.spectatorClient = i;
   }
