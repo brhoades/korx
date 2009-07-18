@@ -326,8 +326,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   }
   self->enemy = attacker;
 
-  if( self->client->sess.spectatorState == SPECTATOR_NOT )
-    self->client->ps.persistant[ PERS_KILLED ]++;
+  self->client->ps.persistant[ PERS_KILLED ]++;
 
   self->client->pers.statscounters.deaths++;
   if( self->client->pers.teamSelection == TEAM_ALIENS ) 
