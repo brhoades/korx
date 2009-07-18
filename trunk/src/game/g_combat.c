@@ -280,6 +280,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   // close any menus the client has open
   G_CloseMenus( self->client->ps.clientNum );
 
+  //save stuff to prevent hackage
+  self->client->pers.savedDeaths = self->client->ps.persistant[ PERS_KILLED ];
+  self->client->pers.savedCredit = self->client->ps.persistant[ PERS_CREDIT ];
+
   // deactivate all upgrades
   for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
     BG_DeactivateUpgrade( i, self->client->ps.stats );
