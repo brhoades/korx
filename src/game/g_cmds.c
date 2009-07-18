@@ -4444,11 +4444,11 @@ void Cmd_Share_f( gentity_t *ent )
     return;
   }
 
-  if( ent->client->pers.teamSelection == TEAM_NONE )
+  if( ent->client->sess.spectatorState != SPECTATOR_NOT )
     playerCredit = ent->client->pers.savedCredit;
   else
     playerCredit = ent->client->ps.persistant[ PERS_CREDIT ];
-  if( level.clients[ clientNum ].pers.teamSelection == TEAM_NONE )
+  if( level.clients[ clientNum ].sess.spectatorState != SPECTATOR_NOT )
     targetCredit = level.clients[ clientNum ].pers.savedCredit;
   else
     targetCredit = level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ];
@@ -4574,8 +4574,16 @@ void Cmd_Donate_f( gentity_t *ent )
   if( ent->client->pers.teamSelection == TEAM_ALIENS )
     value = value * ALIEN_CREDITS_PER_FRAG;
 
-  if( value > ent->client->ps.persistant[ PERS_CREDIT ] )
-    value = ent->client->ps.persistant[ PERS_CREDIT ];
+  if( ent->client->sess.spectatorState == SPECTATOR_NOT )
+  {
+    if( value > ent->client->ps.persistant[ PERS_CREDIT ] )
+      value = ent->client->ps.persistant[ PERS_CREDIT ];
+  }
+  else
+  {
+    if( value > ent->client->pers.savedCredit )
+      value = ent->client->pers.savedCredit;
+  }
 
   if( ent->client->pers.teamSelection == TEAM_ALIENS )
   {

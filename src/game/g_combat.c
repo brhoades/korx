@@ -280,10 +280,6 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   // close any menus the client has open
   G_CloseMenus( self->client->ps.clientNum );
 
-  //save stuff to prevent hackage
-  self->client->pers.savedDeaths = self->client->ps.persistant[ PERS_KILLED ];
-  self->client->pers.savedCredit = self->client->ps.persistant[ PERS_CREDIT ];
-
   // deactivate all upgrades
   for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
     BG_DeactivateUpgrade( i, self->client->ps.stats );
@@ -328,9 +324,14 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     G_LogPrintf("%s^7 was killed by ^1TEAMMATE^7 %s^7 (Did %d damage to %d max)\n",
       self->client->pers.netname, attacker->client->pers.netname, self->client->tkcredits[ attacker->s.number ], self->client->ps.stats[ STAT_MAX_HEALTH ] );
   }
+  
   self->enemy = attacker;
 
   self->client->ps.persistant[ PERS_KILLED ]++;
+
+  // save stuff to prevent hackage
+  self->client->pers.savedDeaths = self->client->ps.persistant[ PERS_KILLED ];
+  self->client->pers.savedCredit = self->client->ps.persistant[ PERS_CREDIT ];
 
   self->client->pers.statscounters.deaths++;
   if( self->client->pers.teamSelection == TEAM_ALIENS ) 
