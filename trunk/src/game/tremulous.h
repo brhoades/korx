@@ -375,7 +375,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BOOSTER_SPLASHRADIUS        50
 #define BOOSTER_CREEPSIZE           120
 #define BOOSTER_REGEN_MOD           2.0f
-#define BOOSTER_VALUE               ABVM(0)
+#define BOOSTER_VALUE               ABVM(3)
 #define BOOST_TIME                  30000
 #define BOOST_WARN_TIME             25000
 
@@ -417,7 +417,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_CREEPSIZE           30
 #define TRAPPER_RANGE               400
 #define TRAPPER_REPEAT              1000
-#define TRAPPER_VALUE               ABVM(25)
+#define TRAPPER_VALUE               ABVM(0)
 #define LOCKBLOB_SPEED              650.0f
 #define LOCKBLOB_LOCKTIME           5000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
@@ -432,7 +432,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define OVERMIND_CREEPSIZE          120
 #define OVERMIND_ATTACK_RANGE       150.0f
 #define OVERMIND_ATTACK_REPEAT      1000
-#define OVERMIND_VALUE              ABVM(30)
+#define OVERMIND_VALUE              ABVM(15)
 
 #define HOVEL_BP                    0
 #define HOVEL_BT                    15000
@@ -529,7 +529,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_REPEAT              1000
 #define SHOTGUN_K_SCALE             1.0f
 #define SHOTGUN_RELOAD              2000
-#define SHOTGUN_SPREAD              900
+#define SHOTGUN_SPREAD              600
 #define SHOTGUN_DMG                 HDM(7)
 #define SHOTGUN_RANGE               (8192 * 12)
 #define SHOTGUN_PRI_RECOIL_MIN_Y    4
@@ -578,7 +578,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CHAINGUN_REPEAT             80
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             1000
-#define CHAINGUN_DMG                HDM(6)
+#define CHAINGUN_DMG                HDM(8)
 #define CHAINGUN_PRI_RECOIL_MIN_Y   0.15
 #define CHAINGUN_PRI_RECOIL_MAX_Y   1.5
 #define CHAINGUN_PRI_RECOIL_MAX_X   2
@@ -766,7 +766,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define HUMAN_BHLTH_MODIFIER        1.0f
 #define HBHM(h)                     ((int)((float)h*HUMAN_BHLTH_MODIFIER))
-#define HUMAN_BVALUE_MODIFIER       240.0f
+#define HUMAN_BVALUE_MODIFIER       50.0f
 #define HBVM(h)                     ((int)((float)h*(float)HUMAN_BVALUE_MODIFIER)) // remember these are measured in credits not frags (c.f. ALIEN_CREDITS_PER_FRAG)
 
 #define REACTOR_BASESIZE            1000
@@ -853,7 +853,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REACTOR_ATTACK_DCC_REPEAT   1000
 #define REACTOR_ATTACK_DCC_RANGE    150.0f
 #define REACTOR_ATTACK_DCC_DAMAGE   40
-#define REACTOR_VALUE               HBVM(30)
+#define REACTOR_VALUE               HBVM(20)
 
 #define REPEATER_BP                 0
 #define REPEATER_BT                 10000
@@ -924,8 +924,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DEFAULT_ALIEN_MAX_STAGE     "2"
 #define DEFAULT_HUMAN_BUILDPOINTS   "100"
 #define DEFAULT_HUMAN_QUEUE_TIME    "1250"
-#define DEFAULT_HUMAN_STAGE2_THRESH "4000"
-#define DEFAULT_HUMAN_STAGE3_THRESH "8000"
+#define DEFAULT_HUMAN_STAGE2_THRESH "2500"
+#define DEFAULT_HUMAN_STAGE3_THRESH "5000"
 #define DEFAULT_HUMAN_MAX_STAGE     "2"
 /*
   SKIRMISH_TIME
