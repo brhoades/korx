@@ -309,6 +309,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     ent->s.otherEntityNum = self->s.number;
     ent->s.otherEntityNum2 = killer;
     ent->r.svFlags = SVF_BROADCAST; // send to everyone
+    if( !tk || g_tkmap.integer )
+      addKill( attacker );
   }
   else 
   {
@@ -428,7 +430,6 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     else
     {
       //AddScore( attacker, 1 ); 
-      AddKill( attacker );
 
       attacker->client->lastKillTime = level.time;
       attacker->client->pers.statscounters.kills++;
