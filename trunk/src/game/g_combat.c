@@ -1342,8 +1342,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   {
     // special case for adv rant eblob and goon barb not doing self damage
     if( targ == attacker &&
-        ( mod == MOD_LEVEL4_EBLOB || mod == MOD_LEVEL4_EBLOB ||
-          mod == MOD_LEVEL3_BOUNCEBALL ) )
+        ( mod == MOD_LEVEL4_EBLOB || mod == MOD_LEVEL3_BOUNCEBALL ) )
       return;
 
     // if TF_NO_FRIENDLY_FIRE is set, don't do damage to the target
