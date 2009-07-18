@@ -3917,6 +3917,7 @@ void G_StopFollowing( gentity_t *ent )
   ent->client->ps.clientNum = ent - g_entities;
   ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.savedCredit;
   ent->client->ps.persistant[ PERS_KILLED ] = ent->client->pers.savedDeaths;
+  ent->client->pers.saved = qfalse;
 
   CalculateRanks( );
 }
@@ -4106,6 +4107,7 @@ void Cmd_Follow_f( gentity_t *ent )
           ent->client->pers.teamSelection ) )
       return;
 
+    ent->client->pers.saved = qtrue;
     ent->client->pers.savedCredit = ent->client->ps.persistant[ PERS_CREDIT ];
     ent->client->pers.savedDeaths = ent->client->ps.persistant[ PERS_KILLED ];
     ent->client->sess.spectatorState = SPECTATOR_FOLLOW;
