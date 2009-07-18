@@ -318,7 +318,7 @@ void G_RunMissile( gentity_t *ent )
   BG_EvaluateTrajectory( &ent->s.pos, level.time, origin );
 
   // ignore interactions with the missile owner
-   if( ent->s.time + 1000 > level.time )    //wait one second before we do anything, just in case it hasn't left our model yet.
+   if( ent->s.time + 500 > level.time )    //wait half a second before we do anything, just in case it hasn't left our model yet.
      passent = ent->r.ownerNum;
   //Aaron: Xael shots / shotty nades should hit their owners
 
