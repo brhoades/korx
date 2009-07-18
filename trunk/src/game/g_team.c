@@ -184,6 +184,7 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
     ent->client->ps.persistant[ PERS_KILLS ] = 0;
     ent->client->ps.persistant[ PERS_KILLED ] = 0;
     ent->client->pers.savedCredit = 0;
+    ent->client->pers.savedDeaths = 0;
     ent->client->pers.statscounters.kills = 0;
     ent->client->pers.statscounters.structskilled = 0;
     ent->client->pers.statscounters.assists = 0;
