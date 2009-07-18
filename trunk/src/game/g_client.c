@@ -249,7 +249,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         if( cl->sess.spectatorState == SPECTATOR_NOT )
           cl->ps.persistant[ PERS_CREDIT ] = max;
         else
-          cl->pers.savedcredit = max;
+          cl->pers.savedCredit = max;
       }
       else
       {
