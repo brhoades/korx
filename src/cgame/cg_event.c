@@ -415,10 +415,7 @@ static void CG_Obituary( entityState_t *ent )
           message = "shouldn't have provoked";
         else
           message = "got spat on by";
-          
-        Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
-        message2 = className;
+        message2 = "'s granger";
         break;
       case MOD_LEVEL1_PCLOUD:
         message = "was gassed by";
