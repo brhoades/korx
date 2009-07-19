@@ -805,7 +805,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_RANGE              300.0f
 #define MGTURRET_SPREAD             200
 #define MGTURRET_DMG                HDM(4)
-#define MGTURRET_SPINUP_TIME        250 // time between target sighted and fire
+#define MGTURRET_SPINUP_TIME        150 // time between target sighted and fire
 #define MGTURRET_DROOPSCALE         0.5f // rate at which turret droops when unpowered
 
 #define MGTURRET_VALUE              HBVM(0)
