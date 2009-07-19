@@ -434,7 +434,7 @@ if a user is interested in a server to do a full status
 ================
 */
 void SVC_Info( netadr_t from ) {
-	int		i, count; //pcount;
+	int		i, count, pcount;
 	char	*gamedir;
 	char	infostring[MAX_INFO_STRING];
 
@@ -451,8 +451,8 @@ void SVC_Info( netadr_t from ) {
 	count = 0;
 	for ( i = 0 ; i < sv_maxclients->integer ; i++ ) {
 		if ( svs.clients[i].state >= CS_CONNECTED ) {
-      //if( i <= sv_privateClients->integer )
-      //  pcount++;
+      if( i <= sv_privateClients->integer )
+        pcount++;
       count++;
 		}
 	}
@@ -468,7 +468,7 @@ void SVC_Info( netadr_t from ) {
 	Info_SetValueForKey( infostring, "mapname", sv_mapname->string );
 	Info_SetValueForKey( infostring, "clients", va("%i", count) );
 	Info_SetValueForKey( infostring, "sv_maxclients", 
-		va("%i", sv_maxclients->integer - sv_privateClients->integer - sv_democlients->integer ) );
+		va("%i", sv_maxclients->integer - sv_privateClients->integer - sv_democlients->integer + pcount ) );
 	Info_SetValueForKey( infostring, "pure", sv_pure->string );
 	Info_SetValueForKey( infostring, "unlagged", Cvar_VariableString( "g_unlagged" ) );
 
