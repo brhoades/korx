@@ -434,7 +434,7 @@ if a user is interested in a server to do a full status
 ================
 */
 void SVC_Info( netadr_t from ) {
-	int		i, count;
+	int		i, count; //pcount;
 	char	*gamedir;
 	char	infostring[MAX_INFO_STRING];
 
@@ -449,9 +449,11 @@ void SVC_Info( netadr_t from ) {
 
 	// don't count privateclients
 	count = 0;
-	for ( i = sv_privateClients->integer ; i < sv_maxclients->integer ; i++ ) {
+	for ( i = 0 ; i < sv_maxclients->integer ; i++ ) {
 		if ( svs.clients[i].state >= CS_CONNECTED ) {
-			count++;
+      //if( i <= sv_privateClients->integer )
+      //  pcount++;
+      count++;
 		}
 	}
 
