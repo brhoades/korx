@@ -798,14 +798,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_ANGULARSPEED       8
 #define MGTURRET_ANGULARSPEED_GRAB  3
 #define MGTURRET_ANGULARSPEED_DCC   10
-#define MGTURRET_ACCURACY_TO_FIRE   0
+#define MGTURRET_ACCURACY_TO_FIRE   3
 #define MGTURRET_VERTICALCAP        30  // +/- maximum pitch
 #define MGTURRET_REPEAT             100
 #define MGTURRET_K_SCALE            1.0f
 #define MGTURRET_RANGE              300.0f
 #define MGTURRET_SPREAD             200
-#define MGTURRET_DMG                HDM(4)
-#define MGTURRET_SPINUP_TIME        150 // time between target sighted and fire
+#define MGTURRET_DMG                HDM(5)
+#define MGTURRET_SPINUP_TIME        100 // time between target sighted and fire
 #define MGTURRET_DROOPSCALE         0.5f // rate at which turret droops when unpowered
 
 #define MGTURRET_VALUE              HBVM(0)
