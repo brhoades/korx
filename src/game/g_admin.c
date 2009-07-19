@@ -4192,7 +4192,7 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
         }
       else if( *name != 'h' && *name != 'a' && *name != 'm' )
         vic->client->pers.paused = qtrue;
-      if( *name == 'm' && G_admin_permission( ent, ADMF_IMMUTABLE ) )
+      if( *name == 'm' && !G_admin_permission( ent, ADMF_IMMUTABLE ) )
       {
         vic->client->pers.muted = qtrue;
         CPx( pids[ i ], va( "cp \"^1You've been paused by ^7%s^1\nYou've been muted by ^7%s\"", 
