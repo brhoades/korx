@@ -1225,7 +1225,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   int     save;
   int     asave = 0;
   int     knockback;
-  int takeNoOverkill;
+  int     takeNoOverkill;
 
   // Can't deal damage sometimes
   if( !targ->takedamage || targ->health <= 0 || level.intermissionQueued )
@@ -1372,9 +1372,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       {
         if( !g_friendlyFireHumans.integer &&
             targ->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-        {
           return;
-        }
+          
         if( !g_friendlyFireAliens.integer &&
              targ->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS
              && !( mod == MOD_POISON ) )
