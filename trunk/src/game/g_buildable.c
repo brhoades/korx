@@ -626,7 +626,7 @@ AGeneric_CreepCheck
 Tests for creep and kills the buildable if there is none
 ================
 */
-void AGeneric_CreepCheck( gentity_t *self )
+qboolean AGeneric_CreepCheck( gentity_t *self )
 {
   gentity_t *spawn;
   int damagetotake;
@@ -640,11 +640,13 @@ void AGeneric_CreepCheck( gentity_t *self )
     //            damagetotake, 0 , MOD_NOCREEP );
     //else
     //The above is a good idea, but currently causes graphical defects
-      G_Damage( self, NULL, NULL, NULL, NULL, damagetotake, 0, MOD_NOCREEP );
-      self->nextthink = level.time + 1000;
-    return;
+    G_Damage( self, NULL, g_entities + self->killedBy, NULL, NULL, 
+            damagetotake, 0, MOD_NOCREEP );
+    self->nextthink = level.time + 1000;
+    return qfalse;
   }
   G_CreepSlow( self );
+  return qtrue;
 }
 
 /*
@@ -1199,11 +1201,12 @@ void AHive_Think( gentity_t *self )
   self->powered = level.overmindPresent;
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
 
-  AGeneric_CreepCheck( self );
-
   // Hive missile hasn't returned in HIVE_REPEAT seconds, forget about it
   if( self->timestamp < level.time )
     self->active = qfalse;
+
+  if( !AGeneric_CreepCheck( self ) )
+    return;
 
   // Find a target to attack
   if( self->spawned && !self->active && G_FindOvermind( self ) )
@@ -1377,9 +1380,7 @@ void AHovel_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
   if( self->spawned && G_FindOvermind( self ) )
   {
     if( self->active && ( self->builder->health <= 0 || !( self->builder->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) ) )
-    {
       self->active = qfalse;
-    }
     else if( self->active && self->builder->health > 0 )
     {
       //this hovel is in use
@@ -1443,7 +1444,8 @@ void AHovel_Think( gentity_t *self )
   self->powered = level.overmindPresent;
   self->nextthink = level.time + 200;
 
-  AGeneric_CreepCheck( self );
+  if( !AGeneric_CreepCheck( self ) )
+    return;
 
   if( self->spawned )
   {
@@ -1514,6 +1516,9 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
   gclient_t *client = other->client;
 
   if( !self->spawned || self->health <= 0 )
+    return;
+    
+  if( !AGeneric_CreepCheck( self ) )
     return;
 
   if( !G_FindOvermind( self ) )
@@ -1698,7 +1703,8 @@ void ATrapper_Think( gentity_t *self )
   self->powered = level.overmindPresent;
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
 
-  AGeneric_CreepCheck( self );
+  if( !AGeneric_CreepCheck( self ) )
+    return;
 
   if( self->spawned && G_FindOvermind( self ) )
   {
