@@ -449,6 +449,7 @@ void SVC_Info( netadr_t from ) {
 
 	// don't count privateclients
 	count = 0;
+  pcount = 0;
 	for ( i = 0 ; i < sv_maxclients->integer ; i++ ) {
 		if ( svs.clients[i].state >= CS_CONNECTED ) {
       if( i <= sv_privateClients->integer )
@@ -468,7 +469,7 @@ void SVC_Info( netadr_t from ) {
 	Info_SetValueForKey( infostring, "mapname", sv_mapname->string );
 	Info_SetValueForKey( infostring, "clients", va("%i", count) );
 	Info_SetValueForKey( infostring, "sv_maxclients", 
-		va("%i", sv_maxclients->integer - sv_privateClients->integer - sv_democlients->integer ) );
+		va("%i", sv_maxclients->integer - sv_privateClients->integer - sv_democlients->integer + pcount ) );
 	Info_SetValueForKey( infostring, "pure", sv_pure->string );
 	Info_SetValueForKey( infostring, "unlagged", Cvar_VariableString( "g_unlagged" ) );
 
