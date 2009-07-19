@@ -153,9 +153,9 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( cl == client )
         continue;
 
-     thisteam = cl->pers.teamSelection;
+     thisteam = cl->ps.stats[ STAT_TEAM ];
 
-      if( team != thisteam )
+      if( team != thisteam || thisteam == TEAM_NONE )
         continue;
         
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
@@ -233,9 +233,9 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( cl == client )
         continue;
 
-      thisteam = cl->pers.teamSelection;
+      thisteam = cl->ps.stats[ STAT_TEAM ];
 
-      if( team != thisteam )
+      if( team != thisteam || thisteam == TEAM_NONE )
         continue;
         
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
