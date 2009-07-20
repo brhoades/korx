@@ -1062,8 +1062,24 @@ static void G_ClientCleanName( const char *in, char *out, int outSize )
     if( *in < ' ' || *in > '}' || *in == '`' )
       continue;
 
-    // check emoticons
-    if( !g_emoticonsAllowedInNames.integer && G_IsEmoticon( in, &escaped ) )    {
+    // check colors
+    if( Q_IsColorString( in ) )
+    {
+      in++;
+
+       // make sure room in dest for both chars
+       if( len > outSize - 2 )
+         break;
+ 
+      *out++ = Q_COLOR_ESCAPE;
+
+      *out++ = *in;
+
+      len += 2;
+      continue;
+    }
+    else if( !g_emoticonsAllowedInNames.integer && G_IsEmoticon( in, &escaped ) )
+    {
       // make sure room in dest for both chars
       if( len > outSize - 2 )
         break;
