@@ -2073,10 +2073,11 @@ void ExitLevel( void )
       BG_Free( mark );
     }
   }
-  if( G_MapRotationActive( ) )
-    G_AdvanceMapRotation( );
-  else  if( G_MapExists( g_nextMap.string ) )
+  
+  if( G_MapExists( g_nextMap.string ) )
     trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextMap.string ) );
+  else if( G_MapRotationActive( ) )
+    G_AdvanceMapRotation( );
   else
     trap_SendConsoleCommand( EXEC_APPEND, "map_restart\n" );
 
