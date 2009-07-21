@@ -337,7 +337,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_debugMapRotation, "g_debugMapRotation", "0", 0, 0, qfalse  },
   { &g_currentMapRotation, "g_currentMapRotation", "-1", 0, 0, qfalse  }, // -1 = NOT_ROTATING
   { &g_currentMap, "g_currentMap", "0", 0, 0, qfalse  },
-  { &g_nextMap, "g_nextMap", "0", 0 , 0, qtrue  },
+  { &g_nextMap, "g_nextMap", "", 0 , 0, qtrue  },
   { &g_initialMapRotation, "g_initialMapRotation", "", CVAR_ARCHIVE, 0, qfalse  },
   { &g_debugVoices, "g_debugVoices", "0", 0, 0, qfalse  },
   { &g_voiceChats, "g_voiceChats", "1", CVAR_ARCHIVE, 0, qfalse },
@@ -812,7 +812,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   trap_Cvar_Set( "g_extremeSuddenDeathVote", "0" );
   
   //reset nextmap
-  trap_Cvar_Set( "g_nextMap", "0" );
+  trap_Cvar_Set( "g_nextMap", "" );
   
   //reset extendvote, just in case
   trap_Cvar_Set( "g_extendvote", "0" );
@@ -2075,7 +2075,7 @@ void ExitLevel( void )
   }
   if( G_MapRotationActive( ) )
     G_AdvanceMapRotation( );
-  else  if( strcmp( g_nextMap.string, "0" ) && G_MapExists( g_nextMap.string ) )
+  else  if( G_MapExists( g_nextMap.string ) )
     trap_SendConsoleCommand( EXEC_APPEND, va( "map %s", g_nextMap.string ) );
   else
     trap_SendConsoleCommand( EXEC_APPEND, "map_restart\n" );

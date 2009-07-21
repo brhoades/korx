@@ -1635,7 +1635,7 @@ void Cmd_CallVote_f( gentity_t *ent )
       return;
     }
 
-    if( !trap_FS_FOpenFile( va( "maps/%s.bsp", arg2 ), NULL, FS_READ ) )
+    if( !G_MapExists( arg2 ) )
     {
       trap_SendServerCommand( ent - g_entities, va( "print \"callvote: "
         "'maps/%s^7.bsp' could not be found on the server\n\"", arg2 ) );
