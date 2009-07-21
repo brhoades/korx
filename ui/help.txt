@@ -10,7 +10,7 @@
   "^1Recent Changes^7"
   {
     You can view more details at korx.googlecode.com.
-    #include svnlog.txt
+    #include ui/svnlog.txt
   }
   "Sprint / Dodge"
   {
