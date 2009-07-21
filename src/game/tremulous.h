@@ -735,7 +735,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   noRC recharge rate (0.6 JPU/s -> 0% to 100% in 100 seconds
 */
 
-#define BSUIT_PRICE                 500
+#define BSUIT_PRICE                 350
 #define BSUIT_POISON_PROTECTION     4
 #define BSUIT_PCLOUD_PROTECTION     3000
 
@@ -819,7 +819,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TESLAGEN_REPEAT             250
 #define TESLAGEN_K_SCALE            4.0f
 #define TESLAGEN_RANGE              250
-#define TESLAGEN_DMG                HDM(9)
+#define TESLAGEN_DMG                HDM(12)
 #define TESLAGEN_VALUE              HBVM(0)
 
 #define DC_BP                       8
