@@ -7,6 +7,11 @@
     "We can also be reached on IRC:\n"
     "irc.quakenet.org - #knightsofreason or #korx"
   }
+  "^1Recent Changes^7"
+  {
+    You can view more details at korx.googlecode.com.
+    #include svnlog.txt
+  }
   "Sprint / Dodge"
   {
     "Human players will find their old binds for sprinting will no longer "
