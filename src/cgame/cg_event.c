@@ -169,12 +169,17 @@ static void CG_Obituary( entityState_t *ent )
         break;
         
       case MOD_XAEL:
-        if( gender == GENDER_FEMALE )
-          message = "french kissed her xael shot";
-        else if( gender == GENDER_NEUTER )
-          message = "french kissed its xael shot";
+        if( rand( ) % 2 )
+        {
+          if( gender == GENDER_FEMALE )
+            message = "french kissed her xael shot";
+          else if( gender == GENDER_NEUTER )
+            message = "french kissed its xael shot";
+          else
+            message = "french kissed his xael shot";
+        }
         else
-          message = "french kissed his xael shot";
+          message = "learned what happens when you xael spam";
         break;
 
       case MOD_GRENADE:
@@ -300,6 +305,11 @@ static void CG_Obituary( entityState_t *ent )
         {
           message = "shouldn't have angered";
           message2 = "'s granger";
+        }
+        else if( rand( ) % 2 )
+        {
+          message = "learned why";
+          message2 = "'s granger will never make a good pet";
         }
         else
         {
