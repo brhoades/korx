@@ -5567,8 +5567,8 @@ qboolean G_admin_listrotation( gentity_t *ent, int skiparg )
 
       for( j = 0; j < mapRotations.rotations[ i ].numMaps; j++ )
       {
-        if( j - 1 == G_GetCurrentMap( i ) && strcmp( g_nextMap.string, "0" ) )
-          ADMBP( va( "  ^%iN^7  %-20s ^%i%s\n", 1, g_nextMap.string, 1, "next map vote" ) );
+        if( j - 1 == G_GetCurrentMap( i ) && strcmp( g_nextMap.string, "" ) )
+          ADMBP( va( "  ^1N^7 %-20s ^1%s\n", g_nextMap.string, "next map vote" ) );
         if ( G_GetCurrentMap( i ) == j )
         {
           if( mapRotations.rotations[ i ].maps[ j ].name != g_currentMap.string )
