@@ -3687,6 +3687,7 @@ static void CG_Draw2D( void )
     menu = Menus_FindByName( BG_ClassConfig( cg.predictedPlayerState.stats
                                                  [ STAT_CLASS ] )->hudName );
     CG_DrawBuildableStatus( );
+    CG_DrawTeamStatus( );
   }
 
   if( !menu )
