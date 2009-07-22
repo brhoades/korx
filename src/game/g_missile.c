@@ -658,7 +658,7 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   bolt->splashDamage = damage / 2;
   bolt->splashRadius = radius;
   bolt->methodOfDeath = MOD_XAEL;
-  bolt->splashMethodOfDeath = MOD_XAEL;
+  bolt->splashMethodOfDeath = MOD_XAEL_SPLASH;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
   bolt->s.time = level.time;
