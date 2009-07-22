@@ -1650,6 +1650,8 @@ void ClientThink_real( gentity_t *ent )
     return;
   }
 
+  G_UpdatePTRConnection( client );
+
   // spectators don't do much
   if( client->sess.spectatorState != SPECTATOR_NOT )
   {
@@ -1664,8 +1666,6 @@ void ClientThink_real( gentity_t *ent )
     SpectatorThink( ent, ucmd );
     return;
   }
-
-  G_UpdatePTRConnection( client );
 
   // check for inactivity timer, but never drop the local client of a non-dedicated server
   if( !ClientInactivityTimer( client ) )

@@ -293,6 +293,10 @@ typedef struct connectionRecord_s
   int       clientCredit;
 
   int       ptrCode;
+  qboolean  specd;
+  qboolean  muted;
+  qboolean  denyBuild;
+  int            voteCount;
 } connectionRecord_t;
 
 typedef struct
