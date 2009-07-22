@@ -42,6 +42,7 @@ gfx/invis/fade
 
 gfx/invis/ateam
 {
+  deformvertexes bulge 7 7 8
   {
     map gfx/invis/light.jpg
     tcMod rotate 15
@@ -72,6 +73,7 @@ gfx/invis/ateam
 
 gfx/invis/hteam
 {
+  deformvertexes bulge 7 7 8
   {
     map gfx/invis/light.jpg
     tcMod rotate 15
