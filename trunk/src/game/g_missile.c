@@ -140,8 +140,12 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       
       if( attacker->client && BG_InventoryContainsUpgrade( UP_SURGE, attacker->client->ps.stats ) )
         decay *= XAEL_SURGE_DMG_MOD;
-        
+      
       ent->damage -= decay;
+      if( ent->splashDamage - decay/2 >= 0 )
+        ent->splashDamage -= decay/2;
+      else
+        ent->splashDamage = 0;
     }
 
     if( ent->damage > 0 )
@@ -167,6 +171,10 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
 
     //each bounce takes a little damage off      
     ent->damage -= decay;
+      if( ent->splashDamage - decay/2 >= 0 )
+        ent->splashDamage -= decay/2;
+      else
+        ent->splashDamage = 0;
 
     if( ent->damage > 0 )
       return;
