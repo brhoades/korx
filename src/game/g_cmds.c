@@ -4147,12 +4147,12 @@ void Cmd_PTRCRestore_f( gentity_t *ent )
   connectionRecord_t  *connection;
   //int code;
   
-  /*if( ent->client->pers.joinedATeam )
+  if( ent->client->pers.joinedATeam )
   {
     trap_SendServerCommand( ent - g_entities,
       "print \"You cannot use a PTR code after joining a team\n\"" );
     return;
-  }*/
+  }
 
   //trap_Argv( 1, s, sizeof( s ) );
 
@@ -4167,7 +4167,10 @@ void Cmd_PTRCRestore_f( gentity_t *ent )
 
     // set the correct credit
     ent->client->ps.persistant[ PERS_CREDIT ] = 0;
-    G_AddCreditToClient( ent->client, connection->clientCredit, qtrue );
+    if( ent->client->ps.stats[ STAT_TEAM ] == TEAM_NONE )
+      ent->client->pers.savedCredit = connection->clientCredit;
+    else
+      ent->client->ps.persistant[ PERS_CREDIT ] = connection->clientCredit;
     if ( connection->oldClient != ent - g_entities )
         G_AddCreditToClient( &level.clients[ connection->oldClient ], -connection->clientCredit, qtrue );
     ent->client->pers.denyBuild = connection->denyBuild;
