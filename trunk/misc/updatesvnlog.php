@@ -3,7 +3,7 @@
 $filen = "/home/tremulous/korx/ui/help.txt";
 $dir = "/home/tremulous/korx/";
 
-exec( "echo \"`svn log $dir -l5 -v`\"", $out );
+exec( "echo \"`svn log $dir -l4`\"", $out );
 exec( "svn revert $filen" );
 
 $endstring = "korx.googlecode.com.";
@@ -26,8 +26,10 @@ for( $i=0; $i<count( $file ); $i++ )
   {
     for( $j=0; $j<count( $out ); $j++ )
     {
-      if( $out[$j] != NULL )
-        fwrite( $h, "    \"".$out[$j]."\"\n" );
+      if( $out[$j] != NULL && stripos( $out[$j], "------------------------------------------------" ) === FALSE )
+        fwrite( $h, "    \"".$out[$j]."\\n\"\n" );
+      else if( stripos( $out[$j], "------------------------------------------------" ) !== FALSE )
+        fwrite( $h, "    \"\\n\"\n" );
     }
   }
 }
