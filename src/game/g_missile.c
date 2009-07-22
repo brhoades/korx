@@ -110,6 +110,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
   qboolean    returnAfterDamage = qfalse;
   vec3_t      dir;
   qboolean    nodamage=qfalse;
+  
   if( trace->surfaceFlags & SURF_NOIMPACT )
   {
     G_FreeEntity( ent );
@@ -128,8 +129,47 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
     //only play a sound if requested
     if( !( ent->s.eFlags & EF_NO_BOUNCE_SOUND ) )
       G_AddEvent( ent, EV_GRENADE_BOUNCE, 0 );
+      
+    //each bounce takes a little damage off
+    if( !strcmp( ent->classname, "xael" ) || !strcmp( ent->classname, "xael_secondary" ) )
+    {
+      int decay = XAEL_DAMAGE_DECAY;
+      
+      if( !strcmp( ent->classname, "xael_secondary" )  )
+        decay = XAEL_SECONDARY_DECAY;
+      
+      if( attacker->client && BG_InventoryContainsUpgrade( UP_SURGE, attacker->client->ps.stats ) )
+        decay *= XAEL_SURGE_DMG_MOD;
+        
+      ent->damage -= decay;
+    }
 
-    return;
+    if( ent->damage > 0 )
+      return;
+  }
+  else if( ( !strcmp( ent->classname, "xael" ) || !strcmp( ent->classname, "xael_secondary" ) ) 
+                && attacker->client && other->s.eType == ET_BUILDABLE 
+                && other->buildableTeam == attacker->client->ps.stats[ STAT_TEAM ] )
+  {
+     int decay = XAEL_DAMAGE_DECAY;
+     
+    G_BounceMissile( ent, trace );
+
+    //only play a sound if requested
+    if( !( ent->s.eFlags & EF_NO_BOUNCE_SOUND ) )
+      G_AddEvent( ent, EV_GRENADE_BOUNCE, 0 );
+
+    if( !strcmp( ent->classname, "xael_secondary" )  )
+      decay = XAEL_SECONDARY_DECAY;
+
+    if( BG_InventoryContainsUpgrade( UP_SURGE, attacker->client->ps.stats ) )
+      decay *= XAEL_SURGE_DMG_MOD;
+
+    //each bounce takes a little damage off      
+    ent->damage -= decay;
+
+    if( ent->damage > 0 )
+      return;
   }
 
   if( !strcmp( ent->classname, "grenade" ) )
@@ -586,9 +626,9 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   int thinkTime;
   
   if( !BG_InventoryContainsUpgrade( UP_SURGE, self->client->ps.stats ) )
-    thinkTime = (int) ( 10000 * ( 1.0f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
+    thinkTime = (int) ( 10000 * ( 1.1f - (float)damage / (float)XAEL_TOTAL_CHARGE ) );
   else
-    thinkTime = (int) ( 10000 * ( 1.0f - (float)damage / (float)(XAEL_TOTAL_CHARGE*XAEL_SURGE_DMG_MOD ) ) );
+    thinkTime = (int) ( 10000 * ( 1.1f - (float)damage / (float)(XAEL_TOTAL_CHARGE*XAEL_SURGE_DMG_MOD ) ) );
 
   VectorNormalize( dir );
 
@@ -601,7 +641,10 @@ gentity_t *fire_xael( gentity_t *self, vec3_t start, vec3_t dir,
   else if( damage != XAEL_SECONDARY_DAMAGE && damage != XAEL_SECONDARY_DAMAGE * XAEL_SURGE_DMG_MOD )
     bolt->nextthink = level.time + thinkTime;
   else
-    bolt->nextthink = level.time + 2500;
+  {
+    bolt->nextthink = level.time + XAEL_SECONDARY_LIFESPAN;
+    bolt->classname = "xael_secondary";
+  }
 
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
