@@ -1667,6 +1667,14 @@ void ClientThink_real( gentity_t *ent )
     return;
   }
 
+  //forcespec evasion bug fix
+  if( ent->client->pers.specd && ent->client->ps.stats[ STAT_TEAM ] != TEAM_NONE )
+  {
+    G_ChangeTeam( ent, TEAM_NONE );
+    trap_SendServerCommand( ent - g_entities, "cp \"^1You're forced to spectators, lets try to keep it that way.^7\"" );
+    return;
+  }
+  
   // check for inactivity timer, but never drop the local client of a non-dedicated server
   if( !ClientInactivityTimer( client ) )
     return;
