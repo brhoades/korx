@@ -653,12 +653,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_CHARGEREPEAT           1000
 #define XAEL_RELOAD                 2000
 #define XAEL_DAMAGE                 HDM(250)
+#define XAEL_DAMAGE_DECAY   HDM(10)   //each bounce takes off thiss much damage
 #define XAEL_RADIUS                 175
 #define XAEL_SIZE                   5        // missile bounding box radius
 #define XAEL_SECONDARY_DAMAGE       HDM(15)
 #define XAEL_SECONDARY_RADIUS       75
 #define XAEL_SECONDARY_SPEED        1700
 #define XAEL_SECONDARY_REPEAT       1000
+#define XAEL_SECONDARY_LIFESPAN   4000
+#define XAEL_SECONDARY_DECAY         4
 #define XAEL_SPEED                  800
 #define XAEL_CHARGE_TIME            2000
 #define XAEL_TOTAL_CHARGE           255
