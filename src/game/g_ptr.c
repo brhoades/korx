@@ -68,6 +68,10 @@ void G_UpdatePTRConnection( gclient_t *client )
     else
       client->pers.connection->clientCredit =
           client->ps.persistant[ PERS_CREDIT ];
+    client->pers.connection->specd = client->pers.specd;
+    client->pers.connection->muted = client->pers.muted;
+    client->pers.connection->denyBuild = client->pers.denyBuild;
+    client->pers.connection->voteCount = client->pers.voteCount;
   }
 }
 
