@@ -972,9 +972,7 @@ static int CG_CalcFov( void )
       trap_SendClientCommand( "follow\n" );
   }
 
-  if( cg.predictedPlayerState.pm_type == PM_INTERMISSION ||
-      ( cg.snap->ps.persistant[ PERS_SPECSTATE ] != SPECTATOR_NOT ) || 
-      ( cg.renderingThirdPerson ) )
+  if( cg.predictedPlayerState.pm_type == PM_INTERMISSION || cg.renderingThirdPerson )
   {
     // if in intermission or third person, use a fixed value
     fov_x = 90;
@@ -1024,10 +1022,10 @@ static int CG_CalcFov( void )
           fov_x = fov_x + f * ( zoomFov - fov_x );
 
         // BUTTON_ATTACK2 isn't held so unzoom next time
-        if( !( cmd.buttons & BUTTON_ATTACK2 ) )
+        if( !( cmd.buttons & BUTTON_ATTACK2 ) && !(  cg.snap->ps.pm_flags & PMF_FOLLOW )  )
         {
           //hijack the voice channel
-          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_VOICE, cgs.media.weaponZoomOut );
+          //trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_VOICE, cgs.media.weaponZoomOut );
           cg.zoomed   = qfalse;
           cg.zoomTime = MIN( cg.time, 
               cg.time + cg.time - cg.zoomTime - ZOOM_TIME );
@@ -1043,10 +1041,10 @@ static int CG_CalcFov( void )
           fov_x = zoomFov + f * ( fov_x - zoomFov );
 
         // BUTTON_ATTACK2 is held so zoom next time
-        if( cmd.buttons & BUTTON_ATTACK2 )
+        if( cmd.buttons & BUTTON_ATTACK2 && !(  cg.snap->ps.pm_flags & PMF_FOLLOW ) )
         {
           //hijack the voice channel
-          trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_VOICE, cgs.media.weaponZoomIn );
+          //trap_S_StartSound( NULL, cg.predictedPlayerState.clientNum, CHAN_VOICE, cgs.media.weaponZoomIn );
           cg.zoomed   = qtrue;
           cg.zoomTime = MIN( cg.time, 
               cg.time + cg.time - cg.zoomTime - ZOOM_TIME );

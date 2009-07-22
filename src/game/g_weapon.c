@@ -1852,6 +1852,7 @@ void FireWeapon2( gentity_t *ent )
     case WP_HBUILD:
       cancelBuildFire( ent );
       break;
+      
     default:
       break;
   }

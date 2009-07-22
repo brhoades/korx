@@ -689,6 +689,7 @@ typedef struct centity_s
 
   int                   invisTime;
   qboolean              invis;
+  qboolean              zoomed;
 } centity_t;
 
 

@@ -723,6 +723,14 @@ void ClientTimerActions( gentity_t *ent, int msec )
           client->ps.stats[ STAT_MISC ] = 0;
     }
     
+    if( ( weapon == WP_MASS_DRIVER || weapon == WP_LAS_GUN ) )
+    {
+      if( ( ucmd->buttons & BUTTON_ATTACK2 ) && !( ent->client->ps.eFlags & EF_ZOOM ) )
+        ent->client->ps.eFlags |= EF_ZOOM;      
+      else if( !( ucmd->buttons & BUTTON_ATTACK2 ) && ( ent->client->ps.eFlags & EF_ZOOM ) )
+        ent->client->ps.eFlags &= ~EF_ZOOM;
+    }
+    
     if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
     {	
       if( ent->client->cloakReady == qfalse 

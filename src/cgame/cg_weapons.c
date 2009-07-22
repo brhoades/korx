@@ -1073,7 +1073,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
                             vec3_origin, ps ? cgs.media.lCannonWarningSound :
                                               cgs.media.lCannonWarningSound2 );
 
-  // Xael cannon charge warning beep
+  // Xael charge warning beep
   // FIXME: should not send this to aliens at all, rather than just ignoring it
   if( weaponNum == WP_XAEL &&
       ( cent->currentState.eFlags & EF_WARN_CHARGE ) &&
@@ -1081,6 +1081,36 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
     trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin,
                             vec3_origin, ps ? cgs.media.lCannonWarningSound :
                                               cgs.media.lCannonWarningSound2 );
+
+  //Zoom in / out sound
+  if( ( weaponNum == WP_LAS_GUN || weaponNum == WP_MASS_DRIVER ) &&
+       ( cent->currentState.eFlags & EF_ZOOM ) && !cent->zoomed )
+  {
+        trap_S_StartSound( cent->lerpOrigin, cent->currentState.number, 
+                                          CHAN_AUTO, cgs.media.weaponZoomIn );
+        cent->zoomed = qtrue;
+        
+        if( cg.snap->ps.pm_flags & PMF_FOLLOW )
+        {
+          cg.zoomed = qtrue;
+          cg.zoomTime = MIN( cg.time, 
+              cg.time + cg.time - cg.zoomTime - ZOOM_TIME );
+        }
+  }
+  else if ( ( weaponNum == WP_LAS_GUN || weaponNum == WP_MASS_DRIVER ) &&
+       !( cent->currentState.eFlags & EF_ZOOM ) && cent->zoomed )
+  {
+        trap_S_StartSound( cent->lerpOrigin, cent->currentState.number, 
+                                          CHAN_AUTO, cgs.media.weaponZoomOut );
+        cent->zoomed = qfalse;
+        if( cg.snap->ps.pm_flags & PMF_FOLLOW )
+        {
+          cg.zoomed = qfalse;
+          cg.zoomTime = MIN( cg.time, 
+              cg.time + cg.time - cg.zoomTime - ZOOM_TIME );
+        }
+  }
+
 
   if( !noGunModel )
   {
