@@ -77,3 +77,11 @@ repair
 		text "Our base needs repairs!"
 	}
 }
+
+rush
+{
+	"voice/rush.ogg"
+	{
+		text "Rush the enemy!"
+	}
+}
