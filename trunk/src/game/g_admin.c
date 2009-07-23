@@ -479,6 +479,9 @@ qboolean G_admin_permission_guid( char *guid, char flag )
           case ADMF_INCOGNITO:
           case ADMF_IMMUTABLE:
           case ADMF_DBUILDER:
+          case ADMF_PERMDENYBUILD:
+          case ADMF_PERMFORCESPEC:
+          case ADMF_PERMMUTED:
             return qfalse; 
           default:
             return qtrue;
