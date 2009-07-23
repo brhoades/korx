@@ -78,7 +78,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
        ""
     },
     
-    {"register", G_admin_register, "a",
+    {"register", G_admin_register, "C",
       "Registers your name to protect it from being used by others or updates your"      
       " admin name to your current name.",
       ""
@@ -129,7 +129,7 @@ g_admin_cmd_t g_admin_cmds[ ] =
       ""
     },
 
-    {"time", G_admin_time, "C",
+    {"time", G_admin_time, "a",
       "show the current local server time",
       ""
     },
@@ -442,6 +442,9 @@ qboolean G_admin_permission_guid( char *guid, char flag )
           case ADMF_INCOGNITO:
           case ADMF_IMMUTABLE:
           case ADMF_DBUILDER:
+          case ADMF_PERMDENYBUILD:
+          case ADMF_PERMFORCESPEC:
+          case ADMF_PERMMUTED:
             return qfalse; 
           default:
             return qtrue;
@@ -2558,6 +2561,13 @@ qboolean G_admin_mute( gentity_t *ent, int skiparg )
     return qfalse;
   }
   vic = &g_entities[ pids[ 0 ] ];
+  
+  if( G_admin_permission( vic, ADMF_PERMMUTED ) && !Q_stricmp( cmd, "unmute" ) )
+  {
+    ADMP( "^3!unmute: ^7player is permanently muted due to his/her level\n" );
+    return qtrue;
+  }
+  
   if( vic->client->pers.muted == qtrue )
   {
     if( !Q_stricmp( cmd, "mute" ) )
@@ -2617,6 +2627,13 @@ qboolean G_admin_denybuild( gentity_t *ent, int skiparg )
     return qfalse;
   }
   vic = &g_entities[ pids[ 0 ] ];
+  
+  if( G_admin_permission( vic, ADMF_PERMDENYBUILD ) && !Q_stricmp( cmd, "allowbuild" ) )
+  {
+    ADMP( "^3!allowbuild: ^7player has permanently lost his/her building rights due to his/her level\n" );
+    return qtrue;
+  }
+  
   if( vic->client->pers.denyBuild )
   {
     if( !Q_stricmp( cmd, "denybuild" ) )
@@ -4245,9 +4262,8 @@ qboolean G_admin_forcespec( gentity_t *ent, int skiparg )
 
   if ( vic->client->pers.specd == qtrue )
   {
-  ADMP( "^3!forcespec: ^7player already forcespeced\n" );
-
-  return qfalse;
+    ADMP( "^3!forcespec: ^7player already forcespeced\n" );
+    return qfalse;
   }
 
   //push them to the spec team
@@ -4291,15 +4307,21 @@ qboolean G_admin_unforcespec( gentity_t *ent, int skiparg )
 
   if ( vic->client->pers.specd == qfalse )
   {
-  ADMP( "^3!unforcespec: ^7player is not forcespeced\n" );
-
-  return qfalse;
+    ADMP( "^3!unforcespec: ^7player is not forcespeced\n" );
+    return qfalse;
   }
 
   if( !admin_higher( ent, vic ) )
   {
     ADMP( "^3!unforcespec: ^7sorry, but your intended victim has a higher admin"
         " level than you\n" );
+    return qfalse;
+  }
+
+  if( G_admin_permission( vic, ADMF_PERMFORCESPEC ) )
+  {
+    ADMP( "^3!unforcespec: ^7player has permanently lost his/her ability to join a team"
+            " due to his/her level\n" );
     return qfalse;
   }
 
