@@ -518,15 +518,15 @@ void CG_UpdateCvars( void )
   {
   	trap_Cvar_VariableStringBuffer( "r_celoutline", var, sizeof( var ) );
   	celoutline = atoi( var );
-  	if (!(celoutline == 0))
+  	if( celoutline != 0 )
   	{
       trap_Cvar_Set( "r_celoutline", "0" );
     	trap_Cvar_VariableStringBuffer( "r_celoutline", var, sizeof( var ) );
   	  celoutline = atoi( var );
-      if (celoutline == 0)
-        trap_SendClientCommand( "a Cell Outline Cheat was Enabled by myself and Deactivated by the server" );
+      if( celoutline == 0 )
+        trap_SendClientCommand( "a r_celoutline was activated by myself, and decativated by the server." );
       else
-        trap_SendClientCommand( "an Attempted Cell Outline Cheat Deactivation Failed!" );
+        trap_SendClientCommand( "a Attempt at deactivating r_celoutline, which I activated, failed." );
   	}
   	cg.lastCelOutlineCheckTime = cg.time;
   }
