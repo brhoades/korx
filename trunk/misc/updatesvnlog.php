@@ -26,6 +26,17 @@ for( $i=0; $i<count( $file ); $i++ )
   {
     for( $j=0; $j<count( $out ); $j++ )
     {
+      if( stripos( $out[$j], "lines" ) !== FALSE && stripos( $out[$j], " | " !== FALSE )
+      {
+        $out[$j] = explode( " | ", $out[$j] );
+        $rev = $out[$j][0];
+        $name = $out[$j][1];
+        $date = $out[$j][2];
+        $date = explode( " (", $date );
+        $date = $date[0];
+        $out[$j] = $rev". by ".$name." on ".$date.":";
+      }
+      
       if( $out[$j] != NULL && stripos( $out[$j], "------------------------------------------------" ) === FALSE )
         fwrite( $h, "    \"".$out[$j]."\\n\"\n" );
       else if( stripos( $out[$j], "------------------------------------------------" ) !== FALSE )
