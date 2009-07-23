@@ -1163,6 +1163,11 @@ static void CG_PTRConfirm_f( void )
   trap_SendConsoleCommand( "menu ptrc_popmenu\n" );
 }
 
+static void CG_ChangeVoice( void )
+{
+  trap_SendConsoleCommand( va( "set voice %s\n", CG_Argv( 1 ) ) );
+}
+
 static consoleCommand_t svcommands[ ] =
 {
   { "cp", CG_CenterPrint_f },
@@ -1177,7 +1182,8 @@ static consoleCommand_t svcommands[ ] =
   { "servermenu", CG_ServerMenu_f },
   { "serverclosemenus", CG_ServerCloseMenus_f },
   { "poisoncloud", CG_PoisonCloud_f },
-  { "voice", CG_ParseVoice },
+  { "voice", CG_ParseVoice }, 
+  { "changevoice", CG_ChangeVoice },
   { "ptrcrequest", CG_PTRRequest_f },
   { "ptrcissue", CG_PTRIssue_f },
   { "ptrcconfirm", CG_PTRConfirm_f }

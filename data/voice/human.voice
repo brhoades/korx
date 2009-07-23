@@ -1,0 +1,87 @@
+base
+{
+	"voice/human/base.ogg"
+	{
+		text "Base under attack!"
+	}
+}
+
+as2
+{
+	"voice/human/as2.ogg"
+	{
+		text "The aliens have reached stage 2!"
+	}
+}
+
+as3
+{
+	"voice/human/as3.ogg"
+	{
+		text "The aliens have reached stage 3!"
+	}
+}
+
+builder
+{
+	"voice/human/builder.ogg"
+	{
+		text "We need a builder!"
+	}
+}
+
+flank
+{
+	"voice/human/flank.ogg"
+	{
+		text "Flank!"
+	}
+}
+
+followme
+{
+	"voice/human/followme.ogg"
+	{
+		text "Follow me!"
+	}
+}
+
+getback
+{
+	"voice/human/getback.ogg"
+	{
+		text "Get back!"
+	}
+}
+
+grenade
+{
+	"voice/human/grenade.ogg"
+	{
+		text "Grenade!"
+	}
+}
+
+moveforward
+{
+	"voice/human/moveforward.ogg"
+	{
+		text "Move forward!"
+	}
+}
+
+repair
+{
+	"voice/human/repair.ogg"
+	{
+		text "Our base needs repairs!"
+	}
+}
+
+rush
+{
+	"voice/human/rush.ogg"
+	{
+		text "Rush the enemy!"
+	}
+}
