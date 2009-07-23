@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="grenade_data" version="1.3.0" audacityversion="1.3.8" sel0="0.0224245925" sel1="0.0224245925" vpos="128" h="0.4508523342" zoom="847.2840684930" rate="22050">
+	<tags>
+		<tag name="id3v2" value="1"/>
+	</tags>
+	<wavetrack name="taunt" channel="2" linked="0" offset="0.00000000" mute="0" solo="0" height="150" minimized="0" rate="22050" gain="1" pan="0">
+		<waveclip offset="-0.02344671">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="26112">
+				<waveblock start="0">
+					<simpleblockfile filename="e00009c1.au" len="26112" min="-0.81839" max="0.829834" rms="0.038878"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="pain25_1" channel="2" linked="0" offset="0.00000000" mute="0" solo="0" height="150" minimized="0" rate="22050" gain="1" pan="0">
+		<waveclip offset="0.39827664">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="9148">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000ec0.au" len="9148" min="-0.569244" max="0.553009" rms="0.016707"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="0.81315193">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1092">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000aab.au" len="1092" min="-0.005798" max="0.007904" rms="0.000444"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="jump1" channel="2" linked="0" offset="0.00000000" mute="0" solo="0" height="150" minimized="0" rate="22050" gain="1.412538" pan="0">
+		<waveclip offset="1.00642584">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="0"/>
+			<envelope numpoints="1">
+				<controlpoint t="0.000000000000" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+		<waveclip offset="1.00642584">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="9376">
+				<waveblock start="0">
+					<simpleblockfile filename="e00000dc.au" len="9376" min="-0.317017" max="0.449738" rms="0.01574"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="0.000000000000" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="jump1" channel="2" linked="0" offset="0.00000000" mute="0" solo="0" height="150" minimized="0" rate="22050" gain="1.258925" pan="0">
+		<waveclip offset="0.77188209">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="9376">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000e01.au" len="9376" min="-0.317017" max="0.449738" rms="0.01574"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

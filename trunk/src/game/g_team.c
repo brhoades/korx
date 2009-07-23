@@ -136,6 +136,13 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
 
   if( oldTeam == newTeam )
     return;
+    
+  if( newTeam == TEAM_ALIENS )
+     trap_SendServerCommand( ent - g_entities,  "changevoice alien" );
+  else if( newTeam == TEAM_HUMANS )
+     trap_SendServerCommand( ent - g_entities,  "changevoice human" );
+  else if( newTeam== TEAM_NONE )
+     trap_SendServerCommand( ent - g_entities,  "changevoice default" );
 
   G_LeaveTeam( ent );
   ent->client->pers.teamSelection = newTeam;

@@ -1,0 +1,39 @@
+base
+{
+	"voice/alien/base.ogg"
+	{
+		text "Our base is under attack!"
+	}
+}
+
+hs2
+{
+	"voice/alien/hs2.ogg"
+	{
+		text "The humans have reached stage 2!"
+	}
+}
+
+hs3
+{
+	"voice/alien/hs3.ogg"
+	{
+		text "The humans have reached stage 3!"
+	}
+}
+
+builder
+{
+	"voice/alien/builders.ogg"
+	{
+		text "We need more builders!"
+	}
+}
+
+grenade
+{
+	"voice/alien/grenade.ogg"
+	{
+		text "Grenade!"
+	}
+}

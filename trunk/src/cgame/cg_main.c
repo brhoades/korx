@@ -513,7 +513,7 @@ void CG_UpdateCvars( void )
 
   CG_SetUIVars( );
   CG_SetPVars( );
-  
+      
   if ( cg.lastCelOutlineCheckTime + CELL_OUTLINE_CHECK_FREQ < cg.time )
   {
   	trap_Cvar_VariableStringBuffer( "r_celoutline", var, sizeof( var ) );

@@ -1,0 +1,39 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="taunt_data" version="1.3.0" audacityversion="1.3.8" sel0="0.0374743063" sel1="0.0374743063" vpos="0" h="0.1671473026" zoom="1681.1518683579" rate="22050">
+	<tags>
+		<tag name="id3v2" value="1"/>
+	</tags>
+	<wavetrack name="taunt" channel="2" linked="0" offset="0.00000000" mute="0" solo="0" height="150" minimized="0" rate="22050" gain="1" pan="0">
+		<waveclip offset="-0.93074830">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="28706">
+				<waveblock start="0">
+					<simpleblockfile filename="e000007d.au" len="28706" min="-0.793671" max="0.997528" rms="0.04597"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="0.934260509959" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="pain50_1" channel="2" linked="0" offset="0.00000000" mute="0" solo="0" height="150" minimized="0" rate="22050" gain="1" pan="0">
+		<waveclip offset="0.24494331">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="9184">
+				<waveblock start="0">
+					<simpleblockfile filename="e000001b.au" len="9184" min="-1" max="0.622986" rms="0.023792"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="grab" channel="2" linked="0" offset="0.00000000" mute="0" solo="0" height="150" minimized="0" rate="44100" gain="1" pan="0">
+		<waveclip offset="-0.04045351">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="24192">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000f55.au" len="24192" min="-0.917633" max="0.94043" rms="0.112169"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
