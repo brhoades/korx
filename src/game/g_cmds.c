@@ -605,12 +605,17 @@ void Cmd_Team_f( gentity_t *ent )
       oldteam ) );
     return;
   }
-
+  
+  if( G_admin_permission( ent, ADMF_PERMFORCESPEC ) )
+  {
+    trap_SendServerCommand( ent-g_entities, va( "print \"Your admin level is permaforcespeced, you cannot join teams.\n\"" ) );
+    return;
+  }
+  
   if( !Q_stricmp( s, "auto" ) )
   {
     if( ent->client->pers.specd )
     {
-      team = TEAM_NONE;
       trap_SendServerCommand( ent-g_entities, va( "print \"You cannot join teams, you are forced to the spectators\n\"" ) );
       return;
     }
@@ -639,11 +644,6 @@ void Cmd_Team_f( gentity_t *ent )
       break;
 
     case TEAM_ALIENS:
-      if( ent->client->pers.specd )
-      {
-        trap_SendServerCommand( ent-g_entities, va( "print \"You cannot join teams, you are forced to the spectators\n\"" ) );
-        return;
-      }
       if( g_forceAutoSelect.integer && !G_admin_permission(ent, ADMF_FORCETEAMCHANGE) )
       {
         trap_SendServerCommand( ent-g_entities, "print \"You can only join teams using autoselect\n\"" );
@@ -732,6 +732,12 @@ void Cmd_Team_f( gentity_t *ent )
   if( oldteam == team )
     return;
 
+  if( ent->client->pers.specd )
+  {
+    trap_SendServerCommand( ent-g_entities, va( "print \"You cannot join teams, you are forced to the spectators\n\"" ) );
+    return;
+  }
+
   if( team != TEAM_NONE && g_maxGameClients.integer &&
     level.numPlayingClients >= g_maxGameClients.integer )
   {
@@ -790,8 +796,6 @@ static void G_SayTo( gentity_t *ent, gentity_t *other, int mode, int color, cons
     specAllChat = G_admin_permission( other, ADMF_SPEC_ALLCHAT );
     if( !specAllChat )
       return;
-
-    // specs with ADMF_SPEC_ALLCHAT flag can see team chat
   }
 
   if( ent && BG_ClientListTest( &other->client->sess.ignoreList, ent-g_entities ) )
@@ -827,6 +831,12 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
     {
       return;
     }
+
+  if( ent->client && G_admin_permission( ent, ADMF_PERMMUTED ) )
+  {
+    trap_SendServerCommand( ent-g_entities, va( "print \"Your admin level is permamuted, you cannot speak.\n\"" ) );
+    return;
+  }
 
   if( ent && ent->client )
   {
@@ -3538,6 +3548,12 @@ void Cmd_Build_f( gentity_t *ent )
     return;
   }
 
+  if( G_admin_permission( ent, ADMF_PERMDENYBUILD ) )
+  {
+    trap_SendServerCommand( ent-g_entities, va( "print \"Your admin level is permadenybuilt, you cannot build.\n\"" ) );
+    return;
+  }
+  
   if( ent->client->pers.denyBuild )
   {
     G_TriggerMenu( ent->client->ps.clientNum, MN_B_REVOKED );
@@ -4905,7 +4921,7 @@ void ClientCommand( int clientNum )
   }
 
   if( cmds[ i ].cmdFlags & CMD_MESSAGE && ( ent->client->pers.muted ||
-      G_FloodLimited( ent ) ) )
+      G_FloodLimited( ent ) ) && !G_admin_permission( ent, ADMF_PERMMUTED ) )
     return;
 
   if( cmds[ i ].cmdFlags & CMD_TEAM &&

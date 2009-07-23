@@ -1058,15 +1058,22 @@ void ClientTimerActions( gentity_t *ent, int msec )
       }
       // it is over until the next one
       else
-      {
         client->infected = qfalse;
-      }
     }
     // lose some voice enthusiasm
     if( client->voiceEnthusiasm > 0.0f )
       client->voiceEnthusiasm -= VOICE_ENTHUSIASM_DECAY;
     else
       client->voiceEnthusiasm = 0.0f;
+      
+    if( !ent->client->pers.muted && G_admin_permission( ent, ADMF_PERMMUTED ) )
+      ent->client->pers.muted = qtrue;
+    
+    if( !ent->client->pers.denyBuild && G_admin_permission( ent, ADMF_PERMDENYBUILD ) )
+      ent->client->pers.denyBuild = qtrue;
+      
+    if( !ent->client->pers.specd && G_admin_permission( ent, ADMF_PERMFORCESPEC ) )
+      ent->client->pers.specd = qtrue;
   }
 
   // Regenerate Adv. Mara barbs
@@ -1671,7 +1678,8 @@ void ClientThink_real( gentity_t *ent )
   if( ent->client->pers.specd && ent->client->ps.stats[ STAT_TEAM ] != TEAM_NONE )
   {
     G_ChangeTeam( ent, TEAM_NONE );
-    trap_SendServerCommand( ent - g_entities, "cp \"^1You're forced to spectators, lets try to keep it that way.^7\"" );
+    trap_SendServerCommand( ent - g_entities, "print \"^1You're forced to spectators, lets try to keep it that way.^7\"" );
+    trap_SendServerCommand( ent - g_entities, "cp \"^1You're forcespeced!^7\"" );
     return;
   }
   

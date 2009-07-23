@@ -359,7 +359,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_adminTempBan, "g_adminTempBan", "2m", CVAR_ARCHIVE, 0, qfalse  },
   { &g_adminMaxBan, "g_adminMaxBan", "2w", CVAR_ARCHIVE, 0, qfalse  },
   { &g_adminMapLog, "g_adminMapLog", "", CVAR_ROM, 0, qfalse  },
-  { &g_minLevelToJoinTeam, "g_minLevelToJoinTeam", "0", CVAR_ARCHIVE, 0, qfalse  },
+  { &g_minLevelToJoinTeam, "g_minLevelToJoinTeam", "-10", CVAR_ARCHIVE, 0, qfalse  },
   { &g_forceAutoSelect, "g_forceAutoSelect", "0", CVAR_ARCHIVE, 0, qtrue },
 
   { &g_dretchPunt, "g_dretchPunt", "0", CVAR_ARCHIVE, 0, qfalse  },
@@ -373,7 +373,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_publicAdminMessages, "g_publicAdminMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_publicClanMessages, "g_publicClanMessages", "1", CVAR_ARCHIVE, 0, qfalse  },
   
-  { &g_minLevelToSpecMM1, "g_minLevelToSpecMM1", "0", CVAR_ARCHIVE, 0, qfalse  },
+  { &g_minLevelToSpecMM1, "g_minLevelToSpecMM1", "-10", CVAR_ARCHIVE, 0, qfalse  },
   { &g_actionPrefix, "g_actionPrefix", "* ", CVAR_ARCHIVE, 0, qfalse },
   { &g_myStats, "g_myStats", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_buildLogMaxLength, "g_buildLogMaxLength", "25", CVAR_ARCHIVE, 0, qfalse  },
