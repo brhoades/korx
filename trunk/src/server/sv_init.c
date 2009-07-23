@@ -487,6 +487,10 @@ void SV_SpawnServer( char *server, qboolean killBots ) {
 	// clear physics interaction links
 	SV_ClearWorld ();
 	
+	// some hackage to skip slot zero but keep same client numbers
+	Cvar_Set( "sv_maxclients", va("%i",sv_maxclients->integer+1) );
+	Cvar_Set( "sv_privateClients", va("%i",sv_privateClients->integer+1) );
+	
 	// media configstring setting should be done during
 	// the loading stage, so connected clients don't have
 	// to load during actual gameplay
