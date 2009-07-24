@@ -4922,7 +4922,14 @@ void ClientCommand( int clientNum )
 
   if( cmds[ i ].cmdFlags & CMD_MESSAGE && ( ent->client->pers.muted ||
       G_FloodLimited( ent ) || G_admin_permission( ent, ADMF_PERMMUTED ) )
-    return;
+    {
+      if( G_admin_permission( ent, ADMF_PERMMUTED ) )
+        trap_SendServerCommand( ent-g_entities, va( "print \"Your admin level is permamuted, you cannot speak.\n\"" ) );
+      else if( ent->client->pers.muted )
+        trap_SendServerCommand( ent-g_entities, va( "print \"You are muted and may not speak.\n\"" ) );
+        
+      return;
+    }
 
   if( cmds[ i ].cmdFlags & CMD_TEAM &&
       ent->client->pers.teamSelection == TEAM_NONE )
