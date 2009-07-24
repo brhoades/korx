@@ -1690,7 +1690,7 @@ void ClientBegin( int clientNum )
     {
       trap_SendServerCommand( client->ps.clientNum, va( "print \"^1Your client is out of date. Updating your client will allow you to "
         "become an admin on servers and download maps much more quickly. Please replace your client executable with the one "
-        "at ^2http://trem.tjw.org/backport/^1 and reconnect. \n\"" ) );
+        "at ^2http://tremfusion.net/^1 and reconnect. \n\"" ) );
     }
   }
 
