@@ -832,12 +832,6 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText )
       return;
     }
 
-  if( ent->client && G_admin_permission( ent, ADMF_PERMMUTED ) )
-  {
-    trap_SendServerCommand( ent-g_entities, va( "print \"Your admin level is permamuted, you cannot speak.\n\"" ) );
-    return;
-  }
-
   if( ent && ent->client )
   {
     Com_sprintf( name, sizeof( name ), "test message" );
@@ -4921,15 +4915,15 @@ void ClientCommand( int clientNum )
   }
 
   if( cmds[ i ].cmdFlags & CMD_MESSAGE && ( ent->client->pers.muted ||
-      G_FloodLimited( ent ) || G_admin_permission( ent, ADMF_PERMMUTED ) )
-    {
+      G_FloodLimited( ent ) || G_admin_permission( ent, ADMF_PERMMUTED ) ) )
+  {
       if( G_admin_permission( ent, ADMF_PERMMUTED ) )
-        trap_SendServerCommand( ent-g_entities, va( "print \"Your admin level is permamuted, you cannot speak.\n\"" ) );
+        trap_SendServerCommand( ent-g_entities, "print \"Your admin level is permamuted, you cannot speak.\n\"" );
       else if( ent->client->pers.muted )
-        trap_SendServerCommand( ent-g_entities, va( "print \"You are muted and may not speak.\n\"" ) );
+        trap_SendServerCommand( ent-g_entities, "print \"You are muted and may not speak.\n\"" );
         
       return;
-    }
+  }
 
   if( cmds[ i ].cmdFlags & CMD_TEAM &&
       ent->client->pers.teamSelection == TEAM_NONE )
