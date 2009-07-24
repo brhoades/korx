@@ -26,7 +26,7 @@ for( $i=0; $i<count( $file ); $i++ )
   {
     for( $j=0; $j<count( $out ); $j++ )
     {
-      if( stripos( $out[$j], "lines" ) !== FALSE && stripos( $out[$j], " | " !== FALSE )
+      if( stripos( $out[$j], "lines" ) !== FALSE && stripos( $out[$j], " | " !== FALSE ) )
       {
         $out[$j] = explode( " | ", $out[$j] );
         $rev = $out[$j][0];
@@ -34,7 +34,7 @@ for( $i=0; $i<count( $file ); $i++ )
         $date = $out[$j][2];
         $date = explode( " (", $date );
         $date = $date[0];
-        $out[$j] = $rev". by ".$name." on ".$date.":";
+        $out[$j] = $rev." by ".$name." on ".$date.": ";
       }
       
       if( $out[$j] != NULL && stripos( $out[$j], "------------------------------------------------" ) === FALSE )
