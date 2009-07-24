@@ -603,6 +603,15 @@ void ClientTimerActions( gentity_t *ent, int msec )
   client->time100 += msec;
   client->time1000 += msec;
   client->time10000 += msec;
+  
+  if( BG_GetPlayerWeapon( &client->ps ) == WP_MASS_DRIVER 
+      || BG_GetPlayerWeapon( &client->ps ) == WP_LAS_GUN )
+  {
+    if( ( ucmd->buttons & BUTTON_ATTACK2 ) && !( ent->client->ps.eFlags & EF_ZOOM ) )
+      ent->client->ps.eFlags |= EF_ZOOM;      
+    else if( !( ucmd->buttons & BUTTON_ATTACK2 ) && ( ent->client->ps.eFlags & EF_ZOOM ) )
+      ent->client->ps.eFlags &= ~EF_ZOOM;
+  }
 
   // smooth alien regeneration
   if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS &&
@@ -721,14 +730,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
           client->ps.stats[ STAT_MISC ] -= 100;
         if( client->ps.stats[ STAT_MISC ] < 0 )
           client->ps.stats[ STAT_MISC ] = 0;
-    }
-    
-    if( ( weapon == WP_MASS_DRIVER || weapon == WP_LAS_GUN ) )
-    {
-      if( ( ucmd->buttons & BUTTON_ATTACK2 ) && !( ent->client->ps.eFlags & EF_ZOOM ) )
-        ent->client->ps.eFlags |= EF_ZOOM;      
-      else if( !( ucmd->buttons & BUTTON_ATTACK2 ) && ( ent->client->ps.eFlags & EF_ZOOM ) )
-        ent->client->ps.eFlags &= ~EF_ZOOM;
     }
     
     if( BG_InventoryContainsUpgrade( UP_CLOAK, client->ps.stats ) )
