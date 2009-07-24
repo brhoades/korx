@@ -4921,7 +4921,7 @@ void ClientCommand( int clientNum )
   }
 
   if( cmds[ i ].cmdFlags & CMD_MESSAGE && ( ent->client->pers.muted ||
-      G_FloodLimited( ent ) ) && !G_admin_permission( ent, ADMF_PERMMUTED ) )
+      G_FloodLimited( ent ) || G_admin_permission( ent, ADMF_PERMMUTED ) )
     return;
 
   if( cmds[ i ].cmdFlags & CMD_TEAM &&
