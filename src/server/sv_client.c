@@ -225,10 +225,10 @@ void SV_DirectConnect( netadr_t from ) {
 	password = Info_ValueForKey( userinfo, "password" );
   
 	if ( !strcmp( password, sv_privatePassword->string ) || VM_Call( gvm, GAME_PINGPRIV_OVERRIDE ) == 1 ) {
-		startIndex = sv_democlients->integer + 1;
+		startIndex = sv_democlients->integer;
 	} else {
 		// skip past the reserved slots
-		startIndex = sv_privateClients->integer + sv_democlients->integer + 1;
+		startIndex = sv_privateClients->integer + sv_democlients->integer;
 	}
 
 	newcl = NULL;
