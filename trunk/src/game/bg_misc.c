@@ -353,7 +353,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     "Telenode",            //char      *humanName;
     "The most basic human structure. It provides a means for humans "
       "to enter the battle arena. Without any of these the humans "
-      "cannot spawn and defeat is imminent.",
+      "cannot spawn and defeat is imminent. You may use the telenode "
+      "to teleport to another.",
     "team_human_spawn",    //char      *entityName;
     { -40, -40, -4 },      //vec3_t    mins;
     { 40, 40, 4 },         //vec3_t    maxs;

@@ -192,6 +192,7 @@
     "  kevlarman\n"
     "  Einstein\n"
     "  TremFusion Developers\n"
+    "  Risujin (balance mod)\n"
     "  MGDev Developers\n"
     "  f0rqu3(Original Tremx Developer)\n"
     "  And most importantly, the |KoR|KoRx server\n"

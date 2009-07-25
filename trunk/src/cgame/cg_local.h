@@ -1283,6 +1283,8 @@ typedef struct
   sfxHandle_t alienL4ChargePrepare;
   sfxHandle_t alienL4ChargeStart;
 
+  sfxHandle_t humanSpawnSound;
+
   qhandle_t   cursor;
   qhandle_t   selectCursor;
   qhandle_t   sizeCursor;
@@ -1317,6 +1319,9 @@ typedef struct
   qhandle_t   alienBuildableHitSmallPS;
   qhandle_t   alienBuildableHitLargePS;
   qhandle_t   alienBuildableDestroyedPS;
+  
+  qhandle_t   humanTelenodeSpawnPS;
+  qhandle_t   humanTelenodeTeleportPS;
 
   qhandle_t   alienBleedPS;
   qhandle_t   humanBleedPS;

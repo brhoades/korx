@@ -525,6 +525,27 @@ void CG_Menu( int menu, int arg )
       shortMsg  = "You cannot change teams until your build timer expires.";
       type      = DT_COMMAND;
       break;
+      
+    case MN_H_NOTELEPORT:
+      longMsg = "There are either no other telenodes or "
+             "they have not yet recharged.";
+      shortMsg = "No available telenode destinations.";
+      type      = DT_COMMAND;
+      break;
+
+    case MN_H_RECHARGING:
+      longMsg = "This buildable is recharging. "
+             "You will have to wait until it is done before using it.";
+      shortMsg = "This buildable is recharging.";
+      type      = DT_COMMAND;
+      break;
+      
+    case MN_H_INSIDETELENODE:
+      longMsg = "Please keep all appendages inside the telenode at all times. "
+             "You are unable to use this telenode until you do so.";
+      shortMsg = "Please keep all appendages inside the telenode at all times.";
+      type      = DT_COMMAND;
+      break;
 
     //===============================
 

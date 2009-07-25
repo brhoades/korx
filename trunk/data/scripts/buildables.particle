@@ -547,3 +547,63 @@ alienAcidTubePS
     period 10 - ~0%
   }
 }
+
+humanTelenodeTeleportPS
+{
+  ejector
+  {
+    particle
+    {
+      shader sync gfx/telenode/particle.tga
+
+      displacement 0 0 60 ~9
+      normalDisplacement  70
+
+      velocityType      static
+      velocityDir       linear
+      velocityMagnitude 30
+      velocity          0 0 -1 ~0
+
+      radius 0 5.0 5.0
+      alpha  0 1.0 0.0
+      rotation 0 ~360 -
+      bounce 0.0
+
+      lifeTime 1000~50%
+    }
+
+    count 75
+    delay 0
+    period 100 - ~0%
+  }
+}
+
+humanTelenodeSpawnPS
+{
+  ejector
+  {
+    particle
+    {
+      shader sync gfx/telenode/particle.tga
+
+      displacement 0 0 60 ~9
+      normalDisplacement  70
+
+      velocityType      static
+      velocityDir       linear
+      velocityMagnitude 30
+      velocity          0 0 -1 ~0
+
+      radius 0 5.0 5.0
+      alpha  0 1.0 0.0
+      rotation 0 ~360 -
+      bounce 0.0
+
+      lifeTime 1000~50%
+    }
+
+    count 100
+    delay 0
+    period 100 - ~0%
+  }
+}

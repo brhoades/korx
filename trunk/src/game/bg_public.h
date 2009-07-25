@@ -581,7 +581,10 @@ typedef enum
   EV_ALIENRANGED_MISS,      // Alien ranged attack feedback miss enemy
   EV_ALIENRANGED_TEAMHIT,   // Alien ranged attack feedback hit teammate
   
-  EV_LEV2_ZAP
+  EV_LEV2_ZAP,
+
+  EV_TELENODE_SPAWN,
+  EV_TELENODE_TELEPORT
 } entity_event_t;
 
 typedef enum
@@ -590,6 +593,11 @@ typedef enum
   MN_A_TEAMFULL,
   MN_H_TEAMFULL,
 
+  // stuff from risujin's balance mod
+  MN_H_NOTELEPORT,
+  MN_H_RECHARGING,
+  MN_H_INSIDETELENODE,
+  
   // cmd stuff
   MN_CMD_CHEAT,
   MN_CMD_CHEAT_TEAM,
@@ -953,8 +961,8 @@ typedef enum
   MOD_ASPAWN,
   MOD_ATUBE,
   MOD_OVERMIND,
-  MOD_SLAP,
   MOD_KILL,
+  MOD_SLAP,
   MOD_JETPACK_EXPLODE,
   
   MOD_SPITFIRE_ZAP
