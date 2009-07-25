@@ -964,6 +964,9 @@ static void CG_RegisterGraphics( void )
   cgs.media.humanBuildableDestroyedPS = CG_RegisterParticleSystem( "humanBuildableDestroyedPS" );
   cgs.media.alienBuildableDestroyedPS = CG_RegisterParticleSystem( "alienBuildableDestroyedPS" );
 
+  cgs.media.humanTelenodeSpawnPS      = CG_RegisterParticleSystem( "humanTelenodeSpawnPS" );
+  cgs.media.humanTelenodeTeleportPS   = CG_RegisterParticleSystem( "humanTelenodeTeleportPS" );
+
   cgs.media.alienBleedPS              = CG_RegisterParticleSystem( "alienBleedPS" );
   cgs.media.humanBleedPS              = CG_RegisterParticleSystem( "humanBleedPS" );
 

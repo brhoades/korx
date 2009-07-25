@@ -2585,8 +2585,77 @@ void HTeslaGen_Think( gentity_t *self )
 
 //==================================================================================
 
+/*
+================
+HSpawn_Activate
 
+Called when a human activates a spawn to teleport in Balance Mod
+================
+*/
+void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
+{
+	if( self->spawned )
+  {
+		// Only humans can activate this
+		if( activator->client->ps.stats[ STAT_TEAM ] != TEAM_HUMANS )
+      return;
+      
+		// Must be powered
+		if( !self->powered )
+    {
+			G_TriggerMenu( activator->client->ps.clientNum, MN_H_NOTPOWERED );
+			return;
+		}
 
+		// If this is powered then find the next suitable spawn and respawn
+		if( self->clientSpawnTime <= 0 )
+    {
+			vec3_t spawn_origin,spawn_angles;
+			gentity_t *spot=self;
+
+			//while( ( spot = G_Find( self, FOFS( classname ), BG_Buildable( BA_H_SPAWN )->entityName ) ) )
+      while( ( spot = G_SelectTremulousSpawnPoint( TEAM_HUMANS, spot->s.origin, 
+                    spawn_origin, spawn_angles ) ) && level.numHumanSpawns > 1 )
+      {
+				if( spot == self )
+        {
+          G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
+          return;
+        }
+
+				// Setup spawn angles (from ClientSpawn)
+				VectorCopy( spot->s.angles, spawn_angles );
+				spawn_angles[ROLL] = 0;
+				spawn_angles[ YAW ] += 180.0f;
+				AngleNormalize360( spawn_angles[ YAW ] );
+
+				// Both spawns have been used
+				self->clientSpawnTime = HUMAN_SPAWN_TELEPORT_TIME;
+				spot->clientSpawnTime = HUMAN_SPAWN_TELEPORT_TIME;
+
+				// Send a used event
+				G_AddEvent( self, EV_TELENODE_TELEPORT, 0 );
+				G_AddEvent( spot, EV_TELENODE_TELEPORT, 0 );
+
+				// Prevent lerping
+				activator->client->ps.eFlags ^= EF_TELEPORT_BIT;
+
+				// Copy vectors
+				G_SetOrigin( activator,spawn_origin );
+				VectorCopy( spawn_origin,activator->client->ps.origin );
+				//SetClientViewAngle( activator, spawn_angles );
+
+				// Play the spawn sound effect
+				G_AddPredictableEvent( activator, EV_PLAYER_RESPAWN, 0 );
+
+				return;
+			}
+			G_TriggerMenu( activator->client->ps.clientNum, MN_H_NOTELEPORT );
+		} 
+    else
+			G_TriggerMenu( activator->client->ps.clientNum, MN_H_RECHARGING );
+	}
+}
 
 /*
 ================
@@ -3741,6 +3810,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
     case BA_H_SPAWN:
       built->die = HSpawn_Die;
       built->think = HSpawn_Think;
+      built->use = HSpawn_Activate;
       break;
 
     case BA_H_MGTURRET:

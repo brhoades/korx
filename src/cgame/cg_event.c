@@ -1127,7 +1127,31 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
       break;
 
     case EV_LEV2_ZAP:
-      CG_Level2Zap( es );
+       CG_Level2Zap( es );
+      break;
+     
+    case EV_TELENODE_SPAWN:
+      {
+        particleSystem_t *ps = CG_SpawnNewParticleSystem( cgs.media.humanTelenodeSpawnPS );
+
+        if( CG_IsParticleSystemValid( &ps ) )
+        {
+          CG_SetAttachmentCent( &ps->attachment, cent );
+          CG_AttachToCent( &ps->attachment );
+        }
+      }
+      break;
+
+    case EV_TELENODE_TELEPORT:
+      {
+        particleSystem_t *ps = CG_SpawnNewParticleSystem( cgs.media.humanTelenodeTeleportPS );
+
+        if( CG_IsParticleSystemValid( &ps ) )
+        {
+          CG_SetAttachmentCent( &ps->attachment, cent );
+          CG_AttachToCent( &ps->attachment );
+        }
+      }
       break;
 
     default:
