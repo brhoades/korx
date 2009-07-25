@@ -5207,7 +5207,12 @@ qboolean G_admin_detonate( gentity_t *ent, int skiparg )
   vic = &g_entities[ pids[ 0 ] ];
 
   //make them explode...
-  tent = G_TempEntity( vic->s.origin, EV_HUMAN_BUILDABLE_EXPLOSION );
+  if( vic->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS && vic->client->sess.spectatorState == SPECTATOR_NOT  )
+    tent = G_TempEntity( vic->s.origin, EV_HUMAN_EXPLOSION );
+  else if( vic->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS && vic->client->sess.spectatorState == SPECTATOR_NOT )
+    tent = G_TempEntity( vic->s.origin, EV_ALIEN_BUILDABLE_EXPLOSION );
+  else
+    tent = G_TempEntity( vic->s.origin, EV_HUMAN_BUILDABLE_EXPLOSION );
   oldhealth = vic->health;
   damage = BG_FindHealthForClass( vic->client->ps.stats[ STAT_CLASS ] );
   vic->health -= damage;

@@ -1319,6 +1319,7 @@ typedef struct
   qhandle_t   alienBuildableHitSmallPS;
   qhandle_t   alienBuildableHitLargePS;
   qhandle_t   alienBuildableDestroyedPS;
+  qhandle_t   humanExplosionPS;
   
   qhandle_t   humanTelenodeSpawnPS;
   qhandle_t   humanTelenodeTeleportPS;
@@ -1736,6 +1737,7 @@ void        CG_DrawBuildableStatus( void );
 void        CG_InitBuildables( void );
 void        CG_HumanBuildableExplosion( vec3_t origin, vec3_t dir );
 void        CG_AlienBuildableExplosion( vec3_t origin, vec3_t dir );
+void        CG_HumanExplosion( vec3_t origin, vec3_t dir );
 
 //
 // cg_animation.c

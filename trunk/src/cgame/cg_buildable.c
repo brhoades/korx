@@ -70,6 +70,30 @@ void CG_AlienBuildableExplosion( vec3_t origin, vec3_t dir )
 }
 
 /*
+===================
+CG_HumanExplosion
+
+Generated a bunch of gibs launching out from a location
+===================
+*/
+void CG_HumanExplosion( vec3_t origin, vec3_t dir )
+{
+  particleSystem_t  *ps;
+
+  trap_S_StartSound( origin, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.alienBuildableExplosion );
+
+  //particle system
+  ps = CG_SpawnNewParticleSystem( cgs.media.humanExplosionPS );
+
+  if( CG_IsParticleSystemValid( &ps ) )
+  {
+    CG_SetAttachmentPoint( &ps->attachment, origin );
+    CG_SetParticleSystemNormal( ps, dir );
+    CG_AttachToPoint( &ps->attachment );
+  }
+}
+
+/*
 =================
 CG_HumanBuildableExplosion
 
