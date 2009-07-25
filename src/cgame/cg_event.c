@@ -1154,6 +1154,11 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
       }
       break;
 
+    case EV_HUMAN_EXPLOSION:
+      ByteToDir( es->eventParm, dir );
+      CG_HumanExplosion( position, dir );
+      break;
+
     default:
       CG_Error( "Unknown event: %i", event );
       break;

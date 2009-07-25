@@ -958,7 +958,7 @@ gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
 
   VectorCopy( start, bolt->r.currentOrigin );
 
-  tent = G_TempEntity( self->s.origin, EV_HUMAN_BUILDABLE_EXPLOSION );
+  tent = G_TempEntity( self->s.origin, EV_HUMAN_EXPLOSION );
 
   return bolt;
 }

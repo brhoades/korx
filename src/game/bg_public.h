@@ -584,7 +584,9 @@ typedef enum
   EV_LEV2_ZAP,
 
   EV_TELENODE_SPAWN,
-  EV_TELENODE_TELEPORT
+  EV_TELENODE_TELEPORT,
+  
+  EV_HUMAN_EXPLOSION
 } entity_event_t;
 
 typedef enum
