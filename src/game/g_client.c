@@ -1952,7 +1952,6 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
       }
 
       G_AddPredictableEvent( ent, EV_PLAYER_RESPAWN, 0 );
-      G_AddEvent( spawn, EV_TELENODE_SPAWN, 0 );
     }
   }
   else if( client->sess.spectatorState == SPECTATOR_NOT &&
