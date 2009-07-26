@@ -2614,7 +2614,7 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
 			gentity_t *spot=self;
 
 			//while( ( spot = G_Find( self, FOFS( classname ), BG_Buildable( BA_H_SPAWN )->entityName ) ) )
-      while( ( spot = G_SelectTremulousSpawnPoint( TEAM_HUMANS, spot->s.origin, 
+      while( ( spot = G_SelectTremulousSpawnPoint( TEAM_HUMANS, NULL,
                     spawn_origin, spawn_angles ) ) && level.numHumanSpawns > 1 )
       {
 				if( spot == self )
