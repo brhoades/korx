@@ -403,7 +403,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HIVE_LIFETIME               6000
 #define HIVE_REPEAT                 3000
 #define HIVE_K_SCALE                1.0f
-#define HIVE_DMG                    100
+#define HIVE_DMG                    97
 #define HIVE_SPEED                  384.0f
 #define HIVE_DIR_CHANGE_PERIOD      500
 #define HIVE_VALUE                  ABVM(0)
