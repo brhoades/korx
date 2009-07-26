@@ -618,8 +618,11 @@ gentity_t *G_SelectHumanSpawnPoint( vec3_t preference )
 
   if( !count )
     return NULL;
-
-  return G_ClosestEnt( preference, spots, count );
+  
+  if( preference == NULL )
+    return spots[ rand() % count ];
+  else
+    return G_ClosestEnt( preference, spots, count );
 }
 
 
