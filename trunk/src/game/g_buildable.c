@@ -2615,14 +2615,40 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
 
 			//while( ( spot = G_Find( self, FOFS( classname ), BG_Buildable( BA_H_SPAWN )->entityName ) ) )
       while( ( spot = G_SelectTremulousSpawnPoint( TEAM_HUMANS, NULL,
-                    spawn_origin, spawn_angles ) ) && level.numHumanSpawns > 1 )
+                    spawn_origin, spawn_angles ) ) && ( level.numHumanSpawns > 1 || g_extremeSuddenDeath.integer ) )
       {
         // you have to be blocking the node you're teleporting from to use it
 				if( G_CheckSpawnPoint( self->s.number, self->s.origin, 
             self->s.origin2, BA_H_SPAWN, NULL ) == NULL || spot == self )
         {
-          G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
-          return;
+          if( !g_extremeSuddenDeath.integer )
+          {
+            G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
+            return;
+          }
+          else
+          {
+            int spawns, i;
+            gentity_t *ent;
+            
+            spawns = 0;
+            for( i = 1, ent = g_entities + i ; i < level.num_entities ; i++, ent++ )
+            {
+              if( !ent->inuse || ent->s.eType != ET_BUILDABLE || ent->health <= 0 )
+                continue;
+
+              if( ent->s.modelindex == BA_H_SPAWN )
+                spawns++;
+            }
+            
+            if( spawns > 1 )
+            {
+              G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
+              return;
+            }
+            else
+              break;
+          }
         }
 
 				// Setup spawn angles (from ClientSpawn)
