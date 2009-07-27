@@ -2601,11 +2601,11 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
       return;
       
 		// Must be powered
-		if( !self->powered )
+		/*if( !self->powered )
     {
 			G_TriggerMenu( activator->client->ps.clientNum, MN_H_NOTPOWERED );
 			return;
-		}
+		}*/
 
 		// If this is powered then find the next suitable spawn and respawn
 		if( self->clientSpawnTime <= 0 )
@@ -2777,9 +2777,10 @@ void HSpawn_Think( gentity_t *self )
   gentity_t *ent;
 
   // spawns work without power
-  self->powered = qtrue;
-
-  if( self->spawned )
+  if( !g_extremeSuddenDeath.integer )
+    self->powered = qtrue;
+    
+  if( self->spawned && self->powered )
   {
     //only suicide if at rest
     if( self->s.groundEntityNum )
