@@ -2617,7 +2617,9 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
       while( ( spot = G_SelectTremulousSpawnPoint( TEAM_HUMANS, NULL,
                     spawn_origin, spawn_angles ) ) && level.numHumanSpawns > 1 )
       {
-				if( spot == self )
+        // you have to be blocking the node you're teleporting from to use it
+				if( G_CheckSpawnPoint( self->s.number, self->s.origin, 
+            self->s.origin2, BA_H_SPAWN, NULL ) == NULL || spot == self )
         {
           G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
           return;
@@ -2633,9 +2635,10 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
 				self->clientSpawnTime = HUMAN_SPAWN_TELEPORT_TIME;
 				spot->clientSpawnTime = HUMAN_SPAWN_TELEPORT_TIME;
 
+        //FIXME: These particle systems bleed through walls
 				// Send a used event
-				G_AddEvent( self, EV_TELENODE_TELEPORT, 0 );
-				G_AddEvent( spot, EV_TELENODE_TELEPORT, 0 );
+				//G_AddEvent( self, EV_TELENODE_TELEPORT, 0 );
+				//G_AddEvent( spot, EV_TELENODE_TELEPORT, 0 );
 
 				// Prevent lerping
 				activator->client->ps.eFlags ^= EF_TELEPORT_BIT;
@@ -2804,7 +2807,7 @@ void HSpawn_Think( gentity_t *self )
           {
             //five seconds of countermeasures and we're still blocked
             //time for something more drastic
-            G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_TRIGGER_HURT );
+            G_Damage( ent, NULL, NULL, NULL, NULL, 10, 0, MOD_TRIGGER_HURT );
             self->spawnBlockTime += 2000;
             //inappropriate MOD but prints an apt obituary
           }
@@ -2831,7 +2834,13 @@ void HSpawn_Think( gentity_t *self )
         self->spawnBlockTime = 0;
     }
   }
-
+  
+  // flash when charging
+  if( self->clientSpawnTime > 0 && self->s.torsoAnim != BANIM_SPAWN1 )
+    G_SetIdleBuildableAnim( self, BANIM_SPAWN1 );
+  else if( self->clientSpawnTime == 0 && self->s.torsoAnim != BANIM_IDLE1 )
+    G_SetIdleBuildableAnim( self, BANIM_IDLE1 );
+        
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
 }
 
