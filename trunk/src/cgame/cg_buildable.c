@@ -1092,7 +1092,7 @@ static void CG_BuildableStatusDisplay( centity_t *cent )
       float pX;
 
       pX = picX + ( subH * bs->horizontalMargin );
-      if( es->modelindex != BA_A_SPAWN )
+      if( es->modelindex != BA_A_SPAWN && es->modelindex != BA_H_SPAWN )
         CG_DrawPic( pX, subY, subH, subH, bs->noPowerShader );
       else
         CG_DrawPic( pX, subY, subH, subH, bs->esdShader );
