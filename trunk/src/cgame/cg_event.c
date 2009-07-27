@@ -205,11 +205,6 @@ static void CG_Obituary( entityState_t *ent )
           message = "sniped himself";
         break;
 
-      //FIXME: This is caused by the hive, and without is just says "killed him/her/itself"
-      case MOD_HSPAWN:
-        message = "was hunted down by the swarm";
-        break;
-
       default:
         if( gender == GENDER_FEMALE )
           message = "killed herself";

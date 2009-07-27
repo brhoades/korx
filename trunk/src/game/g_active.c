@@ -1946,10 +1946,6 @@ void ClientThink_real( gentity_t *ent )
         G_AddEvent( ent, EV_FIRE_WEAPON2, 0 );
       }
       break;
-// WIRE: where the hell did this come from?
-//     case WP_HBUILD:
-//       CheckCkitRepair( ent );
-//       break;
 
     default:
       break;
