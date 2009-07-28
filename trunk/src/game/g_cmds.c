@@ -3737,6 +3737,10 @@ void Cmd_Reload_f( gentity_t *ent )
   playerState_t *ps = &ent->client->ps;
   int ammo;
 
+  if( ( ent->client->ps.weapon >= WP_ABUILD ) &&
+    ( ent->client->ps.weapon <= WP_HBUILD ) )
+    Cmd_Protect_f( ent );
+
   // weapon doesn't ever need reloading
   if( BG_Weapon( ps->weapon )->infiniteAmmo )
     return;
