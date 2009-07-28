@@ -587,7 +587,7 @@ gentity_t *G_SelectHumanSpawnPoint( vec3_t preference )
   int       count;
   gentity_t *spots[ MAX_SPAWN_POINTS ];
 
-  if( level.numHumanSpawns <= 0 )
+  if( level.numHumanSpawns <= 0 && !g_extremeSuddenDeath.integer )
     return NULL;
 
   count = 0;
