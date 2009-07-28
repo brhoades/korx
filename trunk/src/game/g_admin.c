@@ -4105,7 +4105,7 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
   {
     G_SayArgv( 1 + skiparg, name, sizeof( name ) );
     targeted = qtrue;
-    if( *name == 'a' || *name == 'h' || *name == 'm' )
+    if( ( *name == 'a' || *name == 'h' || *name == 'm' ) && strlen( name ) == 1 )
       targeted = qfalse;
     else if( ( found = G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) ) != 1 )
     {
@@ -4123,6 +4123,7 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
   if( targeted == qfalse )
   {
     char subject[ MAX_STRING_CHARS ];
+    
 		everyone = qtrue;
     for( i = 0; i < MAX_CLIENTS; i++ )
     {
@@ -4175,22 +4176,25 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
           ADMP( "^3!pause: ^7player is already paused\n" );
         continue;
       }
-      if( ( *name == 'a' && vic->client->pers.teamSelection == TEAM_ALIENS )
-            || ( *name == 'h' && vic->client->pers.teamSelection == TEAM_HUMANS ) )
+      
+      if( ( ( *name == 'a' && vic->client->pers.teamSelection == TEAM_ALIENS )
+            || ( *name == 'h' && vic->client->pers.teamSelection == TEAM_HUMANS ) ) 
+            && !targeted )
       {
         vic->client->pers.paused = qfalse;
         CPx( pids[ i ], "cp \"^2Your team has been unpaused\"" );
       }
-      else if( *name != 'h' && *name != 'a' && *name != 'm' )
+      else
         vic->client->pers.paused = qfalse;
         
-      if( *name == 'm' && G_admin_permission( ent, ADMF_IMMUTABLE ) )
+      if( *name == 'm' && G_admin_permission( vic, ADMF_IMMUTABLE ) )
       {
         vic->client->pers.muted = qfalse;
         CPx( pids[ i ], "cp \"^2You've been unpaused\nYou've been unmuted\"" );
       }
-      else if( *name != 'h' && *name != 'a' && *name != 'm' )
+      else if( targeted || everyone)
         CPx( pids[ i ], "cp \"^2You've been unpaused\"" );
+        
       if( targeted )
         AP( va( "print \"^3!unpause: ^7%s^7 unpaused by %s\n\"",
 	    vic->client->pers.netname,
@@ -4204,23 +4208,27 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
           ADMP( "^3!unpause: ^7player is already unpaused\n" );
         continue;
       }
-      if( ( *name == 'a' && vic->client->pers.teamSelection == TEAM_ALIENS )
+      if( ( ( *name == 'a' && vic->client->pers.teamSelection == TEAM_ALIENS )
             || ( *name == 'h' && vic->client->pers.teamSelection == TEAM_HUMANS ) )
+            && !targeted )
         {
           vic->client->pers.paused = qtrue;
           CPx( pids[ i ], "cp \"^2Your team has been paused\"" );
         }
-      else if( *name != 'h' && *name != 'a' && *name != 'm' )
+      else
         vic->client->pers.paused = qtrue;
-      if( *name == 'm' && !G_admin_permission( ent, ADMF_IMMUTABLE ) )
+      
+      if( *name == 'm' && !G_admin_permission( vic, ADMF_IMMUTABLE ) 
+           && !targeted )
       {
         vic->client->pers.muted = qtrue;
         CPx( pids[ i ], va( "cp \"^1You've been paused by ^7%s^1\nYou've been muted by ^7%s\"", 
             ( ent ) ? ent->client->pers.netname : "console", ( ent ) ? ent->client->pers.netname : "console" ) );
       }
-      else if( *name != 'h' && *name != 'a' && *name != 'm' )
+      else
         CPx( pids[ i ], va( "cp \"^1You've been paused by ^7%s\"", 
 	  ( ent ) ? ent->client->pers.netname : "console" ) );
+    
       if( targeted )
         AP( va( "print \"^3!pause: ^7%s^7 paused by %s\n\"", 
           vic->client->pers.netname,
