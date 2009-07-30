@@ -1235,9 +1235,6 @@ void G_CountSpawns( void )
   level.numAlienSpawns = 0;
   level.numHumanSpawns = 0;
 
-  if( g_extremeSuddenDeath.integer )
-    return;
-
   for( i = 1, ent = g_entities + i ; i < level.num_entities ; i++, ent++ )
   {
     if( !ent->inuse || ent->s.eType != ET_BUILDABLE || ent->health <= 0 )
@@ -1418,31 +1415,10 @@ void G_CalculateBuildPoints( void )
     level.extremeSuddenDeath = qtrue;
     level.suddenDeath = qtrue;
 
-    //destroy all spawns
-    if( !g_tkmap.integer )
-    {
-      for( i = 1, ent = g_entities + i; i < level.num_entities; i++, ent++ )
-      {        
-        if( !ent || !ent->s.eType == ET_BUILDABLE || ent->health <= 0 )
-          continue;
-        
-        if( !g_smartesd.integer && ( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN ) )
-          G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
-        else if( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN )
-          ent->powered = qfalse;
-      }
-    }
-
     if( g_alienStage.integer < 2 )
         trap_Cvar_Set( "g_alienStage", "2" ); // set aliens to stage 3
     if( g_humanStage.integer < 2 )
         trap_Cvar_Set( "g_humanStage", "2" ); // set humans to stage 3
-
-    if( g_smartesd.integer && !g_tkmap.integer )
-    {
-      level.alienTeamLocked = qtrue;  // lock alien team
-      level.humanTeamLocked = qtrue;  // lock human team
-    }
     
     for( i = 0; i < MAX_CLIENTS; i++ )
     {
@@ -1454,8 +1430,8 @@ void G_CalculateBuildPoints( void )
     
     if( level.extremeSuddenDeathWarning < TW_PASSED && !g_tkmap.integer )
     {
-      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! NO SPAWNS, NO BUILDING\"" );
-      trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! NO SPAWNS, NO BUILDING\n\"" );
+      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! INFINITE CREDITS, NO BUILDING\"" );
+      trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! INFINITE CREDITS, NO BUILDING\n\"" );
       level.extremeSuddenDeathWarning = TW_PASSED;
     }
     else if( level.extremeSuddenDeathWarning < TW_PASSED && g_tkmap.integer )
