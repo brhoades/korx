@@ -404,7 +404,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
             price = g_entities[ i ].client->ps.persistant[ PERS_CREDIT ];
           if( price )
           {
-            G_AddCreditToClient( self->client, price, qtrue );
+            // meh
+            self->client->pers.savedCredit += price;
             G_AddCreditToClient( g_entities[ i ].client, -price, qtrue );
             if( self->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
             {
