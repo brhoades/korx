@@ -2724,6 +2724,7 @@ done:
 }
 
 /* this is really crappy */
+// FIXME: count is still inaccurate in some cases. 
 int sscanf( const char *buffer, const char *fmt, ... )
 {
   int cmd;
@@ -2741,6 +2742,9 @@ int sscanf( const char *buffer, const char *fmt, ... )
       continue;
     }
 
+    if( !buffer[ 0 ] )
+	  break;
+
     cmd = fmt[ 1 ];
     fmt += 2;
 
@@ -2750,12 +2754,15 @@ int sscanf( const char *buffer, const char *fmt, ... )
       case 'd':
       case 'u':
         **arg = _atoi( &buffer );
+		++count;
         break;
       case 'f':
         *(float *)*arg = _atof( &buffer );
+		++count;
         break;
       case 'x':
         **arg = _hextoi( &buffer );
+		++count;
         break;
     }
 
