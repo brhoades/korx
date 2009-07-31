@@ -406,7 +406,8 @@ qboolean G_admin_permission_guid( char *guid, char flag )
   int l = 0;
   char *flags;
 
-  if(!guid) return qfalse; // since there is a different check for console, here we are just returning false.
+  if( !guid ) 
+	return qfalse; // since there is a different check for console, here we are just returning false.
 
   for( i = 0; i < MAX_ADMIN_ADMINS && g_admin_admins[ i ]; i++ )
   {
@@ -494,94 +495,15 @@ qboolean G_admin_permission_guid( char *guid, char flag )
   return qfalse;
 }
 
+
 qboolean G_admin_permission( gentity_t *ent, char flag )
 {
-  int i;
-  int l = 0;
-  char *flags;
-
-  // console always wins
   if( !ent )
-    return qtrue;
+	return qtrue; //console always wins
+  if( !ent->client->pers.guid ) 
+	return qfalse; //if we have no guid, and we are not console, we lose.
 
-  for( i = 0; i < MAX_ADMIN_ADMINS && g_admin_admins[ i ]; i++ )
-  {
-    if( !Q_stricmp( ent->client->pers.guid, g_admin_admins[ i ]->guid ) )
-    {
-      flags = g_admin_admins[ i ]->flags;
-      while( *flags )
-      {
-        if( *flags == flag )
-          return qtrue;
-        else if( *flags == '-' )
-        {
-          while( *flags++ )
-          {
-            if( *flags == flag )
-              return qfalse;
-            if( *flags == '+' )
-              break;
-          }
-        }
-        else if( *flags == '*' )
-        {
-          while( *flags++ )
-          {
-            if( *flags == flag )
-              return qfalse;
-          }
-          // flags with significance only for individuals (
-          // like ADMF_INCOGNITO and ADMF_IMMUTABLE are NOT covered
-          // by the '*' wildcard.  They must be specified manually.
-          switch( flag )
-          {
-          case ADMF_INCOGNITO:
-          case ADMF_IMMUTABLE:
-          case ADMF_DBUILDER:
-            return qfalse; 
-          default:
-            return qtrue;
-          }
-        }
-        flags++;
-      }
-      l = g_admin_admins[ i ]->level;
-    }
-  }
-  for( i = 0; i < MAX_ADMIN_LEVELS && g_admin_levels[ i ]; i++ )
-  {
-    if( g_admin_levels[ i ]->level == l )
-    {
-      flags = g_admin_levels[ i ]->flags;
-      while( *flags )
-      {
-        if( *flags == flag )
-          return qtrue;
-        if( *flags == '*' )
-        {
-          while( *flags++ )
-          {
-            if( *flags == flag )
-              return qfalse;
-          }
-          // flags with significance only for individuals (
-          // like ADMF_INCOGNITO and ADMF_IMMUTABLE are NOT covered
-          // by the '*' wildcard.  They must be specified manually.
-          switch( flag )
-          {
-          case ADMF_INCOGNITO:
-          case ADMF_IMMUTABLE:
-          case ADMF_DBUILDER:
-            return qfalse; 
-          default:
-            return qtrue;
-          } 
-        }
-        flags++;
-      }
-    }
-  }
-  return qfalse;
+  return G_admin_permission_guid(ent->client->pers.guid, flag);
 }
 
 qboolean G_admin_name_check( gentity_t *ent, char *name, char *err, int len )
@@ -1292,12 +1214,15 @@ qboolean G_admin_ban_check( char *userinfo, char *reason, int rlen )
 
       ipscanfcount = sscanf(g_admin_bans[ i ]->ip, "%d.%d.%d.%d/%d", &IP[4], &IP[3], &IP[2], &IP[1], &IP[0]);
 
-      if(ipscanfcount==5) mask = IP[0]; 
-      else mask = -1;
+      if( ipscanfcount==5 )
+		mask = IP[0]; 
+      else
+		mask = -1;
 
       for(k = 4; k >= 1; k--)
       {
-        if(!IP[k]) continue;
+        if(!IP[k]) 
+		  continue;
         intIP |= IP[k] << 8*(k-1);
       }
 
