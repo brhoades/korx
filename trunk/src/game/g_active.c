@@ -1135,7 +1135,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
   {
     client->time10000 -= 10000;
     
-    if( client->ps.stats[ STAT_TEAM ] != TEAM_NONE && level.extremeSuddenDeath )
+    if( client->ps.stats[ STAT_TEAM ] != TEAM_NONE && level.extremeSuddenDeath
+          && client->ps.stats[ STAT_HEALTH ] > 0 )
     {
       int max;
       
@@ -1686,12 +1687,6 @@ void ClientThink_real( gentity_t *ent )
   {
     if( client->sess.spectatorState == SPECTATOR_SCOREBOARD )
       return;
-    // To clean up teams during ESD
-    if( g_extremeSuddenDeath.integer && g_smartesd.integer 
-        && !level.intermissiontime && ent->lastDamageTime + 3000 <= level.time
-         && ( ( ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS && level.numHumanSpawns <= 0 ) 
-                || ( ent->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS && level.numAlienSpawns <= 0 ) ) )
-      G_ChangeTeam( ent, TEAM_NONE );
     SpectatorThink( ent, ucmd );
     return;
   }
