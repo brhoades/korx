@@ -2620,6 +2620,12 @@ void Cmd_Destroy_f( gentity_t *ent )
 
   if( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING )
   {
+    if( g_floodMinTime.integer )
+      if ( G_FloodLimited( ent ) )
+      {
+        trap_SendServerCommand( ent-g_entities, "print \"You are spamming designated builders; please wait before attempting to decon again\n\"" );
+        return;
+      }
     if( ( ent->client->hovel->s.eFlags & EF_DBUILDER ) &&
       !ent->client->pers.designatedBuilder )
     {
