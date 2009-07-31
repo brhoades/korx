@@ -1430,7 +1430,7 @@ void G_CalculateBuildPoints( void )
     
     if( level.extremeSuddenDeathWarning < TW_PASSED && !g_tkmap.integer )
     {
-      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! INFINITE CREDITS, NO BUILDING\"" );
+      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death!\nINFINITE CREDITS, NO BUILDING\"" );
       trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! INFINITE CREDITS, NO BUILDING\n\"" );
       level.extremeSuddenDeathWarning = TW_PASSED;
       trap_Cvar_Set( "g_suddenDeath", "1" );
@@ -1438,7 +1438,7 @@ void G_CalculateBuildPoints( void )
     }
     else if( level.extremeSuddenDeathWarning < TW_PASSED && g_tkmap.integer )
     {
-      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! BUILDING TEAMKILLING, NO BUILDING, LAST ONE ALIVE WINS\"" );
+      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death!\nBUILDING TEAMKILLING, NO BUILDING, LAST ONE ALIVE WINS\"" );
       trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! BUILDING TEAMKILLING, NO BUILDING, LAST ONE ALIVE WINS\n\"" );
       level.extremeSuddenDeathWarning = TW_PASSED;
       trap_Cvar_Set( "g_suddenDeath", "1" );
