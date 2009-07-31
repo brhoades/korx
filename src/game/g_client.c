@@ -185,7 +185,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "frags";
         else
           type = "frag";
-        trap_SendServerCommand( i,
+        trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
         client->pers.netname, overflowamt, type ) );
       }
@@ -195,7 +195,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "credits";
         else
           type = "credit";
-        trap_SendServerCommand( i,
+        trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
         client->pers.netname, overflowamt, type ) );
       }
@@ -268,7 +268,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "frags";
         else
           type = "frag";
-        trap_SendServerCommand( i,
+        trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
         client->pers.netname, overflowamt, type ) );
       }
@@ -278,7 +278,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           type = "credits";
         else
           type = "credit";
-        trap_SendServerCommand( i,
+        trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2%i ^7%s to you!\n\"",
         client->pers.netname, overflowamt, type ) );
       }
