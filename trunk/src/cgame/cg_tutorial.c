@@ -315,6 +315,30 @@ static void CG_AlienLevel1Text( char *text, playerState_t *ps )
 CG_AlienLevel2Text
 ===============
 */
+static void CG_AlienSpitfireText( char *text, playerState_t *ps )
+{
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to invoke an electrical attack\n",
+        CG_KeyNameForCommand( "+attack" ) ) );
+
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Hold down %s to sprint\n",
+        CG_KeyNameForCommand( "+button5" ) ) );
+        
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to launch a small acid blob\n",
+        CG_KeyNameForCommand( "+button2" ) ) );
+  
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to toggle your ability to fly\n",
+        CG_KeyNameForCommand( "+button6" ) ) );
+}
+
+/*
+===============
+CG_AlienLevel2Text
+===============
+*/
 static void CG_AlienLevel2Text( char *text, playerState_t *ps )
 {
   Q_strcat( text, MAX_TUTORIAL_TEXT,
@@ -702,6 +726,10 @@ const char *CG_TutorialText( void )
           CG_AlienLevel1Text( text, ps );
           break;
 
+        case PCL_ALIEN_SPITFIRE:
+          CG_AlienSpitfireText( text, ps );
+          break;
+          
         case PCL_ALIEN_LEVEL2:
         case PCL_ALIEN_LEVEL2_UPG:
           CG_AlienLevel2Text( text, ps );
