@@ -611,12 +611,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
     if( client->ps.pm_type == PM_SPITPACK )
     {
       client->ps.pm_type = PM_NORMAL;
-      client->ps.eFlags |= EF_SPITPACK;   
+      client->ps.eFlags &= ~EF_SPITPACK;
     }
     else
     {
       client->ps.pm_type = PM_SPITPACK;
-      client->ps.eFlags &= ~EF_SPITPACK;
+      client->ps.eFlags |= EF_SPITPACK;   
     }
   }
   
