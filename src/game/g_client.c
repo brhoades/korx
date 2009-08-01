@@ -181,11 +181,15 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( team == TEAM_ALIENS )
       {
         double aoverflow=0;
+        
         aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( overflowamt != 1 && overflow > 1 )
+        if( overflow > 1 || overflow < 1 )
           type = "frags";
-        else if( overflow == 1 )
+        else if( aoverflow == 1 )
           type = "frag";
+        
+        if( aoverflow == 0 )
+          aoverflow = 0.1;
           
         trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2%f ^7%s to you!\n\"",
@@ -266,11 +270,15 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( team == TEAM_ALIENS )
       {
         double aoverflow=0;
+        
         aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( aoverflow != 1 )
+        if( overflow > 1 || overflow < 1 )
           type = "frags";
-        else
+        else if( aoverflow == 1 )
           type = "frag";
+        
+        if( aoverflow == 0 )
+          aoverflow = 0.1;
         trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2%f ^7%s to you!\n\"",
         client->pers.netname, aoverflow, type ) );
@@ -296,10 +304,13 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         double aoverflow=0;
         
         aoverflow = (double)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
-        if( aoverflow != 1 )
+        if( overflow > 1 || overflow < 1 )
           type = "frags";
-        else
+        else if( aoverflow == 1 )
           type = "frag";
+        
+        if( aoverflow == 0 )
+          aoverflow = 0.1;
         trap_SendServerCommand( client - level.clients,
          va( "print \"^7You overflowed ^2%f^7 %s to ^2%d ^7%s\n\"",
          aoverflow, type, overflowed,

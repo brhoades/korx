@@ -3601,7 +3601,7 @@ qboolean G_admin_register(gentity_t *ent, int skiparg )
     return qfalse;
   }
 
-  trap_SendConsoleCommand( EXEC_APPEND,va( "!setlevel %d %d;",ent - g_entities, level) );
+  trap_SendConsoleCommand( EXEC_APPEND,va( "!setlevel %ld %d;",ent - g_entities, level) );
   ClientUserinfoChanged( ent - g_entities );
 
   AP( va( "print \"^3!register: ^7%s^7 is now a protected nickname.\n\"", ent->client->pers.netname) );
@@ -4621,7 +4621,7 @@ qboolean G_admin_revert( gentity_t *ent, int skiparg )
               Com_sprintf( argbuf, sizeof argbuf, "%s%s%s%s%s%s%s!",
                   ( repeat > 1 ) ? "x" : "", ( repeat > 1 ) ? va( "%d ", repeat ) : "",
                   ( ID ) ? "#" : "", ( ID ) ? va( "%d ", ptr->ID ) : "",
-                  ( builder ) ? "-" : "", ( builder ) ? va( "%d ", builder - g_entities ) : "", 
+                  ( builder ) ? "-" : "", ( builder ) ? va( "%ld ", builder - g_entities ) : "", 
                   ( team == TEAM_ALIENS ) ? "a " : ( team == TEAM_HUMANS ) ? "h " : "" );
               ADMP( va( "^3!revert: ^7revert aborted: reverting this %s would conflict with "
                   "another buildable, use ^3!revert %s ^7to override\n", action, argbuf ) );
@@ -4649,7 +4649,7 @@ qboolean G_admin_revert( gentity_t *ent, int skiparg )
           Com_sprintf( argbuf, sizeof argbuf, "%s%s%s%s%s%s%s!",
               ( repeat > 1 ) ? "x" : "", ( repeat > 1 ) ? va( "%d ", repeat ) : "",
               ( ID ) ? "#" : "", ( ID ) ? va( "%d ", ptr->ID ) : "",
-              ( builder ) ? "-" : "", ( builder ) ? va( "%d ", builder - g_entities ) : "", 
+              ( builder ) ? "-" : "", ( builder ) ? va( "%ld ", builder - g_entities ) : "", 
               ( team == TEAM_ALIENS ) ? "a " : ( team == TEAM_HUMANS ) ? "h " : "" );
           ADMP( va( "^3!revert: ^7revert aborted: reverting this %s would "
               "conflict with another buildable, use ^3!revert %s ^7to override\n",
