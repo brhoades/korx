@@ -2600,10 +2600,9 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
 		// If this is powered then find the next suitable spawn and respawn
 		if( self->clientSpawnTime <= 0 )
     {
-			vec3_t spawn_origin,spawn_angles;
+			vec3_t spawn_origin, spawn_angles;
 			gentity_t *spot=self;
 
-			//while( ( spot = G_Find( self, FOFS( classname ), BG_Buildable( BA_H_SPAWN )->entityName ) ) )
       while( ( spot = G_SelectTremulousSpawnPoint( TEAM_HUMANS, NULL,
                     spawn_origin, spawn_angles ) ) && level.numHumanSpawns > 1 )
       {
@@ -2636,7 +2635,6 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
 				// Copy vectors
 				G_SetOrigin( activator,spawn_origin );
 				VectorCopy( spawn_origin,activator->client->ps.origin );
-				//SetClientViewAngle( activator, spawn_angles );
 
 				// Play the spawn sound effect
 				G_AddPredictableEvent( activator, EV_PLAYER_RESPAWN, 0 );
@@ -2774,7 +2772,8 @@ void HSpawn_Think( gentity_t *self )
     //only suicide if at rest
     if( self->s.groundEntityNum )
     {
-      if( ( ent = G_CheckSpawnPoint( self->s.number, self->s.origin,
+      if( self->clientSpawnTime <= 0 &&
+          ( ent = G_CheckSpawnPoint( self->s.number, self->s.origin,
               self->s.origin2, BA_H_SPAWN, NULL ) ) != NULL )
       {
         // If the thing blocking the spawn is a buildable, kill it. 
@@ -2825,10 +2824,10 @@ void HSpawn_Think( gentity_t *self )
     }
   }
   
-  // flash when charging
+  // turn off the aura when charging
   if( self->clientSpawnTime > 0 && self->s.torsoAnim != BANIM_SPAWN1 )
     G_SetIdleBuildableAnim( self, BANIM_SPAWN1 );
-  else if( self->clientSpawnTime == 0 && self->s.torsoAnim != BANIM_IDLE1 )
+  else if( self->clientSpawnTime <= 0 && self->s.torsoAnim != BANIM_IDLE1 )
     G_SetIdleBuildableAnim( self, BANIM_IDLE1 );
         
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
