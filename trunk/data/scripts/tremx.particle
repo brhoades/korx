@@ -299,10 +299,10 @@ humanExplosionPS
 
       displacement 0 0 40 ~0
 
-      velocityType      static
+      velocityType      normal
       velocityDir       linear
-      velocityMagnitude 300~75%
-      velocity          0 0 1 ~60
+      velocityMagnitude 500~100%
+      velocity          0 0 15 ~60
 
       accelerationType      static
       accelerationDir       linear
@@ -311,7 +311,7 @@ humanExplosionPS
 
       radius          0 2.0 -
       bounce          0.35
-      bounceMark      1~1 32 blood_puddle
+      bounceMark      5~1 32 blood_puddle
       bounceSound     ~1 sound/misc/organic_bounce.wav
 
       lifeTime 5000~1000
