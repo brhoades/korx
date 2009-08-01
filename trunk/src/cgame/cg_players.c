@@ -1562,17 +1562,14 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
   cmdNum = trap_GetCurrentCmdNumber( );
   trap_GetUserCmd( cmdNum, &cmd );
 
-  if( held & ( 1 << UP_SPITPACK ) )
+  if( cent->currentState.eFlags & EF_SPITPACK )
   {
-    if( active & ( 1 << UP_SPITPACK ) )
+    if( !cl_jetpackmute.integer)
     {
-      if( !cl_jetpackmute.integer)
-      {
-        if( ( cmd.buttons & BUTTON_ATTACK2 ) )
-          trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.spitpackFastFlyingSound );
-        else
-          trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.spitpackFlyingSound );
-      }
+      if( ( cmd.buttons & BUTTON_ATTACK2 ) )
+        trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.spitpackFastFlyingSound );
+      else
+        trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.spitpackFlyingSound );
     }
   }
 

@@ -3241,22 +3241,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     qtrue,                  //qboolean purchasable
     qtrue,                 //qboolean usable
     TEAM_HUMANS              //WUTeam_t  team;
-  },
-  {
-    UP_SPITPACK,            //int   upgradeNum;
-    0,         //int   price;
-    ( 1 << S2 )|( 1 << S3 ), //int  stages
-    SLOT_BACKPACK,          //int   slots;
-    "spitpack",             //char  *upgradeName;
-    "Spitpack",         //char  *upgradeHumanName;
-    "An invisibility cloak that can be used to sneak up on aliens "
-     "without being seen. The cloak lasts for 30 seconds once it "
-     " is activated. You can recharge your cloak by buying ammo."
-     " The cloak is now more visible to your allies.",
-    "icons/iconu_cloak",
-    qfalse,                  //qboolean purchasable
-    qtrue,                 //qboolean usable
-    TEAM_ALIENS              //WUTeam_t  team;
   }
 };
 
