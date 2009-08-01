@@ -309,9 +309,9 @@ humanExplosionPS
       accelerationMagnitude 800
       acceleration          0 0 -1 0
 
-      radius          0 1.0 -
-      bounce          0.2
-      bounceMark      1~1 16 blood_puddle
+      radius          0 2.0 -
+      bounce          0.35
+      bounceMark      1~1 32 blood_puddle
       bounceSound     ~1 sound/misc/organic_bounce.wav
 
       lifeTime 5000~1000
