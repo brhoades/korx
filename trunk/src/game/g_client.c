@@ -180,14 +180,16 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       if( team == TEAM_ALIENS )
       {
-        overflowamt = (int)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( overflowamt != 1 )
+        double aoverflow=0;
+        aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
+        if( overflowamt != 1 && overflow > 1 )
           type = "frags";
-        else
+        else if( overflow == 1 )
           type = "frag";
+          
         trap_SendServerCommand( k,
-        va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
-        client->pers.netname, overflowamt, type ) );
+        va( "print \"%s^7 overflowed ^2%f ^7%s to you!\n\"",
+        client->pers.netname, aoverflow, type ) );
       }
       else
       {
@@ -263,14 +265,15 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       if( team == TEAM_ALIENS )
       {
-        overflowamt = (int)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( overflowamt != 1 )
+        double aoverflow=0;
+        aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
+        if( aoverflow != 1 )
           type = "frags";
         else
           type = "frag";
         trap_SendServerCommand( k,
-        va( "print \"%s^7 overflowed ^2~%i ^7%s to you!\n\"",
-        client->pers.netname, overflowamt, type ) );
+        va( "print \"%s^7 overflowed ^2%f ^7%s to you!\n\"",
+        client->pers.netname, aoverflow, type ) );
       }
       else
       {
@@ -286,18 +289,20 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
     
     if( overflowed > 0 )
     {
-      char      *type = "";
+      char *type = "";
       
       if( client->pers.teamSelection == TEAM_ALIENS )
       {
-        overflowtotal = (int)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
-        if( overflowtotal != 1 )
+        double aoverflow=0;
+        
+        aoverflow = (double)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
+        if( aoverflow != 1 )
           type = "frags";
         else
           type = "frag";
         trap_SendServerCommand( client - level.clients,
-         va( "print \"^7You overflowed ^2~%i^7 %s to ^2%d ^7%s\n\"",
-         overflowtotal, type, overflowed,
+         va( "print \"^7You overflowed ^2%f^7 %s to ^2%d ^7%s\n\"",
+         aoverflow, type, overflowed,
          ( overflowed == 1 ) ? "person" : "people" ) );
       }
       else
