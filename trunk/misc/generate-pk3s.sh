@@ -11,7 +11,7 @@ echo "`make`"
 #`rm /home/tremulous/korx/*.pk3`
 num="`svn info | awk '/Revision:/ {print $2}'`"
 #num="`svn id -n`"
-num=$(( $num+96 ))
+num=$(( $num+97 ))
 cd data/
 #num="`date +%Y%j%M%S`"
 echo "Generating package set "$num
@@ -27,17 +27,13 @@ zip -9rq ../korx_gfx_$num.pk3 gfx -x *.svn* *.xcf* *.blend*
 echo "Generating emoticons pk3..."
 zip -9rq ../korx_emoticons_$num.pk3 emoticons -x *.svn* *.xcf* *.blend*
 echo "Generating miscellaneous pk3..."
-mkdir ui
-mv ../ui/help.txt ui
-zip -9rq ../korx_misc_$num.pk3 ../GPL ../COPYING ../CC configs armour fonts icons scripts ui -x *.svn* *.xcf* *.blend*
-mv ui/help.txt ../ui
-rmdir ui
+zip -9rq ../korx_misc_$num.pk3 ../GPL ../COPYING ../CC configs armour fonts icons scripts -x *.svn* *.xcf* *.blend*
 cd ..
 echo "Generating UI pk3..."
-zip -9rq korx_ui_$num.pk3 ui scripts  -x *.svn* *.xcf* *.blend* *help.txt*
+zip -9rq korx_ui_$num.pk3 ui scripts  -x *.svn* *.xcf* *.blend*
 cd build/releas*/base/
 echo "Generating vm pk3..."
-zip -9rq ../../../korx_vm_$num.pk3 vm/ -x *.svn* *.xcf*
+zip -9rq ../../../korx_vm_$num.pk3 vm/ -x *.svn* *.xcf* game.qvm
 echo "Generating data_static pk3..."
 cd /home/tremulous/korx/data_static
 zip -9rq ../korx_data_static_$num.pk3 * ../ui/he -x *.svn* *.xcf*
