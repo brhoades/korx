@@ -118,7 +118,7 @@ typedef enum
   PM_FREEZE,        // stuck in place with no control
   PM_INTERMISSION,  // no movement or status bar
   PM_HOVELING,      // stuck in place with rotational camera control
-  PM_SPITPACK
+  PM_SPITPACK       // spitfire's 'jetpack'
 } pmtype_t;
 
 // pmtype_t categories
@@ -229,7 +229,7 @@ typedef enum
   STAT_FALLDIST,  // the distance the player fell
   STAT_VIEWLOCK,  // direction to lock the view in
   STAT_CLOAK,     // when invis started
-  STAT_JPCHARGE,   // jetpack fuel counter
+  STAT_JPCHARGE,  // jetpack fuel counter
   STAT_JPRCDELAY  // jetpack RC charge delay
   //netcode has space for -2 more (lol...)
 } statIndex_t;
@@ -291,10 +291,11 @@ typedef enum
 #define EF_TELEPORT_BIT     0x00000002    // toggled every time the origin abruptly changes
 #define EF_PLAYER_EVENT     0x00000004
 #define EF_BOUNCE           0x00000008    // for missiles
-#define EF_ZOOM                 0x00000008    // Aaron: I'm a bad boy
+#define EF_ZOOM             0x00000008    // Aaron: I'm a bad boy
 #define EF_BOUNCE_HALF      0x00000010    // for missiles
 #define EF_NO_BOUNCE_SOUND  0x00000020    // for missiles
 #define EF_B_SPAWNED        0x00000008    // buildable has spawned
+#define EF_SPITPACK         0x00000008    // Aaron: More recycling
 #define EF_B_POWERED        0x00000010    // buildable is powered
 #define EF_B_MARKED         0x00000020    // buildable is marked for deconstruction
 #define EF_WALLCLIMB        0x00000040    // wall walking
@@ -309,7 +310,7 @@ typedef enum
 #define EF_VOTED            0x00008000    // already cast a vote
 #define EF_TEAMVOTED        0x00010000    // already cast a vote
 #define EF_BLOBLOCKED       0x00020000    // caught by a trapper
-#define EF_WARN_CHARGE      0x00040000    // Lucifer Cannon is about to overcharge
+#define EF_WARN_CHARGE      0x00040000    // Lucifer Cannon / Xael is about to overcharge
 #define EF_DBUILDER         0x00080000    // designated builder protection
 
 typedef enum
@@ -397,8 +398,7 @@ typedef enum
   UP_REGEN,
   UP_SURGE,
   UP_CLOAK,
-  UP_SPITPACK,
-
+  
   UP_NUM_UPGRADES,
 } upgrade_t;
 

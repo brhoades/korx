@@ -604,13 +604,30 @@ void ClientTimerActions( gentity_t *ent, int msec )
   client->time1000 += msec;
   client->time10000 += msec;
   
+  // spitpack activation detection
+  if( client->ps.weapon == WP_SPITFIRE && ucmd->buttons & BUTTON_DODGE
+      && !( client->oldbuttons & BUTTON_DODGE ) )
+  {
+    if( client->ps.pm_type == PM_SPITPACK )
+    {
+      client->ps.pm_type = PM_NORMAL;
+      client->ps.eFlags |= EF_SPITPACK;   
+    }
+    else
+    {
+      client->ps.pm_type = PM_SPITPACK;
+      client->ps.eFlags &= ~EF_SPITPACK;
+    }
+  }
+  
+  // zoom detection
   if( BG_GetPlayerWeapon( &client->ps ) == WP_MASS_DRIVER 
       || BG_GetPlayerWeapon( &client->ps ) == WP_LAS_GUN )
   {
     if( ( ucmd->buttons & BUTTON_ATTACK2 ) && !( ent->client->ps.eFlags & EF_ZOOM ) )
-      ent->client->ps.eFlags |= EF_ZOOM;      
+      client->ps.eFlags |= EF_ZOOM;      
     else if( !( ucmd->buttons & BUTTON_ATTACK2 ) && ( ent->client->ps.eFlags & EF_ZOOM ) )
-      ent->client->ps.eFlags &= ~EF_ZOOM;
+      client->ps.eFlags &= ~EF_ZOOM;
   }
 
   // smooth alien regeneration
@@ -1718,9 +1735,7 @@ void ClientThink_real( gentity_t *ent )
     client->ps.pm_type = PM_GRABBED;
   else if( BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_JETPACK, client->ps.stats ) )
     client->ps.pm_type = PM_JETPACK;
-  else if( BG_InventoryContainsUpgrade( UP_SPITPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_SPITPACK, client->ps.stats ) )
-    client->ps.pm_type = PM_SPITPACK;
-  else
+  else if( client->ps.pm_type != PM_SPITPACK )
     client->ps.pm_type = PM_NORMAL;
 
   if( ( client->ps.stats[ STAT_STATE ] & SS_GRABBED ) &&
