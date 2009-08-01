@@ -81,8 +81,8 @@ void SP_info_human_intermission( gentity_t *ent )
 
 void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 {
-  int       i;
-  int       overflow = 0, max = 0, overflowed = 0, overflowtotal = 0;
+  int       i, overflow = 0, max = 0, overflowed = 0;
+  float     overflowtotal = 0;
   gclient_t *cl;
   team_t team = TEAM_NONE;
 
@@ -180,20 +180,24 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       if( team == TEAM_ALIENS )
       {
-        double aoverflow=0;
+        float aoverflow = 0.0f;
+        char buffer[ 10 ];
         
-        aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( aoverflow > 1 || aoverflow < 1 )
+        aoverflow = (float)( overflowamt/ALIEN_CREDITS_PER_FRAG );
+        
+        if( aoverflow > 1.0f || aoverflow < 1.0f )
           type = "frags";
-        else if( aoverflow == 1 )
+        else if( aoverflow == 1.0f )
           type = "frag";
         
-        if( aoverflow == 0 )
-          aoverflow = 0.1;
+        if( aoverflow < 0.1f && aoverflow != 0.0f )
+          aoverflow = 0.1f;
+          
+        Com_sprintf( buffer, sizeof( buffer ), "%.1f", aoverflow );
           
         trap_SendServerCommand( k,
-        va( "print \"%s^7 overflowed ^2%2f ^7%s to you!\n\"",
-        client->pers.netname, aoverflow, type ) );
+        va( "print \"%s^7 overflowed ^2%s ^7%s to you!\n\"",
+        client->pers.netname, buffer, type ) );
       }
       else
       {
@@ -269,19 +273,24 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       if( team == TEAM_ALIENS )
       {
-        double aoverflow=0;
+        float aoverflow = 0.0f;
+        char buffer[ 10 ];
         
-        aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( aoverflow > 1 || aoverflow < 1 )
+        aoverflow = (float)( overflowamt/ALIEN_CREDITS_PER_FRAG );
+
+        if( aoverflow > 1.0f || aoverflow < 1.0f )
           type = "frags";
-        else if( aoverflow == 1 )
+        else if( aoverflow == 1.0f )
           type = "frag";
         
-        if( aoverflow == 0 )
-          aoverflow = 0.1;
+        if( aoverflow < 0.1f && aoverflow != 0.0f )
+          aoverflow = 0.1f;
+          
+        Com_sprintf( buffer, sizeof( buffer ), "%.1f", aoverflow );
+
         trap_SendServerCommand( k,
-        va( "print \"%s^7 overflowed ^2%2f ^7%s to you!\n\"",
-        client->pers.netname, aoverflow, type ) );
+        va( "print \"%s^7 overflowed ^2%s ^7%s to you!\n\"",
+        client->pers.netname, buffer, type ) );
       }
       else
       {
@@ -301,30 +310,34 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       
       if( client->pers.teamSelection == TEAM_ALIENS )
       {
-        double aoverflow=0;
+        float aoverflow = 0.0f;
+        char buffer[ 10 ];
         
-        aoverflow = (double)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
-        if( aoverflow > 1 || aoverflow < 1 )
+        aoverflow = (float)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
+        
+        if( aoverflow > 1.0f || aoverflow < 1.0f )
           type = "frags";
-        else if( aoverflow == 1 )
+        else if( aoverflow == 1.0f )
           type = "frag";
         
-        if( aoverflow == 0 )
-          aoverflow = 0.1;
+        if( aoverflow < 0.1f && aoverflow != 0.0f )
+          aoverflow = 0.1f;
+          
+        Com_sprintf( buffer, sizeof( buffer ), "%.1f", aoverflow );
+
         trap_SendServerCommand( client - level.clients,
-         va( "print \"^7You overflowed ^2%2f^7 %s to ^2%d ^7%s\n\"",
-         aoverflow, type, overflowed,
-         ( overflowed == 1 ) ? "person" : "people" ) );
+         va( "print \"^7You overflowed ^2%s^7 %s to ^2%d ^7%s\n\"",
+         buffer, type, overflowed, ( overflowed == 1 ) ? "person" : "people" ) );
       }
       else
       {
-        if( overflowtotal != 1 )
+        if( overflowtotal != 1.0f )
           type = "credits";
         else
           type = "credit";
         trap_SendServerCommand( client - level.clients,
           va( "print \"^7You overflowed ^2%i^7 %s to ^2%d ^7%s\n\"",
-          overflowtotal, type, overflowed,
+          (int) overflowtotal, type, overflowed,
           ( overflowed == 1 ) ? "person" : "people" ) );
       }
     }
