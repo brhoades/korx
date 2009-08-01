@@ -192,7 +192,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
           aoverflow = 0.1;
           
         trap_SendServerCommand( k,
-        va( "print \"%s^7 overflowed ^2%f ^7%s to you!\n\"",
+        va( "print \"%s^7 overflowed ^2%2f ^7%s to you!\n\"",
         client->pers.netname, aoverflow, type ) );
       }
       else
@@ -280,7 +280,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         if( aoverflow == 0 )
           aoverflow = 0.1;
         trap_SendServerCommand( k,
-        va( "print \"%s^7 overflowed ^2%f ^7%s to you!\n\"",
+        va( "print \"%s^7 overflowed ^2%2f ^7%s to you!\n\"",
         client->pers.netname, aoverflow, type ) );
       }
       else
@@ -312,7 +312,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         if( aoverflow == 0 )
           aoverflow = 0.1;
         trap_SendServerCommand( client - level.clients,
-         va( "print \"^7You overflowed ^2%f^7 %s to ^2%d ^7%s\n\"",
+         va( "print \"^7You overflowed ^2%2f^7 %s to ^2%d ^7%s\n\"",
          aoverflow, type, overflowed,
          ( overflowed == 1 ) ? "person" : "people" ) );
       }
