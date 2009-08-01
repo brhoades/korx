@@ -4961,13 +4961,9 @@ void ClientCommand( int clientNum )
 
   if( cmds[ i ].cmdFlags & CMD_HUMAN && ent->client->pers.teamSelection != TEAM_HUMANS && !ent->client->pers.override )
   {
-    // small hack to allow spitfires to use /itemact /itemtoggle /itemdeact
     // seems safe as they still can't buy human items/weapons/etc nor activate subsequent items they can't buy as they don't have them
-    if( ent->client->ps.stats[ STAT_CLASS ] != PCL_ALIEN_SPITFIRE )
-    {
-      G_TriggerMenu( clientNum, MN_CMD_HUMAN );
-      return;
-    }
+    G_TriggerMenu( clientNum, MN_CMD_HUMAN );
+    return;
   }
 
   if( cmds[ i ].cmdFlags & CMD_LIVING &&
