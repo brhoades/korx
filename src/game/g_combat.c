@@ -311,7 +311,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     ent->s.otherEntityNum = self->s.number;
     ent->s.otherEntityNum2 = killer;
     ent->r.svFlags = SVF_BROADCAST; // send to everyone
-    if( !tk || g_tkmap.integer )
+    if( ( !tk || g_tkmap.integer ) && attacker != self )
       AddKill( attacker );
   }
   else 
