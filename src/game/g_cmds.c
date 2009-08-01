@@ -2116,6 +2116,13 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
       trap_SendServerCommand( ent-g_entities, "print \"You have already surrendered\n\"");
       return;
     }
+    else if( ( team == TEAM_ALIENS && level.numAlienClients < 3 )
+        || ( team == TEAM_HUMANS && level.numHumanClients < 3 ) )
+    {
+      trap_SendServerCommand( ent-g_entities, "print \"You need more people on your team to admit defeat\n\"");
+      return;
+    }
+    
     Com_sprintf( level.teamVoteString[ cs_offset ],
       sizeof( level.teamVoteString[ cs_offset ] ), "admitdefeat %i", team );
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
