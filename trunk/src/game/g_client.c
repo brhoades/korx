@@ -183,7 +183,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         double aoverflow=0;
         
         aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( overflow > 1 || overflow < 1 )
+        if( aoverflow > 1 || aoverflow < 1 )
           type = "frags";
         else if( aoverflow == 1 )
           type = "frag";
@@ -272,7 +272,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         double aoverflow=0;
         
         aoverflow = (double)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-        if( overflow > 1 || overflow < 1 )
+        if( aoverflow > 1 || aoverflow < 1 )
           type = "frags";
         else if( aoverflow == 1 )
           type = "frag";
@@ -304,7 +304,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         double aoverflow=0;
         
         aoverflow = (double)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
-        if( overflow > 1 || overflow < 1 )
+        if( aoverflow > 1 || aoverflow < 1 )
           type = "frags";
         else if( aoverflow == 1 )
           type = "frag";
