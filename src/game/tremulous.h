@@ -113,7 +113,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL2_CLAW_K_SCALE         1.0f
 #define LEVEL2_CLAW_U_REPEAT        400
 #define LEVEL2_CLAW_U_K_SCALE       1.0f
-#define LEVEL2_AREAZAP_DMG          ADM(20)
+#define LEVEL2_AREAZAP_DMG          ADM(15)
 #define LEVEL2_AREAZAP_RANGE        200.0f
 #define LEVEL2_AREAZAP_CUTOFF       300.0f
 #define LEVEL2_AREAZAP_REPEAT       1500
@@ -159,8 +159,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_SPLASH_DMG LEVEL3_BOUNCEBALL_DMG
 #define LEVEL3_BOUNCEBALL_REGEN     10000    // msec until new barb
 
-#define LEVEL4_CLAW_DMG             ADM(100)
-#define LEVEL4_CLAW_RANGE           128.0f
+#define LEVEL4_CLAW_DMG             ADM(90)
+#define LEVEL4_CLAW_RANGE           90.0f
 #define LEVEL4_CLAW_WIDTH           14.0f
 #define LEVEL4_CLAW_HEIGHT          20.0f
 #define LEVEL4_CLAW_REPEAT          750
@@ -202,7 +202,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_HLTH_MODIFIER         1.0f
 #define AHM(h)                      ((int)((float)h*ALIEN_HLTH_MODIFIER))
 
-#define ALIEN_VALUE_MODIFIER        1.10f
+#define ALIEN_VALUE_MODIFIER        1.0f
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ALIEN_REGEN_DAMAGE_TIME     1500 //msec since damage that regen starts again
@@ -310,9 +310,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_REGEN_RANGE          200.0f
 
 #define LEVEL4_UPG_SPEED            1.2f
-#define LEVEL4_UPG_VALUE            AVM(1000)
+#define LEVEL4_UPG_VALUE            AVM(1100)
 #define LEVEL4_UPG_HEALTH           AHM(600)
-#define LEVEL4_UPG_REGEN            11
+#define LEVEL4_UPG_REGEN            10
 #define LEVEL4_UPG_REGEN_MSEC       ARMSEC(LEVEL4_UPG_HEALTH)
 #define LEVEL4_UPG_COST             5
 #define LEVEL4_UPG_REGEN_MOD        1.5f
