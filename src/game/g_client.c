@@ -185,16 +185,19 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         
         aoverflow = (float)( overflowamt/ALIEN_CREDITS_PER_FRAG );
         
-        if( aoverflow > 1.0f || aoverflow < 1.0f )
-          type = "frags";
-        else if( aoverflow == 1.0f )
-          type = "frag";
-        
         if( aoverflow < 0.1f && aoverflow != 0.0f )
           aoverflow = 0.1f;
           
         Com_sprintf( buffer, sizeof( buffer ), "%.1f", aoverflow );
+
+        if( strcmp( buffer, "1.0" ) )
+          type = "frags";
+        else
+          type = "frag";
           
+        if( !strcmp( buffer, "0.0" ) )
+          strcpy( buffer, "<0.1" );
+
         trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2%s ^7%s to you!\n\"",
         client->pers.netname, buffer, type ) );
@@ -277,16 +280,19 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         char buffer[ 10 ];
         
         aoverflow = (float)( overflowamt/ALIEN_CREDITS_PER_FRAG );
-
-        if( aoverflow > 1.0f || aoverflow < 1.0f )
-          type = "frags";
-        else if( aoverflow == 1.0f )
-          type = "frag";
         
         if( aoverflow < 0.1f && aoverflow != 0.0f )
           aoverflow = 0.1f;
           
         Com_sprintf( buffer, sizeof( buffer ), "%.1f", aoverflow );
+
+        if( strcmp( buffer, "1.0" ) )
+          type = "frags";
+        else
+          type = "frag";
+          
+        if( !strcmp( buffer, "0.0" ) )
+          strcpy( buffer, "<0.1" );
 
         trap_SendServerCommand( k,
         va( "print \"%s^7 overflowed ^2%s ^7%s to you!\n\"",
@@ -315,15 +321,18 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         
         aoverflow = (float)( overflowtotal/ALIEN_CREDITS_PER_FRAG );
         
-        if( aoverflow > 1.0f || aoverflow < 1.0f )
-          type = "frags";
-        else if( aoverflow == 1.0f )
-          type = "frag";
-        
         if( aoverflow < 0.1f && aoverflow != 0.0f )
           aoverflow = 0.1f;
           
         Com_sprintf( buffer, sizeof( buffer ), "%.1f", aoverflow );
+
+        if( strcmp( buffer, "1.0" ) )
+          type = "frags";
+        else
+          type = "frag";
+
+        if( !strcmp( buffer, "0.0" ) )
+          strcpy( buffer, "<0.1" );
 
         trap_SendServerCommand( client - level.clients,
          va( "print \"^7You overflowed ^2%s^7 %s to ^2%d ^7%s\n\"",
