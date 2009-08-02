@@ -298,7 +298,6 @@ typedef enum
 #define EF_B_POWERED        0x00000010    // buildable is powered
 #define EF_B_MARKED         0x00000020    // buildable is marked for deconstruction
 #define EF_WALLCLIMB        0x00000040    // wall walking
-#define EF_SPITPACK         0x00000040    // Aaron: More recycling
 #define EF_WALLCLIMBCEILING 0x00000080    // wall walking ceiling hack
 #define EF_NODRAW           0x00000100    // may have an event, but no model (unspawned items)
 #define EF_FIRING           0x00000200    // for lightning gun
@@ -312,6 +311,7 @@ typedef enum
 #define EF_BLOBLOCKED       0x00020000    // caught by a trapper
 #define EF_WARN_CHARGE      0x00040000    // Lucifer Cannon / Xael is about to overcharge
 #define EF_DBUILDER         0x00080000    // designated builder protection
+#define EF_SPITPACK         0x00080000    // Aaron: More recycling
 
 typedef enum
 {
