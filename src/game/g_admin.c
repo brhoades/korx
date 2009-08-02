@@ -4604,9 +4604,16 @@ qboolean G_admin_revert( gentity_t *ent, int skiparg )
           VectorSubtract( targ->s.pos.trBase, ptr->origin, dist );
           if( VectorLength( dist ) > 10 )
             continue; // number is somewhat arbitrary, watch for false pos/neg
+          
           // if we didn't continue then it's this one, unlink it but we can't
           // free it yet, because the markdecon buildables might not place
-          trap_UnlinkEntity( targ );
+          
+          // Aaron: Erm... If we don't free it, and we revert a building
+          // building, it causes it to reappear...
+          if( targ->spawned )
+            trap_UnlinkEntity( targ );
+          else
+            G_FreeEntity( targ );
           break;
         }
         // if there are marked buildables to replace, and we aren't overriding 
