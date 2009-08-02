@@ -207,7 +207,8 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
     {
       if( other->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
       {
-        if( attacker->client && ( attacker->client->ps.weapon == WP_ABUILD2 
+        if( attacker->client && ( ( attacker->client->ps.weapon == WP_ABUILD2 
+            && other->client->ps.stats[ STAT_CLASS ] != PCL_HUMAN_BSUIT ) 
             || attacker->client->ps.weapon == WP_ABUILD3 ) )
         {
           other->client->ps.stats[ STAT_STATE ] |= SS_BLOBLOCKED;
