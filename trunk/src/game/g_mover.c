@@ -331,7 +331,13 @@ qboolean G_MoverPush( gentity_t *pusher, vec3_t move, vec3_t amove, gentity_t **
       G_Damage( check, pusher, pusher, NULL, NULL, 99999, 0, MOD_CRUSH );
       continue;
     }
-
+    
+    // If a corpse is in the way just remove it, they tend to cause doors to go bonkers
+    if( check->s.eType == ET_CORPSE )
+    {
+      trap_UnlinkEntity( check );
+      continue;
+    }
 
     // save off the obstacle so we can call the block function (crush, etc)
     *obstacle = check;
