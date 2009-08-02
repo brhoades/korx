@@ -3,6 +3,7 @@
 $filen = "/home/tremulous/korx/ui/help.txt";
 $dir = "/home/tremulous/korx/";
 
+
 exec( "echo \"`svn log $dir -l4`\"", $out );
 exec( "svn revert $filen" );
 
@@ -26,7 +27,8 @@ for( $i=0; $i<count( $file ); $i++ )
   {
     for( $j=0; $j<count( $out ); $j++ )
     {
-      if( stripos( $out[$j], "lines" ) !== FALSE && stripos( $out[$j], " | " !== FALSE ) )
+      if( $j > 0 
+          && stripos( $out[$j-1], "------------------------------------------------" ) !== FALSE )
       {
         $out[$j] = explode( " | ", $out[$j] );
         $rev = $out[$j][0];
@@ -34,7 +36,22 @@ for( $i=0; $i<count( $file ); $i++ )
         $date = $out[$j][2];
         $date = explode( " (", $date );
         $date = $date[0];
-        $out[$j] = $rev." by ".$name." on ".$date.": ";
+        $date = explode( " ", $date );
+        if( $date[2] == "-300" )
+          $date[2] = "ADT";
+        else if( $date[2] == "-400" )
+          $date[2] = "AST/EDT";
+        else if( $date[2] == "-0500" )
+          $date[2] = "EST/CDT";
+        else if( $date[2] == "-0600" )
+          $date[2] = "CST/MDT";
+        else if( $date[2] == "-700" )
+          $date[2] = "MST/PDT";
+        else if( $date[2] == "-800" )
+          $date[2] = "PST";
+        $date = implode( " ", $date );
+        unset( $out[$j] );
+        $out[$j] = $rev." by ".$name." on ".$date.":";
       }
       
       if( $out[$j] != NULL && stripos( $out[$j], "------------------------------------------------" ) === FALSE )
