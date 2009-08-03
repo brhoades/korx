@@ -2917,6 +2917,7 @@ void CheckTeamVote( team_t team )
     {
       G_TeamCommand( team, va( "print \"^2Team Vote Passed^7 (^2Y^7:%i, ^1N^7:%i, %i percent)\n\"",
                       yays, nays, voteYesPercent ) );
+      trap_SendConsoleCommand( EXEC_APPEND, va( "%s\n", level.teamVoteString[ cs_offset ] ) );
     }
     else
     {
