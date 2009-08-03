@@ -1147,28 +1147,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
     else
       ent->timestamp = level.time;
   }
-  
-  while( client->time10000 >= 10000 )
-  {
-    client->time10000 -= 10000;
-    
-    if( client->ps.stats[ STAT_TEAM ] != TEAM_NONE && level.extremeSuddenDeath
-          && client->ps.stats[ STAT_HEALTH ] > 0 )
-    {
-      int max;
-      
-      if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-        max = HUMAN_MAX_CREDITS;
-      else
-        max = ALIEN_MAX_CREDITS+ALIEN_CREDITS_PER_FRAG; //Aliens get an extra frag for adv. rant
-      
-      if( client->ps.persistant[ PERS_CREDIT ] != max )
-        client->ps.persistant[ PERS_CREDIT ] = max;
-      
-      if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS && client->grenadedelay )
-        client->grenadedelay = qfalse;
-    }
-  }
 }
 
 /*
@@ -1704,6 +1682,12 @@ void ClientThink_real( gentity_t *ent )
   {
     if( client->sess.spectatorState == SPECTATOR_SCOREBOARD )
       return;
+      
+    //To clean up teams during ESD
+    if( g_extremeSuddenDeath.integer && g_smartesd.integer 
+        && !level.intermissiontime && ent->lastDamageTime + 3000 <= level.time )
+      G_ChangeTeam( ent, TEAM_NONE );
+
     SpectatorThink( ent, ucmd );
     return;
   }

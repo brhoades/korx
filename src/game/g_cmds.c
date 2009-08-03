@@ -649,6 +649,12 @@ void Cmd_Team_f( gentity_t *ent )
         trap_SendServerCommand( ent-g_entities, "print \"You can only join teams using autoselect\n\"" );
         return;
       }
+      if( level.humanTeamLocked && g_extremeSuddenDeath.integer )
+      {
+        trap_SendServerCommand( ent-g_entities,
+          va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
+        return; 
+      }
       if( level.alienTeamLocked )
       {
         trap_SendServerCommand( ent-g_entities,
@@ -684,6 +690,12 @@ void Cmd_Team_f( gentity_t *ent )
       {
         trap_SendServerCommand( ent-g_entities, "print \"You can only join teams using autoselect\n\"" );
         return;
+      }
+      if( level.humanTeamLocked && g_extremeSuddenDeath.integer )
+      {
+        trap_SendServerCommand( ent-g_entities,
+          va( "print \"The game is currently in Extreme Sudden Death\n\"" ) );
+        return; 
       }
       if( level.humanTeamLocked )
       {
@@ -3145,17 +3157,6 @@ void Cmd_Buy_f( gentity_t *ent )
       return;
     }
 
-    // check to see if it's ESD and a nade
-    if( level.extremeSuddenDeath && upgrade == UP_GRENADE 
-          && ent->client->grenadedelay && !override )
-    {
-      trap_SendServerCommand( ent-g_entities, va("print \"You are only allowed to buy a grenade when your credits are restored, which happens every 10 seconds\n\"" ) );
-      return;
-    }
-    else if( upgrade == UP_GRENADE && level.extremeSuddenDeath 
-                 && !override )
-      ent->client->grenadedelay = qtrue;
-
     // determine if buying it is allowed
     if( !BG_UpgradeIsAllowed( upgrade ) && !override )
     {
@@ -3539,13 +3540,6 @@ void Cmd_Build_f( gentity_t *ent )
   {
     trap_SendServerCommand( ent-g_entities,
       "print \"You may not build while paused\n\"" );
-    return;
-  }
-  
-  if( level.extremeSuddenDeath && !ent->client->pers.override )
-  {
-    trap_SendServerCommand( ent-g_entities,
-      "print \"You may not build in ESD\n\"" );
     return;
   }
 
