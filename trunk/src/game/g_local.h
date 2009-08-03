@@ -525,7 +525,6 @@ struct gclient_s
   int                 blobs;
   
   int                 tkcredits[ MAX_CLIENTS ];
-  qboolean        grenadedelay;
 };
 
 

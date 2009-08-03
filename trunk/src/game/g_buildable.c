@@ -798,7 +798,10 @@ void ASpawn_Think( gentity_t *self )
   }
   
   G_CreepSlow( self );
-  
+
+  if( level.extremeSuddenDeath && g_smartesd.integer )
+    self->powered = qfalse;
+
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
 }
 
@@ -2596,6 +2599,13 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
 		// Only humans can activate this
 		if( activator->client->ps.stats[ STAT_TEAM ] != TEAM_HUMANS )
       return;
+      
+		// Must be powered
+		/*if( !self->powered )
+    {
+			G_TriggerMenu( activator->client->ps.clientNum, MN_H_NOTPOWERED );
+			return;
+		}*/
 
 		// If this is powered then find the next suitable spawn and respawn
 		if( self->clientSpawnTime <= 0 )
@@ -2604,14 +2614,40 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
 			gentity_t *spot=self;
 
       while( ( spot = G_SelectTremulousSpawnPoint( TEAM_HUMANS, NULL,
-                    spawn_origin, spawn_angles ) ) && level.numHumanSpawns > 1 )
+                    spawn_origin, spawn_angles ) ) && ( level.numHumanSpawns > 1 || g_extremeSuddenDeath.integer ) )
       {
         // you have to be blocking the node you're teleporting from to use it
 				if( G_CheckSpawnPoint( self->s.number, self->s.origin, 
-            self->s.origin2, BA_H_SPAWN, NULL ) != activator || spot == self )
+            self->s.origin2, BA_H_SPAWN, NULL ) == NULL || spot == self )
         {
+          if( !g_extremeSuddenDeath.integer )
+          {
             G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
             return;
+          }
+          else
+          {
+            int spawns, i;
+            gentity_t *ent;
+            
+            spawns = 0;
+            for( i = 1, ent = g_entities + i ; i < level.num_entities ; i++, ent++ )
+            {
+              if( !ent->inuse || ent->s.eType != ET_BUILDABLE || ent->health <= 0 )
+                continue;
+
+              if( ent->s.modelindex == BA_H_SPAWN )
+                spawns++;
+            }
+            
+            if( spawns > 1 )
+            {
+              G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
+              return;
+            }
+            else
+              break;
+          }
         }
 
 				// Setup spawn angles (from ClientSpawn)
@@ -2765,7 +2801,8 @@ void HSpawn_Think( gentity_t *self )
   gentity_t *ent;
 
   // spawns work without power
-  self->powered = qtrue;
+  if( !g_extremeSuddenDeath.integer )
+    self->powered = qtrue;
     
   if( self->spawned && self->powered )
   {
