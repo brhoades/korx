@@ -133,7 +133,10 @@ char *modNames[ ] =
   "MOD_SLAP",
   "MOD_JETPACK_EXPLODE",
   
-  "MOD_SPITFIRE_ZAP"
+  "MOD_SPITFIRE_ZAP",
+  
+  "MOD_CKIT",
+  "MOD_VESD"
 };
 
 /*
@@ -1661,11 +1664,20 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       targ->client->ps.stats[ STAT_HEALTH ] = targ->health;
 
     targ->lastDamageTime = level.time;
-    targ->nextRegenTime = level.time + ALIEN_REGEN_DAMAGE_TIME;
+    if( !level.vesd )
+      targ->nextRegenTime = level.time + ALIEN_REGEN_DAMAGE_TIME;
 
     // add to the attackers "account" on the target
     if( attacker->client && attacker != targ && ( !OnSameTeam( targ, attacker ) || g_tkmap.integer ) )
+    {
+      if( level.vesd )
+      {
+        //FIXME: float conversion overkill
+        attacker->health += (int)( (float)takeNoOverkill * ( (float)attacker->client->ps.stats[ STAT_MAX_HEALTH ] / (float)targ->client->ps.stats[ STAT_MAX_HEALTH ] ) );
+        attacker->client->ps.stats[ STAT_HEALTH ] = attacker->health;
+      }
       targ->credits[ attacker->client->ps.clientNum ] += take;
+    }
     else if( attacker != targ && OnSameTeam( targ, attacker ) && !g_tkmap.integer )
       targ->client->tkcredits[ attacker->client->ps.clientNum ] += takeNoOverkill;
 

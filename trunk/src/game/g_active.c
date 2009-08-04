@@ -632,17 +632,28 @@ void ClientTimerActions( gentity_t *ent, int msec )
 
   // smooth alien regeneration
   if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS &&
-    level.surrenderTeam != TEAM_ALIENS && 
-    ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
+      level.surrenderTeam != TEAM_ALIENS && 
+      ( ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME < level.time ) 
+      || level.vesd ) )
   {
     if( client->healRate > 0 &&
         ent->health > 0 &&
-        ent->health < client->ps.stats[ STAT_MAX_HEALTH ] )
+        ( ( ent->health < client->ps.stats[ STAT_MAX_HEALTH ] )
+        || level.vesd ) )
     {
       while( ent->nextRegenTime < level.time )
       {
-        ent->health += 1;
-        ent->nextRegenTime += client->healRate;
+        if( !level.vesd )
+        {
+          ent->health += 1;
+          ent->nextRegenTime += client->healRate;
+        }
+        else
+        {
+          //ent->health -= 1;
+          G_Damage( ent, NULL, NULL, NULL, NULL, 1, 0, MOD_VESD );
+          ent->nextRegenTime = level.time + 60000/client->ps.stats[ STAT_MAX_HEALTH ];
+        }
         //take away one tk credit
         for( i = 0; i < MAX_CLIENTS; i++ )
         {
@@ -653,14 +664,15 @@ void ClientTimerActions( gentity_t *ent, int msec )
       if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
       {
         int i;
-        ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
+        
+        if( !level.vesd )
+          ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
         for( i = 0; i < MAX_CLIENTS; i++ )
         {
           ent->credits[ i ] = 0;
           //zero all tk accounts
           ent->client->tkcredits[ i ] = 0;
         }
-
       }
     }
   }
@@ -668,9 +680,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
   // 'smooth' human regeneration
   if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
     level.surrenderTeam != TEAM_HUMANS && 
-    ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time 
-    && ent->health < client->ps.stats[ STAT_MAX_HEALTH ]
-    && ent->health > 0 && ent->nextRegenTime < level.time )
+    ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME < level.time || level.vesd ) 
+    && ( ent->health < client->ps.stats[ STAT_MAX_HEALTH ] || level.vesd )
+    && ent->health > 0 && ( ent->nextRegenTime < level.time || level.vesd ) )
   {
     //calculate regen rate
     int regen = REGEN_HEALTH_RATE;
@@ -688,8 +700,17 @@ void ClientTimerActions( gentity_t *ent, int msec )
       
     if( ent->nextRegenTime < level.time && regen > 0 )
     {
-      ent->health += 1;
-      ent->nextRegenTime = level.time + 1000/regen;
+      if( !level.vesd )
+      {
+        ent->health += 1;
+        ent->nextRegenTime = level.time + 1000/regen;
+      }
+      else
+      {
+        //ent->health -= 1;
+        G_Damage( ent, ent, ent, NULL, NULL, 1, 0, MOD_VESD );
+        ent->nextRegenTime = level.time + 60000/client->ps.stats[ STAT_MAX_HEALTH ];
+      }
       //take away one tk credit
       for( i = 0; i < MAX_CLIENTS; i++ )
       {
@@ -701,7 +722,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
     if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
     {
       int i;
-      ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
+      
+      if( !level.vesd )
+        ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
       for( i = 0; i < MAX_CLIENTS; i++ )
       {
         ent->credits[ i ] = 0;

@@ -3560,6 +3560,13 @@ void Cmd_Build_f( gentity_t *ent )
     G_TriggerMenu( ent->client->ps.clientNum, MN_B_SURRENDER );
     return;
   }
+  
+  if( level.extremeSuddenDeath )
+  {
+    trap_SendServerCommand( ent-g_entities,
+      "print \"Building in Extreme Sudden Death is not permitted\n\"" );
+    return;
+  }
 
   trap_Argv( 1, s, sizeof( s ) );
 

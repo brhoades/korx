@@ -1061,12 +1061,18 @@ void cancelBuildFire( gentity_t *ent )
         else
           G_AddEvent( ent, EV_BUILD_REPAIR, 0 );
       }
-      //heal ANY player
-      else if( traceEnt->client && traceEnt->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+      //heal an ally
+      else if( traceEnt->client 
+               && ( traceEnt->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS
+                    || level.vesd ) )
       {
         hHealth = traceEnt->client->ps.stats[ STAT_MAX_HEALTH ];
 
-        traceEnt->health += HBUILD_HEALRATE/2;
+        if( !level.vesd )
+          traceEnt->health += HBUILD_HEALRATE/2;
+        else
+          G_Damage( traceEnt, ent, ent, NULL, NULL,
+                    HBUILD_HEALRATE/2, 0, MOD_CKIT );
 
         if( traceEnt->health > hHealth )
           traceEnt->health = hHealth;
