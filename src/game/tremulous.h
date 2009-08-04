@@ -725,7 +725,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JETPACK_CHARGE_CAPACITY     90     // JPU (Jetpack Power Units) (Consumption Rate = 1 JPU/s)
 #define JETPACK_STD_CHARGE_RATE     1.0   // x JPU/s (Onboard Recharge)
 #define JETPACK_RC_CHARGE_RATE      2.0   // x JPU/s (Reactor Charge Bonus) (RC Up = RC Charge Bonus + Onboard Charge Rate)
-#define JETPACK_RC_CHARGE_DELAY     10000 // Milliseconds from when jetpack was last deactivated before RC starts giving extra charge
+#define JETPACK_STD_CHARGE_DELAY    3000  // (ms) When jetpack turns off, start self-recharge after this delay
+#define JETPACK_RC_CHARGE_DELAY     3000 // (ms) When jetpack turns off, give a fast (bonus) charge after this delay (if RC is up)
 #define JETPACK_FAILURE             10     // Jetpack encounters intermittent failure when its charge is equal to or less than this
 #define JETPACK_EXPLODE_MOD         7      // Range and damage multiplier for shotgun nade - used when a jetpack explodes due to mara zap
 #define JETPACK_EXPLODE_CHANCE      .001f  // Chance that the jetpack will explode, as a float, not percent

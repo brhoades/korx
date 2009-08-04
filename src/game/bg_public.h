@@ -218,19 +218,19 @@ typedef enum
   STAT_HEALTH,
   STAT_ITEMS,
   STAT_ACTIVEITEMS,
-  STAT_WEAPON,    // current primary weapon
-  STAT_MAX_HEALTH,// health / armor limit, changable by handicap
-  STAT_CLASS,     // player class (for aliens AND humans)
-  STAT_TEAM,      // player team
-  STAT_STAMINA,   // stamina (human only)
-  STAT_STATE,     // client states e.g. wall climbing
-  STAT_MISC,      // for uh...misc stuff (pounce, trample, lcannon)
-  STAT_BUILDABLE, // which ghost model to display for building
-  STAT_FALLDIST,  // the distance the player fell
-  STAT_VIEWLOCK,  // direction to lock the view in
-  STAT_CLOAK,     // when invis started
-  STAT_JPCHARGE,  // jetpack fuel counter
-  STAT_JPRCDELAY  // jetpack RC charge delay
+  STAT_WEAPON,       // current primary weapon
+  STAT_MAX_HEALTH,   // health / armor limit, changable by handicap
+  STAT_CLASS,        // player class (for aliens AND humans)
+  STAT_TEAM,         // player team
+  STAT_STAMINA,      // stamina (human only)
+  STAT_STATE,        // client states e.g. wall climbing
+  STAT_MISC,         // for uh...misc stuff (pounce, trample, lcannon)
+  STAT_BUILDABLE,    // which ghost model to display for building
+  STAT_FALLDIST,     // the distance the player fell
+  STAT_VIEWLOCK,     // direction to lock the view in
+  STAT_CLOAK,        // when invis started
+  STAT_JET_CHARGE,   // jetpack charge
+  STAT_JET_STOP_TIME // jetpack RC charge delay
   //netcode has space for -2 more (lol...)
 } statIndex_t;
 

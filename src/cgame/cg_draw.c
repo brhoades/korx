@@ -1272,7 +1272,7 @@ static float CG_JPChargeProgress( void )
   }
   if( max - min <= 0.f )
     return 0.f;
-  progress = ( (float)cg.predictedPlayerState.stats[ STAT_JPCHARGE ] - min ) /
+  progress = ( (float)cg.predictedPlayerState.stats[ STAT_JET_CHARGE ] - min ) /
              ( max - min );
   if( progress > 1.f )
     return 1.f;
@@ -1459,7 +1459,7 @@ static void CG_DrawPlayerJPChargeBar( rectDef_t *rect, vec4_t ref_color, qhandle
 
   // flash red if jetpack is about to fail
 
-  if( cg.predictedPlayerState.stats[ STAT_JPCHARGE ] <= JETPACK_FAILURE && ( cg.time & 512 ) )
+  if( cg.predictedPlayerState.stats[ STAT_JET_CHARGE ] <= JETPACK_FAILURE && ( cg.time & 512 ) )
   {
     color[ 0 ] = 1.f;
     color[ 1 ] = 0.f;
@@ -1468,7 +1468,7 @@ static void CG_DrawPlayerJPChargeBar( rectDef_t *rect, vec4_t ref_color, qhandle
 
   // flash white if we're recharging
 
-  else if( !BG_UpgradeIsActive( UP_JETPACK, cg.predictedPlayerState.stats ) && cg.predictedPlayerState.stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY && ( cg.time & 512 ) )
+  else if( !BG_UpgradeIsActive( UP_JETPACK, cg.predictedPlayerState.stats ) && cg.predictedPlayerState.stats[ STAT_JET_CHARGE ] < JETPACK_CHARGE_CAPACITY && ( cg.time & 512 ) )
   {
       color[ 0 ] = 1.0f;
       color[ 1 ] = 1.0f;

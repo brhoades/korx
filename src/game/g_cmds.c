@@ -3015,7 +3015,7 @@ void Cmd_Buy_f( gentity_t *ent )
     if( armAvailable || powerAvailable )
     {
       if( BG_InventoryContainsUpgrade( UP_JETPACK,ent->client->ps.stats ) )
-        ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
+        ent->client->ps.stats[ STAT_JET_CHARGE ] = JETPACK_CHARGE_CAPACITY;
       if( BG_InventoryContainsUpgrade( UP_CLOAK, ent->client->ps.stats ) )
       {
         ent->client->cloakReady = qtrue;
@@ -3203,7 +3203,7 @@ void Cmd_Buy_f( gentity_t *ent )
         ent->client->ps.stats[ STAT_CLOAK ] = CLOAK_TIME;
       }
       if( upgrade == UP_JETPACK )
-        ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
+        ent->client->ps.stats[ STAT_JET_CHARGE ] = JETPACK_CHARGE_CAPACITY;
     }
       
     //subtract from funds
