@@ -2928,6 +2928,12 @@ void Cmd_ToggleItem_f( gentity_t *ent )
   }
   else if( BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
   {
+    
+    if( upgrade == UP_MEDKIT && level.vesd )
+    {
+      trap_SendServerCommand( ent-g_entities, "print \"No medkits in ESD\n\"" );
+      return; 
+    }
     if( BG_UpgradeIsActive( upgrade, ent->client->ps.stats ) )
       BG_DeactivateUpgrade( upgrade, ent->client->ps.stats );
     else
