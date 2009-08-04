@@ -2615,7 +2615,7 @@ void HSpawn_Activate( gentity_t *self,gentity_t *other,gentity_t *activator )
       {
         // you have to be blocking the node you're teleporting from to use it
 				if( G_CheckSpawnPoint( self->s.number, self->s.origin, 
-            self->s.origin2, BA_H_SPAWN, NULL ) == NULL || spot == self )
+            self->s.origin2, BA_H_SPAWN, NULL ) != activator || spot == self )
         {
           G_TriggerMenu( activator->client->ps.clientNum, MN_H_INSIDETELENODE );
           return;
