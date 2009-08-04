@@ -1518,9 +1518,9 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
     }
     else if( i == UP_JETPACK )
     {
-      if( cg.snap->ps.stats[ STAT_JPCHARGE ] > 0 )
+      if( cg.snap->ps.stats[ STAT_JET_CHARGE ] > 0 )
       {
-        if( cg.snap->ps.stats[ STAT_JPCHARGE ] == JETPACK_CHARGE_CAPACITY )
+        if( cg.snap->ps.stats[ STAT_JET_CHARGE ] == JETPACK_CHARGE_CAPACITY )
         {
           colinfo[ numItems ] = 0;
         }

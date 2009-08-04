@@ -980,24 +980,35 @@ void ClientTimerActions( gentity_t *ent, int msec )
         client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_ACTIVE;
     }
 
+    // if alive and we have a jetpack
     if( ent->client->ps.stats[ STAT_HEALTH ] > 0 
         && BG_InventoryContainsUpgrade( UP_JETPACK, ent->client->ps.stats ) )
     { 
-      if( BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] > 0 )
-        ent->client->ps.stats[ STAT_JPCHARGE ]--;
-      else if( !BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JPCHARGE ] < JETPACK_CHARGE_CAPACITY )
+      // take away one charge unit per second if the jetpack is active
+      if( BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JET_CHARGE ] > 0 )
+        ent->client->ps.stats[ STAT_JET_CHARGE ]--;
+      // if the jetpack is not active and at less than full charge, process the recharge code
+      else if( !BG_UpgradeIsActive( UP_JETPACK, ent->client->ps.stats ) && ent->client->ps.stats[ STAT_JET_CHARGE ] < JETPACK_CHARGE_CAPACITY )
       {
-        if( ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_STD_CHARGE_RATE > JETPACK_CHARGE_CAPACITY )
-          ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
-        else
-          ent->client->ps.stats[ STAT_JPCHARGE ] += JETPACK_STD_CHARGE_RATE;
-        
-        if( ent->client->ps.stats[ STAT_JPRCDELAY ] < level.time && level.reactorPresent )
+        // if the level time is beyond: (jetpack's last deactivation time + standard charge delay)
+        if( (ent->client->ps.stats[ STAT_JET_STOP_TIME ] + JETPACK_STD_CHARGE_DELAY) < level.time )
         {
-          if( ent->client->ps.stats[ STAT_JPCHARGE ] + JETPACK_RC_CHARGE_RATE > JETPACK_CHARGE_CAPACITY )
-            ent->client->ps.stats[ STAT_JPCHARGE ] = JETPACK_CHARGE_CAPACITY;
+          // if increasing the charge will exceed maximum charge, set the charge to maximum            
+          if( ent->client->ps.stats[ STAT_JET_CHARGE ] + JETPACK_STD_CHARGE_RATE > JETPACK_CHARGE_CAPACITY )
+            ent->client->ps.stats[ STAT_JET_CHARGE ] = JETPACK_CHARGE_CAPACITY;
+          // if not yet at full, give a standard charge
           else
-            ent->client->ps.stats[ STAT_JPCHARGE ] += JETPACK_RC_CHARGE_RATE;
+            ent->client->ps.stats[ STAT_JET_CHARGE ] += JETPACK_STD_CHARGE_RATE;
+        }
+        // if the reactor is up and the level time is beyond: (jetpack's last deactivation time + rc charge delay)
+        if( (ent->client->ps.stats[ STAT_JET_STOP_TIME ] + JETPACK_RC_CHARGE_DELAY) < level.time && level.reactorPresent )
+        {
+          // if increasing the charge will exceed maximum charge, set the charge to maximum
+          if( ent->client->ps.stats[ STAT_JET_CHARGE ] + JETPACK_RC_CHARGE_RATE > JETPACK_CHARGE_CAPACITY )
+            ent->client->ps.stats[ STAT_JET_CHARGE ] = JETPACK_CHARGE_CAPACITY;
+          // if not yet at full, keep giving a bonus charge
+          else
+            ent->client->ps.stats[ STAT_JET_CHARGE ] += JETPACK_RC_CHARGE_RATE;
         }
       }
     }
@@ -1876,14 +1887,14 @@ void ClientThink_real( gentity_t *ent )
     if( ( ent->waterlevel >= 3 ) && !client->pers.override )
     {
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
-      client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
+      client->ps.stats[ STAT_JET_STOP_TIME ] = level.time;
     }
     
     //switch jetpack off if there is no fuel left
-    if( client->ps.stats[ STAT_JPCHARGE ] <= 0 )
+    if( client->ps.stats[ STAT_JET_CHARGE ] <= 0 )
     {
       BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
-      client->ps.stats[ STAT_JPRCDELAY ] = level.time + JETPACK_RC_CHARGE_DELAY;
+      client->ps.stats[ STAT_JET_STOP_TIME ] = level.time;
     }
 
   }

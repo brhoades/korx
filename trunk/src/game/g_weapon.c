@@ -1532,8 +1532,8 @@ void G_UpdateZaps( gentity_t *ent )
       {
         int chance = ( (int)(1 / JETPACK_EXPLODE_CHANCE ) );
         //drain those batteries!
-        if( enemy->client->ps.stats[ STAT_JPCHARGE ] > 0 )
-          enemy->client->ps.stats[ STAT_JPCHARGE ]--;
+        if( enemy->client->ps.stats[ STAT_JET_CHARGE ] > 0 )
+          enemy->client->ps.stats[ STAT_JET_CHARGE ]--;
         
         //once in a blue moon... BOOM!
         if( rand() % chance  == chance / 2 )
