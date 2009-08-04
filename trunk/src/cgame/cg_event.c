@@ -83,6 +83,12 @@ static void CG_Obituary( entityState_t *ent )
     case MOD_SUICIDE:
       message = "can't take it anymore";
       break;
+    case MOD_VESD:
+      if( rand( ) % 2 )
+        message = "died because he did not enthuse the spectators";
+      else
+        message = "became a victim to boredom";
+      break;
     case MOD_FALLING:
       message = "fell foul to gravity";
       break;
@@ -205,13 +211,6 @@ static void CG_Obituary( entityState_t *ent )
           message = "sniped himself";
         break;
         
-      case MOD_VESD:
-        if( rand( ) % 2 )
-          message = "died because he did not enthuse the spectators";
-        else
-          message = "became a victim to boredom";
-        break;
-
       default:
         if( gender == GENDER_FEMALE )
           message = "killed herself";
