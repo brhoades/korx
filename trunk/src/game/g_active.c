@@ -677,6 +677,38 @@ void ClientTimerActions( gentity_t *ent, int msec )
     }
   }
   
+  if( level.vesd && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS
+      && ent->health > 0 && ent->client->nextAmmoRegen < level.time
+      && !BG_Weapon( client->ps.weapon )->infiniteAmmo )
+  {
+    int offset = 1000, maxammo = BG_Weapon( client->ps.weapon )->maxAmmo, maxclips = BG_Weapon( client->ps.weapon )->maxClips;
+    
+    maxammo = BG_Weapon( client->ps.weapon )->maxAmmo;
+    maxclips = BG_Weapon( client->ps.weapon )->maxClips;
+    if( BG_Weapon( client->ps.weapon )->usesEnergy && (
+        BG_InventoryContainsUpgrade( UP_BATTPACK, client->ps.stats ) ||
+        BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) ) )
+      maxammo = (int)( (float)BG_Weapon( client->ps.weapon )->maxAmmo * BATTPACK_MODIFIER );
+    else if( !BG_Weapon( client->ps.weapon )->usesEnergy && (
+        BG_InventoryContainsUpgrade( UP_AMMOPACK, client->ps.stats ) ||
+        BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) ) )
+      maxclips = (int)( 1 + (float) BG_Weapon( client->ps.weapon )->maxClips * AMMOPACK_MODIFIER );
+    
+    if( BG_Weapon( client->ps.weapon )->usesEnergy
+        && client->ps.ammo != maxammo )
+    {
+      offset = VAMPIRIC_ESD_TAR/maxammo;
+      client->ps.ammo++;
+    }
+    else if( client->ps.ammo != maxammo || client->ps.clips != maxclips )
+    {    
+      offset = VAMPIRIC_ESD_TAR/( maxclips * maxammo );
+      client->ps.ammo++;
+    }
+
+    ent->client->nextAmmoRegen = level.time + offset;
+  }
+  
   // 'smooth' human regeneration
   if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
     level.surrenderTeam != TEAM_HUMANS && 
