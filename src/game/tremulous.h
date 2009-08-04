@@ -959,6 +959,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Time it takes for everyone to die in VESD (3 minutes)
 #define VAMPIRIC_ESD_TTD            180000
 
+// Time it takes for humans to regen all their ammo (1 minute)
+#define VAMPIRIC_ESD_TAR            90000
+
 #define DAMAGE_FRACTION_FOR_KILL    0.5f //how much damage players (versus structures) need to
                                          //do to increment the stage kill counters
 

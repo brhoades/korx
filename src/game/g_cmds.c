@@ -2855,7 +2855,7 @@ void Cmd_ActivateItem_f( gentity_t *ent )
 
   if( upgrade == UP_MEDKIT && level.vesd )
   {
-    trap_SendServerCommand( ent-g_entities, va( "print \"No medkits in ESD\n\"", s ) );
+    trap_SendServerCommand( ent-g_entities, "print \"No medkits in ESD\n\"" );
     return; 
   }
   if( upgrade != UP_NONE && BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
