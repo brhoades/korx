@@ -440,15 +440,15 @@ qboolean G_admin_permission_guid( char *guid, char flag )
           // by the '*' wildcard.  They must be specified manually.
           switch( flag )
           {
-          case ADMF_INCOGNITO:
-          case ADMF_IMMUTABLE:
-          case ADMF_DBUILDER:
-          case ADMF_PERMDENYBUILD:
-          case ADMF_PERMFORCESPEC:
-          case ADMF_PERMMUTED:
-            return qfalse; 
-          default:
-            return qtrue;
+            case ADMF_INCOGNITO:
+            case ADMF_IMMUTABLE:
+            case ADMF_DBUILDER:
+            case ADMF_PERMDENYBUILD:
+            case ADMF_PERMFORCESPEC:
+            case ADMF_PERMMUTED:
+              return qfalse; 
+            default:
+              return qtrue;
           } 
         }
         flags++;
@@ -477,15 +477,15 @@ qboolean G_admin_permission_guid( char *guid, char flag )
           // by the '*' wildcard.  They must be specified manually.
           switch( flag )
           {
-          case ADMF_INCOGNITO:
-          case ADMF_IMMUTABLE:
-          case ADMF_DBUILDER:
-          case ADMF_PERMDENYBUILD:
-          case ADMF_PERMFORCESPEC:
-          case ADMF_PERMMUTED:
-            return qfalse; 
-          default:
-            return qtrue;
+            case ADMF_INCOGNITO:
+            case ADMF_IMMUTABLE:
+            case ADMF_DBUILDER:
+            case ADMF_PERMDENYBUILD:
+            case ADMF_PERMFORCESPEC:
+            case ADMF_PERMMUTED:
+              return qfalse; 
+            default:
+              return qtrue;
           } 
         }
         flags++;

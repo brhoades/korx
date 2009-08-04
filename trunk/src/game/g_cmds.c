@@ -2853,6 +2853,11 @@ void Cmd_ActivateItem_f( gentity_t *ent )
   upgrade = BG_UpgradeByName( s )->number;
   weapon = BG_WeaponByName( s )->number;
 
+  if( upgrade == UP_MEDKIT && level.vesd )
+  {
+    trap_SendServerCommand( ent-g_entities, va( "print \"No medkits in ESD\n\"", s ) );
+    return; 
+  }
   if( upgrade != UP_NONE && BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
   {
     BG_ActivateUpgrade( upgrade, ent->client->ps.stats );
