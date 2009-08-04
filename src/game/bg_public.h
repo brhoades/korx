@@ -967,7 +967,10 @@ typedef enum
   MOD_SLAP,
   MOD_JETPACK_EXPLODE,
   
-  MOD_SPITFIRE_ZAP
+  MOD_SPITFIRE_ZAP,
+  
+  MOD_CKIT,
+  MOD_VESD
 } meansOfDeath_t;
 
 

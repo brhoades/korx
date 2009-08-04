@@ -204,6 +204,13 @@ static void CG_Obituary( entityState_t *ent )
         else
           message = "sniped himself";
         break;
+        
+      case MOD_VESD:
+        if( rand( ) % 2 )
+          message = "died because he did not enthuse the spectators";
+        else
+          message = "became a victim to boredom";
+        break;
 
       default:
         if( gender == GENDER_FEMALE )
@@ -240,14 +247,23 @@ static void CG_Obituary( entityState_t *ent )
   {
     switch( mod )
     {
-      case MOD_PAINSAW:
-        message = "was sawn by";
-        break;
       case MOD_BLASTER:
         message = "was blasted by";
         break;
+      case MOD_CKIT:
+        if( rand( ) % 2 )
+          message = "was deconstructed by";
+        else
+        {
+          message = "felt the full force of";
+          message2 = "'s ckit";
+        }
+        break;
       case MOD_MACHINEGUN:
         message = "was machinegunned by";
+        break;
+      case MOD_PAINSAW:
+        message = "was sawn by";
         break;
       case MOD_CHAINGUN:
         message = "was chaingunned by";

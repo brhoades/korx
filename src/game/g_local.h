@@ -735,7 +735,7 @@ typedef struct
   qboolean          suddenDeath;
   int               suddenDeathTime;
   qboolean          extremeSuddenDeath;
-  int               extremeSuddenDeathTime;
+  int               extremeSuddenDeathTime;       // Not to be confused with g_extremesuddendeathtime, which is when it starts. This holds when it startED
   int               suddenDeathABuildPoints;
   int               suddenDeathHBuildPoints;
   qboolean          suddenDeathVote;
@@ -780,6 +780,7 @@ typedef struct
   statsCounters_level alienStatsCounters;
   statsCounters_level humanStatsCounters;
   qboolean          playerWin;
+  qboolean          vesd;                         //tells us when to start hurting people in ESD       
 } level_locals_t;
 
 #define CMD_CHEAT         0x0001

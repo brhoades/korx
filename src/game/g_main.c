@@ -1310,6 +1310,26 @@ void G_CalculateBuildPoints( void )
     level.humanNextQueueTime += g_alienBuildQueueTime.integer;
   }
   
+  if( level.extremeSuddenDeathTime > 0 )
+  {
+    if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-2500
+        && level.time <= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-2000
+        && !level.vesd )
+      AP( "cp \"^1Your base will explode shortly\n^1You will also start taking constant damage\"" );
+    else if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY
+              && !level.vesd )
+    {
+      for( i = 1, ent = g_entities + i; i < level.num_entities; i++, ent++ )
+      {        
+        if( !ent || ent->s.eType != ET_BUILDABLE || ent->health <= 0 )
+          continue;
+        
+        G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+      }
+      level.vesd = qtrue;
+    }
+  }
+  
   //Extend votes
  if( g_extendvote.integer )
  {
@@ -1417,6 +1437,7 @@ void G_CalculateBuildPoints( void )
   {
     level.extremeSuddenDeath = qtrue;
     level.suddenDeath = qtrue;
+    level.extremeSuddenDeathTime = level.time;
 
     //destroy all spawns
     if( !g_tkmap.integer )
@@ -1426,10 +1447,8 @@ void G_CalculateBuildPoints( void )
         if( !ent || !ent->s.eType == ET_BUILDABLE || ent->health <= 0 )
           continue;
         
-        if( !g_smartesd.integer && ( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN ) )
+        if( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN )
           G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
-        else if( ent->s.modelindex == BA_H_SPAWN || ent->s.modelindex == BA_A_SPAWN )
-          ent->powered = qfalse;
       }
     }
 
@@ -1454,8 +1473,8 @@ void G_CalculateBuildPoints( void )
     
     if( level.extremeSuddenDeathWarning < TW_PASSED && !g_tkmap.integer )
     {
-      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! NO SPAWNS, NO BUILDING\"" );
-      trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! NO SPAWNS, NO BUILDING\n\"" );
+      trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! NO SPAWNS\n ^1NO BUILDINGS and CONSTANT DAMAGE in 30 seconds\"" );
+      trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! NO SPAWNS; NO BUILDINGS and CONSTANT DAMAGE starts in 30 seconds\n\"" );
       level.extremeSuddenDeathWarning = TW_PASSED;
     }
     else if( level.extremeSuddenDeathWarning < TW_PASSED && g_tkmap.integer )
