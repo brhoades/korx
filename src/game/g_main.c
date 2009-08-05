@@ -1321,8 +1321,15 @@ void G_CalculateBuildPoints( void )
     {
       for( i = 1, ent = g_entities + i; i < level.num_entities; i++, ent++ )
       {        
-        if( !ent || ent->s.eType != ET_BUILDABLE || ent->health <= 0 )
+        if( !ent || ent->health <= 0 )
           continue;
+        else if( ent->s.eType != ET_BUILDABLE && ent->client 
+                 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+        {
+          if( BG_InventoryContainsUpgrade( UP_MEDKIT, ent->client->ps.stats ) )
+            BG_RemoveUpgradeFromInventory( UP_MEDKIT, ent->client->ps.stats );
+          continue;
+        }
         
         G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
       }
