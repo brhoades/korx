@@ -1324,14 +1324,15 @@ void G_CalculateBuildPoints( void )
         if( !ent || ent->health <= 0 )
           continue;
         else if( ent->s.eType != ET_BUILDABLE && ent->client 
-                 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+                 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS
+                 && ent->health > 0 )
         {
           if( BG_InventoryContainsUpgrade( UP_MEDKIT, ent->client->ps.stats ) )
             BG_RemoveUpgradeFromInventory( UP_MEDKIT, ent->client->ps.stats );
           continue;
         }
-        
-        G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+        else if( ent->s.eType == ET_BUILDABLE )
+          G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
       }
       level.vesd = qtrue;
     }
