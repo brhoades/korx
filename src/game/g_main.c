@@ -1312,10 +1312,10 @@ void G_CalculateBuildPoints( void )
   
   if( level.extremeSuddenDeathTime > 0 )
   {
-    if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-2500
-        && level.time <= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-2000
+    if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-5500
+        && level.time <= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-5000
         && !level.vesd )
-      AP( "cp \"^1Your base will explode shortly\n^1You will also start taking constant damage\"" );
+      AP( "cp \"^1Your base will explode shortly\n^1You will also start taking constant damage\n^3Attack enemies to heal\"" );
     else if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY
               && !level.vesd )
     {
@@ -1481,7 +1481,7 @@ void G_CalculateBuildPoints( void )
     if( level.extremeSuddenDeathWarning < TW_PASSED && !g_tkmap.integer )
     {
       trap_SendServerCommand( -1, "cp \"^1Extreme Sudden Death! NO SPAWNS\n ^1NO BUILDINGS and CONSTANT DAMAGE in 30 seconds\"" );
-      trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! NO SPAWNS; NO BUILDINGS and CONSTANT DAMAGE starts in 30 seconds\n\"" );
+      trap_SendServerCommand( -1, "print \"^1Extreme Sudden Death! NO SPAWNS; NO BUILDINGS / CONSTANT DAMAGE starts in 30 seconds\n\"" );
       level.extremeSuddenDeathWarning = TW_PASSED;
     }
     else if( level.extremeSuddenDeathWarning < TW_PASSED && g_tkmap.integer )
