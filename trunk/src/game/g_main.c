@@ -1323,9 +1323,10 @@ void G_CalculateBuildPoints( void )
       {        
         if( !ent || ent->health <= 0 )
           continue;
-        else if( ent->s.eType != ET_BUILDABLE && ent->client 
+        else if( ent->client 
                  && ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS
-                 && ent->health > 0 )
+                 && ent->client->sess.spectatorState == SPECTATOR_NOT
+                 && ent->client->ps.stats[ STAT_HEALTH ] > 0 )
         {
           if( BG_InventoryContainsUpgrade( UP_MEDKIT, ent->client->ps.stats ) )
             BG_RemoveUpgradeFromInventory( UP_MEDKIT, ent->client->ps.stats );
