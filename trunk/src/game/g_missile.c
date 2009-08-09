@@ -957,7 +957,7 @@ gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
   //VectorScale( dir, SHOTGUN_NADE_SPEED, bolt->s.pos.trDelta );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
 
-  VectorCopy( start, bolt->r.currentOrigin );
+  VectorCopy( start, self->r.currentOrigin );
 
   tent = G_TempEntity( self->s.origin, EV_HUMAN_EXPLOSION );
 
