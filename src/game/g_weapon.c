@@ -339,7 +339,8 @@ void meleeAttack( gentity_t *ent, float range, float width, float height,
   gentity_t *traceEnt;
 
   G_WideTrace( &tr, ent, range, width, height, &traceEnt );
-  if( traceEnt == NULL || !traceEnt->takedamage ) {
+  if( traceEnt == NULL || !traceEnt->takedamage )
+  {
     G_AddEvent( ent, EV_ALIEN_MISS, 0 );
     return;
   }
@@ -1170,7 +1171,8 @@ qboolean CheckVenomAttack( gentity_t *ent )
   if( traceEnt->health <= 0 )
       return qfalse;
 
-  if( !traceEnt->client && !( traceEnt->s.eType == ET_BUILDABLE ) )
+  if( !traceEnt->client && !( traceEnt->s.eType == ET_BUILDABLE )
+      && traceEnt->s.eType != ET_MOVER )
     return qfalse;
 
   //allow bites to work against defensive buildables only
@@ -1231,10 +1233,10 @@ qboolean CheckVenomAttack2( gentity_t *ent )
   if( traceEnt->health <= 0 )
       return qfalse;
 
-  if( !traceEnt->client && !( traceEnt->s.eType == ET_BUILDABLE ) )
+  if( !traceEnt->client && !( traceEnt->s.eType == ET_BUILDABLE )
+      && traceEnt->s.eType != ET_MOVER )
     return qfalse;
 
-  // only allow bites to work against buildings as they are constructing
   if( traceEnt->s.eType == ET_BUILDABLE )
   {
     if( BG_FindTeamForBuildable( traceEnt->s.modelindex ) != BIT_HUMANS )
