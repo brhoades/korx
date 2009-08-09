@@ -158,7 +158,8 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
   if( ent->client->pers.saved || G_admin_permission( ent, ADMF_TEAMCHANGEFREE ) ||
     ( g_teamImbalanceWarnings.integer && isFixingImbalance ) ||
     ( ( oldTeam == TEAM_HUMANS || oldTeam == TEAM_ALIENS ) &&
-      ( level.time - ent->client->pers.teamChangeTime ) > 60000 ) )
+      ( level.time - ent->client->pers.teamChangeTime ) > 60000 )
+      || oldTeam == TEAM_NONE )
   {
     if( oldTeam == TEAM_NONE )
     {
