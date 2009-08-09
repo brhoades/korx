@@ -5273,7 +5273,7 @@ qboolean G_admin_cp( gentity_t *ent, int skiparg )
 }
 
 
-#define MAX_LISTMAPS_MAPS 128
+#define MAX_LISTMAPS_MAPS   1024
 
 static int SortMaps(const void *a, const void *b)
 {
@@ -5318,7 +5318,12 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
   qsort(fileSort, count, sizeof(fileSort[ 0 ]), SortMaps);
 
   rows = count / 3;
-  if ( rows * 3 < count ) rows++;
+    
+  if( rows * 3 < count )
+    rows++;
+
+  if( rows > 30 )
+    rows = 30;
 
   ADMBP_begin();
   for( i = 0; i < rows; i++ )
@@ -5329,9 +5334,9 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
       ( rows * 2 + i < count ) ? fileSort[ rows * 2 + i ] : "" ) );
   }
   if ( search[ 0 ] )
-    ADMBP( va( "^3!listmaps: ^7found %d maps matching '%s^7'.\n", count, search ) );
+    ADMBP( va( "^3!listmaps: ^7found about %d maps matching '%s^7'.\n", rows * 3, search ) );
   else
-    ADMBP( va( "^3!listmaps: ^7listing %d maps.\n", count ) );
+    ADMBP( va( "^3!listmaps: ^7listing about %d maps.\n", rows * 3 ) );
 
   ADMBP_end();
 
