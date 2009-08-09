@@ -526,6 +526,7 @@ struct gclient_s
   
   int                 tkcredits[ MAX_CLIENTS ];
   int                 nextAmmoRegen;        // only used in VESD
+  int                 jetpackStopTime;     // if the jetpack is stopped, this will hold the time, which allows for us to wait 3 seconds before recharging
 };
 
 

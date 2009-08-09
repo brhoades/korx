@@ -1862,7 +1862,7 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
   {
     ent = &g_entities[ entityList[ e ] ];
 
-    if( ent == ignore )
+    if( !ent || ent == ignore || ent->health < 0 )
       continue;
 
     if( !ent->takedamage )
