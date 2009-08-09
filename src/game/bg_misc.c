@@ -64,7 +64,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     0,                     //int       turretRange;
     0,                     //int       turretFireSpeed;
     WP_NONE,               //weapon_t  turretProjType;
-    0.5f,                  //float     minNormal;
+    0.0f,                  //float     minNormal;
     qtrue,                 //qboolean  invertNormal;
     qfalse,                //qboolean  creepTest;
     ASPAWN_CREEPSIZE,      //int       creepSize;
@@ -260,8 +260,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     0,                     //int       turretRange;
     0,                     //int       turretFireSpeed;
     WP_NONE,               //weapon_t  turretProjType;
-    0.707f,                //float     minNormal;
-    qfalse,                //qboolean  invertNormal;
+    0.5f,                //float     minNormal;
+    qtrue,                //qboolean  invertNormal;
     qtrue,                 //qboolean  creepTest;
     BOOSTER_CREEPSIZE,     //int       creepSize;
     qfalse,                //qboolean  dccTest;
@@ -337,8 +337,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     0,                     //int       turretRange;
     0,                     //int       turretFireSpeed;
     WP_NONE,               //weapon_t  turretProjType;
-    0.95f,                 //float     minNormal;
-    qfalse,                //qboolean  invertNormal;
+    0.5f,                 //float     minNormal;
+    qtrue,                //qboolean  invertNormal;
     qtrue,                 //qboolean  creepTest;
     HOVEL_CREEPSIZE,       //int       creepSize;
     qfalse,                //qboolean  dccTest;
