@@ -229,9 +229,8 @@ typedef enum
   STAT_FALLDIST,     // the distance the player fell
   STAT_VIEWLOCK,     // direction to lock the view in
   STAT_CLOAK,        // when invis started
-  STAT_JET_CHARGE,   // jetpack charge
-  STAT_JET_STOP_TIME // jetpack RC charge delay
-  //netcode has space for -2 more (lol...)
+  STAT_JET_CHARGE   // jetpack charge
+  //netcode has space for 1 more
 } statIndex_t;
 
 #define SCA_WALLCLIMBER         0x00000001

@@ -2887,7 +2887,11 @@ void Cmd_DeActivateItem_f( gentity_t *ent )
   upgrade = BG_UpgradeByName( s )->number;
 
   if( BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
+  {
+    if( upgrade == UP_JETPACK )
+      ent->client->jetpackStopTime = level.time;
     BG_DeactivateUpgrade( upgrade, ent->client->ps.stats );
+  }
   else
     trap_SendServerCommand( ent-g_entities, va( "print \"You don't have the %s\n\"", s ) );
 }
@@ -2924,7 +2928,11 @@ void Cmd_ToggleItem_f( gentity_t *ent )
   else if( BG_InventoryContainsUpgrade( upgrade, ent->client->ps.stats ) )
   {
     if( BG_UpgradeIsActive( upgrade, ent->client->ps.stats ) )
+    {
+      if( upgrade == UP_JETPACK )
+        ent->client->jetpackStopTime = level.time;
       BG_DeactivateUpgrade( upgrade, ent->client->ps.stats );
+    }
     else
       BG_ActivateUpgrade( upgrade, ent->client->ps.stats );
   }
