@@ -5282,7 +5282,7 @@ static int SortMaps(const void *a, const void *b)
 
 qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
 {
-  char fileList[ 4096 ] = {""};
+  char fileList[ 20 * MAX_LISTMAPS_MAPS ] = {""}; // assuming most of the maps will have <= 15 characters in their name (plus a few characters for spaces)
   char *fileSort[ MAX_LISTMAPS_MAPS ];
   char search[ 16 ] = {""};
   int numFiles;
@@ -5303,7 +5303,7 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
   for( i = 0; i < numFiles && count < MAX_LISTMAPS_MAPS; i++, filePtr += fileLen + 1 )
   {
     fileLen = strlen( filePtr );
-    if (fileLen < 5)
+    if( fileLen < 5 )
       continue;
 
     filePtr[ fileLen - 4 ] = '\0';
@@ -5315,7 +5315,7 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
     count++;
   }
 
-  qsort(fileSort, count, sizeof(fileSort[ 0 ]), SortMaps);
+  qsort( fileSort, count, sizeof( fileSort[ 0 ] ), SortMaps );
 
   rows = count / 3;
     
@@ -5333,7 +5333,7 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg )
       ( rows + i < count ) ? fileSort[ rows + i ] : "",
       ( rows * 2 + i < count ) ? fileSort[ rows * 2 + i ] : "" ) );
   }
-  if ( search[ 0 ] )
+  if( search[ 0 ] )
     ADMBP( va( "^3!listmaps: ^7found about %d maps matching '%s^7'.\n", rows * 3, search ) );
   else
     ADMBP( va( "^3!listmaps: ^7listing about %d maps.\n", rows * 3 ) );
