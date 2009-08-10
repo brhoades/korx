@@ -2,7 +2,8 @@
 //This is an example script for updating your 'recently changed' menu entry.
 $filen = "/home/tremulous/korx/ui/help.txt";
 $dir = "/home/tremulous/korx/";
-
+//$filen = "/home/aaron/work/korx/ui/help.txt";
+//$dir = "/home/aaron/work/korx";
 
 exec( "echo \"`svn log $dir -l4`\"", $out );
 exec( "svn revert $filen" );
@@ -55,7 +56,7 @@ for( $i=0; $i<count( $file ); $i++ )
       }
       
       if( $out[$j] != NULL && stripos( $out[$j], "------------------------------------------------" ) === FALSE )
-        fwrite( $h, "    \"".$out[$j]."\\n\"\n" );
+        fwrite( $h, "    \"".addcslashes( mysql_escape_string( $out[$j] ), "\$" )."\\n\"\n" );
       else if( stripos( $out[$j], "------------------------------------------------" ) !== FALSE )
         fwrite( $h, "    \"\\n\"\n" );
     }
