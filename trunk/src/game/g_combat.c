@@ -391,8 +391,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
         for ( i = 0; i < MAX_CLIENTS; i++ )
         {
           int price;
-          // no retribution if self damage or enemmy damage or building damage or no damage from this client
-          if( i == self - g_entities || !g_entities[ i ].client || !OnSameTeam( &g_entities[ i ], self ) || !self->client->tkcredits[ i ] )
+          // no retribution if self damage or enemy damage or building damage or no damage from this client
+          if( i == self - g_entities || !g_entities[ i ].client 
+              || !OnSameTeam( &g_entities[ i ], self ) 
+              || !self->client->tkcredits[ i ] )
             continue;
             
           if( self->client->tkcredits[ i ] < 0 )
@@ -401,6 +403,21 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
           // calculate retribution price (rounded up)
           price = ( totalPrice * self->client->tkcredits[ i ] ) / totalTK + 0.5f;
           self->client->tkcredits[ i ] = 0;
+          
+          // subtract what they owe us
+          if( g_entities[ i ].client->tkcredits[ self->client->ps.clientNum ] > 0 )
+          {
+            if( price - g_entities[ i ].client->tkcredits[ self->client->ps.clientNum ] < 0 )
+            {
+              g_entities[ i ].client->tkcredits[ self->client->ps.clientNum ] -= price;
+              price = 0;
+            }
+            else
+            {
+              price -= g_entities[ i ].client->tkcredits[ self->client->ps.clientNum ];
+              g_entities[ i ].client->tkcredits[ self->client->ps.clientNum ] = 0;
+            }
+          }
 
           // check for enough credits
           if( g_entities[ i ].client->ps.persistant[ PERS_CREDIT ] < price )
