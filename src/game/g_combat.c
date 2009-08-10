@@ -369,6 +369,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
     if( g_retribution.integer && totalTK && !g_tkmap.integer )
     {
       int totalPrice;
+      float owed;
       int max = HUMAN_MAX_CREDITS;
 
       if( self->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
@@ -388,7 +389,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
         if( totalTK < self->client->ps.stats[ STAT_MAX_HEALTH ] )
           totalTK = self->client->ps.stats[ STAT_MAX_HEALTH ];
 
-        for ( i = 0; i < MAX_CLIENTS; i++ )
+        for( i = 0; i < MAX_CLIENTS; i++ )
         {
           int price;
           // no retribution if self damage or enemy damage or building damage or no damage from this client
@@ -400,8 +401,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
           if( self->client->tkcredits[ i ] < 0 )
             self->client->tkcredits[ i ] = 0;
 
-          // calculate retribution price (rounded up)
-          price = ( totalPrice * self->client->tkcredits[ i ] ) / totalTK + 0.5f;
+          // calculate retribution price
+          price = ( totalPrice * self->client->tkcredits[ i ] ) / totalTK;
+          owed = ( (float) totalPrice * (float) self->client->tkcredits[ i ] ) / totalTK;
           self->client->tkcredits[ i ] = 0;
           
           // subtract what they owe us
@@ -433,22 +435,25 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
             G_AddCreditToClient( g_entities[ i ].client, -price, qtrue );
             if( self->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
             {
-              price = (int)( price / ALIEN_CREDITS_PER_FRAG );
-              if( price > 0 )
-              {
-                trap_SendServerCommand( self->client->ps.clientNum, va( "print \"Received ^3~%d frags ^7from %s ^7in retribution.\n\"", price, g_entities[ i ].client->pers.netname ) );
-                trap_SendServerCommand( g_entities[ i ].client->ps.clientNum, va( "print \"Transfered ^3~%d frags ^7to %s ^7in retribution.\n\"", price, self->client->pers.netname ) );
-              }
-              else
-              {
-                trap_SendServerCommand( self->client->ps.clientNum, va( "print \"Received ^3 >0 (partial) frags ^7from %s ^7in retribution.\n\"", g_entities[ i ].client->pers.netname ) );
-                trap_SendServerCommand( g_entities[ i ].client->ps.clientNum, va( "print \"Transfered ^3 >0 (partial) frags ^7to %s ^7in retribution.\n\"", self->client->pers.netname ) );
-              }
+              char dprice[ 5 ], dowed[ 5 ];
+              
+              Com_sprintf( dprice, sizeof( dprice ), "%1f", (float)price/(float)ALIEN_CREDITS_PER_FRAG );
+              Com_sprintf( dowed, sizeof( dowed ), "%1f", owed/(float)ALIEN_CREDITS_PER_FRAG );
+              
+              if( !strcmp( dprice, "0.0" ) )
+                strcpy( dprice, "<0.1" );
+                
+              if( !strcmp( dowed, "0.0" ) )
+                strcpy( dowed, "<0.1" );
+                
+              trap_SendServerCommand( self->client->ps.clientNum, va( "print \"Received ^3%s frags ^7of ^3%s frags ^7owed from %s ^7in retribution.\n\"", dprice, dowed, g_entities[ i ].client->pers.netname ) );
+              trap_SendServerCommand( g_entities[ i ].client->ps.clientNum, va( "print \"Transfered ^3%s frags ^7of ^3%s frags ^7owed to %s ^7in retribution.\n\"", dprice, dowed, self->client->pers.netname ) );
+
             }
             else
             {
-              trap_SendServerCommand( self->client->ps.clientNum, va( "print \"Received ^3%d credits ^7from %s ^7in retribution.\n\"", price, g_entities[ i ].client->pers.netname ) );
-              trap_SendServerCommand( g_entities[ i ].client->ps.clientNum, va( "print \"Transfered ^3%d credits ^7to %s ^7in retribution.\n\"", price, self->client->pers.netname ) );
+              trap_SendServerCommand( self->client->ps.clientNum, va( "print \"Received ^3%d credits ^7of ^3%d credits^7 owed from %s ^7in retribution.\n\"", price, (int)owed, g_entities[ i ].client->pers.netname ) );
+              trap_SendServerCommand( g_entities[ i ].client->ps.clientNum, va( "print \"Transfered ^3%d credits ^7of ^3%d credits^7 owed to %s ^7in retribution.\n\"", price, (int)owed, self->client->pers.netname ) );
             }
           }
         }
