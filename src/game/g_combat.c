@@ -420,8 +420,12 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
           }
 
           // check for enough credits
-          if( g_entities[ i ].client->ps.persistant[ PERS_CREDIT ] < price )
+          if( g_entities[ i ].client->sess.spectatorState == SPECTATOR_NOT
+              && g_entities[ i ].client->ps.persistant[ PERS_CREDIT ] < price )
             price = g_entities[ i ].client->ps.persistant[ PERS_CREDIT ];
+          else if( g_entities[ i ].client->sess.spectatorState != SPECTATOR_NOT
+                   && g_entities[ i ].client->pers.savedCredit < price )
+            price = g_entities[ i ].client->pers.savedCredit;
           if( price )
           {
             // meh
