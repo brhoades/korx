@@ -783,6 +783,8 @@ typedef struct
   statsCounters_level humanStatsCounters;
   qboolean          playerWin;
   qboolean          vesd;                         //tells us when to start hurting people in ESD       
+
+  timeWarning_t     spamWebsite;
 } level_locals_t;
 
 #define CMD_CHEAT         0x0001

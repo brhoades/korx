@@ -211,6 +211,10 @@ vmCvar_t  g_msgTime;
 vmCvar_t  g_tkmap;
 vmCvar_t  g_nodretchtogranger;
 
+vmCvar_t  g_doWebsiteSpam;
+vmCvar_t  g_websiteSpamMessage1;
+vmCvar_t  g_websiteSpamMessage2;
+
 static cvarTable_t   gameCvarTable[ ] =
 {
   // don't override the cheat state set by the system
@@ -401,8 +405,10 @@ static cvarTable_t   gameCvarTable[ ] =
 
   { &g_tag, "g_tag", "main", CVAR_INIT, 0, qfalse },
   { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse },
-  { &g_nodretchtogranger, "g_nodretchtogranger", "0", CVAR_ARCHIVE, 0, qfalse }
+  { &g_nodretchtogranger, "g_nodretchtogranger", "0", CVAR_ARCHIVE, 0, qfalse },
   
+  { &g_websiteSpamMessage1, "g_websiteSpamMessage1", "^2K^7nights^2o^7f^2R^7eason.org", CVAR_ARCHIVE, 0, qfalse},
+  { &g_websiteSpamMessage2, "g_websiteSpamMessage2", "^7For Stats, Forums and More", CVAR_ARCHIVE, 0, qfalse}
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
@@ -3043,13 +3049,39 @@ void CheckCountdown( void )
   static qboolean altcolor = qfalse;
   int timeleft = g_warmup.integer - ( level.time - level.startTime ) / 1000;
   char *leftarrows, *rightarrows;
+  
+	if( level.time - level.startTime > g_warmup.integer*1000 
+      && level.spamWebsite != TW_PASSED )
+	{
+		if ( level.time - level.startTime > g_warmup.integer*1000 + 10000 
+         && level.spamWebsite < TW_IMMINENT && g_doWebsiteSpam.integer )
+		{
+			if( g_websiteSpamMessage1.string[ 0 ] )
+			{
+				trap_SendServerCommand( -1, va( "cp \"%s\"", g_websiteSpamMessage1.string ) );
+				trap_SendServerCommand( -1, va( "print \"%s\n\"", g_websiteSpamMessage1.string ) );
+			}
+			level.spamWebsite = TW_IMMINENT;
+		}
+		else if( level.time - level.startTime > g_warmup.integer*1000 + 7500 
+              && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
+		{
+			if( g_websiteSpamMessage2.string[ 0 ] )
+			{
+				trap_SendServerCommand( -1, va( "cp \"%s\"", g_websiteSpamMessage2.string ) );
+				trap_SendServerCommand( -1, va( "print \"%s\n\"", g_websiteSpamMessage2.string ) );
+			}
+			level.spamWebsite = TW_PASSED;
+		}
+	}
+
   if( !g_doWarmup.integer || timeleft < 0 )
     return;
 
   if( level.time - lastmsg < 500 )
     return;
   lastmsg = level.time;
-  if( timeleft > 0 && timeleft < 6)
+  if( timeleft > 0 && timeleft < 6 )
   {
     switch( timeleft )
     {
