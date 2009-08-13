@@ -98,3 +98,12 @@ models/buildables/dcc/comp_top
 		tcGen environment
 	}
 }
+
+models/buildables/dcc/comp_display
+{
+	{
+		map models/buildables/dcc/comp_display.jpg
+		blendfunc gl_one gl_src_alpha
+		rgbGen identity
+	}
+}
