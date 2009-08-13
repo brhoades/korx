@@ -652,8 +652,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
         {
           //ent->health -= 1;
           G_Damage( ent, NULL, NULL, NULL, NULL, 1, 0, MOD_VESD );
-          if( ent->health <= 0 )
-            break;
           ent->nextRegenTime = level.time + VAMPIRIC_ESD_TTD/client->ps.stats[ STAT_MAX_HEALTH ];
         }
         //take away one tk credit
@@ -743,8 +741,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
       {
         //ent->health -= 1;
         G_Damage( ent, NULL, NULL, NULL, NULL, 1, 0, MOD_VESD );
-        if( ent->health <= 0 )
-          break;
         ent->nextRegenTime = level.time + VAMPIRIC_ESD_TTD/client->ps.stats[ STAT_MAX_HEALTH ];
       }
       //take away one tk credit
