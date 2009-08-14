@@ -3050,11 +3050,9 @@ void CheckCountdown( void )
   int timeleft = g_warmup.integer - ( level.time - level.startTime ) / 1000;
   char *leftarrows, *rightarrows;
   
-	if( level.time - level.startTime > g_warmup.integer*1000 
-      && level.spamWebsite != TW_PASSED )
+	if( timeleft <= -3 && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
 	{
-		if ( level.time - level.startTime > g_warmup.integer*1000 + 10000 
-         && level.spamWebsite < TW_IMMINENT && g_doWebsiteSpam.integer )
+		if( timeleft <= -5 && level.spamWebsite < TW_IMMINENT )
 		{
 			if( g_websiteSpamMessage1.string[ 0 ] )
 			{
@@ -3063,8 +3061,7 @@ void CheckCountdown( void )
 			}
 			level.spamWebsite = TW_IMMINENT;
 		}
-		else if( level.time - level.startTime > g_warmup.integer*1000 + 7500 
-              && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
+		else if( timeleft <= -7 && level.spamWebsite < TW_PASSED )
 		{
 			if( g_websiteSpamMessage2.string[ 0 ] )
 			{
