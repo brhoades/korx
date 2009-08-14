@@ -407,6 +407,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_tkmap, "g_tkmap", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_nodretchtogranger, "g_nodretchtogranger", "0", CVAR_ARCHIVE, 0, qfalse },
   
+  { &g_doWebsiteSpam, "g_doWebsiteSpam", "45", CVAR_ARCHIVE, 0, qfalse},
   { &g_websiteSpamMessage1, "g_websiteSpamMessage1", "^2K^7nights^2o^7f^2R^7eason.org", CVAR_ARCHIVE, 0, qfalse},
   { &g_websiteSpamMessage2, "g_websiteSpamMessage2", "^7For Stats, Forums and More", CVAR_ARCHIVE, 0, qfalse}
 };
@@ -3048,11 +3049,12 @@ void CheckCountdown( void )
   static int lastmsg = 0;
   static qboolean altcolor = qfalse;
   int timeleft = g_warmup.integer - ( level.time - level.startTime ) / 1000;
+  int wtimeleft = g_doWebsiteSpam.integer - ( level.time - level.startTime ) / 1000;
   char *leftarrows, *rightarrows;
   
-	if( timeleft <= -3 && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
+	if( wtimeleft > 0 && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
 	{
-		if( timeleft <= -5 && level.spamWebsite < TW_IMMINENT )
+		if( wtimeleft <= 5 && level.spamWebsite < TW_IMMINENT )
 		{
 			if( g_websiteSpamMessage1.string[ 0 ] )
 			{
@@ -3061,7 +3063,7 @@ void CheckCountdown( void )
 			}
 			level.spamWebsite = TW_IMMINENT;
 		}
-		else if( timeleft <= -7 && level.spamWebsite < TW_PASSED )
+		else if( wtimeleft <= 2 && level.spamWebsite < TW_PASSED )
 		{
 			if( g_websiteSpamMessage2.string[ 0 ] )
 			{
