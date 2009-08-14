@@ -3052,7 +3052,7 @@ void CheckCountdown( void )
   int wtimeleft = g_doWebsiteSpam.integer - ( level.time - level.startTime ) / 1000;
   char *leftarrows, *rightarrows;
   
-	if( wtimeleft > 0 && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
+	if( wtimeleft <= 0 && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
 	{
 		if( wtimeleft <= 0 && level.spamWebsite < TW_IMMINENT )
 		{
