@@ -3054,7 +3054,7 @@ void CheckCountdown( void )
   
 	if( wtimeleft > 0 && level.spamWebsite < TW_PASSED && g_doWebsiteSpam.integer )
 	{
-		if( wtimeleft <= 5 && level.spamWebsite < TW_IMMINENT )
+		if( wtimeleft <= 0 && level.spamWebsite < TW_IMMINENT )
 		{
 			if( g_websiteSpamMessage1.string[ 0 ] )
 			{
@@ -3063,7 +3063,7 @@ void CheckCountdown( void )
 			}
 			level.spamWebsite = TW_IMMINENT;
 		}
-		else if( wtimeleft <= 2 && level.spamWebsite < TW_PASSED )
+		else if( wtimeleft <= -5 && level.spamWebsite < TW_PASSED )
 		{
 			if( g_websiteSpamMessage2.string[ 0 ] )
 			{
