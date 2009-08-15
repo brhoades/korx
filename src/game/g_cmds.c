@@ -4803,7 +4803,8 @@ int G_FloodLimited( gentity_t *ent )
   if( g_floodMinTime.integer <= 0 
       || G_admin_permission( ent, ADMF_NOCENSORFLOOD ) )
   {
-    ent->client->pers.floodTime = level.time;
+    if( ent && ent->client )
+      ent->client->pers.floodTime = level.time;
     return 0;
   }
 
