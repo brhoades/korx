@@ -530,7 +530,7 @@ Returns qfalse if the client is dropped
 */
 qboolean ClientInactivityTimer( gclient_t *client )
 {
-  if( ! g_inactivity.integer )
+  if( !g_inactivity.integer )
   {
     // give everyone some time, so if the operator sets g_inactivity during
     // gameplay, everyone isn't kicked
@@ -542,7 +542,7 @@ qboolean ClientInactivityTimer( gclient_t *client )
            client->pers.cmd.upmove ||
            ( client->pers.cmd.buttons & BUTTON_ATTACK ) )
   {
-    client->inactivityTime = level.time + g_inactivity.integer * 1000;
+    client->inactivityTime = level.time + g_inactivity.integer * 60 * 1000;
     client->inactivityWarning = qfalse;
   }
   else if( !client->pers.localClient )
@@ -1770,7 +1770,9 @@ void ClientThink_real( gentity_t *ent )
   }
   
   // check for inactivity timer, but never drop the local client of a non-dedicated server
-  if( !ClientInactivityTimer( client ) )
+  // don't do this check if they've got the inactivity flag
+  if( !ClientInactivityTimer( client ) 
+      && !G_admin_permission( ent, ADMF_ACTIVITY ) )
     return;
 
   // calculate where ent is currently seeing all the other active clients
