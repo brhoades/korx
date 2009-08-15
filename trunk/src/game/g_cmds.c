@@ -4800,12 +4800,12 @@ int G_FloodLimited( gentity_t *ent )
 {
   int deltatime, ms;
 
-  if( g_floodMinTime.integer <= 0 )
+  if( g_floodMinTime.integer <= 0 
+      || G_admin_permission( ent, ADMF_NOCENSORFLOOD ) )
+  {
+    ent->client->pers.floodTime = level.time;
     return 0;
-
-  // handles !ent
-  if( G_admin_permission( ent, ADMF_NOCENSORFLOOD ) )
-    return 0;
+  }
 
   deltatime = level.time - ent->client->pers.floodTime;
 
