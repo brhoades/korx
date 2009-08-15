@@ -3058,7 +3058,11 @@ void CheckCountdown( void )
 		{
 			if( g_websiteSpamMessage1.string[ 0 ] )
 			{
-				trap_SendServerCommand( -1, va( "cp \"%s\"", g_websiteSpamMessage1.string ) );
+        char wrappedtext[ MAX_STRING_CHARS ];
+        
+        strcpy( wrappedtext, g_websiteSpamMessage1.string );
+        G_WordWrap( wrappedtext, 50 );
+				trap_SendServerCommand( -1, va( "cp \"%s\"",wrappedtext ) );
 				trap_SendServerCommand( -1, va( "print \"%s\n\"", g_websiteSpamMessage1.string ) );
 			}
 			level.spamWebsite = TW_IMMINENT;
@@ -3067,7 +3071,11 @@ void CheckCountdown( void )
 		{
 			if( g_websiteSpamMessage2.string[ 0 ] )
 			{
-				trap_SendServerCommand( -1, va( "cp \"%s\"", g_websiteSpamMessage2.string ) );
+        char wrappedtext[ MAX_STRING_CHARS ];
+        
+        strcpy( wrappedtext, g_websiteSpamMessage2.string );
+        G_WordWrap( wrappedtext, 50 );
+				trap_SendServerCommand( -1, va( "cp \"%s\"", wrappedtext ) );
 				trap_SendServerCommand( -1, va( "print \"%s\n\"", g_websiteSpamMessage2.string ) );
 			}
 			level.spamWebsite = TW_PASSED;
