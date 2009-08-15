@@ -540,7 +540,8 @@ qboolean ClientInactivityTimer( gclient_t *client )
   else if( client->pers.cmd.forwardmove ||
            client->pers.cmd.rightmove ||
            client->pers.cmd.upmove ||
-           ( client->pers.cmd.buttons & BUTTON_ATTACK ) )
+           ( client->pers.cmd.buttons & BUTTON_ATTACK )
+           || client->pers.floodTime > client->inactivityTime )
   {
     client->inactivityTime = level.time + g_inactivity.integer * 60 * 1000;
     client->inactivityWarning = qfalse;
@@ -553,6 +554,10 @@ qboolean ClientInactivityTimer( gclient_t *client )
       return qfalse;
     }
 
+    if( level.time > client->inactivityTime - 30000
+        && level.time < client->inactivityTime - 30500 )
+      trap_SendServerCommand( client - level.clients, "cp \"Thirty seconds until inactivity drop!\n\"" );
+    
     if( level.time > client->inactivityTime - 10000 && !client->inactivityWarning )
     {
       client->inactivityWarning = qtrue;
