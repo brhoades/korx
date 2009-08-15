@@ -1389,18 +1389,17 @@ void ClientUserinfoChanged( int clientNum )
       {
         char    decoloured[ MAX_STRING_CHARS ] = "";   
         if( g_decolourLogfiles.integer == 1 )
-    {
-      Com_sprintf( decoloured, sizeof(decoloured), " (\"%s^7\" -> \"%s^7\")", oldname, client->pers.netname );
-      G_DecolorString( decoloured, decoloured, sizeof( decoloured ) );
-          G_LogPrintfColoured( "ClientRename: %i [%s] (%s) \"%s^7\" -> \"%s^7\"%s\n", clientNum,
-             client->pers.ip, client->pers.guid, oldname, client->pers.netname, decoloured );
-    }
-    else
-    {
-          G_LogPrintf( "ClientRename: %i [%s] (%s) \"%s^7\" -> \"%s^7\"%s\n", clientNum,
-             client->pers.ip, client->pers.guid, oldname, client->pers.netname, decoloured );
-    }
-
+        {
+          Com_sprintf( decoloured, sizeof(decoloured), " (\"%s^7\" -> \"%s^7\")", oldname, client->pers.netname );
+          G_DecolorString( decoloured, decoloured, sizeof( decoloured ) );
+              G_LogPrintfColoured( "ClientRename: %i [%s] (%s) \"%s^7\" -> \"%s^7\"%s\n", clientNum,
+                 client->pers.ip, client->pers.guid, oldname, client->pers.netname, decoloured );
+        }
+        else
+        {
+              G_LogPrintf( "ClientRename: %i [%s] (%s) \"%s^7\" -> \"%s^7\"%s\n", clientNum,
+                 client->pers.ip, client->pers.guid, oldname, client->pers.netname, decoloured );
+        }
       }
       else
       {
@@ -1565,26 +1564,34 @@ char *ClientConnect( int clientNum, qboolean firstTime )
       strcmp( g_password.string, value ) != 0 )
     return "Invalid password";
 
-  // add guid to session so we don't have to keep parsing userinfo everywhere
-  for( i = 0; i < sizeof( client->pers.guid ) - 1 &&
-              isxdigit( client->pers.guid[ i ] ); i++ );
-  if( i < sizeof( client->pers.guid ) - 1 )
-    return "Invalid GUID";
-  for( i = 0; i < level.maxclients; i++ )
+  if( client->pers.guid[0] )
   {
-    if( level.clients[ i ].pers.connected == CON_DISCONNECTED )
-      continue;
-    if( !Q_stricmp( client->pers.guid, level.clients[ i ].pers.guid ) )
+    // add guid to session so we don't have to keep parsing userinfo everywhere
+    for( i = 0; i < sizeof( client->pers.guid ) - 1 &&
+                isxdigit( client->pers.guid[ i ] ); i++ );
+    if( i < sizeof( client->pers.guid ) - 1 )
+      return "Invalid GUID";
+    
+    for( i = 0; i < level.maxclients; i++ )
     {
-      if( !G_ClientIsLagging( level.clients + i ) )
+      if( level.clients[ i ].pers.connected == CON_DISCONNECTED )
+        continue;
+      if( !Q_stricmp( client->pers.guid, level.clients[ i ].pers.guid ) )
       {
-        trap_SendServerCommand( i, "cp \"Your GUID is not secure\"" );
-        return "Duplicate GUID";
+        if( !G_ClientIsLagging( level.clients + i ) )
+        {
+          trap_SendServerCommand( i, "cp \"Your GUID is not secure\"" );
+          return "Duplicate GUID";
+        }
+        trap_DropClient( i, "Ghost" );
       }
-      trap_DropClient( i, "Ghost" );
     }
   }
-
+  else
+  {
+    Q_strncpyz( client->pers.guid, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      sizeof( client->pers.guid ) );
+  }
   // save ip
   value = Info_ValueForKey( userinfo, "ip" );
   Q_strncpyz( client->pers.ip, value, sizeof( client->pers.ip ) );
