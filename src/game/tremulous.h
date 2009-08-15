@@ -489,18 +489,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BLASTER_K_SCALE             1.0f
 #define BLASTER_SPREAD              200
 #define BLASTER_SPEED               2000
-#define BLASTER_DMG                 HDM(9)
+#define BLASTER_DMG                 HDM(7)
 #define BLASTER_SIZE                5
 #define BLASTER_SURGE_DMG_MOD       1.0f
 #define BLASTER_SURGE_TIME_MOD      0.625
 
 #define RIFLE_CLIPSIZE              30
 #define RIFLE_MAXCLIPS              6
-#define RIFLE_REPEAT                90
+#define RIFLE_REPEAT                80
 #define RIFLE_K_SCALE               1.0f
 #define RIFLE_RELOAD                2000
 #define RIFLE_PRICE                 0
-#define RIFLE_SPREAD                200
+#define RIFLE_SPREAD                100
 #define RIFLE_DMG                   HDM(5)
 #define RIFLE_RECOIL_MIN_Y          0.25
 #define RIFLE_RECOIL_MAX_Y          1.2
@@ -802,14 +802,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_ANGULARSPEED       8
 #define MGTURRET_ANGULARSPEED_GRAB  3
 #define MGTURRET_ANGULARSPEED_DCC   10
-#define MGTURRET_ACCURACY_TO_FIRE   7
+#define MGTURRET_ACCURACY_TO_FIRE   12
 #define MGTURRET_VERTICALCAP        30  // +/- maximum pitch
 #define MGTURRET_REPEAT             100
 #define MGTURRET_K_SCALE            1.0f
 #define MGTURRET_RANGE              300.0f
-#define MGTURRET_SPREAD             200
+#define MGTURRET_SPREAD             225
 #define MGTURRET_DMG                HDM(4)
-#define MGTURRET_SPINUP_TIME        150 // time between target sighted and fire
+#define MGTURRET_SPINUP_TIME        200 // time between target sighted and fire
 #define MGTURRET_DROOPSCALE         0.5f // rate at which turret droops when unpowered
 
 #define MGTURRET_VALUE              HBVM(0)

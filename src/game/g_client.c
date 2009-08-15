@@ -2156,7 +2156,7 @@ void ClientDisconnect( int clientNum )
   ent->client->sess.spectatorState =
       ent->client->ps.persistant[ PERS_SPECSTATE ] = SPECTATOR_NOT;
 
-  trap_SetConfigstring( CS_PLAYERS + clientNum, "");
+  trap_SetConfigstring( CS_PLAYERS + clientNum, "" );
 
   G_DemoCommand( DC_CLIENT_REMOVE, va( "%d", clientNum ) );
 
