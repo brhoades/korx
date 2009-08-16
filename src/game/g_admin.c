@@ -177,15 +177,13 @@ g_admin_cmd_t g_admin_cmds[ ] =
     },
 
     {"pause", G_admin_pause, "g",
-      "buy some time, specifying m instead of a target mutes everyone "
-      "without immunity. Specifying a or h pauses that team only",
-      "(^5name|slot|m|a|h^7)"
+      "buy some time",
+      "(^5name|slot^7)"
     },
 
     {"unpause", G_admin_pause, "g",
-      "carry on with the game, specifying m instead of a target unmutes everyone "
-      " without immunity. Specifying a or h pauses that team only",
-      "(^5name|slot|m|a|h^7)"
+      "carry on with the game",
+      "(^5name|slot^7)"
     },
 
     {"lock", G_admin_lock, "G",
@@ -4022,8 +4020,8 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
   //it performs an essentially identical function
   int i, j = 0, pids[ MAX_CLIENTS + 1 ], found;
   qboolean everyone = qfalse;
-  char err[ MAX_STRING_CHARS ];
-  char name[ MAX_NAME_LENGTH ], command[ MAX_ADMIN_CMD_LEN ], *cmd;
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  char command[ MAX_ADMIN_CMD_LEN ], *cmd;
   qboolean targeted = qfalse;
   //targeted is set to ensure we don't get spam when pausing everybody
   gentity_t *vic;
@@ -4031,29 +4029,8 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
   cmd = command;
   if( cmd && *cmd == '!' )
     cmd++;
-  if( G_SayArgc() == ( 2 + skiparg ) )
+  if( G_SayArgc() == 1 + skiparg )
   {
-    G_SayArgv( 1 + skiparg, name, sizeof( name ) );
-    targeted = qtrue;
-    if( ( *name == 'a' || *name == 'h' || *name == 'm' ) && strlen( name ) == 1 )
-      targeted = qfalse;
-    else if( ( found = G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) ) != 1 )
-    {
-      G_MatchOnePlayer( pids, found, err, sizeof( err ) );
-      ADMP( va( "^3!%s: ^7%s\n", cmd, err ) );
-      return qfalse;
-    }
-  }
-  else if( G_SayArgc() > 2 + skiparg )
-  {
-    ADMP( va( "^3!%s: ^7usage: ^3!%s ^7(^5name|slot|m|a|h^7)\n", cmd, cmd ) );
-    return qfalse;
-  }
-
-  if( targeted == qfalse )
-  {
-    char subject[ MAX_STRING_CHARS ];
-    
 		everyone = qtrue;
     for( i = 0; i < MAX_CLIENTS; i++ )
     {
@@ -4064,33 +4041,41 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
         j++;
       }
     }
-    if( *name == 'a' )
-      Com_sprintf( subject, sizeof( subject ), "^1Alien Team" );
-    else if( *name == 'h' )
-      Com_sprintf( subject, sizeof( subject ), "^4Human Team" );
-    else
-      Com_sprintf( subject, sizeof( subject ), "game" );
-    if( !Q_stricmp( cmd, "pause" ) )
-    {
-      AP( va( "print \"^3!pause: ^7%s^7 has paused the %s\n\"",
-      ( ent ) ? ent->client->pers.netname : "console", subject ) );
-      level.paused = qfalse;
-    }
-    else
-    {
-      AP( va( "print \"^3!unpause: ^7%s^7 has unpaused the %s\n\"",
-      ( ent ) ? ent->client->pers.netname : "console", subject ) );
-      level.paused = qfalse;
-    }
-    pids[ j ] = -1;
+      if( Q_stricmp( cmd, "unpause" ) )
+        {
+          AP( va( "print \"^3!pause: ^7%s^7 has paused the game\n\"",
+          ( ent ) ? ent->client->pers.netname : "console" ) );
+          level.paused = qfalse;
+        }
+        else
+        {
+          AP( va( "print \"^3!unpause: ^7%s^7 has unpaused the game\n\"",
+          ( ent ) ? ent->client->pers.netname : "console" ) );
+          level.paused = qfalse;
+        }
+      pids[ j ] = -1;
   }
-
+  else if( G_SayArgc() == ( 2 + skiparg ) )
+  {
+    G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+    if( ( found = G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) ) != 1 )
+    {
+      G_MatchOnePlayer( pids, found, err, sizeof( err ) );
+      ADMP( va( "^3!%s: ^7%s\n", cmd, err ) );
+      return qfalse;
+    }
+    targeted = qtrue;
+  }
+  else if( G_SayArgc() > 2 + skiparg )
+  {
+    ADMP( va( "^3!%s: ^7usage: ^3!%s ^7(^5name|slot^7)\n", cmd, cmd ) );
+    return qfalse;
+  }
   for( i = 0; pids[ i ] >= 0; i++ )
   {
     vic = &g_entities[ pids[ i ] ];
-    if ( !vic || !vic->client || ( !vic->client->pers.connected && ( vic->client->pers.connected != CON_CONNECTED ||
-        vic->client->pers.connected != CON_CONNECTING ) ) )
-        continue;
+    if ( !vic || !vic->client || (!vic->client->pers.connected && (vic->client->pers.connected != CON_CONNECTED ||
+        vic->client->pers.connected != CON_CONNECTING))) continue;
     if( !admin_higher( ent, vic ) )
     {
       if( targeted )
@@ -4106,27 +4091,10 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
           ADMP( "^3!pause: ^7player is already paused\n" );
         continue;
       }
-      
-      if( ( ( *name == 'a' && vic->client->pers.teamSelection == TEAM_ALIENS )
-            || ( *name == 'h' && vic->client->pers.teamSelection == TEAM_HUMANS ) ) 
-            && !targeted )
-      {
-        vic->client->pers.paused = qfalse;
-        CPx( pids[ i ], "cp \"^2Your team has been unpaused\"" );
-      }
-      else
-        vic->client->pers.paused = qfalse;
-        
-      if( *name == 'm' && G_admin_permission( vic, ADMF_IMMUTABLE ) )
-      {
-        vic->client->pers.muted = qfalse;
-        CPx( pids[ i ], "cp \"^2You've been unpaused\nYou've been unmuted\"" );
-      }
-      else if( targeted || everyone)
-        CPx( pids[ i ], "cp \"^2You've been unpaused\"" );
-        
+      vic->client->pers.paused = qfalse;
+      CPx( pids[ i ], "cp \"^2You've been unpaused\"" );
       if( targeted )
-        AP( va( "print \"^3!unpause: ^7%s^7 unpaused by %s\n\"",
+	AP( va( "print \"^3!unpause: ^7%s^7 unpaused by %s\n\"",
 	    vic->client->pers.netname,
 	    ( ent ) ? ent->client->pers.netname : "console" ) );
     }
@@ -4138,27 +4106,9 @@ qboolean G_admin_pause( gentity_t *ent, int skiparg )
           ADMP( "^3!unpause: ^7player is already unpaused\n" );
         continue;
       }
-      if( ( ( *name == 'a' && vic->client->pers.teamSelection == TEAM_ALIENS )
-            || ( *name == 'h' && vic->client->pers.teamSelection == TEAM_HUMANS ) )
-            && !targeted )
-        {
-          vic->client->pers.paused = qtrue;
-          CPx( pids[ i ], "cp \"^2Your team has been paused\"" );
-        }
-      else
-        vic->client->pers.paused = qtrue;
-      
-      if( *name == 'm' && !G_admin_permission( vic, ADMF_IMMUTABLE ) 
-           && !targeted )
-      {
-        vic->client->pers.muted = qtrue;
-        CPx( pids[ i ], va( "cp \"^1You've been paused by ^7%s^1\nYou've been muted by ^7%s\"", 
-            ( ent ) ? ent->client->pers.netname : "console", ( ent ) ? ent->client->pers.netname : "console" ) );
-      }
-      else
-        CPx( pids[ i ], va( "cp \"^1You've been paused by ^7%s\"", 
+      vic->client->pers.paused = qtrue;
+      CPx( pids[ i ], va( "cp \"^1You've been paused by ^7%s\"", 
 	  ( ent ) ? ent->client->pers.netname : "console" ) );
-    
       if( targeted )
         AP( va( "print \"^3!pause: ^7%s^7 paused by %s\n\"", 
           vic->client->pers.netname,
