@@ -691,7 +691,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * HUMAN upgrades
  */
 
-#define LIGHTARMOUR_PRICE           0
+#define LIGHTARMOUR_PRICE           50
 #define LIGHTARMOUR_POISON_PROTECTION 1
 #define LIGHTARMOUR_PCLOUD_PROTECTION 0
 
