@@ -259,7 +259,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SPITFIRE_UPG_COST               2
 
 #define LEVEL1_SPEED                1.25f
-#define LEVEL1_VALUE                AVM(225)
+#define LEVEL1_VALUE                AVM(300)
 #define LEVEL1_HEALTH               AHM(75)
 #define LEVEL1_REGEN                3
 #define LEVEL1_REGEN_MSEC           ARMSEC(LEVEL1_HEALTH)
@@ -267,42 +267,42 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL1_REGEN_MOD            1.5f
 
 #define LEVEL1_UPG_SPEED            1.25f
-#define LEVEL1_UPG_VALUE            AVM(275)
+#define LEVEL1_UPG_VALUE            AVM(350)
 #define LEVEL1_UPG_HEALTH           AHM(100)
 #define LEVEL1_UPG_REGEN            3
 #define LEVEL1_UPG_REGEN_MSEC       ARMSEC(LEVEL1_UPG_HEALTH)
 #define LEVEL1_UPG_COST             1
 
 #define LEVEL2_SPEED                1.2f
-#define LEVEL2_VALUE                AVM(350)
+#define LEVEL2_VALUE                AVM(400)
 #define LEVEL2_HEALTH               AHM(150)
 #define LEVEL2_REGEN                4
 #define LEVEL2_REGEN_MSEC           ARMSEC(LEVEL2_HEALTH)
 #define LEVEL2_COST                 1
 
 #define LEVEL2_UPG_SPEED            1.2f
-#define LEVEL2_UPG_VALUE            AVM(450)
+#define LEVEL2_UPG_VALUE            AVM(500)
 #define LEVEL2_UPG_HEALTH           AHM(175)
 #define LEVEL2_UPG_REGEN            5
 #define LEVEL2_UPG_REGEN_MSEC       ARMSEC(LEVEL2_UPG_HEALTH)
 #define LEVEL2_UPG_COST             1
 
 #define LEVEL3_SPEED                1.1f
-#define LEVEL3_VALUE                AVM(500)
+#define LEVEL3_VALUE                AVM(600)
 #define LEVEL3_HEALTH               AHM(200)
 #define LEVEL3_REGEN                6
 #define LEVEL3_REGEN_MSEC           ARMSEC(LEVEL3_HEALTH)
 #define LEVEL3_COST                 1
 
 #define LEVEL3_UPG_SPEED            1.1f
-#define LEVEL3_UPG_VALUE            AVM(600)
+#define LEVEL3_UPG_VALUE            AVM(750)
 #define LEVEL3_UPG_HEALTH           AHM(250)
 #define LEVEL3_UPG_REGEN            7
 #define LEVEL3_UPG_REGEN_MSEC       ARMSEC(LEVEL3_UPG_HEALTH)
 #define LEVEL3_UPG_COST             1
 
 #define LEVEL4_SPEED                1.2f
-#define LEVEL4_VALUE                AVM(800)
+#define LEVEL4_VALUE                AVM(1000)
 #define LEVEL4_HEALTH               AHM(400)
 #define LEVEL4_REGEN                9
 #define LEVEL4_REGEN_MSEC           ARMSEC(LEVEL4_HEALTH)
@@ -310,7 +310,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_REGEN_RANGE          200.0f
 
 #define LEVEL4_UPG_SPEED            1.2f
-#define LEVEL4_UPG_VALUE            AVM(1100)
+#define LEVEL4_UPG_VALUE            AVM(1300)
 #define LEVEL4_UPG_HEALTH           AHM(600)
 #define LEVEL4_UPG_REGEN            10
 #define LEVEL4_UPG_REGEN_MSEC       ARMSEC(LEVEL4_UPG_HEALTH)
