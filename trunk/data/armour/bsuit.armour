@@ -5,7 +5,7 @@
   maxHeight 0.8
   minAngle  0
   maxAngle  360
-  modifier  0.2
+  modifier  0.17
 }
 
 {

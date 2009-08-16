@@ -5,7 +5,7 @@
   maxHeight 0.8
   minAngle  310
   maxAngle  50
-  modifier  0.35
+  modifier  0.30
 }
 
 {
@@ -14,7 +14,7 @@
   maxHeight 0.8
   minAngle  50
   maxAngle  130
-  modifier  0.3
+  modifier  0.33
 }
 
 {
@@ -23,7 +23,7 @@
   maxHeight 0.8
   minAngle  130
   maxAngle  230
-  modifier  0.4
+  modifier  0.35
 }
 
 {
@@ -32,7 +32,7 @@
   maxHeight 0.8
   minAngle  230
   maxAngle  310
-  modifier  0.3
+  modifier  0.33
 }
 
 {
@@ -41,7 +41,7 @@
   maxHeight 0.5
   minAngle  0
   maxAngle  360
-  modifier  0.3
+  modifier  0.33
 }
 
 {
@@ -50,7 +50,7 @@
   maxHeight 0.72
   minAngle  310
   maxAngle  50
-  modifier  0.35
+  modifier  0.30
   crouch
 }
 
@@ -60,7 +60,7 @@
   maxHeight 0.72
   minAngle  50
   maxAngle  130
-  modifier  0.3
+  modifier  0.33
   crouch
 }
 
@@ -70,7 +70,7 @@
   maxHeight 0.72
   minAngle  130
   maxAngle  230
-  modifier  0.4
+  modifier  0.35
   crouch
 }
 
@@ -80,7 +80,7 @@
   maxHeight 0.72
   minAngle  230
   maxAngle  310
-  modifier  0.3
+  modifier  0.33
   crouch
 }
 
@@ -90,6 +90,6 @@
   maxHeight 0.3
   minAngle  0
   maxAngle  360
-  modifier  0.3
+  modifier  0.33
   crouch
 }
