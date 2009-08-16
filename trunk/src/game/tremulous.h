@@ -482,7 +482,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
 
-#define HUMAN_WDMG_MODIFIER         1.0f
+#define HUMAN_WDMG_MODIFIER         1.1f
 #define HDM(d)                      ((int)((float)d*HUMAN_WDMG_MODIFIER))
 
 #define BLASTER_REPEAT              400
