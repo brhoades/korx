@@ -1928,7 +1928,7 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   if( ent->client->pers.classSelection == PCL_HUMAN )
   {
     BG_AddUpgradeToInventory( UP_MEDKIT, client->ps.stats );
-    BG_AddUpgradeToInventory( UP_LIGHTARMOUR, client->ps.stats );
+    //BG_AddUpgradeToInventory( UP_LIGHTARMOUR, client->ps.stats );
     weapon = client->pers.humanItemSelection;
   }
   else if( client->sess.spectatorState == SPECTATOR_NOT )
