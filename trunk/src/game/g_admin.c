@@ -3571,7 +3571,7 @@ qboolean G_admin_putmespec( gentity_t *ent, int skiparg )
   }
   else if( ent->lastDamageTime + 5000 > level.time && ent->health > 0 )
   {
-    AP( "!specme: ^7You were damaged less than 5 seconds ago, please wait a little bit\n" );
+    ADMP( "!specme: ^7You were damaged less than 5 seconds ago, please wait a little bit\n" );
     return qfalse;
   }
   G_ChangeTeam( ent, TEAM_NONE );
