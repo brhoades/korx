@@ -682,32 +682,31 @@ void ClientTimerActions( gentity_t *ent, int msec )
     }
   }
   
+  // vesd ammo regen (humans)
   if( level.vesd && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS
       && ent->health > 0 && ent->client->nextAmmoRegen < level.time
       && !BG_Weapon( client->ps.weapon )->infiniteAmmo )
   {
-    int offset = 1000, maxammo = BG_Weapon( client->ps.weapon )->maxAmmo, maxclips = BG_Weapon( client->ps.weapon )->maxClips;
+    int offset = 1000;
+    int maxammo = BG_Weapon( client->ps.weapon )->maxAmmo * ( BG_Weapon( client->ps.weapon )->maxClips + 1 );
+    int curammo = client->ps.ammo * ( client->ps.clips + 1 );
     
-    maxammo = BG_Weapon( client->ps.weapon )->maxAmmo;
-    maxclips = BG_Weapon( client->ps.weapon )->maxClips;
     if( BG_Weapon( client->ps.weapon )->usesEnergy && (
         BG_InventoryContainsUpgrade( UP_BATTPACK, client->ps.stats ) ||
         BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) ) )
-      maxammo = (int)( (float)BG_Weapon( client->ps.weapon )->maxAmmo * BATTPACK_MODIFIER );
+      maxammo = (int)( (float)BG_Weapon( client->ps.weapon )->maxAmmo 
+                * BATTPACK_MODIFIER );
     else if( !BG_Weapon( client->ps.weapon )->usesEnergy && (
         BG_InventoryContainsUpgrade( UP_AMMOPACK, client->ps.stats ) ||
         BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) ) )
-      maxclips = (int)( 1 + (float) BG_Weapon( client->ps.weapon )->maxClips * AMMOPACK_MODIFIER );
+      maxammo = (int)( (float)BG_Weapon( client->ps.weapon )->maxAmmo ) 
+                * ( 1 + (float) BG_Weapon( client->ps.weapon )->maxClips 
+                    * AMMOPACK_MODIFIER );
     
     if( BG_Weapon( client->ps.weapon )->usesEnergy
-        && client->ps.ammo != maxammo )
+        && curammo < maxammo )
     {
       offset = VAMPIRIC_ESD_TAR/maxammo;
-      client->ps.ammo++;
-    }
-    else if( client->ps.ammo != maxammo || client->ps.clips != maxclips )
-    {    
-      offset = VAMPIRIC_ESD_TAR/( maxclips * maxammo );
       client->ps.ammo++;
     }
 
