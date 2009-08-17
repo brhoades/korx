@@ -110,7 +110,7 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   {
     int k, overflowedto[ MAX_CLIENTS ];
     
-    if( client->sess.spectatorState == SPECTATOR_NOT )
+    if( client->ps.stats[ STAT_HEALTH ] > 0 )
     {
       overflow = client->ps.persistant[ PERS_CREDIT ] + credit - max;
       client->ps.persistant[ PERS_CREDIT ] = max;
@@ -161,20 +161,21 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
         continue;
         
-      if( cl->sess.spectatorState != SPECTATOR_NOT )
+      if( cl->sess.spectatorState != SPECTATOR_NOT
+          || cl->ps.stats[ STAT_HEALTH ] > 0 )
         continue;
 
       overflowed++;
-      if( cl->ps.persistant[ PERS_CREDIT ] + overflow > max )
+      if( cl->pers.saved + overflow > max )
       {
-        overflowamt = max - cl->ps.persistant[ PERS_CREDIT ];
+        overflowamt = max - cl->pers.saved;
         overflow -= overflowamt;
-        cl->ps.persistant[ PERS_CREDIT ] = max;  
+        cl->pers.saved = max;  
       }
       else
       {
         overflowamt = overflow;
-        cl->ps.persistant[ PERS_CREDIT ] += overflow;
+        cl->pers.saved += overflow;
         overflow = 0;
       }
 
