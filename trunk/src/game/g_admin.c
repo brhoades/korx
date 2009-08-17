@@ -3569,7 +3569,7 @@ qboolean G_admin_putmespec( gentity_t *ent, int skiparg )
     ADMP( "!specme: sorry, but console isn't allowed on the spectators team\n" );
     return qfalse;
   }
-  else if( ent->lastDamageTime + 5000 > level.time )
+  else if( ent->lastDamageTime + 5000 > level.time && ent->health > 0 )
   {
     AP( "!specme: ^7You were damaged less than 5 seconds ago, please wait a little bit\n" );
     return qfalse;

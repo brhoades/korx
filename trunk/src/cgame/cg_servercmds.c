@@ -812,7 +812,7 @@ void CG_Menu( int menu, int arg )
     case MN_A_TOOCLOSE:
       longMsg   = "This location is too close to the enemy to evolve. Move away "
                   "from the enemy's presence and try again.";
-      shortMsg  = "This location is too close to the enemy to evolve\n";
+      shortMsg  = "This location is too close to the enemy to evolve";
       type      = DT_ARMOURYEVOLVE;
       break;
 
