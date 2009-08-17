@@ -155,14 +155,15 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
      thisteam = cl->ps.stats[ STAT_TEAM ];
 
-      if( team != thisteam || thisteam == TEAM_NONE )
+      if( team != thisteam || thisteam == TEAM_NONE 
+          || cl->ps.stats[ STAT_TEAM ] != cl->pers.teamSelection )
         continue;
         
       if( cl->ps.persistant[ PERS_CREDIT ] >= max )
         continue;
         
       if( cl->sess.spectatorState != SPECTATOR_NOT
-          || cl->ps.stats[ STAT_HEALTH ] > 0 )
+          || cl->ps.stats[ STAT_HEALTH ] <= 0 )
         continue;
 
       overflowed++;
@@ -249,14 +250,15 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 
       thisteam = cl->ps.stats[ STAT_TEAM ];
 
-      if( team != thisteam || thisteam == TEAM_NONE )
+      if( team != thisteam || thisteam == TEAM_NONE
+          || thisteam != cl->pers.teamSelection )
         continue;
         
-      if( cl->ps.persistant[ PERS_CREDIT ] >= max )
+      if( cl->pers.savedCredit >= max )
         continue;
 
       overflowed++;
-      if( cl->ps.persistant[ PERS_CREDIT ] + overflow > max )
+      if( cl->pers.savedCredit + overflow > max )
       {
         overflowamt = max - cl->ps.persistant[ PERS_CREDIT ];
         overflow -= overflowamt;
