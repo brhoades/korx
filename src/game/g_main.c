@@ -681,6 +681,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   int i;
   char buffer[ MAX_CVAR_VALUE_STRING ];
   int a, b;
+  char map[ MAX_CVAR_VALUE_STRING ] = {""};
 
   srand( randomSeed );
 
@@ -737,12 +738,9 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   else
     G_Printf( "Not logging to disk\n" );
 
-  {
-    char map[ MAX_CVAR_VALUE_STRING ] = {""};
+  trap_Cvar_VariableStringBuffer( "mapname", map, sizeof( map ) );
 
-    trap_Cvar_VariableStringBuffer( "mapname", map, sizeof( map ) );
-    G_MapConfigs( map );
-  }
+  G_MapConfigs( map );
 
   // we're done with g_mapConfigs, so reset this for the next map
   trap_Cvar_Set( "g_mapConfigsLoaded", "0" );
@@ -819,7 +817,9 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   trap_Cvar_Set( "g_extremeSuddenDeathVote", "0" );
   
   //reset nextmap
-  trap_Cvar_Set( "g_nextMap", "" );
+  if( !G_MapExists( g_nextMap.string ) 
+      || !strcmp( map, g_nextMap.string ) )
+    trap_Cvar_Set( "g_nextMap", "" );
   
   //reset extendvote, just in case
   trap_Cvar_Set( "g_extendvote", "0" );
