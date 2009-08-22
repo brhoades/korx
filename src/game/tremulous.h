@@ -691,14 +691,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * HUMAN upgrades
  */
 
-#define LIGHTARMOUR_PRICE           50
+#define LIGHTARMOUR_PRICE             50
 #define LIGHTARMOUR_POISON_PROTECTION 1
 #define LIGHTARMOUR_PCLOUD_PROTECTION 0
+#define LIGHTARMOUR_INFEC_PROTECTION  5
 
 #define HELMET_PRICE                90
 #define HELMET_RANGE                1000.0f
 #define HELMET_POISON_PROTECTION    2
 #define HELMET_PCLOUD_PROTECTION    1000
+#define HELMET_INFEC_PROTECTION     20
 
 #define MEDKIT_PRICE                0
 
@@ -742,6 +744,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BSUIT_PRICE                 350
 #define BSUIT_POISON_PROTECTION     4
 #define BSUIT_PCLOUD_PROTECTION     3000
+#define BSUIT_INFEC_PROTECTION      37
 
 #define MGCLIP_PRICE                0
 
@@ -753,6 +756,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MEDKIT_STARTUP_TIME         4000
 #define MEDKIT_STARTUP_SPEED        5
 
+#define BIOKIT_IFEC_PROTECTION      60
 
 /*
  * HUMAN buildables
