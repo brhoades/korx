@@ -801,7 +801,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_BT                 10000
 #define MGTURRET_HEALTH             HBHM(190)
 #define MGTURRET_DCC_REGEN          5
-#define MGTURRET_SPLASHDAMAGE       100
+#define MGTURRET_SPLASHDAMAGE       50
 #define MGTURRET_SPLASHRADIUS       100
 #define MGTURRET_ANGULARSPEED       8
 #define MGTURRET_ANGULARSPEED_GRAB  3
@@ -873,7 +873,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REPEATER_VALUE              HBVM(0)
 
 #define FORCEFIELD_BP                 8
-#define FORCEFIELD_BT                 10000
+#define FORCEFIELD_BT                 17500
 #define FORCEFIELD_HEALTH             HBHM(800)
 #define FORCEFIELD_SPLASHDAMAGE       50
 #define FORCEFIELD_SPLASHRADIUS       100
