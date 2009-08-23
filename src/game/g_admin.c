@@ -5079,27 +5079,44 @@ qboolean G_admin_detonate( gentity_t *ent, int skiparg )
 
   if( G_SayArgc() < 2 + skiparg )
   {
-    ADMP( "^3!detonate: ^7usage: !detonate: [name|slot#]\n" );
-    return qfalse;
+    vec3_t      forward, end;
+    trace_t     tr;
+
+    // trace someone (from share)
+    AngleVectors( ent->client->ps.viewangles, forward, NULL, NULL );
+    VectorMA( ent->client->ps.origin, 8192 * 16, forward, end );
+
+    trap_Trace( &tr, ent->client->ps.origin, NULL, NULL, end, ent->s.number, MASK_PLAYERSOLID );
+    vic = &g_entities[ tr.entityNum ];
+
+    if( !( tr.fraction < 1.0f && vic->client ) )
+    {
+      ADMP( "detonate: aim at a someone to make them explode or:\n" );
+      ADMP( "^3!detonate: ^7usage: !detonate: [name|slot#]\n" );
+      return qfalse;
+    }
   }
-  G_SayArgv( skiparg, command, sizeof( command ) );
-  cmd = command;
-  if( cmd && *cmd == '!' )
-    cmd++;
-  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
-  if( ( found = G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) ) != 1 )
+  else
   {
-    G_MatchOnePlayer( pids, found, err, sizeof( err ) );
-    ADMP( va( "^3!detonate: ^7%s\n", err ) );
-    return qfalse;
+    G_SayArgv( skiparg, command, sizeof( command ) );
+    cmd = command;
+    if( cmd && *cmd == '!' )
+      cmd++;
+    G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+    if( ( found = G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) ) != 1 )
+    {
+      G_MatchOnePlayer( pids, found, err, sizeof( err ) );
+      ADMP( va( "^3!detonate: ^7%s\n", err ) );
+      return qfalse;
+    }
+    if( !admin_higher( ent, &g_entities[ pids[ 0 ] ] ) )
+    {
+      ADMP( "^3!detonate: ^7sorry, but your intended victim has a higher admin"
+          " level than you\n" );
+      return qfalse;
+    }
+    vic = &g_entities[ pids[ 0 ] ];
   }
-  if( !admin_higher( ent, &g_entities[ pids[ 0 ] ] ) )
-  {
-    ADMP( "^3!detonate: ^7sorry, but your intended victim has a higher admin"
-        " level than you\n" );
-    return qfalse;
-  }
-  vic = &g_entities[ pids[ 0 ] ];
 
   //make them explode...
   if( vic->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS && vic->client->sess.spectatorState == SPECTATOR_NOT  )
