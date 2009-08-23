@@ -839,6 +839,10 @@ void painSawFire( gentity_t *ent )
   trace_t   tr;
   vec3_t    temp;
   gentity_t *tent, *traceEnt;
+  qboolean ckit=qfalse;
+  
+  if( ent->client->ps.weapon == WP_HBUILD )
+    ckit = qtrue;
 
   G_WideTrace( &tr, ent, PAINSAW_RANGE, PAINSAW_WIDTH, PAINSAW_HEIGHT,
                &traceEnt );
@@ -850,9 +854,7 @@ void painSawFire( gentity_t *ent )
 
   // send blood impact
   if( traceEnt->s.eType == ET_PLAYER || traceEnt->s.eType == ET_BUILDABLE )
-  {
     BloodSpurt( ent, traceEnt, &tr );
-  }
   else
   {
     VectorCopy( tr.endpos, temp );
@@ -862,7 +864,10 @@ void painSawFire( gentity_t *ent )
     tent->s.generic1 = ent->s.generic1; //weaponMode
   }
 
-  G_Damage( traceEnt, ent, ent, forward, tr.endpos, PAINSAW_DAMAGE, DAMAGE_NO_KNOCKBACK, MOD_PAINSAW );
+  if( !ckit )
+    G_Damage( traceEnt, ent, ent, forward, tr.endpos, PAINSAW_DAMAGE, DAMAGE_NO_KNOCKBACK, MOD_PAINSAW );
+  else
+    G_Damage( traceEnt, ent, ent, forward, tr.endpos, PAINSAW_DAMAGE, DAMAGE_NO_KNOCKBACK, MOD_CKIT );
 }
 
 /*
@@ -1036,7 +1041,10 @@ void cancelBuildFire( gentity_t *ent )
   if( ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
   {
     AngleVectors( ent->client->ps.viewangles, forward, NULL, NULL );
-    VectorMA( ent->client->ps.origin, 100, forward, end );
+    if( !level.vesd )
+      VectorMA( ent->client->ps.origin, 100, forward, end );
+    else
+      VectorMA( ent->client->ps.origin, PAINSAW_RANGE, forward, end );
 
     trap_Trace( &tr, ent->client->ps.origin, NULL, NULL, end, ent->s.number, MASK_PLAYERSOLID );
     traceEnt = &g_entities[ tr.entityNum ];
@@ -1046,8 +1054,8 @@ void cancelBuildFire( gentity_t *ent )
         traceEnt->health > 0 )
     {
       //repair buildable
-      if(traceEnt->s.eType == ET_BUILDABLE && traceEnt->spawned && 
-        ( traceEnt->buildableTeam == ent->client->ps.stats[ STAT_TEAM ] ))
+      if( traceEnt->s.eType == ET_BUILDABLE && traceEnt->spawned && 
+        ( traceEnt->buildableTeam == ent->client->ps.stats[ STAT_TEAM ] ) )
       {
 
         bHealth = BG_FindHealthForBuildable( traceEnt->s.modelindex );
@@ -1072,13 +1080,18 @@ void cancelBuildFire( gentity_t *ent )
         if( !level.vesd )
           traceEnt->health += HBUILD_HEALRATE/2;
         else
-          G_Damage( traceEnt, ent, ent, NULL, NULL,
-                    HBUILD_HEALRATE/2, 0, MOD_CKIT );
+        {
+          // Hacks
+          painSawFire( ent );
+          ent->client->ps.weaponTime -= BG_Weapon( WP_HBUILD )->repeatRate2;
+          ent->client->ps.weaponTime += BG_Weapon( WP_PAIN_SAW )->repeatRate1;
+        }
 
-        if( traceEnt->health > hHealth )
+        if( traceEnt->health > hHealth && !level.vesd )
           traceEnt->health = hHealth;
 
-        if( traceEnt->health == hHealth )
+        if( traceEnt->health == hHealth 
+            || ( traceEnt->health <= 10 && level.vesd ) )
           G_AddEvent( ent, EV_BUILD_REPAIRED, 0 );
         else
           G_AddEvent( ent, EV_BUILD_REPAIR, 0 );

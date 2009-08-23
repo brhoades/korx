@@ -3535,7 +3535,12 @@ char *eventnames[ ] =
   "EV_ALIENRANGED_MISS",      // Alien ranged attack feedback for missing a strike
   "EV_ALIENRANGED_TEAMHIT",   // Alien ranged attack feedback for hitting a teammate
 
-  "EV_LEV2_ZAP"
+  "EV_LEV2_ZAP",
+  
+  "EV_TELENODE_SPAWN",
+  "EV_TELENODE_TELEPORT",
+  
+  "EV_HUMAN_EXPLOSION"
 };
 
 /*
