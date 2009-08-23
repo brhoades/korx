@@ -1696,7 +1696,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     // add to the attackers "account" on the target
     if( attacker->client && attacker != targ && ( !OnSameTeam( targ, attacker ) || g_tkmap.integer ) )
     {
-      if( level.vesd )
+      if( level.vesd && attacker->health > 0 
+          && attacker->client->ps.stats[ STAT_TEAM ] != TEAM_NONE )
       {
         //FIXME: float conversion overkill
         attacker->health += (int)( (float)takeNoOverkill * ( (float)attacker->client->ps.stats[ STAT_MAX_HEALTH ] / (float)targ->client->ps.stats[ STAT_MAX_HEALTH ] ) );
