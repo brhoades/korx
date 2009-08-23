@@ -51,6 +51,19 @@
     "so aliens do not have to worry (as much) about camping jettards, they have to come down "
     "sometime."
   }
+  "ESD"
+  {
+    "Extreme Sudden Death has been changed, extensively, in KoRx. "
+    "Now, instead of your spawns just dying and you recivieing 2000 credits "
+    "your base also dies after 30 seconds, and you take constant damage. "
+    "The constant damage changes depending on your health. For example, a dretch "
+    "would take 1 damage every 3.6 seconds while a tryant might take 1 damage every 0.15 seconds, "
+    "and a human every 0.9 seconds, and so on. The health you gain is directly related to the amount "
+    "of damage you deal. If you deal 100 damage to a human, as a rant, you would gain 600 health, if "
+    "you did 600 damage to a rain as a human, you would get 100 HP, and so on. Also, in ESD the "
+    "ckit now does damage instead of healing... damage like a saw, so be careful!. "
+    
+  }
   "Barricades"
   {
     "Nearly useless in 1.1, Barricades now have more health, are cheaper to "
