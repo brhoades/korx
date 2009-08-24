@@ -167,16 +167,16 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
         continue;
 
       overflowed++;
-      if( cl->pers.saved + overflow > max )
+      if( cl->ps.persistant[ PERS_CREDIT ] + overflow > max )
       {
         overflowamt = max - cl->pers.saved;
         overflow -= overflowamt;
-        cl->pers.saved = max;  
+        cl->ps.persistant[ PERS_CREDIT ] = max;
       }
       else
       {
         overflowamt = overflow;
-        cl->pers.saved += overflow;
+        cl->ps.persistant[ PERS_CREDIT ] += overflowamt;
         overflow = 0;
       }
 
@@ -251,7 +251,8 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       thisteam = cl->ps.stats[ STAT_TEAM ];
 
       if( team != thisteam || thisteam == TEAM_NONE
-          || thisteam != cl->pers.teamSelection )
+          || thisteam != cl->pers.teamSelection
+          || cl->sess.spectatorState == SPECTATOR_NOT )
         continue;
         
       if( cl->pers.savedCredit >= max )
@@ -262,18 +263,12 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
       {
         overflowamt = max - cl->ps.persistant[ PERS_CREDIT ];
         overflow -= overflowamt;
-        if( cl->sess.spectatorState == SPECTATOR_NOT )
-          cl->ps.persistant[ PERS_CREDIT ] = max;
-        else
-          cl->pers.savedCredit = max;
+        cl->pers.savedCredit = max;
       }
       else
       {
         overflowamt = overflow;
-        if( cl->sess.spectatorState == SPECTATOR_NOT )
-          cl->ps.persistant[ PERS_CREDIT ] += overflow;
-        else
-          cl->pers.savedCredit += overflow;
+        cl->pers.savedCredit += overflow;
         overflow = 0;
       }
 
