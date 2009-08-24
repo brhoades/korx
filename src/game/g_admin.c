@@ -5091,7 +5091,7 @@ qboolean G_admin_detonate( gentity_t *ent, int skiparg )
 
     if( !( tr.fraction < 1.0f && vic->client ) )
     {
-      ADMP( "detonate: aim at a someone to make them explode or:\n" );
+      ADMP( "^3!detonate: ^7aim at a someone to make them explode or:\n" );
       ADMP( "^3!detonate: ^7usage: !detonate: [name|slot#]\n" );
       return qfalse;
     }
