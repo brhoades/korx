@@ -2856,7 +2856,7 @@ void CheckVote( void )
         trap_SendServerCommand( -1, va("print \"Sudden Death will begin in %d seconds\n\"", g_suddenDeathVoteDelay.integer  ) );
     }
     
-    if( !Q_stricmp( level.voteString, "extremesuddendeath" ) || !Q_stricmp( level.voteString, "esd" ) || !Q_stricmp( level.voteString, "extreme_sudden_death" ) )
+    if( !Q_stricmp( level.voteString, "extremesuddendeath" ) )
     {
       level.extremeSuddenDeathTime = level.time + ( 1000 * g_extremeSuddenDeathVoteDelay.integer ) - level.startTime;
       level.extremeSuddenDeathVote = qtrue;
