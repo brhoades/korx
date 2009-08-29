@@ -2894,18 +2894,21 @@ void CheckVote( void )
     if( voteYesPercent > votePassThreshold )
     {   
       // execute the command, then remove the vote
-      trap_SendServerCommand( -1, va("print \"^2Vote Passed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
+      trap_SendServerCommand( -1, va( "print \"^2Vote Passed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ) );
       level.voteExecuteTime = level.time + 3000;
+      G_LogPrintf( "vote: Vote Passed (Y:%i N:%i, %i percent)\n", level.voteYes, level.voteNo, voteYesPercent );
     }
     else if( voteYesPercent <= votePassThreshold  )
     {
       // same behavior as a timeout
-      trap_SendServerCommand( -1, va("print \"^1Vote Failed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
+      trap_SendServerCommand( -1, va( "print \"^1Vote Failed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ) );
+      G_LogPrintf( "vote: Vote Failed (Y:%i N:%i, %i percent)\n", level.voteYes, level.voteNo, voteYesPercent );
     }
     else
     {
       // No one voted or indecisive
       trap_SendServerCommand( -1, va("print \"^1Vote Failed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
+      G_LogPrintf( "vote: Vote Indecisive (FIXME) (Y:%i N:%i, %i percent)\n", level.voteYes, level.voteNo, voteYesPercent );
     }
   }
   else if( Q_stricmpn( level.voteDisplayString, "[Poll]", 6 ) )
@@ -2913,13 +2916,15 @@ void CheckVote( void )
      if( level.voteYes > ( level.numVotingClients * votePassThreshold/100 ) && voteYesPercent > votePassThreshold )
     {   
       // execute the command, then remove the vote
-      trap_SendServerCommand( -1, va("print \"^2Vote Passed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
+      trap_SendServerCommand( -1, va( "print \"^2Vote Passed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ) );
       level.voteExecuteTime = level.time + 3000;
+      G_LogPrintf( "vote: Vote Passed (Y:%i N:%i, %i percent)\n", level.voteYes, level.voteNo, voteYesPercent );
     }
     else if( level.voteNo >= ceil( (float)level.numVotingClients * votePassThreshold/100 ) && voteYesPercent <= votePassThreshold )
     {
       // same behavior as a timeout
-      trap_SendServerCommand( -1, va("print \"^1Vote Failed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ));
+      trap_SendServerCommand( -1, va( "print \"^1Vote Failed ^7(^2Y:^7%i ^1N:^7%i, %i percent)\n\"", level.voteYes, level.voteNo, voteYesPercent ) );
+      G_LogPrintf( "vote: Vote Failed (Y:%i N:%i, %i percent)\n", level.voteYes, level.voteNo, voteYesPercent );
     }
     else
     {
