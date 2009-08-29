@@ -169,7 +169,7 @@
   }
   "^3Credits^7"
   {
-    "KoRx is developed and hosted by KnightsofReason.\n\n"
+    "KoRx is developed and hosted by Knights of Reason.\n\n"
     "Developers:\n"
     "  Aaron5367\n"
     "  Akane\n"
@@ -180,20 +180,9 @@
     "  Eagle\n"
     "  Akane\n"
     "  B-e-t-a\n"
-  }
-  "^3Credits (2)^7"
-  {
-    "Graphics (cont.):\n"
-    "  Narvus\n"
+    "  Navrus\n"
     "  Draug\n"
     "  KnightsofReason.org Forum\n"
-    "\n"
-    "Brain Stormers:\n"
-    "  Stewah\n"
-    "  Lord-Anubis\n"
-    "  Metal\n"
-    "  Fox One\n"
-    " |KoR|KoRx Server\n"
   }
   "^3Special Thanks^7"
   {
@@ -207,7 +196,7 @@
     "  TremFusion Developers\n"
     "  Risujin (balance mod)\n"
     "  MGDev Developers\n"
-    "  f0rqu3(Original Tremx Developer)\n"
+    "  f0rqu3 (Original Tremx Developer)\n"
     "  And most importantly, the |KoR|KoRx server\n"
   }
   "Emoticons: Groups"
