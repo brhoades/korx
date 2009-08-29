@@ -4480,11 +4480,12 @@ void Cmd_Share_f( gentity_t *ent )
     return;
   }
 
-  if( ent->health <= 0 )
+  if( ent->health <= 0 || ent->client->sess.spectatorState != SPECTATOR_NOT )
     playerCredit = ent->client->pers.savedCredit;
   else
     playerCredit = ent->client->ps.persistant[ PERS_CREDIT ];
-  if( level.clients[ clientNum ].ps.stats[ STAT_HEALTH ] <= 0 )
+  if( level.clients[ clientNum ].ps.stats[ STAT_HEALTH ] <= 0 
+      || level.clients[ clientNum ].sess.spectatorState != SPECTATOR_NOT )
     targetCredit = level.clients[ clientNum ].pers.savedCredit;
   else
     targetCredit = level.clients[ clientNum ].ps.persistant[ PERS_CREDIT ];
