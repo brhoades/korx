@@ -310,6 +310,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
       "(^5name|slot^7)"
     }, 
 
+    {"credits", G_admin_credits, "O",
+      "Add/subtract credits to/from a player",
+      "[^3name|slot#^7] [^3amount#^7]"
+    },
+
     {"forcespec", G_admin_forcespec, "p",
       "disable joining of teams for a player",
       "[^3name|slot#^7]"
@@ -384,6 +389,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
     {"cp", G_admin_cp, "Z",
       "display a CP message to users, optionally specifying team(s) to send to",
       "(-AHS) [^3message^7]"
+    },
+
+    {"drop", G_admin_drop, "Z",
+      "kick a client from the server without log",
+      "[^3name|slot#^7] [^3message^7]"
     }
 
   };
@@ -5797,4 +5807,173 @@ void G_admin_cleanup()
     BG_Free( g_admin_commands[ i ] );
     g_admin_commands[ i ] = NULL;
   }
+}
+
+qboolean G_admin_drop( gentity_t *ent, int skiparg )
+{
+  int pids[ MAX_CLIENTS ];
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  int minargc;
+  char msg[ MAX_STRING_CHARS ];
+  char *s;
+  minargc = 2 + skiparg;
+
+  if( G_SayArgc() < minargc )
+  {
+    ADMP( "^3!drop: ^7usage: !drop [name|slot#] [message]\n" );
+    return qfalse;
+  }
+  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+
+  if( G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) != 1 )
+  {
+    int found;
+    
+    found = 0; //stupid errors
+    G_MatchOnePlayer( pids, found, err, sizeof( err ) );
+    ADMP( va( "^3!drop: ^7%s\n", err ) );
+    return qfalse;
+  }
+  
+  if( !admin_higher( ent, &g_entities[ pids[ 0 ] ] ) )
+  {
+    ADMP( "^3!drop: ^7sorry, but your intended victim has a higher admin"
+        " level than you\n" );
+    return qfalse;
+  }
+  
+  minargc = 3 + skiparg;
+  
+  s = G_SayConcatArgs( 2 + skiparg );
+  
+  Q_strncpyz( msg, s, sizeof( msg ) );
+  
+  //what they get
+  if( G_SayArgc() < minargc )
+    trap_SendServerCommand( pids[ 0 ], va( "disconnect" ) );
+  else
+    trap_SendServerCommand( pids[ 0 ], va( "disconnect \"You have been dropped.\n\n%s^7\n\"", msg ) );
+  
+  //what people get
+  trap_DropClient( pids[ 0 ], va( "disconnected" ) );
+
+  return qtrue;
+}
+
+qboolean G_admin_credits( gentity_t *ent, int skiparg )
+{
+  int pids[ MAX_CLIENTS ];
+  char name[ MAX_NAME_LENGTH ], err[ MAX_STRING_CHARS ];
+  int minargc;
+  gentity_t *vic;
+  int amnt;
+  char amnt_chr[11];
+  int max_creds, credits;
+
+  minargc = 3 + skiparg;
+
+  if( G_SayArgc() < minargc )
+  {
+    ADMP( "^3!credits: ^7usage: !credits [name|slot#] [amount#]\n" );
+    return qfalse;
+  }
+  G_SayArgv( 1 + skiparg, name, sizeof( name ) );
+
+  if( G_ClientNumbersFromString( name, pids, MAX_CLIENTS ) != 1 )
+  {
+    int found;
+    
+    found = 0; //stupid errors
+    G_MatchOnePlayer( pids, found, err, sizeof( err ) );
+    ADMP( va( "^3!credits: ^7%s\n", err ) );
+    return qfalse;
+  }
+
+  if( !admin_higher( ent, &g_entities[ pids[ 0 ] ] ) )
+  {
+    ADMP( "^3!credits: ^7sorry, but your intended victim has a higher admin"
+        " level than you\n" );
+    return qfalse;
+  }
+
+  vic = &g_entities[ pids[ 0 ] ];
+  
+  G_SayArgv( 2 + skiparg, amnt_chr, sizeof( amnt_chr ) );
+  //convert the text into a int
+  amnt = atoi( amnt_chr + 1 );
+   
+  //tell the players he's tried to give himself some credits (what a cheater)
+  if( vic == ent )
+  {
+   AP( va( "print \"^3!credits: ^7%s^7 attempted to modify their own credits\n\"", ( ent ) ? ent->client->pers.netname : "console" ) );
+   return qfalse;
+  }
+  
+  if( vic->client->ps.stats[ STAT_TEAM ] == TEAM_NONE )
+  {
+    ADMP( "^3!credits: ^7sorry, but you cannot modify a spectator's credits\n" );
+    return qfalse;
+  }
+
+  if( vic->client->sess.spectatorState == SPECTATOR_NOT )
+   credits = vic->client->ps.persistant[ PERS_CREDIT ];
+  else
+   credits = vic->client->pers.savedCredit;
+   
+  if( vic->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+    amnt *= ALIEN_CREDITS_PER_FRAG;
+
+  switch( amnt_chr[0] )
+  {
+    case '+':
+      //check the players max credit limit
+      if( vic->client->pers.teamSelection == TEAM_HUMANS )
+       max_creds = HUMAN_MAX_CREDITS;
+      else
+       max_creds = ALIEN_MAX_CREDITS;
+      
+      //checks if the player can get anymore money
+      if( credits == max_creds )
+      {
+       ADMP( "^3!credits: ^7sorry, but that player cannot receive anymore credits/evos\n" );
+         return qfalse;
+      }
+      //makes sure it doesnt overflow
+      if( credits + amnt > max_creds )
+       amnt = max_creds - credits;
+       
+      //sets their credits
+      G_AddCreditToClient( vic->client, amnt, qtrue );
+      
+      if( vic->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+        Com_sprintf( amnt_chr, sizeof(amnt_chr), "%i", amnt );
+      else
+        Com_sprintf( amnt_chr, sizeof(amnt_chr), "%.1f", ( (double)amnt )/( (double)ALIEN_CREDITS_PER_FRAG ) );
+      
+      AP( va( "print \"^3!credits: ^7%s^7 gave ^7%s^7 %s extra credits/evos\n\"", ( ent ) ? ent->client->pers.netname : "console", vic->client->pers.netname, amnt_chr ) );
+      break;
+
+    case '-':
+      //check if player can lose anymore money
+      if( credits == 0 )
+      {
+       ADMP( "^3!credits: ^7sorry, but that player cannot lose anymore credits/evos\n" );
+       return qfalse;
+      }
+
+      //makes sure it doesnt underflow
+      if( credits - amnt < 0 )
+        amnt = credits;
+
+      G_AddCreditToClient( vic->client, -(amnt), qtrue );
+
+      if( vic->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+        Com_sprintf( amnt_chr, sizeof(amnt_chr), "%i", amnt );
+      else
+        Com_sprintf( amnt_chr, sizeof(amnt_chr), "%.1f", ( ( (double)amnt )/( (double)ALIEN_CREDITS_PER_FRAG ) ) );
+
+      AP( va( "print \"^3!credits: ^7%s^7 subtracted %s credits/evos from ^7%s^7\n\"", ( ent ) ? ent->client->pers.netname : "console", amnt_chr, vic->client->pers.netname ) );
+      break;
+  }
+  return qtrue;
 }
