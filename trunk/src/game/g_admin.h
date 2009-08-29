@@ -220,6 +220,8 @@ qboolean G_admin_listmaps( gentity_t *ent, int skiparg );
 qboolean G_admin_maplog( gentity_t *ent, int skiparg );
 qboolean G_admin_listrotation( gentity_t *ent, int skiparg );
 qboolean G_admin_subnetban( gentity_t *ent, int skiparg );
+qboolean G_admin_drop( gentity_t *ent, int skiparg ); 
+qboolean G_admin_credits( gentity_t *ent, int skiparg );
 
 void G_Unescape( char *input, char *output, int len );
 qboolean G_StringReplaceCvars( char *input, char *output, int len );
