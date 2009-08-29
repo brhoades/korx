@@ -245,7 +245,8 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
     if( other->client )
     {
       if( ( other->client->ps.stats[ STAT_STATE ] & SS_SLOWLOCKED ) 
-            && other->s.weapon < WP_ALEVEL3 )
+            && ( other->s.weapon < WP_ALEVEL3 
+            || ( other->s.weapon == WP_ABUILD2 || other->s.weapon == WP_ABUILD1 ) ) )
       {
         other->client->ps.stats[ STAT_STATE ] |= SS_BLOBLOCKED;
         other->client->lastLockTime = level.time;
