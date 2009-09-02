@@ -11,6 +11,37 @@
   {
     "You can view more details at korx.googlecode.com."
   }
+  "^3Credits^7"
+  {
+    "KoRx is developed and hosted by Knights of Reason.\n\n"
+    "Developers:\n"
+    "  Aaron5367\n"
+    "  Akane\n"
+    "\n"
+    "Graphics:\n"
+    "  Fox_One\n"
+    "  Eagle\n"
+    "  B-e-t-a\n"
+    "  Akane\n"
+    "  Navras\n"
+    "  Draug\n"
+    "  KnightsofReason.org Forum\n"
+  }
+  "^3Special Thanks^7"
+  {
+    "Special Thanks to:\n"
+    "  WireDDD (original Trepidus)\n"
+    "  Amanieu\n"
+    "  benmachine\n"
+    "  Lakitu7\n"
+    "  kevlarman\n"
+    "  Einstein\n"
+    "  TremFusion Developers\n"
+    "  Risujin (balance mod)\n"
+    "  MGDev Developers\n"
+    "  f0rqu3 (original Tremx developer)\n"
+    "  And most importantly, the |KoR|KoRx server\n"
+  }
   "Sprint / Dodge"
   {
     "Human players will find their old binds for sprinting will no longer "
@@ -54,7 +85,7 @@
   "ESD"
   {
     "Extreme Sudden Death has been changed, extensively, in KoRx. "
-    "Now, instead of your spawns just dying and you recieving 2000 credits, "
+    "Now, instead of your spawns just dying and you receiving 2000 credits, "
     "your base also dies after 30 seconds, and you take constant damage. "
     "The constant damage changes depending on your health. For example, a dretch "
     "would take 1 damage every 3.6 seconds while a tyrant might take 1 damage every 0.15 seconds, "
@@ -100,8 +131,8 @@
   }
   "Lag Correction"
   {
-    "While the Tremulous implementation of Neil Toronto's unlagged is "
-    "becoming widely accepted, KoRx also implements client-side improvements "
+    "When unlagged is enabled (it isn't on official KoRx servers) "
+    "KoRx can implement client-side improvements "
     "not possible in 1.1 servers. For those who insist on leading their "
     "attacks, setting cg_unlagged to 0 will disable backward reconcilliation "
     "on your hitscan weapons."
@@ -166,37 +197,6 @@
     "There is an allied cloak system. Just because you can see "
     "your allies when they are cloaked, doesn't mean they are visible to the opposite team. "
     "You can also use the cloak with anything you want, it might show though, you've been warned. "
-  }
-  "^3Credits^7"
-  {
-    "KoRx is developed and hosted by Knights of Reason.\n\n"
-    "Developers:\n"
-    "  Aaron5367\n"
-    "  Akane\n"
-    "\n"
-    "Graphics:\n"
-    "  Fox_One\n"
-    "  Eagle\n"
-    "  B-e-t-a\n"
-    "  Akane\n"
-    "  Navrus\n"
-    "  Draug\n"
-    "  KnightsofReason.org Forum\n"
-  }
-  "^3Special Thanks^7"
-  {
-    "Special Thanks to:\n"
-    "  WireDDD (original Trepidus)\n"
-    "  Amanieu\n"
-    "  benmachine\n"
-    "  Lakitu7\n"
-    "  kevlarman\n"
-    "  Einstein\n"
-    "  TremFusion Developers\n"
-    "  Risujin (balance mod)\n"
-    "  MGDev Developers\n"
-    "  f0rqu3 (Original Tremx Developer)\n"
-    "  And most importantly, the |KoR|KoRx server\n"
   }
   "Emoticons: Groups"
   {
