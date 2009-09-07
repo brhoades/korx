@@ -187,7 +187,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_EBLOB_RANGE          200.0f
 #define LEVEL4_EBLOB_DMG            ADM(200)
 #define LEVEL4_EBLOB_REGEN          10000
-#define LEVEL4_EBLOB_BUILDABLE      0.50f    //The percentage of damage done to a buildable by acid
+#define LEVEL4_EBLOB_BUILDABLE      0.60f    //The percentage of damage done to a buildable by acid
 
 /*
  * ALIEN classes
@@ -500,8 +500,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_K_SCALE               1.0f
 #define RIFLE_RELOAD                2000
 #define RIFLE_PRICE                 0
-#define RIFLE_SPREAD                100
-#define RIFLE_DMG                   HDM(5)
+#define RIFLE_SPREAD                110
+#define RIFLE_DMG                   HDM(6)
 #define RIFLE_RECOIL_MIN_Y          0.25
 #define RIFLE_RECOIL_MAX_Y          1.2
 #define RIFLE_RECOIL_MAX_X          0.3
