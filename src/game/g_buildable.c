@@ -964,6 +964,7 @@ void ABarricade_Shrink( gentity_t *self, qboolean shrink )
   BG_BuildableBoundingBox( BA_A_BARRICADE, self->r.mins, self->r.maxs );
   if ( shrink )
   {
+    int anim = self->s.torsoAnim & ~( ANIM_FORCEBIT | ANIM_TOGGLEBIT );
     self->r.maxs[ 2 ] = (int)( self->r.maxs[ 2 ] * BARRICADE_SHRINKPROP );
     self->shrunkTime = level.time;
 
@@ -1622,9 +1623,9 @@ qboolean ATrapper_CheckTarget( gentity_t *self, gentity_t *target, int range )
   trace_t   trace;
 
   if( !AGeneric_CreepCheck( self ) ) // Do we have a creep?
-    return;
+    return qfalse;
   if( !G_FindOvermind( self ) ) // Do we have an overmind?
-    return;
+    return qfalse;
   if( !target ) // Do we have a target?
     return qfalse;
   if( !target->inuse ) // Does the target still exist?
