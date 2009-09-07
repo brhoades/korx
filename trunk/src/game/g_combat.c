@@ -1720,7 +1720,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       targ->die( targ, inflictor, attacker, take, mod );
       return;
     }
-    else if( targ->pain )
+    else if( targ->pain && mod != MOD_VESD )
       targ->pain( targ, attacker, take );
   }
 }
