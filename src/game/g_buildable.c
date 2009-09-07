@@ -660,7 +660,8 @@ void AGeneric_Think( gentity_t *self )
 {
   self->powered = level.overmindPresent;
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
-  AGeneric_CreepCheck( self );
+  if( !AGeneric_CreepCheck( self ) )
+    return;
 }
 
 /*
@@ -967,7 +968,7 @@ void ABarricade_Shrink( gentity_t *self, qboolean shrink )
     self->shrunkTime = level.time;
 
     // shrink animation, the destroy animation is used
-    if ( self->spawned && self->health > 0 )
+    if ( self->spawned && self->health > 0 && anim != BANIM_DESTROYED )
     {
       G_SetBuildableAnim( self, BANIM_ATTACK1, qtrue );
       G_SetIdleBuildableAnim( self, BANIM_DESTROYED );
@@ -1101,7 +1102,8 @@ void AAcidTube_Think( gentity_t *self )
   VectorAdd( self->s.origin, range, maxs );
   VectorSubtract( self->s.origin, range, mins );
 
-  AGeneric_CreepCheck( self );
+  if( !AGeneric_CreepCheck( self ) )
+    return;
 
   // attack nearby humans
   if( self->spawned && self->health > 0 && G_FindOvermind( self ) )
@@ -1543,12 +1545,8 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
   if( client && client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
     return;
   
-  //Only allow boostage once every 10 seconds
-  if( client->boostedTime + 10*1000 < level.time )
-  {
-    client->ps.stats[ STAT_STATE ] |= SS_BOOSTED;
-    client->boostedTime = level.time;
-  }
+  client->ps.stats[ STAT_STATE ] |= SS_BOOSTED;
+  client->boostedTime = level.time;
 }
 
 
@@ -1623,6 +1621,10 @@ qboolean ATrapper_CheckTarget( gentity_t *self, gentity_t *target, int range )
   vec3_t    distance;
   trace_t   trace;
 
+  if( !AGeneric_CreepCheck( self ) ) // Do we have a creep?
+    return;
+  if( !G_FindOvermind( self ) ) // Do we have an overmind?
+    return;
   if( !target ) // Do we have a target?
     return qfalse;
   if( !target->inuse ) // Does the target still exist?
