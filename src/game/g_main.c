@@ -828,6 +828,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   level.extremeSuddenDeath = qfalse;
   level.suddenDeathVote = qfalse;
   level.extremeSuddenDeathVote = qfalse;
+  level.vesd = qfalse;
 
   //this allows for the vote delay to be precise
   level.suddenDeathTime = g_suddenDeathTime.integer*60000;
