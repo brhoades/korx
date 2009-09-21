@@ -941,9 +941,9 @@ gentity_t *jetpack_explode( gentity_t *self, vec3_t start )
   bolt->s.generic1 =  self->s.generic1; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD;
-  bolt->splashDamage = ( SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD )/2;
-  bolt->splashRadius = ( SHOTGUN_NADE_RANGE*JETPACK_EXPLODE_MOD )/2;
+  bolt->damage = 0;
+  bolt->splashDamage = 0;
+  bolt->splashRadius = 0;
   bolt->methodOfDeath = MOD_JETPACK_EXPLODE;
   bolt->splashMethodOfDeath = MOD_JETPACK_EXPLODE;
   bolt->clipmask = MASK_SHOT;
