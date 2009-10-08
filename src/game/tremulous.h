@@ -314,7 +314,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL4_UPG_HEALTH           AHM(600)
 #define LEVEL4_UPG_REGEN            10
 #define LEVEL4_UPG_REGEN_MSEC       ARMSEC(LEVEL4_UPG_HEALTH)
-#define LEVEL4_UPG_COST             5
+#define LEVEL4_UPG_COST             4
 #define LEVEL4_UPG_REGEN_MOD        1.5f
 
 /*
@@ -621,7 +621,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_K_SCALE             1.0f
 #define LCANNON_REPEAT              500
 #define LCANNON_RELOAD              0
-#define LCANNON_DAMAGE              HDM(250)
+#define LCANNON_DAMAGE              HDM(240)
 #define LCANNON_RADIUS              150      // primary splash damage radius
 #define LCANNON_SIZE                5        // missile bounding box radius
 #define LCANNON_SECONDARY_DAMAGE    HDM(15)
@@ -642,7 +642,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_SEC_RECOIL_MAX_Y    10
 #define LCANNON_SEC_RECOIL_MAX_X    10
 #define LCANNON_SEC_RECOIL_SOFTEN   0.25f
-#define LCANNON_SURGE_DMG_MOD       1.2f
+#define LCANNON_SURGE_DMG_MOD       1.17f
 #define LCANNON_SURGE_SEC_TIME_MOD 0.75f
 
 
@@ -652,8 +652,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_K_SCALE                1.0f
 #define XAEL_CHARGEREPEAT           1000
 #define XAEL_RELOAD                 2000
-#define XAEL_DAMAGE                 HDM(250)
-#define XAEL_DAMAGE_DECAY   HDM(10)   //each bounce takes off thiss much damage
+#define XAEL_DAMAGE                 HDM(240)
+#define XAEL_DAMAGE_DECAY   HDM(10)   //each bounce takes off this much damage
 #define XAEL_RADIUS                 175
 #define XAEL_SIZE                   5        // missile bounding box radius
 #define XAEL_SECONDARY_DAMAGE       HDM(15)
@@ -678,7 +678,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define XAEL_SEC_RECOIL_MAX_Y       20
 #define XAEL_SEC_RECOIL_MAX_X       10
 #define XAEL_SEC_RECOIL_SOFTEN      0.25
-#define XAEL_SURGE_DMG_MOD          1.2f
+#define XAEL_SURGE_DMG_MOD          1.17f
 #define XAEL_SURGE_PRIM_TIME_MOD     0.75f
 
 #define HBUILD_PRICE                0
