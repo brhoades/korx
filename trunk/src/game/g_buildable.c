@@ -660,6 +660,7 @@ void AGeneric_Think( gentity_t *self )
 {
   self->powered = level.overmindPresent;
   self->nextthink = level.time + BG_Buildable( self->s.modelindex )->nextthink;
+  
   if( !AGeneric_CreepCheck( self ) )
     return;
 }
@@ -1518,7 +1519,7 @@ void ABooster_Touch( gentity_t *self, gentity_t *other, trace_t *trace )
   if( !self->spawned || self->health <= 0 )
     return;
     
-  if( !AGeneric_CreepCheck( self ) )
+  if( !G_FindCreep( self ) )
     return;
 
   if( !G_FindOvermind( self ) )
@@ -1622,7 +1623,7 @@ qboolean ATrapper_CheckTarget( gentity_t *self, gentity_t *target, int range )
   vec3_t    distance;
   trace_t   trace;
 
-  if( !AGeneric_CreepCheck( self ) ) // Do we have a creep?
+  if( !G_FindCreep( self ) ) // Do we have a creep?
     return qfalse;
   if( !G_FindOvermind( self ) ) // Do we have an overmind?
     return qfalse;
@@ -4519,8 +4520,10 @@ void G_CommitRevertedBuildable( gentity_t *ent )
          ent->think = ASpawn_Think;
          break;
       case BA_A_BARRICADE: 
-      case BA_A_BOOSTER:
         ent->think = ABarricade_Think;
+        break;
+      case BA_A_BOOSTER:
+        ent->think = AGeneric_Think;
         break;
       case BA_A_ACIDTUBE:
         ent->think = AAcidTube_Think;
