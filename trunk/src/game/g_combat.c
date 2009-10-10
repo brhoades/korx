@@ -1284,6 +1284,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
           mod == MOD_LEVEL3_BOUNCEBALL  ||
           mod == MOD_LEVEL4_EBLOB       ||
           mod == MOD_LEVEL4_EBLOBSPLASH ||
+          mod == MOD_SPITFIRE_SPITBOMB ||
+          mod == MOD_SPITFIRE_SPITBOMBSPLASH ||
           mod == MOD_SLOWBLOB           ||
           mod == MOD_LEVEL4_TRAMPLE     ||
           mod == MOD_LEVEL4_CRUSH       ||
@@ -1526,7 +1528,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       return;
       
     if( targ->client && attacker->client
-        && ( mod == MOD_LEVEL4_EBLOBSPLASH || mod == MOD_SPITFIRE_SPITBOMB )
+        && ( mod == MOD_LEVEL4_EBLOBSPLASH || mod == MOD_SPITFIRE_SPITBOMBSPLASH )
         && OnSameTeam( targ, attacker ) )
       return;
     
@@ -1636,12 +1638,15 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
             mod == MOD_LEVEL3_BOUNCEBALL  ||
             mod == MOD_LEVEL4_EBLOB       ||
             mod == MOD_LEVEL4_EBLOBSPLASH ||
+            mod == MOD_SPITFIRE_SPITBOMB ||
+            mod == MOD_SPITFIRE_SPITBOMBSPLASH ||
             mod == MOD_SLOWBLOB           ||
             mod == MOD_LEVEL4_TRAMPLE     ||
             mod == MOD_LEVEL4_CRUSH       ||
             mod == MOD_LEVEL3_POUNCE      ||
             mod == MOD_LEVEL1_PCLOUD      ||
-            mod == MOD_LEVEL2_ZAP )
+            mod == MOD_LEVEL2_ZAP ||
+            mod == MOD_SPITFIRE_ZAP )
           G_AddEvent( attacker, EV_ALIENRANGED_HIT, 0 );
         else
           G_AddEvent( attacker, EV_ALIEN_HIT, 0 );
