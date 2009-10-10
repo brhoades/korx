@@ -1683,7 +1683,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                         //float   fallDamage;
     SPITFIRE_REGEN,                               //int     regenRate;
     SPITFIRE_REGEN_MSEC,                          //int     regenRateMsec;
-    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,  //int     abilities;
+    SCA_FOVWARPS|SCA_ALIENSENSE,  //int     abilities;
     WP_SPITFIRE,                                  //weapon_t  startWeapon
     0.0f,                                         //float   buildDist;
     120,                                          //int     fov;

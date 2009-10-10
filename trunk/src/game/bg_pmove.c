@@ -463,7 +463,10 @@ static float PM_CmdScale( usercmd_t *cmd )
       cmd->upmove = 0;
 
     //prevent speed distortions for non ducking classes
-    if( !( pm->ps->pm_flags & PMF_DUCKED ) && pm->ps->pm_type != PM_JETPACK && cmd->upmove < 0 )
+    if( !( pm->ps->pm_flags & PMF_DUCKED ) 
+        && pm->ps->pm_type != PM_JETPACK 
+        && cmd->upmove < 0
+        && pm->ps->pm_type != PM_SPITPACK )
       cmd->upmove = 0;
   }
 
