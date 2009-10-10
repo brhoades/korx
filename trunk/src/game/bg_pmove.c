@@ -45,6 +45,7 @@ float pm_flyaccelerate = 4.0f;
 float pm_friction = 6.0f;
 float pm_waterfriction = 1.0f;
 float pm_flightfriction = 2.0f;
+float pm_spitfriction = 1.5f;
 float pm_spectatorfriction = 5.0f;
 
 int   c_pmove = 0;
@@ -309,8 +310,7 @@ static void PM_Friction( void )
   if( pm->ps->pm_type == PM_JETPACK )
     drop += speed * pm_flightfriction * pml.frametime;
   else if( pm->ps->pm_type == PM_SPITPACK )
-    drop += speed * pm_flightfriction * pml.frametime;
-
+    drop += speed * pm_spitfriction * pml.frametime;
 
   if( pm->ps->pm_type == PM_SPECTATOR )
     drop += speed * pm_spectatorfriction * pml.frametime;
