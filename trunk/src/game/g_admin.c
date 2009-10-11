@@ -4863,16 +4863,19 @@ qboolean G_admin_report( gentity_t *ent, int skiparg )
 #define REPORTSIZE ( (1 + MAX_CLIENTS) * ( MAX_NETNAME + 32 + 15 + 6 ) )
 //that's name [GUID] (ip) for every client and again for reporter
   char report[ MAX_STRING_CHARS + REPORTSIZE ], buffer[ MAX_STRING_CHARS ];
-  int i, length;
-  clientPersistant_t *per = &ent->client->pers;
+  int i, length, j;
   fileHandle_t reportfile;
-  if( !ent || !ent->client ) return qfalse; // console can't report... yet
+  
+  if( !ent || !ent->client ) 
+    return qfalse; // console can't report... yet
+  // moving above this line causes a crash when console uses report.
+
   if( !g_reportFile.string[0] )
   {
     ADMP( "^3!report: ^7This server does not support reporting\n" );
     return qfalse;
   }
-  else if( per->reportCount >= g_reportLimit.integer && 
+  else if( ent->client->pers.reportCount >= g_reportLimit.integer && 
     g_reportLimit.integer )
   {
     ADMP( "^3!report: ^7you have reached your report submission limit "
@@ -4886,7 +4889,7 @@ qboolean G_admin_report( gentity_t *ent, int skiparg )
     length = trap_FS_FOpenFile( g_reportFile.string, &reportfile, FS_WRITE );
   }
 
-  Com_sprintf( report, MAX_STRING_CHARS, "%s [%s] (%s): %s"
+  /*Com_sprintf( report, MAX_STRING_CHARS, "%s [%s] (%s): %s"
                                   "\n\nClients connected:\n", 
           per->netname, per->ip, ( per->guid ) ? per->guid : 
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",  
@@ -4903,6 +4906,32 @@ qboolean G_admin_report( gentity_t *ent, int skiparg )
         ( &ent->client->pers == per ) ? "- reporter" : "" );
       Q_strcat( report, REPORTSIZE, buffer );
     }
+  }*/
+  Com_sprintf( report, MAX_STRING_CHARS, "\n%s [%s] (%s): %s"
+                                      "\n\nClients connected:\n", 
+          ent->client->pers.netname, ent->client->pers.ip, 
+          ( ent->client->pers.guid ) ? ent->client->pers.guid : 
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",  
+        G_SayConcatArgs( 1 + skiparg ) );
+  Q_strcat( report, REPORTSIZE, buffer );
+   for( i = 0; i < MAX_ADMIN_NAMELOGS && g_admin_namelog[ i ]; i++ )
+  {
+    Com_sprintf( buffer, MAX_STRING_CHARS, va( "%-2s (%s) %15s^7",
+      ( g_admin_namelog[ i ]->slot > -1 ) ?
+        va( "%d", g_admin_namelog[ i ]->slot ) : "-",
+      ( g_admin_namelog[ i ]->guid ) ? g_admin_namelog[ i ]->guid : 
+        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+         g_admin_namelog[ i ]->ip ) );
+    Q_strcat( report, REPORTSIZE, buffer );
+    for( j = 0; j < MAX_ADMIN_NAMELOG_NAMES &&
+      g_admin_namelog[ i ]->name[ j ][ 0 ]; j++ )
+    {
+      Com_sprintf( buffer, MAX_STRING_CHARS, 
+          va( " '%s^7'", g_admin_namelog[ i ]->name[ j ] ) );
+      Q_strcat( report, REPORTSIZE, buffer );
+    }
+    Com_sprintf( buffer, MAX_STRING_CHARS, "\n" );
+    Q_strcat( report, REPORTSIZE, buffer );
   }
 
   Q_strcat( report, REPORTSIZE + MAX_STRING_CHARS, "----------\n\n" );
