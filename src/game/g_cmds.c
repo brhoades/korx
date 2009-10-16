@@ -4626,6 +4626,12 @@ void Cmd_Donate_f( gentity_t *ent )
   {
     minportion = ALIEN_CREDITS_PER_FRAG;
     divisor = level.numAlienClients-1;
+    if( divisor <= 0 )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"donate: get some teammates first\n\"" );
+      return;
+    }
     max = ALIEN_MAX_CREDITS;
     if( value > divisor )
       portion = value/divisor;
@@ -4637,6 +4643,12 @@ void Cmd_Donate_f( gentity_t *ent )
     divisor = level.numHumanClients-1;
     max = HUMAN_MAX_CREDITS;
     type = "credit(s)";
+    if( divisor <= 0 )
+    {
+      trap_SendServerCommand( ent-g_entities,
+        "print \"donate: get some teammates first\n\"" );
+      return;
+    }
     if( value > divisor )
       portion = value/divisor;
     else
