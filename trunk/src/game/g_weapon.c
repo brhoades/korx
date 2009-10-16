@@ -1561,8 +1561,8 @@ void G_UpdateZaps( gentity_t *ent )
           if( enemy->client->ps.stats[ STAT_HEALTH ] > 0 )
           {
               G_RadiusDamage( enemy->r.currentOrigin, enemy, SHOTGUN_NADE_DAMAGE*JETPACK_EXPLODE_MOD,
-                               SHOTGUN_NADE_RANGE, NULL, MOD_JETPACK_EXPLODE );
-            //G_Damage( enemy, enemy, enemy, NULL, NULL, enemy->client->ps.stats[ STAT_HEALTH ], 0, MOD_JETPACK_EXPLODE );
+                               SHOTGUN_NADE_RANGE*3, NULL, MOD_JETPACK_EXPLODE );
+            G_Damage( enemy, enemy, enemy, NULL, NULL, enemy->client->ps.stats[ STAT_HEALTH ], 0, MOD_JETPACK_EXPLODE );
           }
         }
       }
