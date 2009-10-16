@@ -3574,12 +3574,13 @@ qboolean G_admin_unlock( gentity_t *ent, int skiparg )
 
 qboolean G_admin_putmespec( gentity_t *ent, int skiparg )
 {
-  if( !ent )
+  if( !ent || !ent->client )
   {
     ADMP( "!specme: sorry, but console isn't allowed on the spectators team\n" );
     return qfalse;
   }
-  else if( ent->lastDamageTime + 5000 > level.time && ent->health > 0 )
+  else if( ent->lastDamageTime + 5000 > level.time
+                && ent->client->sess.spectatorState == SPECTATOR_NOT )
   {
     ADMP( "!specme: ^7You were damaged less than 5 seconds ago, please wait a little bit\n" );
     return qfalse;
