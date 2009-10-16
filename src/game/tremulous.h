@@ -160,7 +160,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL3_BOUNCEBALL_REGEN     10000    // msec until new barb
 
 #define LEVEL4_CLAW_DMG             ADM(100)
-#define LEVEL4_CLAW_RANGE           90.0f
+#define LEVEL4_CLAW_RANGE           115.0f
 #define LEVEL4_CLAW_WIDTH           14.0f
 #define LEVEL4_CLAW_HEIGHT          20.0f
 #define LEVEL4_CLAW_REPEAT          750
@@ -415,7 +415,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_SPLASHDAMAGE        15
 #define TRAPPER_SPLASHRADIUS        100
 #define TRAPPER_CREEPSIZE           30
-#define TRAPPER_RANGE               400
+#define TRAPPER_RANGE               800
 #define TRAPPER_REPEAT              1000
 #define TRAPPER_VALUE               ABVM(0)
 #define LOCKBLOB_SPEED              650.0f
