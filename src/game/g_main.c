@@ -1368,7 +1368,7 @@ void G_CalculateBuildPoints( void )
   if( level.extremeSuddenDeathTime  && !level.extremeSuddenDeath && G_TimeTilExtremeSuddenDeath( ) <= 0 )
     trap_Cvar_Set( "g_extremeSuddenDeath", "1" );
 
-  if( level.extremeSuddenDeathTime.integer 
+  if( g_extremeSuddenDeathTime.integer 
       && g_extremeSuddenDeath.integer )
   {
     if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-5500
