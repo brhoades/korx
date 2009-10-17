@@ -3052,7 +3052,7 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     // determine if it can be bought
-    if( !BG_Weapon( weapon )->purchasable && !override )
+    if( !BG_Weapon( weapon )->purchasable )
     {
       trap_SendServerCommand( ent-g_entities, "print \"You can't buy this item\n\"" );
       return;
