@@ -1373,7 +1373,6 @@ typedef struct
   vec4_t        foreColor;
   vec4_t        backColor;
   qboolean      loaded;
-  qhandle_t     esdShader;
 } buildStat_t;
 
 
