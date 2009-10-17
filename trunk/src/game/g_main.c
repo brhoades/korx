@@ -1318,34 +1318,6 @@ void G_CalculateBuildPoints( void )
     level.humanNextQueueTime += g_alienBuildQueueTime.integer;
   }
   
-  if( level.extremeSuddenDeathTime > 0 )
-  {
-    if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-5500
-        && level.time <= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-5000
-        && !level.vesd )
-      AP( "cp \"^1Your base will explode shortly\n^1You will also start taking constant damage\n^3Attack enemies to heal\"" );
-    else if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY
-              && !level.vesd )
-    {
-      for( i = 1, ent = g_entities + i; i < level.num_entities; i++, ent++ )
-      {        
-        if( !ent || ent->health <= 0 )
-          continue;
-        else if( ent->client 
-                 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS
-                 && ent->client->sess.spectatorState == SPECTATOR_NOT )
-        {
-          if( BG_InventoryContainsUpgrade( UP_MEDKIT, ent->client->ps.stats ) )
-            BG_RemoveUpgradeFromInventory( UP_MEDKIT, ent->client->ps.stats );
-          continue;
-        }
-        else if( ent->s.eType == ET_BUILDABLE )
-          G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
-      }
-      level.vesd = qtrue;
-    }
-  }
-  
   //Extend votes
  if( g_extendvote.integer )
  {
@@ -1395,6 +1367,35 @@ void G_CalculateBuildPoints( void )
   //it is time for extremesuddendeath to start
   if( level.extremeSuddenDeathTime  && !level.extremeSuddenDeath && G_TimeTilExtremeSuddenDeath( ) <= 0 )
     trap_Cvar_Set( "g_extremeSuddenDeath", "1" );
+
+  if( level.extremeSuddenDeathTime.integer 
+      && g_extremeSuddenDeath.integer )
+  {
+    if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-5500
+        && level.time <= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY-5000
+        && !level.vesd )
+      AP( "cp \"^1Your base will explode shortly\n^1You will also start taking constant damage\n^3Attack enemies to heal\"" );
+    else if( level.time >= level.extremeSuddenDeathTime + VAMPIRIC_ESD_DELAY
+              && !level.vesd )
+    {
+      for( i = 1, ent = g_entities + i; i < level.num_entities; i++, ent++ )
+      {        
+        if( !ent || ent->health <= 0 )
+          continue;
+        else if( ent->client 
+                 && ent->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS
+                 && ent->client->sess.spectatorState == SPECTATOR_NOT )
+        {
+          if( BG_InventoryContainsUpgrade( UP_MEDKIT, ent->client->ps.stats ) )
+            BG_RemoveUpgradeFromInventory( UP_MEDKIT, ent->client->ps.stats );
+          continue;
+        }
+        else if( ent->s.eType == ET_BUILDABLE )
+          G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+      }
+      level.vesd = qtrue;
+    }
+  }
 
   //start suddendeath
   if( g_suddenDeath.integer && !level.suddenDeath )
