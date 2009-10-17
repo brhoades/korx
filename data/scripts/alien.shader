@@ -146,11 +146,11 @@ models/players/level3/level3
 models/players/level3/level3adv
 {
 	{
-		map models/players/level3/level3adv.tga
+		map models/players/level3/level3adv.jpg
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/level3/level3adv.tga
+		map models/players/level3/level3adv.jpg
 		blendFunc GL_SRC_ALPHA GL_ONE
 		detail
 		alphaGen lightingSpecular
