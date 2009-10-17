@@ -3035,10 +3035,11 @@ qboolean G_admin_showbans( gentity_t *ent, int skiparg )
   ADMBP_end();
   return qtrue;
 }
-//TODO pull in extra features from lakitu7's qvm for this function
+
 qboolean G_admin_help( gentity_t *ent, int skiparg )
 {
   int i;
+  char additional[ MAX_STRING_CHARS ] = "\nThe following non-standard /commands may also be available to you: \n^3";
 
   if( G_SayArgc() < 2 + skiparg )
   {
@@ -3076,9 +3077,31 @@ qboolean G_admin_help( gentity_t *ent, int skiparg )
       }
     }
     if( count )
-	ADMBP( "\n" );
+      ADMBP( "\n" );
+      
+   if( ent )
+      strcat( additional, "/say_area" );
+    if( g_publicAdminMessages.integer || G_admin_permission( ent, ADMF_ADMINCHAT ) )
+      strcat( additional, " /a" );
+    if( g_publicClanMessages.integer || G_admin_permission( ent, ADMF_CLANCHAT ) )
+      strcat( additional, " /c" );
+    if( g_privateMessages.integer )
+      strcat( additional, " /m" );
+    if( ent && g_actionPrefix.string[0] )
+      strcat( additional, " /me /me_team" );
+    if( ent && g_myStats.integer )
+      strcat( additional, " /mystats" );
+    if( ent && ent->client )
+    {
+      if( ent->client->pers.designatedBuilder )
+        strcat( additional, " /protect /resign" );
+    }
+    if( ent && g_allowShare.integer )
+      strcat( additional, " /share /donate" );
+    
     ADMBP( va( "^3!help: ^7%i available commands\n", count ) );
     ADMBP( "run !help [^3command^7] for help with a specific command.\n" );
+    ADMBP( va( "%s\n", additional ) );
     ADMBP_end();
 
     return qtrue;
@@ -3615,7 +3638,7 @@ qboolean G_admin_register(gentity_t *ent, int skiparg )
     return qfalse;
   }
 
-  trap_SendConsoleCommand( EXEC_APPEND,va( "!setlevel %ld %d;",ent - g_entities, level) );
+  trap_SendConsoleCommand( EXEC_APPEND,va( "!setlevel %d %d;",ent - g_entities, level) );
   ClientUserinfoChanged( ent - g_entities );
 
   AP( va( "print \"^3!register: ^7%s^7 is now a protected nickname.\n\"", ent->client->pers.netname) );
@@ -4594,7 +4617,7 @@ qboolean G_admin_revert( gentity_t *ent, int skiparg )
               Com_sprintf( argbuf, sizeof argbuf, "%s%s%s%s%s%s%s!",
                   ( repeat > 1 ) ? "x" : "", ( repeat > 1 ) ? va( "%d ", repeat ) : "",
                   ( ID ) ? "#" : "", ( ID ) ? va( "%d ", ptr->ID ) : "",
-                  ( builder ) ? "-" : "", ( builder ) ? va( "%ld ", builder - g_entities ) : "", 
+                  ( builder ) ? "-" : "", ( builder ) ? va( "%d ", builder - g_entities ) : "", 
                   ( team == TEAM_ALIENS ) ? "a " : ( team == TEAM_HUMANS ) ? "h " : "" );
               ADMP( va( "^3!revert: ^7revert aborted: reverting this %s would conflict with "
                   "another buildable, use ^3!revert %s ^7to override\n", action, argbuf ) );
@@ -4622,7 +4645,7 @@ qboolean G_admin_revert( gentity_t *ent, int skiparg )
           Com_sprintf( argbuf, sizeof argbuf, "%s%s%s%s%s%s%s!",
               ( repeat > 1 ) ? "x" : "", ( repeat > 1 ) ? va( "%d ", repeat ) : "",
               ( ID ) ? "#" : "", ( ID ) ? va( "%d ", ptr->ID ) : "",
-              ( builder ) ? "-" : "", ( builder ) ? va( "%ld ", builder - g_entities ) : "", 
+              ( builder ) ? "-" : "", ( builder ) ? va( "%d ", builder - g_entities ) : "", 
               ( team == TEAM_ALIENS ) ? "a " : ( team == TEAM_HUMANS ) ? "h " : "" );
           ADMP( va( "^3!revert: ^7revert aborted: reverting this %s would "
               "conflict with another buildable, use ^3!revert %s ^7to override\n",
