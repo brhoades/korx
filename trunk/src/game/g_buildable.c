@@ -2775,9 +2775,8 @@ void HSpawn_Think( gentity_t *self )
 {
   gentity_t *ent;
 
-  // spawns work without power
-  if( !g_extremeSuddenDeath.integer )
-    self->powered = qtrue;
+  //spawns won't work without power
+  self->powered = qtrue;
     
   if( self->spawned && self->powered )
   {

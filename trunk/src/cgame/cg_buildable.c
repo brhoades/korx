@@ -741,12 +741,6 @@ void CG_BuildableStatusParse( const char *filename, buildStat_t *bs )
         bs->markedShader = trap_R_RegisterShader( s );
       continue;
     }
-    else if( !Q_stricmp( token.string, "esdShader" ) )
-    {
-      if( PC_String_Parse( handle, &s ) )
-        bs->esdShader = trap_R_RegisterShader( s );
-      continue;
-    }
     else if( !Q_stricmp( token.string, "healthSevereColor" ) )
     {
       if( PC_Color_Parse( handle, &c ) )
@@ -1092,10 +1086,7 @@ static void CG_BuildableStatusDisplay( centity_t *cent )
       float pX;
 
       pX = picX + ( subH * bs->horizontalMargin );
-      if( es->modelindex != BA_A_SPAWN && es->modelindex != BA_H_SPAWN )
-        CG_DrawPic( pX, subY, subH, subH, bs->noPowerShader );
-      else
-        CG_DrawPic( pX, subY, subH, subH, bs->esdShader );
+      CG_DrawPic( pX, subY, subH, subH, bs->noPowerShader );
     }
 
     if( marked )
