@@ -2620,7 +2620,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     CHAINGUN_REPEAT,      //int       repeatRate1;
     CHAINGUN_REPEAT_2,    //int       repeatRate2;
     0,                    //int       repeatRate3;
-    0,                    //int       reloadTime;
+    CHAINGUN_RELOAD,                    //int       reloadTime;
     CHAINGUN_K_SCALE,     //float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
