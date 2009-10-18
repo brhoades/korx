@@ -146,11 +146,11 @@ models/players/level3/level3
 models/players/level3/level3adv
 {
 	{
-		map models/players/level3/level3adv.jpg
+		map models/players/level3/level3upg.jpg
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/level3/level3adv.jpg
+		map models/players/level3/level3upg.jpg
 		blendFunc GL_SRC_ALPHA GL_ONE
 		detail
 		alphaGen lightingSpecular
@@ -171,6 +171,26 @@ models/players/level4/level4
 	}
 	{
 		map models/players/level4/level4.jpg
+		blendFunc GL_SRC_ALPHA GL_ONE
+		detail
+		alphaGen lightingSpecular
+	}
+	{
+		map models/buildables/mgturret/ref_map.jpg
+		blendFunc GL_DST_COLOR GL_ONE
+		detail
+		tcGen environment
+	}
+}
+
+models/players/level4/level4upg
+{
+	{
+		map models/players/level4/level4upg.jpg
+		rgbGen lightingDiffuse
+	}
+	{
+		map models/players/level4/level4upg.jpg
 		blendFunc GL_SRC_ALPHA GL_ONE
 		detail
 		alphaGen lightingSpecular
