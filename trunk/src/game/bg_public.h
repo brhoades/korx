@@ -296,6 +296,7 @@ typedef enum
 #define EF_B_SPAWNED        0x00000008    // buildable has spawned
 #define EF_B_POWERED        0x00000010    // buildable is powered
 #define EF_B_MARKED         0x00000020    // buildable is marked for deconstruction
+#define EF_SPITPACK         0x00000020    // Aaron: More recycling
 #define EF_WALLCLIMB        0x00000040    // wall walking
 #define EF_WALLCLIMBCEILING 0x00000080    // wall walking ceiling hack
 #define EF_NODRAW           0x00000100    // may have an event, but no model (unspawned items)
@@ -303,7 +304,6 @@ typedef enum
 #define EF_FIRING2          0x00000400    // alt fire
 #define EF_FIRING3          0x00000800    // third fire
 #define EF_MOVER_STOP       0x00001000    // will push otherwise
-#define EF_SPITPACK         0x00001000    // Aaron: More recycling
 #define EF_POISONCLOUDED    0x00002000    // player hit with basilisk gas
 #define EF_CONNECTION       0x00004000    // draw a connection trouble sprite
 #define EF_VOTED            0x00008000    // already cast a vote
