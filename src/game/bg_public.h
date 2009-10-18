@@ -303,6 +303,7 @@ typedef enum
 #define EF_FIRING2          0x00000400    // alt fire
 #define EF_FIRING3          0x00000800    // third fire
 #define EF_MOVER_STOP       0x00001000    // will push otherwise
+#define EF_SPITPACK         0x00001000    // Aaron: More recycling
 #define EF_POISONCLOUDED    0x00002000    // player hit with basilisk gas
 #define EF_CONNECTION       0x00004000    // draw a connection trouble sprite
 #define EF_VOTED            0x00008000    // already cast a vote
@@ -310,7 +311,6 @@ typedef enum
 #define EF_BLOBLOCKED       0x00020000    // caught by a trapper
 #define EF_WARN_CHARGE      0x00040000    // Lucifer Cannon / Xael is about to overcharge
 #define EF_DBUILDER         0x00080000    // designated builder protection
-#define EF_SPITPACK         0x00080000    // Aaron: More recycling
 
 typedef enum
 {
