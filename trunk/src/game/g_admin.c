@@ -3614,14 +3614,14 @@ qboolean G_admin_putmespec( gentity_t *ent, int skiparg )
   return qtrue;
 }
 
-qboolean G_admin_register(gentity_t *ent, int skiparg )
+qboolean G_admin_register( gentity_t *ent, int skiparg )
 {
   int level = 0;
 
   if( !ent || !ent->client )
-    return;
+    return qfalse;
 
-  level = G_admin_level(ent);
+  level = G_admin_level( ent );
 
   if( level == 0 )
   level = 1;

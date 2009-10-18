@@ -2484,7 +2484,7 @@ void Cmd_Class_f( gentity_t *ent )
 
         if( (( other->client && other->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS ) ||
             ( other->s.eType == ET_BUILDABLE && other->buildableTeam == TEAM_HUMANS ) ) &&
-            !ent->client->pers.override )
+            !ent->client->pers.override && G_Visible( ent, other, CONTENTS_SOLID ) )
           foundhuman = qtrue;
         
         if( other->s.modelindex == BA_A_OVERMIND && other->health > 0 && level.overmindPresent )
