@@ -3618,6 +3618,9 @@ qboolean G_admin_register(gentity_t *ent, int skiparg )
 {
   int level = 0;
 
+  if( !ent || !ent->client )
+    return;
+
   level = G_admin_level(ent);
 
   if( level == 0 )
