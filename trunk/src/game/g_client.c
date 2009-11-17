@@ -85,7 +85,6 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   float     overflowtotal = 0;
   gclient_t *cl;
   team_t team = TEAM_NONE;
-
   
   if( !client )
     return;
@@ -102,6 +101,9 @@ void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
   }
   else
     return;
+    
+  if( credit < 0 && cap )
+    cap = qfalse;
 
   //This doesn't work so well in ESD or with /give all
   if( client->ps.persistant[ PERS_CREDIT ] + credit > max 
