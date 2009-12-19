@@ -80,7 +80,7 @@ void CG_HumanExplosion( vec3_t origin, vec3_t dir )
 {
   particleSystem_t  *ps;
 
-  trap_S_StartSound( origin, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.alienBuildableExplosion );
+  trap_S_StartSound( origin, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.humanBuildableExplosion );
 
   //particle system
   ps = CG_SpawnNewParticleSystem( cgs.media.humanExplosionPS );
