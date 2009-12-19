@@ -1555,7 +1555,6 @@ void G_UpdateZaps( gentity_t *ent )
         {
           CPx( enemy->client->ps.clientNum, 
                "cp \"^1WARNING: JETPACK CAPACITOR OVERLOAD DETECTED\"" ); 
-          explodeJetpack( enemy );
           BG_DeactivateUpgrade( UP_JETPACK, enemy->client->ps.stats );
           BG_RemoveUpgradeFromInventory( UP_JETPACK, enemy->client->ps.stats );
           if( enemy->client->ps.stats[ STAT_HEALTH ] > 0 )
@@ -1564,6 +1563,7 @@ void G_UpdateZaps( gentity_t *ent )
                              SHOTGUN_NADE_RANGE*3, NULL, MOD_JETPACK_EXPLODE );      
             G_Damage( enemy, enemy, enemy, NULL, NULL, enemy->client->ps.stats[ STAT_HEALTH ], 0, MOD_JETPACK_EXPLODE );    
           }
+          explodeJetpack( enemy );
         }
       }
     }
