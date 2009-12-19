@@ -334,6 +334,7 @@ void SP_trigger_teleport( gentity_t *self )
     self->s.eFlags |= EF_NODRAW;
 
   self->s.eType = ET_TELEPORT_TRIGGER;
+  
   self->touch = trigger_teleporter_touch;
   self->use = trigger_teleporter_use;
 
@@ -1136,3 +1137,76 @@ void SP_trigger_ammo( gentity_t *self )
   InitTrigger( self );
   trap_LinkEntity( self );
 }
+
+
+/*
+===============
+trigger_credits_use
+===============
+*/
+void trigger_credits_use( gentity_t *self, gentity_t *other, gentity_t *activator )
+{
+  if( self->r.linked )
+    trap_UnlinkEntity( self );
+  else
+    trap_LinkEntity( self );
+}
+
+/*
+===============
+trigger_credits_touch
+===============
+*/
+void trigger_credits_touch( gentity_t *self, gentity_t *other, trace_t *trace )
+{
+  int max, credits;
+  
+  if( !other->client )
+    return;
+
+  if( self->timestamp > level.time )
+    return;
+
+  if( self->spawnflags & 2 )
+    self->timestamp = level.time + 1000;
+  else
+    self->timestamp = level.time + FRAMETIME;
+
+  if( other->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+  {
+    max = ALIEN_MAX_CREDITS;
+  }
+  else if( other->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
+  {
+    max = HUMAN_MAX_CREDITS;
+  }
+  else
+    return;
+  
+  credits = other->client->ps.persistant[ PERS_CREDIT ] + self->damage;
+  if( credits > max )
+  {
+    credits = max;
+  }
+  other->client->ps.persistant[ PERS_CREDIT ] = credits;
+}
+
+/*
+===============
+SP_trigger_credits
+===============
+*/
+void SP_trigger_credits( gentity_t *self )
+{
+  G_SpawnInt( "credits", "5", &self->damage );
+
+  self->touch = trigger_credits_touch;
+  self->use = trigger_credits_use;
+
+  InitTrigger( self );
+
+  // link in to the world if starting active
+  if( !( self->spawnflags & 1 ) )
+    trap_LinkEntity( self );
+}
+
