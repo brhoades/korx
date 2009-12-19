@@ -190,6 +190,7 @@ void SP_trigger_equipment( gentity_t *ent );
 void SP_trigger_gravity( gentity_t *ent );
 void SP_trigger_heal( gentity_t *ent );
 void SP_trigger_ammo( gentity_t *ent );
+void SP_trigger_credits( gentity_t *ent );
 
 void SP_target_delay( gentity_t *ent );
 void SP_target_speaker( gentity_t *ent );
@@ -271,6 +272,7 @@ spawn_t spawns[ ] =
   { "trigger_gravity",          SP_trigger_gravity },
   { "trigger_heal",             SP_trigger_heal },
   { "trigger_ammo",             SP_trigger_ammo },
+  { "trigger_credits",          SP_trigger_credits },
 
   // targets perform no action by themselves, but must be triggered
   // by another entity
