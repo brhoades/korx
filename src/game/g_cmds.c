@@ -1746,9 +1746,6 @@ void Cmd_CallVote_f( gentity_t *ent )
     }
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
-      //trap_SendServerCommand( ent-g_entities,
-      //  "print \"callvote: admin is immune from forcespec\n\"" );
-      //return;
       Com_sprintf( level.voteString, sizeof( level.voteString ),
         "m %d a forcespec vote against you passed. it was called by %s", clientNum,
       ent->client->pers.netname );
@@ -1771,17 +1768,14 @@ void Cmd_CallVote_f( gentity_t *ent )
     }
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
-      //trap_SendServerCommand( ent-g_entities,
-      //  "print \"callvote: admin is immune from forcespec\n\"" );
-      //return;
       Com_sprintf( level.voteString, sizeof( level.voteString ),
-        "m %d a denybuild vote against you passed. it was called by %s", clientNum,
+        "m %d an unforcespec vote against you passed. it was called by %s", clientNum,
       ent->client->pers.netname );
     }
     else
     {
       Com_sprintf( level.voteString, sizeof( level.voteString ),
-        "!denybuild %i", clientNum );
+        "!unforcespec %i", clientNum );
    	}
     Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
       "Allow player \'%s^7\' to join teams", name );
@@ -1796,9 +1790,6 @@ void Cmd_CallVote_f( gentity_t *ent )
     }
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
-      //trap_SendServerCommand( ent-g_entities,
-      //  "print \"callvote: admin is immune from forcespec\n\"" );
-      //return;
       Com_sprintf( level.voteString, sizeof( level.voteString ),
         "m %d a denybuild vote against you passed. it was called by %s", clientNum,
       ent->client->pers.netname );
